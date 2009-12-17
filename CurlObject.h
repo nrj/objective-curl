@@ -27,14 +27,16 @@
 	BOOL verbose;
 	BOOL showProgress;
 	
+	long defaultTimeout;
+	
 	NSString *authUsername;
 	NSString *authPassword;
 	
-	id <TransferRecord> currentTransfer;
+	id <TransferRecord> transfer;
 }
 
 @property(readwrite, assign) id delegate;
-@property(readwrite, assign) id <TransferRecord> currentTransfer;
+@property(readwrite, assign) id <TransferRecord> transfer;
 @property(readwrite, copy) NSString *authUsername;
 @property(readwrite, copy) NSString *authPassword;
 
@@ -43,6 +45,11 @@
 
 - (BOOL)showProgress;
 - (void)setShowProgress:(BOOL)value;
+
+- (long)defaultTimeout;
+- (void)setDefaultTimeout:(long)value;
+
+- (void)handleCurlStatus:(CURLcode)status;
 
 @end
 

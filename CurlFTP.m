@@ -61,7 +61,7 @@
 
 	[localFiles release];
 	
-	[self setCurrentTransfer:upload];
+	[self setTransfer:upload];
 	
 	[NSThread detachNewThreadSelector:@selector(performUploadOnNewThread:) 
 							 toTarget:self 
@@ -91,10 +91,10 @@
 	NSString *credentials = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
 
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);
+	//curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1);
 
-	NSArray *localFiles = [currentTransfer localFiles];
+	NSArray *localFiles = [transfer localFiles];
 	
 	for (int i = 0; i < [localFiles count]; i++)
 	{
@@ -111,7 +111,7 @@
 		fh = fopen([localFile UTF8String], "rb");
 		
 		char remoteUrl[1024];
-		sprintf(remoteUrl, "ftp://%s:%d/%s", [[currentTransfer hostname] UTF8String], [currentTransfer port], [remoteFile UTF8String]);
+		sprintf(remoteUrl, "ftp://%s:%d/%s", [[transfer hostname] UTF8String], [transfer port], [remoteFile UTF8String]);
 		
 		curl_easy_setopt(handle, CURLOPT_URL, remoteUrl);
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
@@ -120,7 +120,10 @@
 		result = curl_easy_perform(handle);
 		
 		if (result != CURLE_OK)
+		{
+			[self handleCurlStatus:result];
 			break;
+		}
 		
 		fclose(fh);
 	}

@@ -10,7 +10,7 @@
 #import "CurlObject.h"
 
 @interface CurlFTP : CurlObject {
-
+	
 }
 
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory;

@@ -12,7 +12,7 @@
 @implementation CurlObject
 
 @synthesize delegate;
-@synthesize currentTransfer;
+@synthesize transfer;
 @synthesize authUsername;
 @synthesize authPassword;
 
@@ -21,7 +21,7 @@
 	if (self = [super init])
 	{
 		handle = curl_easy_init();
-		
+
 		if (!handle)
 		{
 			@throw [NSException exceptionWithName:@"Initialization Error" 
@@ -30,6 +30,8 @@
 		}
 		
 		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); 
+		
+		[self setDefaultTimeout:15];
 	}
 	
 	return self;
@@ -81,6 +83,61 @@
 - (BOOL)showProgress
 {
 	return showProgress;
+}
+
+
+- (long)defaultTimeout
+{
+	return defaultTimeout;
+}
+
+
+- (void)setDefaultTimeout:(long)value
+{
+	if (!handle) return;
+	
+	curl_easy_setopt(handle, CURLOPT_TIMEOUT, value);
+	
+	defaultTimeout = value;
+}
+
+
+- (void)handleCurlStatus:(CURLcode)status
+{
+	char *url;
+	
+	curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &url); 
+	
+	switch (status)
+	{
+		case CURLE_LOGIN_DENIED:
+			printf("Invalid login!\n");
+			break;
+		
+		case CURLE_FTP_ACCESS_DENIED:
+			printf("Permission denied to %s", url);
+			break;
+			
+		case CURLE_COULDNT_CONNECT:
+			printf("Couldn't connect to host '%s' on port %d!\n", [[transfer hostname] UTF8String], [transfer port]);
+			break;
+			
+		case CURLE_COULDNT_RESOLVE_HOST:
+			printf("Couldn't resolve host '%s'\n!", [[transfer hostname] UTF8String]);
+			break;
+			
+		case CURLE_RECV_ERROR:
+			printf("Failure receiving network data.\n");
+			break;
+			
+	   case CURLE_UNSUPPORTED_PROTOCOL:
+			printf("Unknown Protocol '%s'\n!", [[transfer hostname] UTF8String]);
+			break;
+				   
+		default:
+			printf("Unhandled Status Code: %d (%s)\n", status, url);
+			break;
+	}
 }
 
 
@@ -137,7 +194,7 @@
 static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
 	CurlObject *client = (CurlObject *)clientp;
-	id <TransferRecord>transfer = [client currentTransfer];
+	id <TransferRecord>transfer = [client transfer];
 	
 	int uploadProgress = (ulnow * 100 / ultotal);
 	

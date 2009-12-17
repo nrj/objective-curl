@@ -21,14 +21,14 @@
 	[ftp setShowProgress:YES];
 	
 	[ftp setAuthUsername:@"nrj"];
-	[ftp setAuthPassword:@"password"];
+	[ftp setAuthPassword:@"antiquing"];
 	
 	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/OneWay", NULL];
 	
 	[ftp uploadFilesAndDirectories:filesToUpload 
 							toHost:@"bender.local" 
 							  port:21
-						 directory:@""];
+						 directory:@"~"];
 }
 
 

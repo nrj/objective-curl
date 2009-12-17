@@ -18,6 +18,7 @@
 
 @synthesize username;
 @synthesize hostname;
+@synthesize port;
 @synthesize directory;
 
 @synthesize status;
@@ -57,6 +58,7 @@
 	[copy setCurrentFile:[self currentFile]];
 	[copy setUsername:[self username]];
 	[copy setHostname:[self hostname]];
+	[copy setPort:[self port]];
 	[copy setDirectory:[self directory]];	
 	[copy setStatus:[self status]];
 	[copy setStatusMessage:[self statusMessage]];
@@ -73,6 +75,7 @@
 	[encoder encodeObject:currentFile forKey:@"currentFile"];
 	[encoder encodeObject:username forKey:@"username"];
 	[encoder encodeObject:hostname forKey:@"hostname"];
+	[encoder encodeInt:port forKey:@"port"];
 	[encoder encodeObject:directory forKey:@"directory"];
 	if ([self isActiveTransfer])
 	{
@@ -92,6 +95,7 @@
 	currentFile = [[decoder decodeObjectForKey:@"currentFile"] retain];
 	username = [[decoder decodeObjectForKey:@"username"] retain];
 	hostname = [[decoder decodeObjectForKey:@"hostname"] retain];
+	port = [decoder decodeIntForKey:@"port"];
 	directory = [[decoder decodeObjectForKey:@"directory"] retain];
 	status = [decoder decodeIntForKey:@"status"];
 	statusMessage = [[decoder decodeObjectForKey:@"statusMessage"] retain];

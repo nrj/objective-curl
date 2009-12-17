@@ -12,16 +12,8 @@
 
 @implementation CurlFTP
 
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)dir
-{
-	Upload *upload = [[Upload alloc] init];
-	
-	[upload setUsername:authUsername];
-	[upload setHostname:host];
-	[upload setDirectory:dir];
-	[upload setProgress:0];
-	[upload setTotalFilesUploaded:0];
-	
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory
+{	
 	NSMutableArray *remoteFiles = [[NSMutableArray alloc] init];
 	NSMutableArray *localFiles = [[NSMutableArray alloc] init];
 	NSFileManager *mgr = [NSFileManager defaultManager];
@@ -49,18 +41,25 @@
 				if ([mgr fileExistsAtPath:[localPath stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
 				{
 					[localFiles addObject:[localPath stringByAppendingPathComponent:file]];
-					[remoteFiles addObject:[remotePath stringByAppendingPathComponent:file]];
+					[remoteFiles addObject:[directory stringByAppendingPathComponent:[remotePath stringByAppendingPathComponent:file]]];
 					++totalFiles;
 				}
 			}
 		}
 	}
 	
+	Upload *upload = [[Upload alloc] init];
+	
+	[upload setUsername:authUsername];
+	[upload setHostname:host];
+	[upload setPort:port];
+	[upload setDirectory:directory];
+	[upload setProgress:0];
+	[upload setTotalFilesUploaded:0];
 	[upload setLocalFiles:localFiles];
-	
-	[localFiles release];
-	
 	[upload setTotalFiles:[localFiles count]];
+
+	[localFiles release];
 	
 	[self setCurrentTransfer:upload];
 	
@@ -112,13 +111,16 @@
 		fh = fopen([localFile UTF8String], "rb");
 		
 		char remoteUrl[1024];
-		sprintf(remoteUrl, "ftp://%s/%s/%s", [[currentTransfer hostname] UTF8String], [[currentTransfer directory] UTF8String], [remoteFile UTF8String]);
+		sprintf(remoteUrl, "ftp://%s:%d/%s", [[currentTransfer hostname] UTF8String], [currentTransfer port], [remoteFile UTF8String]);
 		
 		curl_easy_setopt(handle, CURLOPT_URL, remoteUrl);
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);		
 		
 		result = curl_easy_perform(handle);
+		
+		if (result != CURLE_OK)
+			break;
 		
 		fclose(fh);
 	}

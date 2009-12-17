@@ -20,6 +20,7 @@
 	
 	NSString *username;
 	NSString *hostname;
+	int port;
 	NSString *directory;
 
 	int status;	
@@ -38,6 +39,7 @@
 
 @property(readwrite, copy) NSString *username;
 @property(readwrite, copy) NSString *hostname;
+@property(readwrite, assign) int port;
 @property(readwrite, copy) NSString *directory;
 
 @property(readwrite, assign) int status;

@@ -38,12 +38,16 @@
 @property(readwrite, copy) NSString *authUsername;
 @property(readwrite, copy) NSString *authPassword;
 
-static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow);
-
 - (BOOL)verbose;
 - (void)setVerbose:(BOOL)value;
 
 - (BOOL)showProgress;
 - (void)setShowProgress:(BOOL)value;
+
+@end
+
+@interface CurlObject (Private)
+
+static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow);
 
 @end

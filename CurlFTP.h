@@ -13,6 +13,6 @@
 
 }
 
-- (void)uploadFile:(NSString *)filePath toLocation:(NSString *)hostname withCredentials:(NSString *)credentials;
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)dir;
 
 @end

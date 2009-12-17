@@ -7,12 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RemoteLocation.h"
+
 
 @protocol TransferRecord 
 
 - (NSString *)name;
 - (void)setName:(NSString *)aName;
+
+- (NSArray *)localFiles;
+- (void)setLocalFiles:(NSArray *)fileList;
+
+- (NSString *)username;
+- (void)setUsername:(NSString *)aUsername;
+
+- (NSString *)hostname;
+- (void)setHostname:(NSString *)aHostname;
+
+- (NSString *)directory;
+- (void)setDirectory:(NSString *)aDirectory;
 
 - (NSString *)currentFile;
 - (void)setCurrentFile:(NSString *)aFile;
@@ -26,17 +38,8 @@
 - (NSString *)status;
 - (void)setStatus:(NSString *)aStatus;
 
-- (NSArray *)localFiles;
-- (void)setLocalFiles:(NSArray *)fileList;
-
 - (int)progress;
 - (void)setProgress:(int)newProgress;
-
-- (id)task;
-- (void)setTask:(id)aTask;
-
-- (id <RemoteLocation>)location;
-- (void)setLocation:(id <RemoteLocation>)aLocation;
 
 - (BOOL)isActiveTransfer;
 

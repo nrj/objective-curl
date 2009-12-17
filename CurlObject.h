@@ -34,7 +34,9 @@
 }
 
 @property(readwrite, assign) id delegate;
-@property(readwrite, retain) id <TransferRecord> currentTransfer;
+@property(readwrite, assign) id <TransferRecord> currentTransfer;
+@property(readwrite, copy) NSString *authUsername;
+@property(readwrite, copy) NSString *authPassword;
 
 static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow);
 

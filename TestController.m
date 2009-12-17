@@ -20,9 +20,15 @@
 	[ftp setVerbose:YES];
 	[ftp setShowProgress:YES];
 	
-	[ftp uploadFile:@"/Users/nrj/Desktop/bigfile.zip" 
-		 toLocation:@"ftp://bender.local/bigfile.zip"
-	withCredentials:@"guest:guest"];
+	[ftp setAuthUsername:@"user"];
+	[ftp setAuthPassword:@"password"];
+	
+	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/TestFolder", NULL];
+	
+	[ftp uploadFilesAndDirectories:filesToUpload 
+							toHost:@"bender.local" 
+							  port:21 
+						 directory:@"uploads"];
 }
 
 

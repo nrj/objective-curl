@@ -9,11 +9,12 @@
 #import "CurlObject.h"
 
 
-
 @implementation CurlObject
 
 @synthesize delegate;
 @synthesize currentTransfer;
+@synthesize authUsername;
+@synthesize authPassword;
 
 - (id)init
 {
@@ -107,6 +108,7 @@
 - (void)uploadDidProgress:(id <TransferRecord>)aRecord toPercent:(int)aPercent
 {
 	printf("uploadDidProgress:toPercent:%d\n", aPercent);
+	
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidProgress:toPercent:)])
 	{
 		[delegate uploadDidProgress:aRecord toPercent:aPercent];
@@ -134,16 +136,14 @@
 
 static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
-//	CurlObject *client = (CurlObject *)clientp;
-//	id <TransferRecord>transfer = [client currentTransfer];
+	CurlObject *client = (CurlObject *)clientp;
+	id <TransferRecord>transfer = [client currentTransfer];
 	
 	int uploadProgress = (ulnow * 100 / ultotal);
 	
-//	[transfer setProgress:uploadProgress];
+	[transfer setProgress:uploadProgress];
 	
-//	[client uploadDidProgress:transfer toPercent:uploadProgress];
-	
-	printf("handleClientProgress %d\n", uploadProgress);
+	[client uploadDidProgress:transfer toPercent:uploadProgress];
 	
 	return 0;
 }

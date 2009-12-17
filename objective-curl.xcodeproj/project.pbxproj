@@ -11,6 +11,7 @@
 		0B58AD5710D6A9D10032C59D /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B58AD5610D6A9D10032C59D /* libcurl.dylib */; };
 		0B95D3E710D7220C00D17237 /* CurlObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B95D3E610D7220C00D17237 /* CurlObject.m */; };
 		0BD55BDC10CD70DD004EB9A3 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD55BDB10CD70DD004EB9A3 /* TestController.m */; };
+		0BE69F5210D981F800A6EFDE /* Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE69F4E10D981F800A6EFDE /* Upload.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -26,9 +27,11 @@
 		0B95D3E610D7220C00D17237 /* CurlObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlObject.m; sourceTree = "<group>"; };
 		0B9A1A7A10D81FFC00A64CD3 /* TransferRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferRecord.h; sourceTree = "<group>"; };
 		0B9A1A7B10D81FFC00A64CD3 /* UploadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadDelegate.h; sourceTree = "<group>"; };
-		0B9A1AB910D826B500A64CD3 /* RemoteLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteLocation.h; sourceTree = "<group>"; };
 		0BD55BDA10CD70DD004EB9A3 /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
 		0BD55BDB10CD70DD004EB9A3 /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
+		0BE69F4E10D981F800A6EFDE /* Upload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Upload.m; sourceTree = "<group>"; };
+		0BE69F4F10D981F800A6EFDE /* Upload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Upload.h; sourceTree = "<group>"; };
+		0BE69F5F10D9849300A6EFDE /* CurlStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlStatus.h; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0BE69F5E10D9846C00A6EFDE /* enum */,
 				0B9A1A5D10D81EB200A64CD3 /* model */,
 				0B9A1A1E10D81E2B00A64CD3 /* protocol */,
 				0BD55BDA10CD70DD004EB9A3 /* TestController.h */,
@@ -73,7 +77,6 @@
 			children = (
 				0B9A1A7A10D81FFC00A64CD3 /* TransferRecord.h */,
 				0B9A1A7B10D81FFC00A64CD3 /* UploadDelegate.h */,
-				0B9A1AB910D826B500A64CD3 /* RemoteLocation.h */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -81,8 +84,18 @@
 		0B9A1A5D10D81EB200A64CD3 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				0BE69F4E10D981F800A6EFDE /* Upload.m */,
+				0BE69F4F10D981F800A6EFDE /* Upload.h */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		0BE69F5E10D9846C00A6EFDE /* enum */ = {
+			isa = PBXGroup;
+			children = (
+				0BE69F5F10D9849300A6EFDE /* CurlStatus.h */,
+			);
+			path = enum;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -211,6 +224,7 @@
 				0BD55BDC10CD70DD004EB9A3 /* TestController.m in Sources */,
 				0B58AD4410D6A6360032C59D /* CurlFTP.m in Sources */,
 				0B95D3E710D7220C00D17237 /* CurlObject.m in Sources */,
+				0BE69F5210D981F800A6EFDE /* Upload.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

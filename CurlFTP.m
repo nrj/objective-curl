@@ -83,7 +83,7 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	CURLcode result;
+	CURLcode result = -1;
 	FILE *fh;
 	struct stat file_info;
 	curl_off_t fsize;
@@ -91,7 +91,7 @@
 	NSString *credentials = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
 
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-	//curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1);
 
 	NSArray *localFiles = [transfer localFiles];
@@ -100,6 +100,8 @@
 	{
 		NSString *localFile = [localFiles objectAtIndex:i];
 		NSString *remoteFile = [remoteFiles objectAtIndex:i];
+		
+		[transfer setCurrentFile:[localFile lastPathComponent]];
 		
 		if(stat([localFile UTF8String], &file_info)) {
 			printf("Couldnt open '%s': %s\n", [localFile UTF8String], strerror(errno));
@@ -118,17 +120,23 @@
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);		
 		
 		result = curl_easy_perform(handle);
+
+		fclose(fh);		
 		
 		if (result != CURLE_OK)
-		{
-			[self handleCurlStatus:result];
 			break;
-		}
-		
-		fclose(fh);
 	}
 
 	[remoteFiles release];
+
+	if (result == CURLE_OK)
+	{
+		[self uploadDidFinish:transfer];
+	}
+	
+	[self setIsUploading:NO];
+	
+	[self handleCurlStatus:result];
 	
 	curl_easy_cleanup(handle);
 	

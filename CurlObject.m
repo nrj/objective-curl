@@ -15,6 +15,7 @@
 @synthesize transfer;
 @synthesize authUsername;
 @synthesize authPassword;
+@synthesize isUploading;
 
 - (id)init
 {
@@ -105,39 +106,51 @@
 - (void)handleCurlStatus:(CURLcode)status
 {
 	char *url;
-	
 	curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &url); 
+	NSString *message;
+	CurlStatus code;
 	
 	switch (status)
 	{
+		case CURLE_OK:
+			message = [NSString stringWithFormat:@"Finished uploading %d files to %@", [transfer totalFiles], [transfer hostname]];
+			break;
+		
 		case CURLE_LOGIN_DENIED:
-			printf("Invalid login!\n");
+			message = [NSString stringWithFormat:@"Invalid login for '%@@%@'", [transfer username], [transfer hostname]];
 			break;
 		
 		case CURLE_FTP_ACCESS_DENIED:
-			printf("Permission denied to %s", url);
+			message = [NSString stringWithFormat:@"Failed writing to directory '%@'", [transfer directory]];
 			break;
 			
 		case CURLE_COULDNT_CONNECT:
-			printf("Couldn't connect to host '%s' on port %d!\n", [[transfer hostname] UTF8String], [transfer port]);
+			message = [NSString stringWithFormat:@"Couldn't connect to host '%@' on port %d", [transfer hostname], [transfer port]];
+			break;
+			
+		case CURLE_OPERATION_TIMEOUTED:
+			message = [NSString stringWithFormat:@"Operation timed out to host '%@'", [transfer hostname]];
 			break;
 			
 		case CURLE_COULDNT_RESOLVE_HOST:
-			printf("Couldn't resolve host '%s'\n!", [[transfer hostname] UTF8String]);
+			message = [NSString stringWithFormat:@"Couldn't resolve host '%@'", [transfer hostname]];
 			break;
 			
 		case CURLE_RECV_ERROR:
-			printf("Failure receiving network data.\n");
+			message = [NSString stringWithFormat:@"Failed to receive network data from '%@'", [transfer hostname]];
 			break;
 			
 	   case CURLE_UNSUPPORTED_PROTOCOL:
-			printf("Unknown Protocol '%s'\n!", [[transfer hostname] UTF8String]);
+			message = [NSString stringWithFormat:@"Unsupported protocol '%@'", [transfer hostname]];
 			break;
 				   
 		default:
-			printf("Unhandled Status Code: %d (%s)\n", status, url);
+			message = [NSString stringWithFormat:@"Unhandled Status Code: %d (%s)", status, url];
 			break;
 	}
+	
+	[transfer setStatusMessage:message];
+	NSLog(message);
 }
 
 
@@ -155,6 +168,7 @@
 
 - (void)uploadDidBegin:(id <TransferRecord>)aRecord
 {
+	NSLog(@"uploadDidBegin: %d files to %@", [aRecord totalFiles], [aRecord hostname]);
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidBegin:)])
 	{
 		[delegate uploadDidBegin:aRecord];
@@ -164,7 +178,7 @@
 
 - (void)uploadDidProgress:(id <TransferRecord>)aRecord toPercent:(int)aPercent
 {
-	printf("uploadDidProgress:toPercent:%d\n", aPercent);
+	NSLog(@"uploadDidProgress:%@ toPercent:%d\n", [aRecord currentFile], aPercent);
 	
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidProgress:toPercent:)])
 	{
@@ -175,6 +189,7 @@
 
 - (void)uploadDidFinish:(id <TransferRecord>)aRecord
 {
+	NSLog(@"uploadDidFinish: %d files to %@", [aRecord totalFiles], [aRecord hostname]);
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidFinish:)])
 	{
 		[delegate uploadDidFinish:aRecord];
@@ -197,6 +212,13 @@ static int handleClientProgress(void *clientp, double dltotal, double dlnow, dou
 	id <TransferRecord>transfer = [client transfer];
 	
 	int uploadProgress = (ulnow * 100 / ultotal);
+	
+	if (![client isUploading] && uploadProgress > 0)
+	{
+		[client uploadDidBegin:transfer];
+
+		[client setIsUploading:YES];
+	}
 	
 	[transfer setProgress:uploadProgress];
 	

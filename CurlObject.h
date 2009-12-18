@@ -33,12 +33,15 @@
 	NSString *authPassword;
 	
 	id <TransferRecord> transfer;
+	
+	BOOL isUploading;
 }
 
 @property(readwrite, assign) id delegate;
 @property(readwrite, assign) id <TransferRecord> transfer;
 @property(readwrite, copy) NSString *authUsername;
 @property(readwrite, copy) NSString *authPassword;
+@property(readwrite, assign) BOOL isUploading;
 
 - (BOOL)verbose;
 - (void)setVerbose:(BOOL)value;

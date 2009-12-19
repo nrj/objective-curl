@@ -52,7 +52,10 @@
 - (long)defaultTimeout;
 - (void)setDefaultTimeout:(long)value;
 
-- (void)handleCurlStatus:(CURLcode)status;
+- (void)handleCurlResult:(CURLcode)status;
+
+- (BOOL)hasAuthUsername;
+- (BOOL)hasAuthPassword;
 
 @end
 

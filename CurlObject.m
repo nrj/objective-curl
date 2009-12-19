@@ -7,7 +7,9 @@
 //
 
 #import "CurlObject.h"
+#import "CurlStatus.h"
 
+#define ANONYMOUS_USERNAME
 
 @implementation CurlObject
 
@@ -103,13 +105,24 @@
 }
 
 
-- (void)handleCurlStatus:(CURLcode)status
+- (BOOL)hasAuthUsername
+{
+	return (authUsername != NULL && ![authUsername isEqualToString:@""]);
+}
+
+
+- (BOOL)hasAuthPassword
+{
+	return (authPassword != NULL && ![authPassword isEqualToString:@""]);
+}
+
+
+
+- (void)handleCurlResult:(CURLcode)status
 {
 	char *url;
 	curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &url); 
 	NSString *message;
-	CurlStatus code;
-	
 	switch (status)
 	{
 		case CURLE_OK:
@@ -117,7 +130,7 @@
 			break;
 		
 		case CURLE_LOGIN_DENIED:
-			message = [NSString stringWithFormat:@"Invalid login for '%@@%@'", [transfer username], [transfer hostname]];
+			message = [NSString stringWithFormat:@"Invalid login for '%@@%@'", ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]];
 			break;
 		
 		case CURLE_FTP_ACCESS_DENIED:
@@ -178,7 +191,7 @@
 
 - (void)uploadDidProgress:(id <TransferRecord>)aRecord toPercent:(int)aPercent
 {
-	NSLog(@"uploadDidProgress:%@ toPercent:%d\n", [aRecord currentFile], aPercent);
+//	NSLog(@"uploadDidProgress:%@ toPercent:%d\n", [aRecord currentFile], aPercent);
 	
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidProgress:toPercent:)])
 	{
@@ -213,16 +226,12 @@ static int handleClientProgress(void *clientp, double dltotal, double dlnow, dou
 	
 	int uploadProgress = (ulnow * 100 / ultotal);
 	
-	if (![client isUploading] && uploadProgress > 0)
+	if (uploadProgress >= 0)
 	{
-		[client uploadDidBegin:transfer];
-
-		[client setIsUploading:YES];
+		[transfer setProgress:uploadProgress];
+	
+		[client uploadDidProgress:transfer toPercent:uploadProgress];
 	}
-	
-	[transfer setProgress:uploadProgress];
-	
-	[client uploadDidProgress:transfer toPercent:uploadProgress];
 	
 	return 0;
 }

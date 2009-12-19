@@ -7,6 +7,7 @@
 //
 
 #import "CurlFTP.h"
+#import "FTPStatus.h"
 #import "Upload.h"
 
 
@@ -70,6 +71,25 @@
 	return upload;
 }
 
+
+- (void)handleFTPStatus:(int)code
+{
+	NSString *message;
+	
+	switch (code)
+	{
+		//case FTP_STATUS_CONNECTED:
+		default:
+			message = [NSString stringWithFormat:@"Unhandled FTP Status: %d", code];
+			break;
+	}
+	
+	[transfer setStatusMessage:message];
+	
+	NSLog(message);
+}
+
+
 @end
 
 
@@ -78,6 +98,20 @@
 
 @implementation CurlFTP (Private)
 
+
+static CurlFTP *_client = NULL;
+
+
+static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
+{	
+	char code[4];
+
+	strncpy(code, (char *)ptr, 3);
+	
+	[_client handleFTPStatus:atoi(code)];
+	
+	return size * nmemb;
+}
 
 - (void)performUploadOnNewThread:(NSArray *)remoteFiles
 {
@@ -88,12 +122,30 @@
 	struct stat file_info;
 	curl_off_t fsize;
 
-	NSString *credentials = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
-
+	NSString *credentials;
+	if ([self hasAuthUsername])
+	{
+		if (![self hasAuthPassword])
+		{
+			// Try Keychain
+		}
+		
+		credentials = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
+	}
+	else
+	{
+		// Try anonymous login
+		credentials = [NSString stringWithFormat:@"anonymous:"];
+	}
+	
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);		
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1);
-
+	curl_easy_setopt(handle, CURLOPT_HEADER, 1);
+	curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, parseFTPHeader);
+	
+	_client = self;
+	
 	NSArray *localFiles = [transfer localFiles];
 	
 	for (int i = 0; i < [localFiles count]; i++)
@@ -117,16 +169,18 @@
 		
 		curl_easy_setopt(handle, CURLOPT_URL, remoteUrl);
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
-		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);		
+		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
 		
 		result = curl_easy_perform(handle);
 
-		fclose(fh);		
+		fclose(fh);
 		
 		if (result != CURLE_OK)
 			break;
 	}
-
+	
+	_client = NULL;
+	
 	[remoteFiles release];
 
 	if (result == CURLE_OK)
@@ -134,11 +188,11 @@
 		[self uploadDidFinish:transfer];
 	}
 	
+	curl_easy_cleanup(handle);
+	
 	[self setIsUploading:NO];
 	
-	[self handleCurlStatus:result];
-	
-	curl_easy_cleanup(handle);
+	[self handleCurlResult:result];
 	
 	[pool drain];
 	[pool release];

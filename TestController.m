@@ -16,8 +16,8 @@
 - (IBAction)runTest:(id)sender
 {
 	CurlFTP *ftp = [[CurlFTP alloc] init];
-	
-	//[ftp setVerbose:YES];
+
+//	[ftp setVerbose:YES];
 	[ftp setShowProgress:YES];
 	
 	[ftp setAuthUsername:@"nrj"];
@@ -28,7 +28,7 @@
 	[ftp uploadFilesAndDirectories:filesToUpload 
 							toHost:@"bender.local" 
 							  port:21
-						 directory:@"uploads"];
+						 directory:@"/home/nrj/global"];
 }
 
 

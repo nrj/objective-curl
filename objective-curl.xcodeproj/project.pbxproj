@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B58AD4410D6A6360032C59D /* CurlFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B58AD4310D6A6360032C59D /* CurlFTP.m */; };
 		0B58AD5710D6A9D10032C59D /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B58AD5610D6A9D10032C59D /* libcurl.dylib */; };
+		0B69642910DC1E6E00FE11BB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B69642810DC1E6E00FE11BB /* Security.framework */; };
 		0B95D3E710D7220C00D17237 /* CurlObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B95D3E610D7220C00D17237 /* CurlObject.m */; };
 		0BD55BDC10CD70DD004EB9A3 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD55BDB10CD70DD004EB9A3 /* TestController.m */; };
 		0BE69F5210D981F800A6EFDE /* Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE69F4E10D981F800A6EFDE /* Upload.m */; };
@@ -23,6 +24,8 @@
 		0B58AD4210D6A6360032C59D /* CurlFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlFTP.h; sourceTree = "<group>"; };
 		0B58AD4310D6A6360032C59D /* CurlFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlFTP.m; sourceTree = "<group>"; };
 		0B58AD5610D6A9D10032C59D /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
+		0B69642810DC1E6E00FE11BB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		0B6964EC10DC319A00FE11BB /* FTPStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPStatus.h; sourceTree = "<group>"; };
 		0B95D3E510D7220C00D17237 /* CurlObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlObject.h; sourceTree = "<group>"; };
 		0B95D3E610D7220C00D17237 /* CurlObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlObject.m; sourceTree = "<group>"; };
 		0B9A1A7A10D81FFC00A64CD3 /* TransferRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferRecord.h; sourceTree = "<group>"; };
@@ -50,6 +53,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				0B58AD5710D6A9D10032C59D /* libcurl.dylib in Frameworks */,
+				0B69642910DC1E6E00FE11BB /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				0BE69F5F10D9849300A6EFDE /* CurlStatus.h */,
+				0B6964EC10DC319A00FE11BB /* FTPStatus.h */,
 			);
 			path = enum;
 			sourceTree = "<group>";
@@ -101,6 +106,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0B69642810DC1E6E00FE11BB /* Security.framework */,
+				0B58AD5610D6A9D10032C59D /* libcurl.dylib */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -132,7 +139,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				0B58AD5610D6A9D10032C59D /* libcurl.dylib */,
 			);
 			name = "objective-curl";
 			sourceTree = "<group>";

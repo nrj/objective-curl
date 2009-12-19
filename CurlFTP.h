@@ -15,4 +15,6 @@
 
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory;
 
+- (void)handleFTPStatus:(int)code;
+
 @end

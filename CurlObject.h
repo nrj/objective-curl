@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "UploadDelegate.h"
+#import "TransferRecord.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -19,7 +18,8 @@
 #include <errno.h>
 #include <unistd.h>
 
-@interface CurlObject : NSObject <UploadDelegate>
+
+@interface CurlObject : NSObject
 {	
 	id delegate;
 	CURL *handle;
@@ -52,15 +52,11 @@
 - (long)defaultTimeout;
 - (void)setDefaultTimeout:(long)value;
 
-- (void)handleCurlResult:(CURLcode)status;
+- (void)handleCurlResult:(CURLcode)result;
 
 - (BOOL)hasAuthUsername;
 - (BOOL)hasAuthPassword;
 
-@end
-
-@interface CurlObject (Private)
-
-static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow);
+- (void)performDelegateSelector:(SEL)aSelector;
 
 @end

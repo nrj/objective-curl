@@ -7,6 +7,7 @@
 //
 
 #import "Upload.h"
+#import "TransferStatus.h"
 
 
 @implementation Upload
@@ -79,7 +80,7 @@
 	[encoder encodeObject:directory forKey:@"directory"];
 	if ([self isActiveTransfer])
 	{
-		[self setStatus:CURL_STATUS_UPLOAD_CANCELLED];
+		[self setStatus:TRANSFER_STATUS_CANCELLED];
 	}
 	[encoder encodeInt:status forKey:@"status"];
 	[encoder encodeObject:statusMessage forKey:@"statusMessage"];
@@ -109,7 +110,9 @@
 
 - (BOOL)isActiveTransfer
 {
-	return (status == CURL_STATUS_CONNECTING || status == CURL_STATUS_UPLOADING || status == CURL_STATUS_AUTHENTICATING);
+	return (status == TRANSFER_STATUS_CONNECTING || 
+			status == TRANSFER_STATUS_UPLOADING || 
+			status == TRANSFER_STATUS_AUTHENTICATING);
 }
 
 @end

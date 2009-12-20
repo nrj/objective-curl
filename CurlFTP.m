@@ -7,111 +7,30 @@
 //
 
 #import "CurlFTP.h"
-#import "FTPStatus.h"
+#import "TransferStatus.h"
+#import "FTPResponse.h"
 #import "Upload.h"
 
 
-@implementation CurlFTP
-
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory
-{	
-	NSMutableArray *remoteFiles = [[NSMutableArray alloc] init];
-	NSMutableArray *localFiles = [[NSMutableArray alloc] init];
-	NSFileManager *mgr = [NSFileManager defaultManager];
-	
-	BOOL isDir;
-	int totalFiles = 0;
-	for (int i = 0; i < [filesAndDirectories count]; i++)
-	{
-		NSString *localPath = [filesAndDirectories objectAtIndex:i];
-		if ([mgr fileExistsAtPath:localPath isDirectory:&isDir] && !isDir)
-		{
-			[localFiles addObject:localPath];
-			[remoteFiles addObject:[localPath lastPathComponent]];
-			
-			++totalFiles;
-		}
-		else
-		{
-			NSDirectoryEnumerator *dir = [mgr enumeratorAtPath:localPath];
-			NSString *remotePath = [localPath lastPathComponent];
-			NSString *file;
-			
-			while (file = [dir nextObject])
-			{
-				if ([mgr fileExistsAtPath:[localPath stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
-				{
-					[localFiles addObject:[localPath stringByAppendingPathComponent:file]];
-					[remoteFiles addObject:[directory stringByAppendingPathComponent:[remotePath stringByAppendingPathComponent:file]]];
-					++totalFiles;
-				}
-			}
-		}
-	}
-	
-	Upload *upload = [[Upload alloc] init];
-	
-	[upload setUsername:authUsername];
-	[upload setHostname:host];
-	[upload setPort:port];
-	[upload setDirectory:directory];
-	[upload setProgress:0];
-	[upload setTotalFilesUploaded:0];
-	[upload setLocalFiles:localFiles];
-	[upload setTotalFiles:[localFiles count]];
-
-	[localFiles release];
-	
-	[self setTransfer:upload];
-	
-	[NSThread detachNewThreadSelector:@selector(performUploadOnNewThread:) 
-							 toTarget:self 
-						   withObject:remoteFiles];
-	
-	return upload;
-}
-
-
-- (void)handleFTPStatus:(int)code
-{
-	NSString *message;
-	
-	switch (code)
-	{
-		//case FTP_STATUS_CONNECTED:
-		default:
-			message = [NSString stringWithFormat:@"Unhandled FTP Status: %d", code];
-			break;
-	}
-	
-	[transfer setStatusMessage:message];
-	
-	NSLog(message);
-}
-
-
-@end
-
-
-#pragma mark Private Methods
-
-
+/*
+ * Private Methods
+ */
 @implementation CurlFTP (Private)
 
 
 static CurlFTP *_client = NULL;
 
-
 static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 {	
 	char code[4];
-
+	
 	strncpy(code, (char *)ptr, 3);
 	
-	[_client handleFTPStatus:atoi(code)];
+	[_client handleFTPResponse:atoi(code)];
 	
 	return size * nmemb;
 }
+
 
 - (void)performUploadOnNewThread:(NSArray *)remoteFiles
 {
@@ -121,7 +40,7 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 	FILE *fh;
 	struct stat file_info;
 	curl_off_t fsize;
-
+	
 	NSString *credentials;
 	if ([self hasAuthUsername])
 	{
@@ -172,7 +91,7 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
 		
 		result = curl_easy_perform(handle);
-
+		
 		fclose(fh);
 		
 		if (result != CURLE_OK)
@@ -182,11 +101,6 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 	_client = NULL;
 	
 	[remoteFiles release];
-
-	if (result == CURLE_OK)
-	{
-		[self uploadDidFinish:transfer];
-	}
 	
 	curl_easy_cleanup(handle);
 	
@@ -196,6 +110,110 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 	
 	[pool drain];
 	[pool release];
+}
+
+
+@end
+
+
+/*
+ * Main Implementation
+ */
+@implementation CurlFTP
+
+
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory
+{		
+	NSMutableArray *remoteFiles = [[NSMutableArray alloc] init];
+	NSMutableArray *localFiles = [[NSMutableArray alloc] init];
+	NSFileManager *mgr = [NSFileManager defaultManager];
+	
+	BOOL isDir;
+	int totalFiles = 0;
+	for (int i = 0; i < [filesAndDirectories count]; i++)
+	{
+		NSString *localPath = [filesAndDirectories objectAtIndex:i];
+		if ([mgr fileExistsAtPath:localPath isDirectory:&isDir] && !isDir)
+		{
+			[localFiles addObject:localPath];
+			[remoteFiles addObject:[localPath lastPathComponent]];
+			
+			++totalFiles;
+		}
+		else
+		{
+			NSDirectoryEnumerator *dir = [mgr enumeratorAtPath:localPath];
+			NSString *remotePath = [localPath lastPathComponent];
+			NSString *file;
+			
+			while (file = [dir nextObject])
+			{
+				if ([mgr fileExistsAtPath:[localPath stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
+				{
+					[localFiles addObject:[localPath stringByAppendingPathComponent:file]];
+					[remoteFiles addObject:[directory stringByAppendingPathComponent:[remotePath stringByAppendingPathComponent:file]]];
+					++totalFiles;
+				}
+			}
+		}
+	}
+	
+	Upload *upload = [[Upload alloc] init];
+	
+	[upload setUsername:authUsername];
+	[upload setHostname:host];
+	[upload setPort:port];
+	[upload setDirectory:directory];
+	[upload setProgress:0];
+	[upload setTotalFilesUploaded:0];
+	[upload setLocalFiles:localFiles];
+	[upload setTotalFiles:[localFiles count]];
+	
+	[localFiles release];
+	
+	[self setTransfer:upload];
+	
+	[NSThread detachNewThreadSelector:@selector(performUploadOnNewThread:) 
+							 toTarget:self 
+						   withObject:remoteFiles];
+	
+	[transfer setStatus:TRANSFER_STATUS_CONNECTING];
+	[transfer setStatusMessage:[NSString stringWithFormat:@"Connecting to %@...", host]];
+	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+	
+	return upload;
+}
+
+
+- (void)handleFTPResponse:(int)code
+{	
+	switch (code)
+	{			
+		case FTP_RESPONSE_NEED_PASSWORD:
+			[transfer setStatus:TRANSFER_STATUS_AUTHENTICATING];
+			[transfer setStatusMessage:[NSString stringWithFormat:[NSString stringWithFormat:@"Authenticating %@@%@...", 
+			  ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]]]];
+			[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+			break;
+			
+		case FTP_RESPONSE_READY_FOR_DATA:
+			if (!isUploading)
+			{
+				[self performDelegateSelector:@selector(curl:transferDidBegin:)];
+				[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+				[self setIsUploading:YES];
+			}			
+			break;
+			
+		case FTP_RESPONSE_FILE_RECEIVED:
+			[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
+			break;
+
+		// Could do more notifications here... just these for now though.
+			
+		default:
+			break;
+	}
 }
 
 

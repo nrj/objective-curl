@@ -25,16 +25,16 @@
 		0B58AD4310D6A6360032C59D /* CurlFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlFTP.m; sourceTree = "<group>"; };
 		0B58AD5610D6A9D10032C59D /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		0B69642810DC1E6E00FE11BB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0B6964EC10DC319A00FE11BB /* FTPStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPStatus.h; sourceTree = "<group>"; };
+		0B6964EC10DC319A00FE11BB /* FTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPResponse.h; sourceTree = "<group>"; };
 		0B95D3E510D7220C00D17237 /* CurlObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlObject.h; sourceTree = "<group>"; };
 		0B95D3E610D7220C00D17237 /* CurlObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlObject.m; sourceTree = "<group>"; };
 		0B9A1A7A10D81FFC00A64CD3 /* TransferRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferRecord.h; sourceTree = "<group>"; };
-		0B9A1A7B10D81FFC00A64CD3 /* UploadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadDelegate.h; sourceTree = "<group>"; };
+		0B9A1A7B10D81FFC00A64CD3 /* TransferDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferDelegate.h; sourceTree = "<group>"; };
 		0BD55BDA10CD70DD004EB9A3 /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
 		0BD55BDB10CD70DD004EB9A3 /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
 		0BE69F4E10D981F800A6EFDE /* Upload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Upload.m; sourceTree = "<group>"; };
 		0BE69F4F10D981F800A6EFDE /* Upload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Upload.h; sourceTree = "<group>"; };
-		0BE69F5F10D9849300A6EFDE /* CurlStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlStatus.h; sourceTree = "<group>"; };
+		0BE69F5F10D9849300A6EFDE /* TransferStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferStatus.h; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				0B9A1A7A10D81FFC00A64CD3 /* TransferRecord.h */,
-				0B9A1A7B10D81FFC00A64CD3 /* UploadDelegate.h */,
+				0B9A1A7B10D81FFC00A64CD3 /* TransferDelegate.h */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -97,8 +97,8 @@
 		0BE69F5E10D9846C00A6EFDE /* enum */ = {
 			isa = PBXGroup;
 			children = (
-				0BE69F5F10D9849300A6EFDE /* CurlStatus.h */,
-				0B6964EC10DC319A00FE11BB /* FTPStatus.h */,
+				0BE69F5F10D9849300A6EFDE /* TransferStatus.h */,
+				0B6964EC10DC319A00FE11BB /* FTPResponse.h */,
 			);
 			path = enum;
 			sourceTree = "<group>";

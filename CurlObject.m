@@ -7,11 +7,43 @@
 //
 
 #import "CurlObject.h"
-#import "CurlStatus.h"
+#import "TransferStatus.h"
 
-#define ANONYMOUS_USERNAME
 
+/*
+ * Private Methods
+ */
+@implementation CurlObject (Private)
+
+
+static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow)
+{	
+	CurlObject *client = (CurlObject *)clientp;
+	id <TransferRecord>transfer = [client transfer];
+	
+	long totalProgressUnits = 100 * ([transfer totalFiles] + 1);
+	int individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
+	int actualProgress = (individualProgress * 100) / totalProgressUnits;
+	
+	if (actualProgress >= 0)
+	{
+		[transfer setProgress:actualProgress];
+		
+		[client performDelegateSelector:@selector(curl:transferDidProgress:)];
+	}
+	
+	return 0;
+}
+
+
+@end
+
+
+/*
+ * Main Implementation
+ */
 @implementation CurlObject
+
 
 @synthesize delegate;
 @synthesize transfer;
@@ -34,7 +66,7 @@
 		
 		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); 
 		
-		[self setDefaultTimeout:15];
+		//[self setDefaultTimeout:15];
 	}
 	
 	return self;
@@ -117,123 +149,86 @@
 }
 
 
-
-- (void)handleCurlResult:(CURLcode)status
+- (void)handleCurlResult:(CURLcode)result
 {
-	char *url;
-	curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &url); 
+	// char *url;
+	// curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &url); 
 	NSString *message;
-	switch (status)
+	TransferStatus status;
+	
+	switch (result)
 	{
 		case CURLE_OK:
+			status = TRANSFER_STATUS_COMPLETE;
 			message = [NSString stringWithFormat:@"Finished uploading %d files to %@", [transfer totalFiles], [transfer hostname]];
 			break;
 		
 		case CURLE_LOGIN_DENIED:
-			message = [NSString stringWithFormat:@"Invalid login for '%@@%@'", ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]];
+			status = TRANSFER_STATUS_FAILED;
+			message = [NSString stringWithFormat:@"Invalid login for '%@@%@'", 
+					   ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]];
 			break;
 		
 		case CURLE_FTP_ACCESS_DENIED:
+			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Failed writing to directory '%@'", [transfer directory]];
 			break;
 			
 		case CURLE_COULDNT_CONNECT:
+			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Couldn't connect to host '%@' on port %d", [transfer hostname], [transfer port]];
 			break;
 			
 		case CURLE_OPERATION_TIMEOUTED:
+			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Operation timed out to host '%@'", [transfer hostname]];
 			break;
 			
 		case CURLE_COULDNT_RESOLVE_HOST:
+			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Couldn't resolve host '%@'", [transfer hostname]];
 			break;
 			
 		case CURLE_RECV_ERROR:
+			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Failed to receive network data from '%@'", [transfer hostname]];
 			break;
 			
 	   case CURLE_UNSUPPORTED_PROTOCOL:
+			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Unsupported protocol '%@'", [transfer hostname]];
 			break;
 				   
 		default:
-			message = [NSString stringWithFormat:@"Unhandled Status Code: %d (%s)", status, url];
+			status = TRANSFER_STATUS_FAILED;
+			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", status];
 			break;
 	}
-	
+
+	[transfer setStatus:status];
 	[transfer setStatusMessage:message];
-	NSLog(message);
+	
+	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+	
+	if (result == CURLE_LOGIN_DENIED)
+	{
+		[self performDelegateSelector:@selector(curl:transferFailedAuthentication:)];
+	}
+	else if (result == CURLE_OK)
+	{
+		[self performDelegateSelector:@selector(curl:transferDidFinish:)];
+	}
+	
+//	NSLog(message);
 }
 
 
-#pragma mark Upload Delegate Methods
-
-
-- (void)uploadRequiresAuthentication:(id <TransferRecord>)aRecord
-{
-	if (delegate && [delegate respondsToSelector:@selector(uploadRequiresAuthentication:)])
+- (void)performDelegateSelector:(SEL)aSelector
+{		
+	if (delegate && [delegate respondsToSelector:aSelector])
 	{
-		[delegate uploadRequiresAuthentication:aRecord];
+		[delegate performSelector:aSelector withObject:self withObject:transfer];
 	}
-}
-
-
-- (void)uploadDidBegin:(id <TransferRecord>)aRecord
-{
-	NSLog(@"uploadDidBegin: %d files to %@", [aRecord totalFiles], [aRecord hostname]);
-	if (delegate && [delegate respondsToSelector:@selector(uploadDidBegin:)])
-	{
-		[delegate uploadDidBegin:aRecord];
-	}
-}
-
-
-- (void)uploadDidProgress:(id <TransferRecord>)aRecord toPercent:(int)aPercent
-{
-//	NSLog(@"uploadDidProgress:%@ toPercent:%d\n", [aRecord currentFile], aPercent);
-	
-	if (delegate && [delegate respondsToSelector:@selector(uploadDidProgress:toPercent:)])
-	{
-		[delegate uploadDidProgress:aRecord toPercent:aPercent];
-	}
-}
-
-
-- (void)uploadDidFinish:(id <TransferRecord>)aRecord
-{
-	NSLog(@"uploadDidFinish: %d files to %@", [aRecord totalFiles], [aRecord hostname]);
-	if (delegate && [delegate respondsToSelector:@selector(uploadDidFinish:)])
-	{
-		[delegate uploadDidFinish:aRecord];
-	}
-}
-
-
-@end
-
-
-#pragma mark Private Methods
-
-
-@implementation CurlObject (Private)
-
-
-static int handleClientProgress(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow)
-{	
-	CurlObject *client = (CurlObject *)clientp;
-	id <TransferRecord>transfer = [client transfer];
-	
-	int uploadProgress = (ulnow * 100 / ultotal);
-	
-	if (uploadProgress >= 0)
-	{
-		[transfer setProgress:uploadProgress];
-	
-		[client uploadDidProgress:transfer toPercent:uploadProgress];
-	}
-	
-	return 0;
 }
 
 

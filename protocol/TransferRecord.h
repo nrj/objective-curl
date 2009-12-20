@@ -68,8 +68,8 @@
 /*
  * Integer status of the transfer
  */
-- (NSString *)status;
-- (void)setStatus:(NSString *)aStatus;
+- (int)status;
+- (void)setStatus:(int)aStatus;
 
 /*
  * Status message

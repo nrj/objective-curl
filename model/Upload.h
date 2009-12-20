@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "TransferRecord.h"
-#import "CurlStatus.h"
 
 
 @interface Upload : NSObject <TransferRecord, NSCoding>

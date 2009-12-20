@@ -18,23 +18,19 @@
 	CurlFTP *ftp = [[CurlFTP alloc] init];
 
 //	[ftp setVerbose:YES];
+
 	[ftp setShowProgress:YES];
 	
 	[ftp setAuthUsername:@"nrj"];
-	[ftp setAuthPassword:@"antiquing"];
+
 	[ftp setDelegate:self];
 	
-	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/OneWay", NULL];
+	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/skreemr", NULL];
 	
 	[ftp uploadFilesAndDirectories:filesToUpload 
 							toHost:@"bender.local" 
 							  port:21
 						 directory:@"/home/nrj/global"];
-	
-	
-		
-
-	[ftp setDelegate:self];
 	
 }
 

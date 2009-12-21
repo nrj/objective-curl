@@ -22,46 +22,46 @@
 {
 	CurlFTP *ftp = [[CurlFTP alloc] init];
 
-//	[ftp setVerbose:YES];
+	[ftp setVerbose:YES];
 	[ftp setShowProgress:YES];
 	
 	[ftp setAuthUsername:@"nrj"];
-	
+
 	[ftp setDelegate:self];
 	
-	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/skreemr", NULL];
+	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/fugu-1.2.0", NULL];
 		
 	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
-														   toHost:@"bender.local" 
-															 port:21
-														directory:@"/home/nrj/global"];
+													toHost:@"bender.local" 
+													port:21
+													directory:@"/home/nrj/global"];
 	
 	[self setUpload:newUpload];
 }
 
 - (void)curl:(CurlObject *)client transferFailedAuthentication:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferFailedAuthentication");
+//	NSLog(@"transferFailedAuthentication");
 }
 
 - (void)curl:(CurlObject *)client transferDidBegin:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidBegin");	
+//	NSLog(@"transferDidBegin");	
 }
 
 - (void)curl:(CurlObject *)client transferDidProgress:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidProgress - %@", [aRecord statusMessage]);
+//	NSLog(@"transferDidProgress - %@", [aRecord statusMessage]);
 }
 
 - (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidFinish");
+//	NSLog(@"transferDidFinish");
 }
 
 - (void)curl:(CurlObject *)client transferStatusDidChange:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferStatusDidChange %d - %@", [aRecord status], [aRecord statusMessage]);
+//	NSLog(@"transferStatusDidChange %d - %@", [aRecord status], [aRecord statusMessage]);
 }
 
 @end

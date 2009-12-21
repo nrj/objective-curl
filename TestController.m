@@ -7,31 +7,36 @@
 //
 
 #import "TestController.h"
-#import "CurlFTP.h"
-
 
 @implementation TestController
 
+
+@synthesize upload;
+
+- (void)awakeFromNib
+{
+	[progress setUsesThreadedAnimation:YES];
+}
 
 - (IBAction)runTest:(id)sender
 {
 	CurlFTP *ftp = [[CurlFTP alloc] init];
 
 //	[ftp setVerbose:YES];
-
 	[ftp setShowProgress:YES];
 	
 	[ftp setAuthUsername:@"nrj"];
-
+	
 	[ftp setDelegate:self];
 	
 	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/skreemr", NULL];
+		
+	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
+														   toHost:@"bender.local" 
+															 port:21
+														directory:@"/home/nrj/global"];
 	
-	[ftp uploadFilesAndDirectories:filesToUpload 
-							toHost:@"bender.local" 
-							  port:21
-						 directory:@"/home/nrj/global"];
-	
+	[self setUpload:newUpload];
 }
 
 - (void)curl:(CurlObject *)client transferFailedAuthentication:(id <TransferRecord>)aRecord
@@ -41,12 +46,12 @@
 
 - (void)curl:(CurlObject *)client transferDidBegin:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidBegin", [aRecord progress]);	
+	NSLog(@"transferDidBegin");	
 }
 
 - (void)curl:(CurlObject *)client transferDidProgress:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidProgress %d", [aRecord progress]);
+	NSLog(@"transferDidProgress - %@", [aRecord statusMessage]);
 }
 
 - (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord

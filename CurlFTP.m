@@ -199,8 +199,10 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 		case FTP_RESPONSE_READY_FOR_DATA:
 			if (!isUploading)
 			{
-				[self performDelegateSelector:@selector(curl:transferDidBegin:)];
+				[transfer setStatus:TRANSFER_STATUS_UPLOADING];
+				[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading (%d%%) to %@", [transfer progress], [transfer hostname]]];
 				[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+				[self performDelegateSelector:@selector(curl:transferDidBegin:)];
 				[self setIsUploading:YES];
 			}			
 			break;

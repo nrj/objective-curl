@@ -7,12 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "ftp.h"
 
 @interface TestController : NSObject 
 {
 	IBOutlet NSButton *btn;
+	IBOutlet NSProgressIndicator *progress;
+	
+	id <TransferRecord>upload;
 }
+
+@property(readwrite, retain) id <TransferRecord>upload;
 
 - (IBAction)runTest:(id)sender;
 

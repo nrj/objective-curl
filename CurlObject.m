@@ -22,13 +22,13 @@ static int handleClientProgress(void *clientp, double dltotal, double dlnow, dou
 	id <TransferRecord>transfer = [client transfer];
 	
 	long totalProgressUnits = 100 * ([transfer totalFiles] + 1);
-	int individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
+	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
 	int actualProgress = (individualProgress * 100) / totalProgressUnits;
 	
 	if (actualProgress >= 0)
 	{
 		[transfer setProgress:actualProgress];
-		
+		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading (%d%%) to %@", actualProgress, [transfer hostname]]];
 		[client performDelegateSelector:@selector(curl:transferDidProgress:)];
 	}
 	

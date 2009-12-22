@@ -11,14 +11,15 @@
 
 @interface TestController : NSObject 
 {
-	IBOutlet NSButton *btn;
 	IBOutlet NSProgressIndicator *progress;
+	
+	CurlFTP *ftp;
 	
 	id <TransferRecord>upload;
 }
 
 @property(readwrite, retain) id <TransferRecord>upload;
 
-- (IBAction)runTest:(id)sender;
+- (void)runCurlTest;
 
 @end

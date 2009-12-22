@@ -26,6 +26,7 @@
 	NSString *statusMessage;
 
 	int progress;
+	int maxConnections;
 	int totalFiles;
 	int totalFilesUploaded;
 }
@@ -45,6 +46,7 @@
 @property(readwrite, copy) NSString *statusMessage;
 
 @property(readwrite, assign) int progress;
+@property(readwrite, assign) int maxConnections;
 @property(readwrite, assign) int totalFiles;
 @property(readwrite, assign) int totalFilesUploaded;
 

@@ -8,8 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="449"/>
 			<integer value="29"/>
+			<integer value="449"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1094,40 +1094,17 @@
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
+				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<object class="NSView" key="NSWindowView" id="686122530">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSButton" id="534303238">
-							<reference key="NSNextResponder" ref="686122530"/>
-							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{14, 12}, {96, 32}}</string>
-							<reference key="NSSuperview" ref="686122530"/>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="778185296">
-								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Button</string>
-								<object class="NSFont" key="NSSupport">
-									<string key="NSName">LucidaGrande</string>
-									<double key="NSSize">1.300000e+01</double>
-									<int key="NSfFlags">1044</int>
-								</object>
-								<reference key="NSControlView" ref="534303238"/>
-								<int key="NSButtonFlags">-2038284033</int>
-								<int key="NSButtonFlags2">129</int>
-								<string key="NSAlternateContents"/>
-								<string key="NSKeyEquivalent"/>
-								<int key="NSPeriodicDelay">200</int>
-								<int key="NSPeriodicInterval">25</int>
-							</object>
-						</object>
 						<object class="NSProgressIndicator" id="694542123">
 							<reference key="NSNextResponder" ref="686122530"/>
 							<int key="NSvFlags">1282</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{111, 23}, {401, 12}}</string>
+							<string key="NSFrame">{{19, 23}, {493, 12}}</string>
 							<reference key="NSSuperview" ref="686122530"/>
 							<int key="NSpiFlags">24840</int>
 							<double key="NSMaxValue">1.000000e+02</double>
@@ -1673,14 +1650,6 @@
 						<reference key="destination" ref="962184478"/>
 					</object>
 					<int key="connectionID">450</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">runTest:</string>
-						<reference key="source" ref="962184478"/>
-						<reference key="destination" ref="534303238"/>
-					</object>
-					<int key="connectionID">453</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2611,24 +2580,9 @@
 						<reference key="object" ref="686122530"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="534303238"/>
 							<reference ref="694542123"/>
 						</object>
 						<reference key="parent" ref="682341643"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">451</int>
-						<reference key="object" ref="534303238"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="778185296"/>
-						</object>
-						<reference key="parent" ref="686122530"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">452</int>
-						<reference key="object" ref="778185296"/>
-						<reference key="parent" ref="534303238"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">454</int>
@@ -2835,13 +2789,11 @@
 					<string>417.IBPluginDependency</string>
 					<string>446.IBPluginDependency</string>
 					<string>448.IBEditorWindowLastContentRect</string>
-					<string>448.IBPluginDependency</string>
 					<string>448.IBWindowTemplateEditedContentRect</string>
 					<string>448.NSWindowTemplate.visibleAtLaunch</string>
 					<string>449.IBPluginDependency</string>
-					<string>451.IBPluginDependency</string>
-					<string>452.IBPluginDependency</string>
 					<string>454.IBPluginDependency</string>
+					<string>455.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
 					<string>56.IBPluginDependency</string>
@@ -3069,11 +3021,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1058, 179}, {531, 60}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1058, 179}, {531, 60}}</string>
+					<string>{{381, 171}, {531, 60}}</string>
+					<string>{{381, 171}, {531, 60}}</string>
 					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3143,21 +3093,15 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TestController</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">runTest:</string>
-						<string key="NS.object.0">id</string>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>btn</string>
 							<string>progress</string>
 							<string>upload</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
 							<string>NSProgressIndicator</string>
 							<string>id</string>
 						</object>
@@ -3170,7 +3114,7 @@
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
-		<string key="IBDocument.LastKnownRelativeProjectPath">objective-curl.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../objective-curl.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 	</data>
 </archive>

@@ -33,11 +33,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0B8DC46A10DF26140042F200 /* PBXContainerItemProxy */ = {
+		0B552B4210E034E7000F4522 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* objective-curl */;
 			remoteInfo = "objective-curl";
 		};
 /* End PBXContainerItemProxy section */
@@ -283,7 +283,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				0B8DC46B10DF26140042F200 /* PBXTargetDependency */,
+				0B552B4310E034E7000F4522 /* PBXTargetDependency */,
 			);
 			name = CurlTester;
 			productName = CurlTester;
@@ -388,10 +388,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0B8DC46B10DF26140042F200 /* PBXTargetDependency */ = {
+		0B552B4310E034E7000F4522 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8DC2EF4F0486A6940098B216 /* objective-curl */;
-			targetProxy = 0B8DC46A10DF26140042F200 /* PBXContainerItemProxy */;
+			targetProxy = 0B552B4210E034E7000F4522 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

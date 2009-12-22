@@ -26,6 +26,7 @@
 @synthesize statusMessage;
 
 @synthesize progress;
+@synthesize maxConnections;
 @synthesize totalFiles;
 @synthesize totalFilesUploaded;
 
@@ -64,6 +65,7 @@
 	[copy setStatus:[self status]];
 	[copy setStatusMessage:[self statusMessage]];
 	[copy setProgress:[self progress]];
+	[copy setMaxConnections:[self maxConnections]];
 	[copy setTotalFiles:[self totalFiles]];
 	[copy setTotalFilesUploaded:[self totalFilesUploaded]];
 	
@@ -86,6 +88,7 @@
 	[encoder encodeObject:statusMessage forKey:@"statusMessage"];
 	[encoder encodeObject:localFiles forKey:@"localFiles"];
 	[encoder encodeInt:progress forKey:@"progress"];
+	[encoder encodeInt:maxConnections forKey:@"maxConnections"];
 	[encoder encodeInt:totalFiles forKey:@"totalFiles"];
 	[encoder encodeInt:totalFilesUploaded forKey:@"totalFilesUploaded"];
 }
@@ -102,6 +105,7 @@
 	statusMessage = [[decoder decodeObjectForKey:@"statusMessage"] retain];
 	localFiles = [[decoder decodeObjectForKey:@"localFiles"] retain];
 	progress = [decoder decodeIntForKey:@"progress"];
+	maxConnections = [decoder decodeIntForKey:@"maxConnections"];
 	totalFiles = [decoder decodeIntForKey:@"totalFiles"];
 	totalFilesUploaded = [decoder decodeIntForKey:@"totalFilesUploaded"];
 

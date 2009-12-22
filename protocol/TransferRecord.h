@@ -84,6 +84,12 @@
 - (void)setProgress:(int)newProgress;
 
 /*
+ * Maximum number of connections to use.
+ */
+- (int)maxConnections;
+- (void)setMaxConnections:(int)numConnects;
+
+/*
  * Determine if the transfer is doing actively doing something
  */
 - (BOOL)isActiveTransfer;

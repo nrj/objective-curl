@@ -16,25 +16,29 @@
 - (void)awakeFromNib
 {
 	[progress setUsesThreadedAnimation:YES];
-}
-
-- (IBAction)runTest:(id)sender
-{
-	CurlFTP *ftp = [[CurlFTP alloc] init];
-
+	
+	ftp = [[CurlFTP alloc] init];
+	
 	[ftp setVerbose:YES];
 	[ftp setShowProgress:YES];
 	
 	[ftp setAuthUsername:@"nrj"];
-
+	[ftp setAuthPassword:@"yaynocops"];
+	
 	[ftp setDelegate:self];
 	
-	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/fugu-1.2.0", NULL];
-		
+	[self runCurlTest];
+}
+
+- (void)runCurlTest
+{		
+	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/skreemr", NULL];
+	
 	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
-													toHost:@"bender.local" 
-													port:21
-													directory:@"/home/nrj/global"];
+														   toHost:@"localhost" 
+															 port:21
+														directory:@"tmp"
+													  maxConnects:5];
 	
 	[self setUpload:newUpload];
 }

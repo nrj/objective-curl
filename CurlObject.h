@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <unistd.h>
 
+#define DEFAULT_MAX_CONNECTS 1
 
 @interface CurlObject : NSObject
 {	

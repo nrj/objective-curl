@@ -12,9 +12,9 @@
 #import "Upload.h"
 
 
-/*
- * Private Methods
- */
+#pragma mark Private Methods
+
+
 @implementation CurlFTP (Private)
 
 
@@ -32,6 +32,163 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 }
 
 
+/* 
+ * Experiemental! Upload a list of files recursively using multiple connections.
+ */
+- (void)performMultiUploadOnNewThread:(NSArray *)remoteFiles
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSArray *localFiles = [transfer localFiles];
+	const int TOTAL_UPLOADS = [localFiles count];
+	const int MAX_CONNECTS = 5;
+
+	CURLM *multi_handle = curl_multi_init();
+	CURL *handles[MAX_CONNECTS];
+	
+	curl_multi_setopt(multi_handle, CURLMOPT_MAXCONNECTS, MAX_CONNECTS);
+	
+	NSString *credentials;
+	if ([self hasAuthUsername])
+	{
+		if (![self hasAuthPassword])
+		{
+			// Try Keychain
+		}
+		
+		credentials = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
+	}
+	else
+	{
+		// Try anonymous login
+		credentials = [NSString stringWithFormat:@"anonymous:"];
+	}	
+	
+	int count = 0;
+	for (count = 0; count < MAX_CONNECTS; ++count)
+	{
+		FILE *file_handle;
+		struct stat file_info;
+		curl_off_t file_size;
+		
+		NSString *localFile = [localFiles objectAtIndex:count];
+		NSString *remoteFile = [remoteFiles objectAtIndex:count];
+		
+		if(stat([localFile UTF8String], &file_info)) {
+			NSLog(@"Couldnt open file '%@': %s", localFile, strerror(errno));
+			break;
+		}
+		
+		file_size = (curl_off_t)file_info.st_size;
+		file_handle = fopen([localFile UTF8String], "rb");
+		
+		NSString *url = [NSString stringWithFormat:@"ftp://%@:%d/%@", [transfer hostname], [transfer port], remoteFile];
+
+		handles[count] = [self newUploadHandle:url withCredentials:credentials];
+		
+		file_handle = fopen([localFile UTF8String], "rb");
+		
+		curl_easy_setopt(handles[count], CURLOPT_READDATA, file_handle);
+		curl_easy_setopt(handles[count], CURLOPT_INFILESIZE_LARGE, (curl_off_t)file_size);
+			
+		curl_multi_add_handle(multi_handle, handles[count]);
+	}
+	
+	
+	int still_running = -1;	
+
+	while (still_running)
+	{
+		while (CURLM_CALL_MULTI_PERFORM == curl_multi_perform(multi_handle, &still_running));
+			
+		if (still_running)
+		{
+			struct timeval timeout;
+			int maxfd;
+			fd_set fdread, fdwrite, fdexc;
+			
+			FD_ZERO(&fdread);
+			FD_ZERO(&fdwrite);
+			FD_ZERO(&fdexc);
+			
+			if(curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexc, &maxfd))
+			{
+				fprintf(stderr, "Error: curl_multi_fdset\n");
+				break;
+			}
+
+			timeout.tv_sec = 1;
+			timeout.tv_usec = 0;
+
+			if (0 > select(maxfd+1, &fdread, &fdwrite, &fdexc, &timeout)) {
+				fprintf(stderr, "Error: select()\n");
+				break;
+			}
+		}
+		
+		int msg_queue;
+		CURLMsg *msg = NULL;
+
+		while ((msg = curl_multi_info_read(multi_handle, &msg_queue))) {
+			if (msg->msg == CURLMSG_DONE) {
+				char *url;
+				CURL *easy_handle = msg->easy_handle;
+				curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url);
+				curl_multi_remove_handle(multi_handle, easy_handle);
+				curl_easy_cleanup(easy_handle);
+			}
+			else {
+				fprintf(stderr, "E: CURLMsg (%d)\n", msg->msg);
+			}
+			if (count < TOTAL_UPLOADS) 
+			{
+				// --
+				FILE *file_handle;
+				struct stat file_info;
+				curl_off_t file_size;
+				
+				NSString *localFile = [localFiles objectAtIndex:count];
+				NSString *remoteFile = [remoteFiles objectAtIndex:count];
+				
+				if(stat([localFile UTF8String], &file_info)) {
+					NSLog(@"Couldnt open file '%@': %s", localFile, strerror(errno));
+					break;
+				}
+				
+				file_size = (curl_off_t)file_info.st_size;
+				file_handle = fopen([localFile UTF8String], "rb");
+				
+				NSString *url = [NSString stringWithFormat:@"ftp://%@:%d/%@", [transfer hostname], [transfer port], remoteFile];
+				
+				handles[count] = [self newUploadHandle:url withCredentials:credentials];
+				
+				file_handle = fopen([localFile UTF8String], "rb");
+				
+				curl_easy_setopt(handles[count], CURLOPT_READDATA, file_handle);
+				curl_easy_setopt(handles[count], CURLOPT_INFILESIZE_LARGE, (curl_off_t)file_size);
+				
+				curl_multi_add_handle(multi_handle, handles[count]);
+				
+				// --
+				count++;
+				
+				still_running++;
+			}
+		}
+		
+	}
+			
+	curl_multi_cleanup(multi_handle);
+	curl_global_cleanup();
+	
+	[pool drain];
+	[pool release];
+}
+
+
+/*
+ * Uploads a list of files recursively using 1 connection.
+ */
 - (void)performUploadOnNewThread:(NSArray *)remoteFiles
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -116,16 +273,47 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 @end
 
 
-/*
- * Main Implementation
- */
+#pragma mark Main Implementation
+
+
 @implementation CurlFTP
 
 
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+									  port:DEFAULT_FTP_PORT 
+								 directory:@"" 
+							   maxConnects:DEFAULT_MAX_CONNECTS];
+}
+
+
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+									  port:port 
+								 directory:@"" 
+							   maxConnects:DEFAULT_MAX_CONNECTS];	
+}
+
+
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+									  port:port 
+								 directory:directory 
+							   maxConnects:DEFAULT_MAX_CONNECTS];
+}
+
+
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory maxConnects:(int)maxConnects
 {		
-	NSMutableArray *remoteFiles = [[NSMutableArray alloc] init];
 	NSMutableArray *localFiles = [[NSMutableArray alloc] init];
+	NSMutableArray *remoteFiles = [[NSMutableArray alloc] init];
+
 	NSFileManager *mgr = [NSFileManager defaultManager];
 	
 	BOOL isDir;
@@ -168,12 +356,23 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 	[upload setTotalFilesUploaded:0];
 	[upload setLocalFiles:localFiles];
 	[upload setTotalFiles:[localFiles count]];
+	[upload setMaxConnections:maxConnects];
 	
 	[localFiles release];
 	
 	[self setTransfer:upload];
-	
-	[NSThread detachNewThreadSelector:@selector(performUploadOnNewThread:) 
+
+	SEL uploadSelector;
+	if (maxConnects > 1)
+	{
+		uploadSelector = @selector(performMultiUploadOnNewThread:);
+	}
+	else
+	{
+		uploadSelector = @selector(performUploadOnNewThread:);
+	}
+		
+	[NSThread detachNewThreadSelector:uploadSelector 
 							 toTarget:self 
 						   withObject:remoteFiles];
 	
@@ -216,6 +415,23 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 		default:
 			break;
 	}
+}
+
+
+- (CURL *)newUploadHandle:(NSString *)url withCredentials:(NSString *)credentials
+{
+	CURL *easy_handle = curl_easy_init();
+	
+	curl_easy_setopt(easy_handle, CURLOPT_UPLOAD, 1L);
+	curl_easy_setopt(easy_handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1);
+	curl_easy_setopt(easy_handle, CURLOPT_HEADER, 1);
+	curl_easy_setopt(easy_handle, CURLOPT_HEADERFUNCTION, parseFTPHeader);
+	curl_easy_setopt(easy_handle, CURLOPT_URL, [url UTF8String]);
+	curl_easy_setopt(easy_handle, CURLOPT_USERPWD, [credentials UTF8String]);
+	curl_easy_setopt(easy_handle, CURLOPT_VERBOSE, YES);
+	curl_easy_setopt(easy_handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
+	
+	return easy_handle;
 }
 
 

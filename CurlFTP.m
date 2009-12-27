@@ -12,83 +12,166 @@
 #import "Upload.h"
 
 
+@implementation CurlFTP
+
+
 /*
- * Private Methods
+ * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
+ * of these options before doing any uploads
+ */ 
+- (id)initForUpload
+{		
+	if (self = [super init])
+	{
+		curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
+		curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
+		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
+		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
+		curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, headerFunction);
+		curl_easy_setopt(handle, CURLOPT_HEADERDATA, self);
+		curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, uploadProgressFunction);
+		curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
+	}
+	
+	return self;
+}
+
+
+/*
+ * Invoked when the FTP headers are received for the current transfer. Parses the FTP response code and handles it accordingly.
+ * 
+ *     See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTHEADERFUNCTION 
  */
-@implementation CurlFTP (Private)
-
-
-static CurlFTP *_client = NULL;
-
-static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
+size_t headerFunction(void *ptr, size_t size, size_t nmemb, CurlFTP *client)
 {	
 	char code[4];
-	
-	strncpy(code, (char *)ptr, 3);
-	
-	[_client handleFTPResponse:atoi(code)];
+	strncpy(code, (char *)ptr, 3);	
+	[client handleFTPResponse:atoi(code)];
 	
 	return size * nmemb;
 }
 
 
-- (void)performUploadOnNewThread:(NSArray *)remoteFiles
+/*
+ * Used to handle upload progress. Invoked by libcurl on progress updates to calculates the new upload progress and set it on the transfer.
+ *
+ *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
+ */
+int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double ultotal, double ulnow)
+{	
+	id <TransferRecord>transfer = [client transfer];
+	
+	long totalProgressUnits = 100 * ([transfer totalFiles] + 1);
+	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
+	int actualProgress = (individualProgress * 100) / totalProgressUnits;
+	
+	if (actualProgress >= 0 && actualProgress >= [transfer progress])
+	{
+		[transfer setProgress:actualProgress];
+		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading (%d%%) to %@", actualProgress, [transfer hostname]]];
+
+		[client performDelegateSelector:@selector(curl:transferDidProgress:)];
+	}
+	
+	return 0;
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host and the users home directory.
+ */
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+								 directory:@""
+									  port:DEFAULT_FTP_PORT];
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host and directory.
+ */
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+								 directory:directory
+									  port:DEFAULT_FTP_PORT];	
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host, directory and port number.
+ */
+- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
+{		
+	Upload *upload = [[Upload alloc] init];
+	
+	[upload setUsername:authUsername];
+	[upload setHostname:host];
+	[upload setPort:port];
+	[upload setDirectory:directory];
+	[upload setProgress:0];
+	
+	[self setTransfer:upload];
+	
+	[NSThread detachNewThreadSelector:@selector(startRecursiveUpload:)
+							 toTarget:self 
+						   withObject:filesAndDirectories];
+	
+	return upload;
+}
+
+
+/*
+ * Thread entry point for recursive uploads. Takes in a list of files and directories to be uploaded and uses the info in [self transfer] 
+ * to perform the upload. 
+ */
+- (void)startRecursiveUpload:(NSArray *)filesAndDirectories
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+	[transfer setStatus:TRANSFER_STATUS_QUEUED];
+	[transfer setStatusMessage:@"Queued"];
+	
+	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+	
+	NSDictionary *pathDict = [self enumerateFilesForUpload:filesAndDirectories withPrefix:[transfer directory]];
+	
+	[transfer setTotalFiles:[pathDict count]];
+	[transfer setTotalFilesUploaded:0];
+	
+	NSString *creds = [self credentials];
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [creds UTF8String]);
+
 	CURLcode result = -1;
-	FILE *fh;
-	struct stat file_info;
-	curl_off_t fsize;
-	
-	NSString *credentials;
-	if ([self hasAuthUsername])
+	NSArray *files = [pathDict allKeys];
+	for (int i = 0; i < [files count]; i++)
 	{
-		if (![self hasAuthPassword])
+		FILE *fh;
+		struct stat finfo;
+		curl_off_t fsize;
+	
+		NSString *currentFile = [files objectAtIndex:i];
+		
+		[transfer setCurrentFile:[currentFile lastPathComponent]];
+		
+		if(stat([currentFile UTF8String], &finfo)) 
 		{
-			// Try Keychain
-		}
-		
-		credentials = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
-	}
-	else
-	{
-		// Try anonymous login
-		credentials = [NSString stringWithFormat:@"anonymous:"];
-	}
-	
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [credentials UTF8String]);		
-	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1);
-	curl_easy_setopt(handle, CURLOPT_HEADER, 1);
-	curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, parseFTPHeader);
-	
-	_client = self;
-	
-	NSArray *localFiles = [transfer localFiles];
-	
-	for (int i = 0; i < [localFiles count]; i++)
-	{
-		NSString *localFile = [localFiles objectAtIndex:i];
-		NSString *remoteFile = [remoteFiles objectAtIndex:i];
-		
-		[transfer setCurrentFile:[localFile lastPathComponent]];
-		
-		if(stat([localFile UTF8String], &file_info)) {
-			printf("Couldnt open '%s': %s\n", [localFile UTF8String], strerror(errno));
+			NSLog(@"Couldnt open file '%s': %s", currentFile);
 			break;
 		}
 		
-		fsize = (curl_off_t)file_info.st_size;
+		fsize = (curl_off_t)finfo.st_size;
 		
-		fh = fopen([localFile UTF8String], "rb");
+		fh = fopen([currentFile UTF8String], "rb");
 		
-		char remoteUrl[1024];
-		sprintf(remoteUrl, "ftp://%s:%d/%s", [[transfer hostname] UTF8String], [transfer port], [remoteFile UTF8String]);
+		NSString *url = [NSString stringWithFormat:@"ftp://%@:%d/%@", [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
 		
-		curl_easy_setopt(handle, CURLOPT_URL, remoteUrl);
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
+		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
 		
 		result = curl_easy_perform(handle);
 		
@@ -98,102 +181,77 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 			break;
 	}
 	
-	_client = NULL;
-	
-	[remoteFiles release];
+	[pathDict release];
 	
 	curl_easy_cleanup(handle);
-	
+
 	[self setIsUploading:NO];
-	
+
 	[self handleCurlResult:result];
-	
+
 	[pool drain];
 	[pool release];
 }
 
 
-@end
-
-
 /*
- * Main Implementation
+ * Enumurates a list of files and directories to be uploaded. Returns a dictionary of files where the key is the absolute path on 
+ * the local file system, and the value is the relative remote path.
+ *     
+ *      e. g. { "/local/path/to/file" => "prefix/remote/path/to/file" }
  */
-@implementation CurlFTP
-
-
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host port:(int)port directory:(NSString *)directory
-{		
-	NSMutableArray *remoteFiles = [[NSMutableArray alloc] init];
-	NSMutableArray *localFiles = [[NSMutableArray alloc] init];
+- (NSDictionary *)enumerateFilesForUpload:(NSArray *)files withPrefix:(NSString *)prefix;
+{
+	NSMutableArray *localPaths = [[NSMutableArray alloc] init];
+	NSMutableArray *remotePaths = [[NSMutableArray alloc] init];
+	
 	NSFileManager *mgr = [NSFileManager defaultManager];
 	
 	BOOL isDir;
-	int totalFiles = 0;
-	for (int i = 0; i < [filesAndDirectories count]; i++)
+	for (int i = 0; i < [files count]; i++)
 	{
-		NSString *localPath = [filesAndDirectories objectAtIndex:i];
-		if ([mgr fileExistsAtPath:localPath isDirectory:&isDir] && !isDir)
+		NSString *pathToFile = [files objectAtIndex:i];
+		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
-			[localFiles addObject:localPath];
-			[remoteFiles addObject:[localPath lastPathComponent]];
-			
-			++totalFiles;
+			[localPaths addObject:pathToFile];
+			[remotePaths addObject:[pathToFile lastPathComponent]];
 		}
 		else
 		{
-			NSDirectoryEnumerator *dir = [mgr enumeratorAtPath:localPath];
-			NSString *remotePath = [localPath lastPathComponent];
+			NSDirectoryEnumerator *dir = [mgr enumeratorAtPath:pathToFile];
+			NSString *basePath = [pathToFile lastPathComponent];
 			NSString *file;
 			
 			while (file = [dir nextObject])
 			{
-				if ([mgr fileExistsAtPath:[localPath stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
+				if ([mgr fileExistsAtPath:[pathToFile stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
 				{
-					[localFiles addObject:[localPath stringByAppendingPathComponent:file]];
-					[remoteFiles addObject:[directory stringByAppendingPathComponent:[remotePath stringByAppendingPathComponent:file]]];
-					++totalFiles;
+					[localPaths addObject:[pathToFile stringByAppendingPathComponent:file]];
+					[remotePaths addObject:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:file]]];
 				}
 			}
 		}
 	}
 	
-	Upload *upload = [[Upload alloc] init];
-	
-	[upload setUsername:authUsername];
-	[upload setHostname:host];
-	[upload setPort:port];
-	[upload setDirectory:directory];
-	[upload setProgress:0];
-	[upload setTotalFilesUploaded:0];
-	[upload setLocalFiles:localFiles];
-	[upload setTotalFiles:[localFiles count]];
-	
-	[localFiles release];
-	
-	[self setTransfer:upload];
-	
-	[NSThread detachNewThreadSelector:@selector(performUploadOnNewThread:) 
-							 toTarget:self 
-						   withObject:remoteFiles];
-	
-	[transfer setStatus:TRANSFER_STATUS_CONNECTING];
-	[transfer setStatusMessage:[NSString stringWithFormat:@"Connecting to %@...", host]];
-	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
-	
-	return upload;
+	return [[NSDictionary alloc] initWithObjects:remotePaths forKeys:localPaths]; 
 }
 
 
+/*
+ * Updates the status and status message of the transfer based on a FTP response code 
+ */
 - (void)handleFTPResponse:(int)code
 {	
 	switch (code)
 	{			
 		case FTP_RESPONSE_NEED_PASSWORD:
-			[transfer setStatus:TRANSFER_STATUS_AUTHENTICATING];
-			[transfer setStatusMessage:[NSString stringWithFormat:[NSString stringWithFormat:@"Authenticating %@@%@...", 
-			  ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]]]];
-			[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+			if (!isUploading)
+			{ 
+				[transfer setStatus:TRANSFER_STATUS_AUTHENTICATING];
+				[transfer setStatusMessage:[NSString stringWithFormat:[NSString stringWithFormat:@"Authenticating %@@%@", 
+																	   ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]]]];
+				[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+			}
 			break;
 			
 		case FTP_RESPONSE_READY_FOR_DATA:
@@ -211,11 +269,38 @@ static size_t parseFTPHeader(void *ptr, size_t size, size_t nmemb, void *data)
 			[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
 			break;
 
-		// Could do more notifications here... just these for now though.
-			
+		case FTP_RESPONSE_EXITING:
+			break;
+
 		default:
 			break;
 	}
+}
+
+
+/* 
+ * Returns a string that can be used for FTP authentication, "username:password", if no username is specified then "anonymous" will 
+ * be used. If a username is present but no password is set, then the users keychain is checked.
+ */
+- (NSString *)credentials
+{
+	NSString *creds;
+	if ([self hasAuthUsername])
+	{
+		if (![self hasAuthPassword])
+		{
+			// Try Keychain
+		}
+		
+		creds = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
+	}
+	else
+	{
+		// Try anonymous login
+		creds = [NSString stringWithFormat:@"anonymous:"];
+	}
+
+	return creds;
 }
 
 

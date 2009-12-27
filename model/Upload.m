@@ -13,21 +13,19 @@
 @implementation Upload
 
 @synthesize name;
-
-@synthesize localFiles;
-@synthesize currentFile;
-
-@synthesize username;
 @synthesize hostname;
-@synthesize port;
 @synthesize directory;
-
-@synthesize status;
-@synthesize statusMessage;
+@synthesize username;
+@synthesize port;
 
 @synthesize progress;
 @synthesize totalFiles;
 @synthesize totalFilesUploaded;
+@synthesize currentFile;
+
+@synthesize status;
+@synthesize statusMessage;
+
 
 - (id)init
 {
@@ -41,7 +39,6 @@
 - (void)dealloc
 {
 	[name release];
-	[localFiles release];
 	[username release];
 	[hostname release];
 	[directory release];
@@ -55,7 +52,6 @@
     Upload *copy = [[[self class] allocWithZone: zone] init];
 	
 	[copy setName:[self name]];
-	[copy setLocalFiles:[self localFiles]];
 	[copy setCurrentFile:[self currentFile]];
 	[copy setUsername:[self username]];
 	[copy setHostname:[self hostname]];
@@ -73,7 +69,6 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
 	[encoder encodeObject:name forKey:@"name"];
-	[encoder encodeObject:currentFile forKey:@"currentFile"];
 	[encoder encodeObject:username forKey:@"username"];
 	[encoder encodeObject:hostname forKey:@"hostname"];
 	[encoder encodeInt:port forKey:@"port"];
@@ -84,7 +79,6 @@
 	}
 	[encoder encodeInt:status forKey:@"status"];
 	[encoder encodeObject:statusMessage forKey:@"statusMessage"];
-	[encoder encodeObject:localFiles forKey:@"localFiles"];
 	[encoder encodeInt:progress forKey:@"progress"];
 	[encoder encodeInt:totalFiles forKey:@"totalFiles"];
 	[encoder encodeInt:totalFilesUploaded forKey:@"totalFilesUploaded"];
@@ -100,7 +94,6 @@
 	directory = [[decoder decodeObjectForKey:@"directory"] retain];
 	status = [decoder decodeIntForKey:@"status"];
 	statusMessage = [[decoder decodeObjectForKey:@"statusMessage"] retain];
-	localFiles = [[decoder decodeObjectForKey:@"localFiles"] retain];
 	progress = [decoder decodeIntForKey:@"progress"];
 	totalFiles = [decoder decodeIntForKey:@"totalFiles"];
 	totalFilesUploaded = [decoder decodeIntForKey:@"totalFilesUploaded"];

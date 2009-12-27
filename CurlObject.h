@@ -22,35 +22,31 @@
 @interface CurlObject : NSObject
 {	
 	id delegate;
-	CURL *handle;
 
 	BOOL verbose;
 	BOOL showProgress;
-	
-	long defaultTimeout;
+	BOOL isUploading;
 	
 	NSString *authUsername;
 	NSString *authPassword;
 	
 	id <TransferRecord> transfer;
 	
-	BOOL isUploading;
+	CURL *handle;
 }
 
 @property(readwrite, assign) id delegate;
-@property(readwrite, assign) id <TransferRecord> transfer;
-@property(readwrite, copy) NSString *authUsername;
-@property(readwrite, copy) NSString *authPassword;
+
+@property(readwrite, assign) BOOL verbose;
+@property(readwrite, assign) BOOL showProgress;
 @property(readwrite, assign) BOOL isUploading;
 
-- (BOOL)verbose;
-- (void)setVerbose:(BOOL)value;
+@property(readwrite, copy) NSString *authUsername;
+@property(readwrite, copy) NSString *authPassword;
 
-- (BOOL)showProgress;
-- (void)setShowProgress:(BOOL)value;
+@property(readwrite, assign) id <TransferRecord> transfer;
 
-- (long)defaultTimeout;
-- (void)setDefaultTimeout:(long)value;
+- (CURL *)handle;
 
 - (void)handleCurlResult:(CURLcode)result;
 

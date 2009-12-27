@@ -13,40 +13,34 @@
 @interface Upload : NSObject <TransferRecord, NSCoding>
 {
 	NSString *name;
-	
-	NSArray  *localFiles;
-	NSString *currentFile;
-	
-	NSString *username;
 	NSString *hostname;
-	int port;
 	NSString *directory;
-
-	int status;	
-	NSString *statusMessage;
+	NSString *username;	
+	int port;
 
 	int progress;
 	int totalFiles;
 	int totalFilesUploaded;
+	NSString *currentFile;
+	
+	int status;	
+	NSString *statusMessage;
 }
 
 
 @property(readwrite, copy) NSString *name;
-
-@property(readwrite, retain) NSArray *localFiles;
-@property(readwrite, copy) NSString *currentFile;
-
-@property(readwrite, copy) NSString *username;
 @property(readwrite, copy) NSString *hostname;
-@property(readwrite, assign) int port;
 @property(readwrite, copy) NSString *directory;
+@property(readwrite, copy) NSString *username;
+@property(readwrite, assign) int port;
+
+@property(readwrite, assign) int totalFiles;
+@property(readwrite, assign) int totalFilesUploaded;
+@property(readwrite, assign) int progress;
+@property(readwrite, copy) NSString *currentFile;
 
 @property(readwrite, assign) int status;
 @property(readwrite, copy) NSString *statusMessage;
-
-@property(readwrite, assign) int progress;
-@property(readwrite, assign) int totalFiles;
-@property(readwrite, assign) int totalFilesUploaded;
 
 
 @end

@@ -18,12 +18,6 @@
 - (void)setName:(NSString *)aName;
 
 /*
- * List of absolute paths to the local files and directories that will be uploaded
- */
-- (NSArray *)localFiles;
-- (void)setLocalFiles:(NSArray *)fileList;
-
-/*
  * Auth Username
  */
 - (NSString *)username;

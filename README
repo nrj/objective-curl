@@ -1,6 +1,51 @@
-objective-curl.framework
+##objective-curl.framework
 
-This is my attempt at bringing an easy-to-use libcurl interface to Cocoa developers. My first and foremost efforts are focusing primarily on recursive FTP upload and download support. There are a couple frameworks out there for libcurl, though I found myself unsatisfied with them each for different reasons. Some lacking functionality, out of date or unstable. I am actively working on this (almost daily) to bring it up to speed. If you would like to contribute please email me - nickrjensen [at] gmail [dot] com
+The objective-curl framework is an easy-to-use interface to the [libcurl C API](http://curl.haxx.se/libcurl/c/) for Cocoa developers. My first and foremost efforts are primarily focusing on FTP support. There are a couple frameworks out there for libcurl that subclass NSURLHandle, which has been deprecated since 10.4. This framework is designed for newer Cocoa applicaations and uses NSObject with your traditional [delegation](http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Conceptual/CocoaFundamentals/CocoaDesignPatterns/CocoaDesignPatterns.html#//apple_ref/doc/uid/TP40002974-CH6-SW19) design patterns.
+
+##Simple FTP Example
+
+    CurlFTP *ftp = [[CurlFTP alloc] initForUploading];
+    
+    [ftp setShowProgress:YES];
+    [ftp setAuthUsername:@"me"];
+    [ftp setAuthPassword:@"mypassword"];
+    
+    // see the TransferDelegate protocol below
+    [ftp setDelegate:self];
+    
+    // feel free to mix and match files and directories
+    NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/path/to/musicfile.mp3", 
+                                                              @"/path/to/directory", 
+                                                              @"/path/to/moviefile.avi", NULL];
+    // start the upload
+    [ftp uploadFilesAndDirectories:filesToUpload toHost:@"localhost" directory:@"~/tmp"];
+
+##The TransferDelegate Protocol
+
+    @protocol TransferDelegate 
+    
+    /*
+     * Called when a username/password is incorrect. You would likely use this to prompt a user for credentials. 
+     */
+    - (void)curl:(CurlObject *)client transferFailedAuthentication:(id <TransferRecord>)aRecord;
+    /*
+     * Called after successful authentication when the upload/download starts.
+     */
+    - (void)curl:(CurlObject *)client transferDidBegin:(id <TransferRecord>)aRecord;
+    /*
+     * Called when the upload/download progress has changed (1-100%)
+     */
+    - (void)curl:(CurlObject *)client transferDidProgress:(id <TransferRecord>)aRecord;
+    /*
+     * Called when the status of the transfer changes. See "TransferStatus.h".
+     */
+    - (void)curl:(CurlObject *)client transferStatusDidChange:(id <TransferRecord>)aRecord;
+    /*
+     * Called when the upload/download has finished successfully.
+     */
+    - (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord;
+    
+    @end
 
 Copyright (c) 2009 Nick Jensen
 

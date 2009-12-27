@@ -13,6 +13,7 @@
 @interface Upload : NSObject <TransferRecord, NSCoding>
 {
 	NSString *name;
+	SecProtocolType protocol;
 	NSString *hostname;
 	NSString *directory;
 	NSString *username;	
@@ -29,6 +30,7 @@
 
 
 @property(readwrite, copy) NSString *name;
+@property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, copy) NSString *hostname;
 @property(readwrite, copy) NSString *directory;
 @property(readwrite, copy) NSString *username;
@@ -42,5 +44,6 @@
 @property(readwrite, assign) int status;
 @property(readwrite, copy) NSString *statusMessage;
 
+- (NSString *)protocolString;
 
 @end

@@ -46,6 +46,8 @@
 
 @property(readwrite, assign) id <TransferRecord> transfer;
 
++ (NSString *)libcurlVersion;
+
 - (CURL *)handle;
 
 - (void)handleCurlResult:(CURLcode)result;

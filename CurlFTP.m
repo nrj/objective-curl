@@ -108,6 +108,7 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 {		
 	Upload *upload = [[Upload alloc] init];
 	
+	[upload setProtocol:kSecProtocolTypeSSH];
 	[upload setUsername:authUsername];
 	[upload setHostname:host];
 	[upload setPort:port];
@@ -167,7 +168,7 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 		
 		fh = fopen([currentFile UTF8String], "rb");
 		
-		NSString *url = [NSString stringWithFormat:@"ftp://%@:%d/%@", [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
+		NSString *url = [NSString stringWithFormat:@"sftp://%@:%d/%@", [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);

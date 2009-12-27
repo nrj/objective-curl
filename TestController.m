@@ -19,10 +19,10 @@
 }
 
 - (IBAction)runTest:(id)sender
-{
+{	
 	CurlFTP *ftp = [[CurlFTP alloc] initForUpload];
 
-	[ftp setVerbose:NO];
+	[ftp setVerbose:YES];
 	[ftp setShowProgress:YES];
 	[ftp setAuthUsername:@"nrj"];
 	[ftp setDelegate:self];
@@ -31,7 +31,8 @@
 		
 	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
 														   toHost:@"localhost" 
-														directory:@"~/tmp"];
+														directory:@"~/tmp"
+															 port:21];
 	
 	[self setUpload:newUpload];
 }

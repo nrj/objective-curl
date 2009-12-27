@@ -23,6 +23,11 @@
 
 @synthesize transfer;
 
++ (NSString *)libcurlVersion
+{		
+	return [NSString stringWithCString:curl_version()];
+}
+
 - (id)init
 {
 	if (self = [super init])
@@ -129,6 +134,11 @@
 			message = [NSString stringWithFormat:@"Failed writing to directory %@", [transfer directory]];
 			break;
 			
+		case CURLE_FAILED_INIT:
+			status = TRANSFER_STATUS_FAILED;
+			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [transfer protocolString], [transfer hostname], [transfer port]];
+			break;
+			
 		case CURLE_COULDNT_CONNECT:
 			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Couldn't connect to host %@ on port %d", [transfer hostname], [transfer port]];
@@ -151,12 +161,12 @@
 			
 	   case CURLE_UNSUPPORTED_PROTOCOL:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Unsupported protocol %@", [transfer hostname]];
+			message = [NSString stringWithFormat:@"Unsupported protocol %@", [transfer protocolString]];
 			break;
 				   
 		default:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", status];
+			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", result];
 			break;
 	}
 

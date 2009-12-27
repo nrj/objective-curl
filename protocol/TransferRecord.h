@@ -18,6 +18,17 @@
 - (void)setName:(NSString *)aName;
 
 /*
+ * Protocol - FTP, SSH etc.
+ */
+- (SecProtocolType)protocol;
+- (void)setProtocol:(SecProtocolType)aProtocol;
+
+/*
+ * String representation of the protocol.
+ */
+- (NSString *)protocolString;
+
+/*
  * Auth Username
  */
 - (NSString *)username;

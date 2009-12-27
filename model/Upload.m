@@ -13,6 +13,7 @@
 @implementation Upload
 
 @synthesize name;
+@synthesize protocol;
 @synthesize hostname;
 @synthesize directory;
 @synthesize username;
@@ -52,6 +53,7 @@
     Upload *copy = [[[self class] allocWithZone: zone] init];
 	
 	[copy setName:[self name]];
+	[copy setProtocol:[self protocol]];
 	[copy setCurrentFile:[self currentFile]];
 	[copy setUsername:[self username]];
 	[copy setHostname:[self hostname]];
@@ -69,6 +71,7 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
 	[encoder encodeObject:name forKey:@"name"];
+	[encoder encodeInt32:protocol forKey:@"protocol"];
 	[encoder encodeObject:username forKey:@"username"];
 	[encoder encodeObject:hostname forKey:@"hostname"];
 	[encoder encodeInt:port forKey:@"port"];
@@ -87,6 +90,7 @@
 - (id)initWithCoder:(NSCoder *)decoder
 {
 	name = [[decoder decodeObjectForKey:@"name"] retain];
+	protocol = (SecProtocolType)[decoder decodeInt32ForKey:@"protocol"];
 	currentFile = [[decoder decodeObjectForKey:@"currentFile"] retain];
 	username = [[decoder decodeObjectForKey:@"username"] retain];
 	hostname = [[decoder decodeObjectForKey:@"hostname"] retain];
@@ -99,6 +103,12 @@
 	totalFilesUploaded = [decoder decodeIntForKey:@"totalFilesUploaded"];
 
 	return self;
+}
+
+- (NSString *)protocolString
+{
+	return [[[NSFileTypeForHFSTypeCode(protocol) stringByTrimmingCharactersInSet:[NSCharacterSet punctuationCharacterSet]] 
+				stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] uppercaseString];
 }
 
 - (BOOL)isActiveTransfer

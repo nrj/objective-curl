@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>0BA547A710E745B00065E0AF</string>
+						<string>0BA547B110E746BC0065E0AF</string>
 						<key>history</key>
 						<array>
 							<string>0BA5475F10E742DD0065E0AF</string>
@@ -312,6 +312,8 @@
 								<string>08FB77AEFE84172EC02AAC07</string>
 								<string>0B76052310DF135400BE0666</string>
 								<string>0B76052210DF134E00BE0666</string>
+								<string>0867D69AFE84028FC02AAC07</string>
+								<string>1058C7B0FEA5585E11CA2CBB</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>0BA546A110E734670065E0AF</string>
 								<string>1C37FABC05509CD000000102</string>
@@ -319,8 +321,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>15</integer>
-									<integer>4</integer>
+									<integer>3</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -374,7 +376,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>0BA547A610E745B00065E0AF</string>
+										<string>0BA547B010E746BC0065E0AF</string>
 										<key>history</key>
 										<array>
 											<string>0BD622AB10DF1816004D8C5B</string>
@@ -390,16 +392,16 @@
 											<string>0BA546D510E736FE0065E0AF</string>
 											<string>0BA546EB10E73BD60065E0AF</string>
 											<string>0BA546ED10E73BD60065E0AF</string>
-											<string>0BA546F410E73BD60065E0AF</string>
 											<string>0BA5474010E73FDA0065E0AF</string>
 											<string>0BA5476310E7430D0065E0AF</string>
 											<string>0BA5476410E7430D0065E0AF</string>
 											<string>0BA5478310E744950065E0AF</string>
 											<string>0BA5478B10E744BC0065E0AF</string>
 											<string>0BA5478D10E744BC0065E0AF</string>
-											<string>0BA5479910E7455A0065E0AF</string>
 											<string>0BA547A410E745B00065E0AF</string>
-											<string>0BA5476710E7430D0065E0AF</string>
+											<string>0BA547A910E746BC0065E0AF</string>
+											<string>0BA547AA10E746BC0065E0AF</string>
+											<string>0BA547AB10E746BC0065E0AF</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -488,6 +490,10 @@
 											<string>0BA5479010E744BC0065E0AF</string>
 											<string>0BA5479B10E7455A0065E0AF</string>
 											<string>0BA547A510E745B00065E0AF</string>
+											<string>0BA547AC10E746BC0065E0AF</string>
+											<string>0BA547AD10E746BC0065E0AF</string>
+											<string>0BA547AE10E746BC0065E0AF</string>
+											<string>0BA547AF10E746BC0065E0AF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -686,8 +692,8 @@
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>0BA5477910E7430D0065E0AF</string>
 		<string>0B25C54110DF0E3F0040E9C1</string>
-		<string>/Users/nrj/Code/Cocoa/objective-curl/objective-curl.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>/Users/nrj/Code/Cocoa/objective-curl/objective-curl.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>33 59 1262 819 0 0 1440 878 </string>

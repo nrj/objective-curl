@@ -22,7 +22,7 @@
 {	
 	CurlFTP *ftp = [[CurlFTP alloc] initForUpload];
 
-	[ftp setVerbose:YES];
+	[ftp setVerbose:NO];
 	[ftp setShowProgress:YES];
 	[ftp setAuthUsername:@"nrj"];
 	[ftp setDelegate:self];
@@ -31,8 +31,7 @@
 		
 	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
 														   toHost:@"localhost" 
-														directory:@"~/tmp"
-															 port:21];
+														directory:@"~/tmp"];
 	
 	[self setUpload:newUpload];
 }

@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ftp.h"
+#import <objective-curl/ftp.h>
 
 @interface TestController : NSObject 
 {

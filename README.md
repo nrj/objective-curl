@@ -1,8 +1,6 @@
-##objective-curl.framework
-
 The objective-curl framework is an easy-to-use interface to the [libcurl C API](http://curl.haxx.se/libcurl/c/) for Cocoa developers. My first and foremost efforts are primarily focusing on FTP support. There are a couple frameworks out there for libcurl that subclass NSURLHandle, which has been deprecated since 10.4. This framework is designed for newer Cocoa applicaations and uses NSObject with your traditional [delegation](http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Conceptual/CocoaFundamentals/CocoaDesignPatterns/CocoaDesignPatterns.html#//apple_ref/doc/uid/TP40002974-CH6-SW19) design patterns.
 
-##Simple FTP Example
+## Simple FTP Example
 
     CurlFTP *ftp = [[CurlFTP alloc] initForUploading];
     
@@ -20,7 +18,7 @@ The objective-curl framework is an easy-to-use interface to the [libcurl C API](
     // start the upload
     [ftp uploadFilesAndDirectories:filesToUpload toHost:@"localhost" directory:@"~/tmp"];
 
-##The TransferDelegate Protocol
+## The TransferDelegate Protocol
 
     @protocol TransferDelegate 
     
@@ -47,6 +45,7 @@ The objective-curl framework is an easy-to-use interface to the [libcurl C API](
     
     @end
 
+## License
 Copyright (c) 2009 Nick Jensen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

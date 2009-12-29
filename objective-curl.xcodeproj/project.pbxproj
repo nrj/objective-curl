@@ -20,8 +20,10 @@
 		0B76053310DF13B600BE0666 /* Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053110DF13B600BE0666 /* Upload.m */; };
 		0B76055110DF150200BE0666 /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76054F10DF150200BE0666 /* EMKeychain.h */; settings = {ATTRIBUTES = (); }; };
 		0B76055210DF150200BE0666 /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76055010DF150200BE0666 /* EMKeychain.m */; };
-		0BA5469C10E734370065E0AF /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA5469B10E734370065E0AF /* libcurl.4.dylib */; };
-		0BA546B810E7352C0065E0AF /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA5469B10E734370065E0AF /* libcurl.4.dylib */; };
+		0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB380A110E84BF4003DD538 /* CurlSFTP.h */; };
+		0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */; };
+		0BB3824910EA9CD4003DD538 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB3824810EA9CD4003DD538 /* libcurl.4.dylib */; };
+		0BB3824A10EA9CE2003DD538 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB3824810EA9CD4003DD538 /* libcurl.4.dylib */; };
 		0BD6227910DF157B004D8C5B /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0BD622C910DF18BB004D8C5B /* objective-curl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7604D410DF126200BE0666 /* Security.framework */; };
@@ -34,11 +36,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0B8DC46A10DF26140042F200 /* PBXContainerItemProxy */ = {
+		0BB3825910EAA03E003DD538 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* objective-curl */;
 			remoteInfo = "objective-curl";
 		};
 /* End PBXContainerItemProxy section */
@@ -50,7 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0BA546B810E7352C0065E0AF /* libcurl.4.dylib in Copy Frameworks */,
+				0BB3824A10EA9CE2003DD538 /* libcurl.4.dylib in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,7 +89,9 @@
 		0B76054F10DF150200BE0666 /* EMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeychain.h; sourceTree = "<group>"; };
 		0B76055010DF150200BE0666 /* EMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKeychain.m; sourceTree = "<group>"; };
 		0B8DC51C10DF26E70042F200 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		0BA5469B10E734370065E0AF /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = libcurl/libcurl.4.dylib; sourceTree = "<group>"; };
+		0BB380A110E84BF4003DD538 /* CurlSFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSFTP.h; sourceTree = "<group>"; };
+		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
+		0BB3824810EA9CD4003DD538 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		0BD6227310DF1564004D8C5B /* CurlTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurlTester.app; sourceTree = BUILT_PRODUCTS_DIR; wrapsLines = 0; };
 		0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurlTester-Info.plist"; sourceTree = "<group>"; };
 		0BD623F710DF1B29004D8C5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -114,7 +118,7 @@
 			files = (
 				0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
-				0BA5469C10E734370065E0AF /* libcurl.4.dylib in Frameworks */,
+				0BB3824910EA9CD4003DD538 /* libcurl.4.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +178,8 @@
 				0B76051B10DF131A00BE0666 /* enum */,
 				0B76051310DF131500BE0666 /* CurlFTP.h */,
 				0B76051410DF131500BE0666 /* CurlFTP.m */,
+				0BB380A110E84BF4003DD538 /* CurlSFTP.h */,
+				0BB380A210E84BF4003DD538 /* CurlSFTP.m */,
 				0B76051510DF131500BE0666 /* CurlObject.h */,
 				0B76051610DF131500BE0666 /* CurlObject.m */,
 			);
@@ -237,7 +243,7 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0BA5469B10E734370065E0AF /* libcurl.4.dylib */,
+				0BB3824810EA9CD4003DD538 /* libcurl.4.dylib */,
 				0B7604D410DF126200BE0666 /* Security.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
@@ -276,6 +282,7 @@
 				0B76053210DF13B600BE0666 /* Upload.h in Headers */,
 				0B76055110DF150200BE0666 /* EMKeychain.h in Headers */,
 				0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */,
+				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,12 +297,11 @@
 				0BD6227010DF1564004D8C5B /* Sources */,
 				0BD6227110DF1564004D8C5B /* Frameworks */,
 				0BD622B210DF1849004D8C5B /* Copy Frameworks */,
-				0BD623F110DF1AAF004D8C5B /* Clean Framework Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0B8DC46B10DF26140042F200 /* PBXTargetDependency */,
+				0BB3825A10EAA03E003DD538 /* PBXTargetDependency */,
 			);
 			name = CurlTester;
 			productName = CurlTester;
@@ -311,6 +317,7 @@
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
 				0BA546BF10E7354B0065E0AF /* Copy Frameworks */,
+				0BB3819B10EA8A79003DD538 /* Update Install Names */,
 			);
 			buildRules = (
 			);
@@ -361,19 +368,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BD623F110DF1AAF004D8C5B /* Clean Framework Headers */ = {
+		0BB3819B10EA8A79003DD538 /* Update Install Names */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Clean Framework Headers";
+			name = "Update Install Names";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"build path ${TARGET_BUILD_DIR}\"\ncd ${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/Contents/Frameworks \nrm -rf */Headers \nrm -rf */Versions/*/Headers \nrm -rf */Versions/*/PrivateHeaders \nrm -rf */Versions/*/Resources/*/Contents/Headers";
+			shellScript = "install_name_tool -id \\\n@executable_path/../Frameworks/libcurl.4.dylib \\\n\"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Versions/Current/Frameworks/libcurl.4.dylib\"\n\ninstall_name_tool -change \\\n/opt/local/lib/libcurl.4.dylib \\\n@executable_path/../Frameworks/objective-curl.framework/Versions/Current/Frameworks/libcurl.4.dylib \\\n\"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Versions/Current/$PRODUCT_NAME\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -395,16 +402,17 @@
 				0B76051A10DF131500BE0666 /* CurlObject.m in Sources */,
 				0B76053310DF13B600BE0666 /* Upload.m in Sources */,
 				0B76055210DF150200BE0666 /* EMKeychain.m in Sources */,
+				0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0B8DC46B10DF26140042F200 /* PBXTargetDependency */ = {
+		0BB3825A10EAA03E003DD538 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8DC2EF4F0486A6940098B216 /* objective-curl */;
-			targetProxy = 0B8DC46A10DF26140042F200 /* PBXContainerItemProxy */;
+			targetProxy = 0BB3825910EAA03E003DD538 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -441,6 +449,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "CurlTester-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -464,6 +473,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "CurlTester-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -483,6 +493,7 @@
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "@executable_path/../Frameworks";
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -493,7 +504,11 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"@executable_path/../Frameworks",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/lib\"",
+				);
 				PRODUCT_NAME = "objective-curl";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -506,6 +521,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = "@executable_path/../Frameworks";
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -513,7 +529,11 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"@executable_path/../Frameworks",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/lib\"",
+				);
 				PRODUCT_NAME = "objective-curl";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -523,10 +543,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
@@ -537,9 +559,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 			};

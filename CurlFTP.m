@@ -18,11 +18,13 @@
 /*
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
  * of these options before doing any uploads
- */ 
+ */
 - (id)initForUpload
 {		
 	if (self = [super init])
 	{
+		[self setProtocolType:kSecProtocolTypeFTP];
+
 		curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
 		curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
 		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
@@ -108,7 +110,7 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 {		
 	Upload *upload = [[Upload alloc] init];
 	
-	[upload setProtocol:kSecProtocolTypeSSH];
+	[upload setProtocol:[self protocolType]];
 	[upload setUsername:authUsername];
 	[upload setHostname:host];
 	[upload setPort:port];

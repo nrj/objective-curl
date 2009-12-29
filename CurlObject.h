@@ -23,6 +23,8 @@
 {	
 	id delegate;
 
+	SecProtocolType protocolType;
+	
 	BOOL verbose;
 	BOOL showProgress;
 	BOOL isUploading;
@@ -37,6 +39,7 @@
 
 @property(readwrite, assign) id delegate;
 
+@property(readwrite, assign) SecProtocolType protocolType;
 @property(readwrite, assign) BOOL verbose;
 @property(readwrite, assign) BOOL showProgress;
 @property(readwrite, assign) BOOL isUploading;

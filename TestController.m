@@ -20,40 +20,42 @@
 
 - (IBAction)runTest:(id)sender
 {	
-	CurlFTP *ftp = [[CurlFTP alloc] initForUpload];
+	CurlSFTP *sftp = [[CurlSFTP alloc] initForUpload];
 
-	[ftp setVerbose:NO];
-	[ftp setShowProgress:YES];
-	[ftp setAuthUsername:@"nrj"];
-	[ftp setDelegate:self];
+	[sftp setVerbose:YES];
+	[sftp setShowProgress:YES];
+	[sftp setAuthUsername:@"nrj"];
+	[sftp setAuthPassword:@"yaynocops"];
+
+	[sftp setDelegate:self];
 	
 	NSArray *filesToUpload = [[NSArray alloc] initWithObjects:@"/Users/nrj/Desktop/fugu-1.2.0", NULL];
 		
-	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
-														   toHost:@"localhost" 
-														directory:@"~/tmp"];
+	id <TransferRecord>newUpload = [sftp uploadFilesAndDirectories:filesToUpload 
+															toHost:@"localhost" 
+														 directory:@"~/tmp"];
 	
 	[self setUpload:newUpload];
 }
 
 - (void)curl:(CurlObject *)client transferFailedAuthentication:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferFailedAuthentication");
+	//NSLog(@"transferFailedAuthentication");
 }
 
 - (void)curl:(CurlObject *)client transferDidBegin:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidBegin");	
+	//NSLog(@"transferDidBegin");	
 }
 
 - (void)curl:(CurlObject *)client transferDidProgress:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidProgress - %@", [aRecord statusMessage]);
+	//NSLog(@"transferDidProgress - %@", [aRecord statusMessage]);
 }
 
 - (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord
 {
-	NSLog(@"transferDidFinish");
+	//NSLog(@"transferDidFinish");
 }
 
 - (void)curl:(CurlObject *)client transferStatusDidChange:(id <TransferRecord>)aRecord

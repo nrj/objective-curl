@@ -14,6 +14,8 @@
 
 @synthesize delegate;
 
+@synthesize protocolType;
+
 @synthesize verbose;
 @synthesize showProgress;
 @synthesize isUploading;

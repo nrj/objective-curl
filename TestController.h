@@ -8,17 +8,25 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CurlSFTP.h"
+#import "CurlFTP.h"
 
 @interface TestController : NSObject 
 {
-	IBOutlet NSButton *btn;
 	IBOutlet NSProgressIndicator *progress;
+	
+	IBOutlet NSTextField *usernameField;
+	IBOutlet NSTextField *passwordField;
+	
+	IBOutlet NSTextField *statusLabel;
+	
+	NSArray *filesToUpload;
 	
 	id <TransferRecord>upload;
 }
 
 @property(readwrite, retain) id <TransferRecord>upload;
 
-- (IBAction)runTest:(id)sender;
+- (IBAction)runFTPTest:(id)sender;
+- (IBAction)runSFTPTest:(id)sender;
 
 @end

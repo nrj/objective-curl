@@ -17,4 +17,6 @@
 
 }
 
+size_t sftpHeaderFunction(void *ptr, size_t size, size_t nmemb, void *client);
+
 @end

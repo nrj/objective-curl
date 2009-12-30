@@ -29,7 +29,7 @@
 		curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
 		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
 		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
-		curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, headerFunction);
+		curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, ftpHeaderFunction);
 		curl_easy_setopt(handle, CURLOPT_HEADERDATA, self);
 		curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, uploadProgressFunction);
 		curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
@@ -44,10 +44,11 @@
  * 
  *     See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTHEADERFUNCTION 
  */
-size_t headerFunction(void *ptr, size_t size, size_t nmemb, CurlFTP *client)
+size_t ftpHeaderFunction(void *ptr, size_t size, size_t nmemb, CurlFTP *client)
 {	
 	char code[4];
 	strncpy(code, (char *)ptr, 3);	
+	
 	[client handleFTPResponse:atoi(code)];
 	
 	return size * nmemb;
@@ -63,11 +64,11 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 {	
 	id <TransferRecord>transfer = [client transfer];
 	
-	long totalProgressUnits = 100 * ([transfer totalFiles] + 1);
+	long totalProgressUnits = 100 * ([transfer totalFiles]);
 	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
 	int actualProgress = (individualProgress * 100) / totalProgressUnits;
 	
-	if (actualProgress >= 0 && actualProgress >= [transfer progress])
+	if (actualProgress >= 0 && actualProgress > [transfer progress])
 	{
 		[transfer setProgress:actualProgress];
 		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading (%d%%) to %@", actualProgress, [transfer hostname]]];
@@ -182,6 +183,8 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 		
 		if (result != CURLE_OK)
 			break;
+		
+		[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
 	}
 	
 	[pathDict release];
@@ -268,10 +271,6 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 			}			
 			break;
 			
-		case FTP_RESPONSE_FILE_RECEIVED:
-			[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
-			break;
-
 		case FTP_RESPONSE_EXITING:
 			break;
 

@@ -15,7 +15,7 @@
 	
 - (id)initForUpload;
 
-size_t headerFunction(void *ptr, size_t size, size_t nmemb, CurlFTP *client);
+size_t ftpHeaderFunction(void *ptr, size_t size, size_t nmemb, CurlFTP *client);
 
 int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double ultotal, double ulnow);
 

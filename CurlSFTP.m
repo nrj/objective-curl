@@ -26,8 +26,6 @@
 		curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
 		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
 		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
-		curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, headerFunction);
-		curl_easy_setopt(handle, CURLOPT_HEADERDATA, self);
 		curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, uploadProgressFunction);
 		curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	}
@@ -115,6 +113,8 @@
 		
 		if (result != CURLE_OK)
 			break;
+		
+		[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
 	}
 	
 	[pathDict release];

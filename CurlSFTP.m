@@ -11,6 +11,9 @@
 
 @implementation CurlSFTP
 
+const int DEFAULT_SFTP_PORT	= 22;
+const NSString *DEFAULT_KNOWN_HOSTS	= @"~/.ssh/known_hosts";
+
 
 /*
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
@@ -22,6 +25,10 @@
 	{
 		[self setProtocolType:kSecProtocolTypeSSH];
 
+		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
+		
+		hostKeyFingerprints = [[NSMutableDictionary alloc] init];
+
 		curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
 		curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
 	}
@@ -30,19 +37,119 @@
 }
 
 
+- (void)dealloc
+{
+	[knownHostsFile release];
+	[hostKeyFingerprints release];
+	[super dealloc];
+}
+
+
 /*
  * Invoked by curl when the known_host key matching is done. Returns a curl_khstat that determines how to proceed. 
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSHKEYFUNCTION
  */
-int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, void *client)
-{
-	NSLog(@"Host Key Callback");
+static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, CurlSFTP *client)
+{			
+	int result = -1;
+	NSString *fingerprint = [NSString formattedMD5:foundKey->key length:foundKey->len];
+	switch (type)
+	{
+		case CURLKHMATCH_OK:
+			result = CURLKHSTAT_FINE;
+			break;
+			
+		case CURLKHMATCH_MISSING:
+			result = [client handleUnknownHostKey:fingerprint];
+			break;
+
+		case CURLKHMATCH_MISMATCH:
+			result = [client handleMismatchedHostKey:fingerprint];
+			break;
+			
+		default:
+			NSLog(@"Unknown curl_khmatch type: %d", type);
+			break;
+	}
 	
+	/* 
+	 CURLKHSTAT_FINE_ADD_TO_FILE	= OK, and add it to known_hosts
+	 CURLKHSTAT_FINE				= OK, but don't add to known_hosts
+	 CURLKHSTAT_REJECT				= NOT OK, reject the connection, return an error
+	 CURLKHSTAT_DEFER				= NO ANSWER, leave the connection intact til we do
+	 */	
 	
-	return 0;
+	return result;
 }
 
+
+/*
+ * Search the acceptedHostKeys dictionary for the RSA fingerprint and return accordingly. If it is not found the Inform the delegate 
+ * that the host we're trying to connect to has an unknown RSA fingerprint.
+ */
+- (int)handleUnknownHostKey:(NSString *)rsaFingerprint
+{
+	int result = CURLKHSTAT_DEFER;
+
+	if (delegate && [delegate respondsToSelector:@selector(curl:transfer:receivedUnknownHostKey:)])
+	{
+		[delegate curl:self transfer:transfer receivedUnknownHostKey:rsaFingerprint];
+	}
+	
+	for (id key in hostKeyFingerprints)
+	{
+		if ([rsaFingerprint isEqual:key])
+		{
+			result = [[hostKeyFingerprints valueForKey:key] intValue];
+			break;
+		}
+	}
+	
+	return result;
+}
+
+
+/*
+ * Search the acceptedHostKeys dictionary for the RSA fingerprint and return accordingly. If it is not found the Inform the delegate 
+ * that the host we're trying to connect to has an mismatched RSA fingerprint.
+ */		
+- (int)handleMismatchedHostKey:(NSString *)rsaFingerprint
+{
+	int result = CURLKHSTAT_DEFER;
+
+	if (delegate && [delegate respondsToSelector:@selector(curl:transfer:receivedMismatchedHostKey:)])
+	{
+		[delegate curl:self transfer:transfer receivedMismatchedHostKey:rsaFingerprint];
+	}
+	
+	for (id key in hostKeyFingerprints)
+	{
+		if ([rsaFingerprint isEqual:key])
+		{
+			result = [[hostKeyFingerprints valueForKey:key] intValue];
+			break;
+		}
+	}
+	
+	return result;
+}
+				
+
+- (void)acceptHostKeyFingerprint:(NSString *)fingerprint permanently:(BOOL)permanent
+{
+	int status = (permanent ? CURLKHSTAT_FINE_ADD_TO_FILE : CURLKHSTAT_FINE);
+	
+	[hostKeyFingerprints setObject:[NSNumber numberWithInt:status] 
+							forKey:fingerprint];	
+}
+
+
+- (void)rejectHostKeyFingerprint:(NSString *)fingerprint
+{
+	[hostKeyFingerprints setObject:[NSNumber numberWithInt:CURLKHSTAT_REJECT] 
+							forKey:fingerprint];
+}
 
 /*
  * Set the path to use for the OpenSSH known_hosts file. Default is ~/.ssh/known_hosts
@@ -65,30 +172,6 @@ int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct 
 {
 	return knownHostsFile;
 }
-
-
-/*
- * 
- */
-- (void)addAcceptedHostKey:(NSString *)hostKey
-{
-	
-}
-
-
-/*
- *
- */
-- (void)addAcceptedHostKey:(NSString *)hostKey toFile:(BOOL)addToFile
-{
-	
-}
-
-
-
-
-
-
 
 
 /*

@@ -8,19 +8,21 @@
 
 #import "TestController.h"
 
+
 @implementation TestController
 
 
 @synthesize upload;
 
+
 - (void)awakeFromNib
 {
 	[progress setUsesThreadedAnimation:YES];
 	
-	filesToUpload = [[NSArray alloc] initWithObjects:[@"~/Desktop/test-upload" stringByExpandingTildeInPath], NULL];
-	
 	[versionLabel setStringValue:[CurlObject libcurlVersion]];
 }
+
+
 
 - (IBAction)runSFTPTest:(id)sender
 {	
@@ -33,13 +35,16 @@
 	[sftp setAuthPassword:[passwordField stringValue]];
 
 	[sftp setDelegate:self];
-			
-	id <TransferRecord>newUpload = [sftp uploadFilesAndDirectories:filesToUpload 
-															toHost:@"localhost" 
-														 directory:@"~/"];
+	
+	NSString *hostname = [hostnameField stringValue];
+	NSArray *filesToUpload = [NSArray arrayWithObjects:[[filepathField stringValue] stringByExpandingTildeInPath], NULL];
+	
+	id <TransferRecord>newUpload = [sftp uploadFilesAndDirectories:filesToUpload toHost:hostname];
 	
 	[self setUpload:newUpload];
 }
+
+
 
 - (IBAction)runFTPTest:(id)sender
 {	
@@ -52,37 +57,69 @@
 	[ftp setAuthPassword:[passwordField stringValue]];
 	
 	[ftp setDelegate:self];
+
+	NSString *hostname = [hostnameField stringValue];
+	NSArray *filesToUpload = [NSArray arrayWithObjects:[[filepathField stringValue] stringByExpandingTildeInPath], NULL];
 	
-	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload 
-															toHost:@"localhost" 
-														 directory:@"~/"];
+	id <TransferRecord>newUpload = [ftp uploadFilesAndDirectories:filesToUpload toHost:hostname];
 	
 	[self setUpload:newUpload];
 }
+
+
+
+- (void)curl:(CurlSFTP *)client transfer:(id <TransferRecord>)aRecord receivedUnknownHostKey:(NSString *)fingerprint
+{
+	NSLog(@"receivedUnknownHostKey: %@", fingerprint);
+	
+	[client acceptHostKeyFingerprint:fingerprint permanently:NO];
+
+//	[client acceptHostKeyFingerprint:fingerprint permanently:YES];
+
+//	[client rejectHostKeyFingerprint:fingerprint];
+}
+
+
+
+- (void)curl:(CurlSFTP *)client transfer:(id <TransferRecord>)aRecord receivedMismatchedHostKey:(NSString *)fingerprint
+{
+	NSLog(@"receivedMismatchedHostKey: %@", fingerprint);
+}
+
+
 
 - (void)curl:(CurlObject *)client transferFailedAuthentication:(id <TransferRecord>)aRecord
 {	
 	NSLog(@"transferFailedAuthentication");
 }
 
+
+
 - (void)curl:(CurlObject *)client transferDidBegin:(id <TransferRecord>)aRecord
 {
 	NSLog(@"transferDidBegin");	
 }
+
+
 
 - (void)curl:(CurlObject *)client transferDidProgress:(id <TransferRecord>)aRecord
 {
 	NSLog(@"transferDidProgress - %d", [aRecord progress]);
 }
 
+
+
 - (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord
 {
 	NSLog(@"transferDidFinish");
 }
 
+
+
 - (void)curl:(CurlObject *)client transferStatusDidChange:(id <TransferRecord>)aRecord
 {
 	NSLog(@"transferStatusDidChange %d - %@", [aRecord status], [aRecord statusMessage]);
 }
+
 
 @end

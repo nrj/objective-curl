@@ -138,6 +138,11 @@
 			message = [NSString stringWithFormat:@"Failed writing to directory %@", [transfer directory]];
 			break;
 			
+		case CURLE_PEER_FAILED_VERIFICATION:
+			status = TRANSFER_STATUS_FAILED;
+			message = [NSString stringWithFormat:@"Unknown host key for %@", [transfer hostname]];
+			break;
+			
 		case CURLE_FAILED_INIT:
 			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [transfer protocolString], [transfer hostname], [transfer port]];

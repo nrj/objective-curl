@@ -14,13 +14,12 @@
 {
 	IBOutlet NSProgressIndicator *progress;
 	
+	IBOutlet NSTextField *versionLabel;	
+	IBOutlet NSTextField *filepathField;
+	IBOutlet NSTextField *hostnameField;
 	IBOutlet NSTextField *usernameField;
 	IBOutlet NSTextField *passwordField;
-
-	IBOutlet NSTextField *versionLabel;	
 	IBOutlet NSTextField *statusLabel;
-	
-	NSArray *filesToUpload;
 	
 	id <TransferRecord>upload;
 }

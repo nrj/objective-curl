@@ -9,22 +9,28 @@
 #import <Cocoa/Cocoa.h>
 #import "CurlFTP.h"
 #import "TransferStatus.h"
+#import "NSString+MD5.h"
 
 
-#define DEFAULT_SFTP_PORT 22
+extern const int DEFAULT_SFTP_PORT;
+extern const NSString * DEFAULT_KNOWN_HOSTS;
 
 @interface CurlSFTP : CurlFTP
 {
 	NSString *knownHostsFile;
-	NSMutableDictionary *acceptedHostKeys;
+	
+	NSMutableDictionary *hostKeyFingerprints;
 }
 
-int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, void *client);
+static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, CurlSFTP *client);
 
 - (void)setKnownHostsFile:(NSString *)filePath;
 - (NSString *)knownHostsFile;
 
-- (void)addAcceptedHostKey:(NSString *)hostKey;
-- (void)addAcceptedHostKey:(NSString *)hostKey toFile:(BOOL)addToFile;
+- (int)handleUnknownHostKey:(NSString *)rsaFingerprint;
+- (int)handleMismatchedHostKey:(NSString *)rsaFingerprint;
+
+- (void)acceptHostKeyFingerprint:(NSString *)fingerprint permanently:(BOOL)permanent;
+- (void)rejectHostKeyFingerprint:(NSString *)fingerprint;
 
 @end

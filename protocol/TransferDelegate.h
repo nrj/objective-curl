@@ -50,12 +50,12 @@
  *
  *          [client addAcceptedHostKey:key toKnownHostsFile:YES];
  */
-- (void)curl:(CurlSFTP *)client transfer:(id <TransferRecord)aRecord receivedUnknownHostKey:(NSString *)fingerprint;
+- (void)curl:(CurlObject *)client transfer:(id <TransferRecord>)aRecord receivedUnknownHostKey:(NSString *)fingerprint;
 
 /*
  * Called when the host key received is different from the known key. This could possible mean a man-in-the-middle attack
  * so be careful when accepting this key (see above for how how to accept it).
  */
-- (void)curl:(CurlSFTP *)client transfer:(id <TransferRecord)aRecord receivedMismatchedHostKey:(NSString *)fingerprint;
+- (void)curl:(CurlObject *)client transfer:(id <TransferRecord>)aRecord receivedMismatchedHostKey:(NSString *)fingerprint;
 
 @end

@@ -20,6 +20,8 @@
 	[progress setUsesThreadedAnimation:YES];
 	
 	[versionLabel setStringValue:[CurlObject libcurlVersion]];
+	
+	NSLog([CurlObject libcurlVersion]);
 }
 
 

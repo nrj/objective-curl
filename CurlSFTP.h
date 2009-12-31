@@ -8,12 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CurlFTP.h"
-#import "TransferStatus.h"
+#import "TransferDelegate.h"
 #import "NSString+MD5.h"
 
 
-extern const int DEFAULT_SFTP_PORT;
-extern const NSString * DEFAULT_KNOWN_HOSTS;
+extern int const DEFAULT_SFTP_PORT;
+
+extern NSString * const SFTP_PROTOCOL_PREFIX;
+
+extern NSString * const DEFAULT_KNOWN_HOSTS;
 
 @interface CurlSFTP : CurlFTP
 {

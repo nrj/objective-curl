@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "CurlObject.h"
+#import "TransferStatus.h"
+#import "Upload.h"
 
-#define DEFAULT_FTP_PORT 21
+
+extern int const DEFAULT_SFTP_PORT;
+
+extern NSString * const FTP_PROTOCOL_PREFIX;
 
 @interface CurlFTP : CurlObject
 	

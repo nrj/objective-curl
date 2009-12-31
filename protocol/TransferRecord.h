@@ -18,13 +18,13 @@
 - (void)setName:(NSString *)aName;
 
 /*
- * Protocol - FTP, SSH etc.
+ * Protocol - enum kSecProtocolTypeFTP, kSecProtocolTypeSSH etc. Used to store/retreive keychain passwords.
  */
 - (SecProtocolType)protocol;
 - (void)setProtocol:(SecProtocolType)aProtocol;
 
 /*
- * String representation of the protocol.
+ * String representation of the protocol - "FTP", "SSH" etc. Used in status messages.
  */
 - (NSString *)protocolString;
 

@@ -7,13 +7,13 @@
 //
 
 #import "CurlFTP.h"
-#import "TransferStatus.h"
-#import "FTPResponse.h"
-#import "Upload.h"
 
+
+int const DEFAULT_FTP_PORT = 21;
+
+NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 
 @implementation CurlFTP
-
 
 /*
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
@@ -26,11 +26,7 @@
 		[self setProtocolType:kSecProtocolTypeFTP];
 
 		curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-		curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
 		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
-		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
-		curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, uploadProgressFunction);
-		curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	}
 	
 	return self;
@@ -38,27 +34,20 @@
 
 
 /*
- * Used to handle upload progress. Invoked by libcurl on progress updates to calculates the new upload progress and set it on the transfer.
- *
- *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
+ * Cleanup.
  */
-int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double ultotal, double ulnow)
-{	
-	id <TransferRecord>transfer = [client transfer];
-	
-	long totalProgressUnits = 100 * ([transfer totalFiles]);
-	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
-	int actualProgress = (individualProgress * 100) / totalProgressUnits;
-	
-	if (actualProgress >= 0 && actualProgress > [transfer progress])
-	{
-		[transfer setProgress:actualProgress];
-		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading (%d%%) to %@", actualProgress, [transfer hostname]]];
+- (void)dealloc
+{
+	[super dealloc];
+}
 
-		[client performDelegateSelector:@selector(curl:transferDidProgress:)];
-	}
-	
-	return 0;
+
+/*
+ * Returns the URL prefix for SFTP transfers.
+ */
+- (NSString * const)protocolPrefix
+{
+	return FTP_PROTOCOL_PREFIX;
 }
 
 
@@ -153,7 +142,7 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 		
 		fh = fopen([currentFile UTF8String], "rb");
 		
-		NSString *url = [NSString stringWithFormat:@"ftp://%@:%d/%@", [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
+		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [self protocolPrefix], [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);

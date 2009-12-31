@@ -12,7 +12,6 @@
 		0B76051810DF131500BE0666 /* CurlFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76051410DF131500BE0666 /* CurlFTP.m */; };
 		0B76051910DF131500BE0666 /* CurlObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76051510DF131500BE0666 /* CurlObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76051A10DF131500BE0666 /* CurlObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76051610DF131500BE0666 /* CurlObject.m */; };
-		0B76052010DF134600BE0666 /* FTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76051E10DF134600BE0666 /* FTPResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76052110DF134600BE0666 /* TransferStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76051F10DF134600BE0666 /* TransferStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76052E10DF138D00BE0666 /* TransferDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76052C10DF138D00BE0666 /* TransferDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76052F10DF138D00BE0666 /* TransferRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76052D10DF138D00BE0666 /* TransferRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -84,7 +83,6 @@
 		0B76051410DF131500BE0666 /* CurlFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlFTP.m; sourceTree = "<group>"; };
 		0B76051510DF131500BE0666 /* CurlObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlObject.h; sourceTree = "<group>"; };
 		0B76051610DF131500BE0666 /* CurlObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlObject.m; sourceTree = "<group>"; };
-		0B76051E10DF134600BE0666 /* FTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPResponse.h; sourceTree = "<group>"; };
 		0B76051F10DF134600BE0666 /* TransferStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferStatus.h; sourceTree = "<group>"; };
 		0B76052C10DF138D00BE0666 /* TransferDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferDelegate.h; sourceTree = "<group>"; };
 		0B76052D10DF138D00BE0666 /* TransferRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferRecord.h; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 		0B76051B10DF131A00BE0666 /* enum */ = {
 			isa = PBXGroup;
 			children = (
-				0B76051E10DF134600BE0666 /* FTPResponse.h */,
 				0B76051F10DF134600BE0666 /* TransferStatus.h */,
 			);
 			path = enum;
@@ -299,7 +296,6 @@
 			files = (
 				0B76051710DF131500BE0666 /* CurlFTP.h in Headers */,
 				0B76051910DF131500BE0666 /* CurlObject.h in Headers */,
-				0B76052010DF134600BE0666 /* FTPResponse.h in Headers */,
 				0B76052110DF134600BE0666 /* TransferStatus.h in Headers */,
 				0B76052E10DF138D00BE0666 /* TransferDelegate.h in Headers */,
 				0B76052F10DF138D00BE0666 /* TransferRecord.h in Headers */,
@@ -515,11 +511,11 @@
 		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /opt/local/lib;
+				FRAMEWORK_SEARCH_PATHS = "";
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -530,11 +526,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					/opt/local/lib,
-					"\"$(SRCROOT)/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-lcurl";
 				PRODUCT_NAME = "objective-curl";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -542,11 +537,11 @@
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = /opt/local/lib;
+				FRAMEWORK_SEARCH_PATHS = "";
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -554,11 +549,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					/opt/local/lib,
-					"\"$(SRCROOT)/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-lcurl";
 				PRODUCT_NAME = "objective-curl";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -572,11 +566,14 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				LD_OPENMP_FLAGS = "-fopenmp";
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lcurl";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -588,10 +585,13 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				LD_OPENMP_FLAGS = "-fopenmp";
 				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-lcurl";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

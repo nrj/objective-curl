@@ -38,25 +38,33 @@
 }
 
 @property(readwrite, assign) id delegate;
-
 @property(readwrite, assign) SecProtocolType protocolType;
-@property(readwrite, assign) BOOL verbose;
-@property(readwrite, assign) BOOL showProgress;
-@property(readwrite, assign) BOOL isUploading;
-
 @property(readwrite, copy) NSString *authUsername;
 @property(readwrite, copy) NSString *authPassword;
-
 @property(readwrite, assign) id <TransferRecord> transfer;
+@property(readwrite, assign) BOOL isUploading;
 
 + (NSString *)libcurlVersion;
 
 - (CURL *)handle;
 
-- (void)handleCurlResult:(CURLcode)result;
+- (void)setVerbose:(BOOL)value;
+
+- (BOOL)verbose;
+
+- (void)setShowProgress:(BOOL)value;
+
+- (BOOL)showProgress;
 
 - (BOOL)hasAuthUsername;
+
 - (BOOL)hasAuthPassword;
+
+- (NSString * const)protocolPrefix;
+
+static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, double ultotal, double ulnow);
+
+- (void)handleCurlResult:(CURLcode)result;
 
 - (void)performDelegateSelector:(SEL)aSelector;
 

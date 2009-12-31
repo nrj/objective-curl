@@ -190,7 +190,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
 									toHost:host 
-								 directory:@""
+								 directory:@"~/"
 									  port:DEFAULT_SFTP_PORT];
 }
 

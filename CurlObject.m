@@ -178,7 +178,8 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 	if (actualProgress >= 0 && actualProgress > [transfer progress])
 	{
 		[transfer setProgress:actualProgress];
-		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading (%d%%) to %@", actualProgress, [transfer hostname]]];
+
+		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading", actualProgress, [transfer hostname]]];
 		
 		[client performDelegateSelector:@selector(curl:transferDidProgress:)];
 	}

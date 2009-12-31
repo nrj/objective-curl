@@ -58,7 +58,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
 									toHost:host 
-								 directory:@""
+								 directory:@"~/"
 									  port:DEFAULT_FTP_PORT];
 }
 
@@ -143,6 +143,8 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 		fh = fopen([currentFile UTF8String], "rb");
 		
 		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [self protocolPrefix], [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
+		
+		NSLog(@"URL - %@", url);
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);

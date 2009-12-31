@@ -1148,7 +1148,7 @@
 							<reference key="NSNextResponder" ref="686122530"/>
 							<int key="NSvFlags">1282</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{303, 112}, {374, 12}}</string>
+							<string key="NSFrame">{{303, 112}, {340, 12}}</string>
 							<reference key="NSSuperview" ref="686122530"/>
 							<int key="NSpiFlags">24840</int>
 							<double key="NSMaxValue">1.000000e+02</double>
@@ -1156,13 +1156,13 @@
 						<object class="NSTextField" id="566891073">
 							<reference key="NSNextResponder" ref="686122530"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{301, 69}, {378, 14}}</string>
+							<string key="NSFrame">{{299, 75}, {378, 14}}</string>
 							<reference key="NSSuperview" ref="686122530"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="1025376068">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents"/>
+								<string key="NSContents">...</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="566891073"/>
 								<object class="NSColor" key="NSBackgroundColor" id="907046648">
@@ -1183,6 +1183,38 @@
 										<bytes key="NSWhite">MAA</bytes>
 									</object>
 								</object>
+							</object>
+						</object>
+						<object class="NSTextField" id="1067956265">
+							<reference key="NSNextResponder" ref="686122530"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{647, 112}, {32, 14}}</string>
+							<reference key="NSSuperview" ref="686122530"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="964985210">
+								<int key="NSCellFlags">68288064</int>
+								<int key="NSCellFlags2">71435264</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="1067956265"/>
+								<reference key="NSBackgroundColor" ref="907046648"/>
+								<reference key="NSTextColor" ref="1002444076"/>
+							</object>
+						</object>
+						<object class="NSTextField" id="1068196819">
+							<reference key="NSNextResponder" ref="686122530"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{301, 53}, {376, 14}}</string>
+							<reference key="NSSuperview" ref="686122530"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="998270084">
+								<int key="NSCellFlags">68288064</int>
+								<int key="NSCellFlags2">71435264</int>
+								<string key="NSContents">...</string>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="1068196819"/>
+								<reference key="NSBackgroundColor" ref="907046648"/>
+								<reference key="NSTextColor" ref="1002444076"/>
 							</object>
 						</object>
 						<object class="NSSecureTextField" id="366964228">
@@ -1358,6 +1390,10 @@
 				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1022775234">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>upload.isActiveTransfer</string>
+				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
@@ -1945,22 +1981,6 @@
 					<int key="connectionID">467</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: upload.statusMessage</string>
-						<reference key="source" ref="566891073"/>
-						<reference key="destination" ref="962184478"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="566891073"/>
-							<reference key="NSDestination" ref="962184478"/>
-							<string key="NSLabel">value: upload.statusMessage</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">upload.statusMessage</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">470</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">versionLabel</string>
 						<reference key="source" ref="962184478"/>
@@ -1999,6 +2019,184 @@
 						<reference key="destination" ref="366964228"/>
 					</object>
 					<int key="connectionID">497</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">currentFileLabel</string>
+						<reference key="source" ref="962184478"/>
+						<reference key="destination" ref="1068196819"/>
+					</object>
+					<int key="connectionID">500</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: uploadEnabled</string>
+						<reference key="source" ref="534303238"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="534303238"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">enabled: uploadEnabled</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">uploadEnabled</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">535</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: uploadEnabled</string>
+						<reference key="source" ref="333143717"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="333143717"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">enabled: uploadEnabled</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">uploadEnabled</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">536</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">displayPatternValue1: upload.totalFilesUploaded</string>
+						<reference key="source" ref="1068196819"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector" id="646929188">
+							<reference key="NSSource" ref="1068196819"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">displayPatternValue1: upload.totalFilesUploaded</string>
+							<string key="NSBinding">displayPatternValue1</string>
+							<string key="NSKeyPath">upload.totalFilesUploaded</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSDisplayPattern</string>
+								<string key="NS.object.0">File (%{value1}@/%{value2}@): %{value3}@</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">549</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">displayPatternValue2: upload.totalFiles</string>
+						<reference key="source" ref="1068196819"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector" id="964234474">
+							<reference key="NSSource" ref="1068196819"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">displayPatternValue2: upload.totalFiles</string>
+							<string key="NSBinding">displayPatternValue2</string>
+							<string key="NSKeyPath">upload.totalFiles</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSDisplayPattern</string>
+								<string key="NS.object.0">File (%{value1}@/%{value2}@): %{value3}@</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="646929188"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">553</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">displayPatternValue3: upload.currentFile</string>
+						<reference key="source" ref="1068196819"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1068196819"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">displayPatternValue3: upload.currentFile</string>
+							<string key="NSBinding">displayPatternValue3</string>
+							<string key="NSKeyPath">upload.currentFile</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSDisplayPattern</string>
+								<string key="NS.object.0">File (%{value1}@/%{value2}@): %{value3}@</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="964234474"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">556</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">displayPatternValue1: upload.progress</string>
+						<reference key="source" ref="1067956265"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1067956265"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">displayPatternValue1: upload.progress</string>
+							<string key="NSBinding">displayPatternValue1</string>
+							<string key="NSKeyPath">upload.progress</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSDisplayPattern</string>
+								<string key="NS.object.0">%{value1}@%</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">567</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: upload.statusMessage</string>
+						<reference key="source" ref="566891073"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="566891073"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">value: upload.statusMessage</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">upload.statusMessage</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">570</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: upload.progress</string>
+						<reference key="source" ref="1068196819"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1068196819"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">hidden: upload.progress</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">upload.progress</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">571</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: upload.progress</string>
+						<reference key="source" ref="1067956265"/>
+						<reference key="destination" ref="962184478"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1067956265"/>
+							<reference key="NSDestination" ref="962184478"/>
+							<string key="NSLabel">hidden: upload.progress</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">upload.progress</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">574</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2901,10 +3099,8 @@
 						<reference key="object" ref="686122530"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="534303238"/>
 							<reference ref="333143717"/>
 							<reference ref="694542123"/>
-							<reference ref="566891073"/>
 							<reference ref="366964228"/>
 							<reference ref="370322315"/>
 							<reference ref="638388920"/>
@@ -2914,6 +3110,10 @@
 							<reference ref="722776817"/>
 							<reference ref="796475260"/>
 							<reference ref="704840857"/>
+							<reference ref="566891073"/>
+							<reference ref="1068196819"/>
+							<reference ref="534303238"/>
+							<reference ref="1067956265"/>
 						</object>
 						<reference key="parent" ref="682341643"/>
 					</object>
@@ -3094,6 +3294,34 @@
 						<int key="objectID">493</int>
 						<reference key="object" ref="129724837"/>
 						<reference key="parent" ref="841017182"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">498</int>
+						<reference key="object" ref="1068196819"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="998270084"/>
+						</object>
+						<reference key="parent" ref="686122530"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">499</int>
+						<reference key="object" ref="998270084"/>
+						<reference key="parent" ref="1068196819"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">562</int>
+						<reference key="object" ref="1067956265"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="964985210"/>
+						</object>
+						<reference key="parent" ref="686122530"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">563</int>
+						<reference key="object" ref="964985210"/>
+						<reference key="parent" ref="1067956265"/>
 					</object>
 				</object>
 			</object>
@@ -3319,10 +3547,14 @@
 					<string>491.IBPluginDependency</string>
 					<string>492.IBPluginDependency</string>
 					<string>493.IBPluginDependency</string>
+					<string>498.IBPluginDependency</string>
+					<string>499.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
 					<string>56.IBPluginDependency</string>
 					<string>56.ImportedFromIB2</string>
+					<string>562.IBPluginDependency</string>
+					<string>563.IBPluginDependency</string>
 					<string>57.IBEditorWindowLastContentRect</string>
 					<string>57.IBPluginDependency</string>
 					<string>57.ImportedFromIB2</string>
@@ -3546,8 +3778,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{872, 877}, {696, 166}}</string>
-					<string>{{872, 877}, {696, 166}}</string>
+					<string>{{735, 797}, {696, 166}}</string>
+					<string>{{735, 797}, {696, 166}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3577,9 +3809,13 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{148, 364}, {245, 183}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
@@ -3634,7 +3870,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">497</int>
+			<int key="maxID">574</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3659,6 +3895,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>currentFileLabel</string>
 							<string>filepathField</string>
 							<string>hostnameField</string>
 							<string>passwordField</string>
@@ -3670,6 +3907,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>

@@ -20,11 +20,15 @@
 	IBOutlet NSTextField *usernameField;
 	IBOutlet NSTextField *passwordField;
 	IBOutlet NSTextField *statusLabel;
+	IBOutlet NSTextField *currentFileLabel;
 	
 	id <TransferRecord>upload;
+	
+	BOOL uploadEnabled;
 }
 
 @property(readwrite, retain) id <TransferRecord>upload;
+@property(readwrite, assign) BOOL uploadEnabled;
 
 - (IBAction)runFTPTest:(id)sender;
 - (IBAction)runSFTPTest:(id)sender;

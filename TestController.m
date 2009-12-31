@@ -13,11 +13,13 @@
 
 
 @synthesize upload;
-
+@synthesize uploadEnabled;
 
 - (void)awakeFromNib
 {
 	[progress setUsesThreadedAnimation:YES];
+	
+	[self setUploadEnabled:YES];
 	
 	[versionLabel setStringValue:[CurlObject libcurlVersion]];
 	
@@ -28,6 +30,8 @@
 
 - (IBAction)runSFTPTest:(id)sender
 {	
+	[self setUploadEnabled:NO];
+	
 	CurlSFTP *sftp = [[CurlSFTP alloc] initForUpload];
 
 	[sftp setVerbose:YES];
@@ -50,6 +54,8 @@
 
 - (IBAction)runFTPTest:(id)sender
 {	
+	[self setUploadEnabled:NO];
+	
 	CurlFTP *ftp = [[CurlFTP alloc] initForUpload];
 	
 	[ftp setVerbose:NO];
@@ -93,6 +99,8 @@
 - (void)curl:(CurlObject *)client transferFailedAuthentication:(id <TransferRecord>)aRecord
 {	
 	NSLog(@"transferFailedAuthentication");
+	
+	[self setUploadEnabled:YES];
 }
 
 
@@ -114,6 +122,8 @@
 - (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord
 {
 	NSLog(@"transferDidFinish");
+	
+	[self setUploadEnabled:YES];
 }
 
 
@@ -121,6 +131,11 @@
 - (void)curl:(CurlObject *)client transferStatusDidChange:(id <TransferRecord>)aRecord
 {
 	NSLog(@"transferStatusDidChange %d - %@", [aRecord status], [aRecord statusMessage]);
+	
+	if ([aRecord status] == TRANSFER_STATUS_FAILED)
+	{
+		[self setUploadEnabled:YES];	
+	}
 }
 
 

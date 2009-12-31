@@ -9,7 +9,6 @@
 #import "NSString+MD5.h"
 
 
-
 @implementation NSString (MD5)
 
 + (NSString *)formattedMD5:(const char *)data length:(unsigned long)len

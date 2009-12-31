@@ -42,7 +42,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* objective-curl */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = "objective-curl";
 		};
 /* End PBXContainerItemProxy section */
@@ -385,8 +385,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
+			shellPath = /bin/bash;
+			shellScript = "/usr/bin/install_name_tool -change \\\n`otool -L $TARGET_BUILD_DIR/objective-curl.framework/objective-curl | grep libcurl | awk '{print $1}'` \\\n@executable_path/../Frameworks/objective-curl.framework/Versions/A/Frameworks/libcurl.4.dylib \\\n$TARGET_BUILD_DIR/objective-curl.framework/objective-curl\n\n/usr/bin/install_name_tool -change \\\n`otool -L $TARGET_BUILD_DIR/objective-curl.framework/objective-curl | grep libssh2 | awk '{print $1}'` \\\n@executable_path/../Frameworks/objective-curl.framework/Versions/A/Frameworks/libssh2.1.dylib \\\n$TARGET_BUILD_DIR/objective-curl.framework/objective-curl";
 		};
 /* End PBXShellScriptBuildPhase section */
 

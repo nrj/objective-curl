@@ -18,13 +18,15 @@
 	[progress setUsesThreadedAnimation:YES];
 	
 	filesToUpload = [[NSArray alloc] initWithObjects:[@"~/Desktop/test-upload" stringByExpandingTildeInPath], NULL];
+	
+	[versionLabel setStringValue:[CurlObject libcurlVersion]];
 }
 
 - (IBAction)runSFTPTest:(id)sender
 {	
 	CurlSFTP *sftp = [[CurlSFTP alloc] initForUpload];
 
-	[sftp setVerbose:NO];
+	[sftp setVerbose:YES];
 	[sftp setShowProgress:YES];
 	
 	[sftp setAuthUsername:[usernameField stringValue]];

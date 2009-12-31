@@ -16,7 +16,8 @@
 	
 	IBOutlet NSTextField *usernameField;
 	IBOutlet NSTextField *passwordField;
-	
+
+	IBOutlet NSTextField *versionLabel;	
 	IBOutlet NSTextField *statusLabel;
 	
 	NSArray *filesToUpload;

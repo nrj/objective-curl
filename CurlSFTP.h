@@ -13,10 +13,18 @@
 
 #define DEFAULT_SFTP_PORT 22
 
-@interface CurlSFTP : CurlFTP {
-
+@interface CurlSFTP : CurlFTP
+{
+	NSString *knownHostsFile;
+	NSMutableDictionary *acceptedHostKeys;
 }
 
-size_t sftpHeaderFunction(void *ptr, size_t size, size_t nmemb, void *client);
+int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, void *client);
+
+- (void)setKnownHostsFile:(NSString *)filePath;
+- (NSString *)knownHostsFile;
+
+- (void)addAcceptedHostKey:(NSString *)hostKey;
+- (void)addAcceptedHostKey:(NSString *)hostKey toFile:(BOOL)addToFile;
 
 @end

@@ -15,8 +15,6 @@
 	
 - (id)initForUpload;
 
-size_t ftpHeaderFunction(void *ptr, size_t size, size_t nmemb, CurlFTP *client);
-
 int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double ultotal, double ulnow);
 
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host;
@@ -24,8 +22,6 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port;
 
 - (NSDictionary *)enumerateFilesForUpload:(NSArray *)files withPrefix:(NSString *)directory;
-
-- (void)handleFTPResponse:(int)code;
 
 - (NSString *)credentials;
 

@@ -25,10 +25,6 @@
 
 @synthesize transfer;
 
-+ (NSString *)libcurlVersion
-{		
-	return [NSString stringWithCString:curl_version()];
-}
 
 - (id)init
 {
@@ -70,6 +66,12 @@
 - (CURL *)handle
 {
 	return handle;
+}
+
+
++ (NSString *)libcurlVersion
+{		
+	return [NSString stringWithCString:curl_version()];
 }
 
 

@@ -3,7 +3,7 @@
 //  objective-curl
 //
 //  Created by nrj on 12/27/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009. All rights reserved.
 //
 
 #import "CurlSFTP.h"
@@ -18,20 +18,77 @@
  */
 - (id)initForUpload
 {		
-	if (self = [super init])
+	if (self = [super initForUpload])
 	{
 		[self setProtocolType:kSecProtocolTypeSSH];
-		
-		curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-		curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
-		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
-		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
-		curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, uploadProgressFunction);
-		curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
+
+		curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
+		curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
 	}
 	
 	return self;
 }
+
+
+/*
+ * Invoked by curl when the known_host key matching is done. Returns a curl_khstat that determines how to proceed. 
+ *
+ *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSHKEYFUNCTION
+ */
+int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, void *client)
+{
+	NSLog(@"Host Key Callback");
+	
+	
+	return 0;
+}
+
+
+/*
+ * Set the path to use for the OpenSSH known_hosts file. Default is ~/.ssh/known_hosts
+ */
+- (void)setKnownHostsFile:(NSString *)filePath
+{		
+	if (knownHostsFile != filePath)
+	{
+		[knownHostsFile release];
+		knownHostsFile = [filePath copy];		
+		curl_easy_setopt(handle, CURLOPT_SSH_KNOWNHOSTS, [knownHostsFile UTF8String]);
+	}
+}
+
+
+/*
+ * Returns the path set for the OpenSSH known_hosts file.
+ */
+- (NSString *)knownHostsFile
+{
+	return knownHostsFile;
+}
+
+
+/*
+ * 
+ */
+- (void)addAcceptedHostKey:(NSString *)hostKey
+{
+	
+}
+
+
+/*
+ *
+ */
+- (void)addAcceptedHostKey:(NSString *)hostKey toFile:(BOOL)addToFile
+{
+	
+}
+
+
+
+
+
+
 
 
 /*

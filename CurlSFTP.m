@@ -207,4 +207,29 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 }
 
 
+/* 
+ * Overridden since there is no anonymous login for SFTP. Instead try public_key authentication if we don't have a username/password.
+ */
+- (NSString *)credentials
+{
+	NSString *creds;
+	if ([self hasAuthUsername])
+	{
+		if (![self hasAuthPassword])
+		{
+			// TODO - Try Keychain and set password here
+		}
+		
+		creds = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
+	}
+	else
+	{
+		// Try anonymous login
+		creds = [NSString stringWithFormat:@"anonymous:"];
+	}
+	
+	return creds;
+}
+
+
 @end

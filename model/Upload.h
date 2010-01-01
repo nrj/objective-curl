@@ -26,6 +26,7 @@
 	
 	int status;	
 	NSString *statusMessage;
+	BOOL hasBeenCancelled;
 }
 
 
@@ -43,6 +44,7 @@
 
 @property(readwrite, assign) int status;
 @property(readwrite, copy) NSString *statusMessage;
+@property(readwrite, assign) BOOL hasBeenCancelled;
 
 - (NSString *)protocolString;
 

@@ -175,7 +175,11 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
 	int actualProgress = (individualProgress * 100) / totalProgressUnits;
 	
-	if (actualProgress >= 0 && actualProgress > [transfer progress])
+	if ([transfer hasBeenCancelled])
+	{		
+		return -1;
+	}
+	else if (actualProgress >= 0 && actualProgress > [transfer progress])
 	{
 		[transfer setProgress:actualProgress];
 
@@ -204,10 +208,9 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 			message = [NSString stringWithFormat:@"Finished", [transfer totalFiles], [transfer hostname]];
 			break;
 		
-		case CURLE_LOGIN_DENIED:
-			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Invalid login for %@@%@", 
-					   ([self hasAuthUsername] ? [self authUsername] : @"anonymous"), [transfer hostname]];
+		case CURLE_ABORTED_BY_CALLBACK:
+			status = TRANSFER_STATUS_CANCELLED;
+			message = [NSString stringWithFormat:@"Cancelled"];
 			break;
 		
 		case CURLE_FTP_ACCESS_DENIED:

@@ -89,6 +89,12 @@
 - (void)setProgress:(int)newProgress;
 
 /*
+ * Queue the transfer to be cancelled at the next possible chance.
+ */
+- (void)setHasBeenCancelled:(BOOL)value;
+- (BOOL)hasBeenCancelled;
+
+/*
  * Determine if the transfer is doing actively doing something
  */
 - (BOOL)isActiveTransfer;

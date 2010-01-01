@@ -32,5 +32,6 @@
 
 - (IBAction)runFTPTest:(id)sender;
 - (IBAction)runSFTPTest:(id)sender;
+- (IBAction)cancelTransfer:(id)sender;
 
 @end

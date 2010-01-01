@@ -26,7 +26,7 @@
 
 @synthesize status;
 @synthesize statusMessage;
-
+@synthesize hasBeenCancelled;
 
 - (id)init
 {
@@ -64,6 +64,7 @@
 	[copy setProgress:[self progress]];
 	[copy setTotalFiles:[self totalFiles]];
 	[copy setTotalFilesUploaded:[self totalFilesUploaded]];
+	[copy setHasBeenCancelled:[self hasBeenCancelled]];
 	
     return copy;
 }
@@ -76,15 +77,12 @@
 	[encoder encodeObject:hostname forKey:@"hostname"];
 	[encoder encodeInt:port forKey:@"port"];
 	[encoder encodeObject:directory forKey:@"directory"];
-	if ([self isActiveTransfer])
-	{
-		[self setStatus:TRANSFER_STATUS_CANCELLED];
-	}
 	[encoder encodeInt:status forKey:@"status"];
 	[encoder encodeObject:statusMessage forKey:@"statusMessage"];
 	[encoder encodeInt:progress forKey:@"progress"];
 	[encoder encodeInt:totalFiles forKey:@"totalFiles"];
 	[encoder encodeInt:totalFilesUploaded forKey:@"totalFilesUploaded"];
+	[encoder encodeBool:hasBeenCancelled forKey:@"hasBeenCancelled"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -101,6 +99,7 @@
 	progress = [decoder decodeIntForKey:@"progress"];
 	totalFiles = [decoder decodeIntForKey:@"totalFiles"];
 	totalFilesUploaded = [decoder decodeIntForKey:@"totalFilesUploaded"];
+	hasBeenCancelled = [decoder decodeBoolForKey:@"hasBeenCancelled"];
 
 	return self;
 }

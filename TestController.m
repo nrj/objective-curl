@@ -75,6 +75,14 @@
 }
 
 
+- (IBAction)cancelTransfer:(id)sender
+{
+	if (![upload hasBeenCancelled])
+	{
+		[upload setHasBeenCancelled:YES];
+	}
+}
+
 
 - (void)curl:(CurlSFTP *)client transfer:(id <TransferRecord>)aRecord receivedUnknownHostKey:(NSString *)fingerprint
 {
@@ -132,9 +140,10 @@
 {
 	NSLog(@"transferStatusDidChange %d - %@", [aRecord status], [aRecord statusMessage]);
 	
-	if ([aRecord status] == TRANSFER_STATUS_FAILED)
+	if ([aRecord status] == TRANSFER_STATUS_FAILED || [aRecord status] == TRANSFER_STATUS_CANCELLED)
 	{
-		[self setUploadEnabled:YES];	
+		
+		[self setUploadEnabled:YES];
 	}
 }
 

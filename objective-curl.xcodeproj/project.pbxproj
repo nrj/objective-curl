@@ -25,6 +25,10 @@
 		0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
 		0BB383B210EB1DF9003DD538 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
 		0BB383B310EB1DF9003DD538 /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
+		0BBF81F710EEB1B0005358BB /* FTPCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* FTPCommand.h */; };
+		0BBF81F810EEB1B0005358BB /* FTPCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* FTPCommand.m */; };
+		0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83DB10EFD6CD005358BB /* ftpparse.c */; };
+		0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DC10EFD6CD005358BB /* ftpparse.h */; };
 		0BD6227910DF157B004D8C5B /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0BD622C910DF18BB004D8C5B /* objective-curl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7604D410DF126200BE0666 /* Security.framework */; };
@@ -97,6 +101,10 @@
 		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
 		0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
+		0BBF81F510EEB1B0005358BB /* FTPCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPCommand.h; sourceTree = "<group>"; };
+		0BBF81F610EEB1B0005358BB /* FTPCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPCommand.m; sourceTree = "<group>"; };
+		0BBF83DB10EFD6CD005358BB /* ftpparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftpparse.c; sourceTree = "<group>"; };
+		0BBF83DC10EFD6CD005358BB /* ftpparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpparse.h; sourceTree = "<group>"; };
 		0BD6227310DF1564004D8C5B /* CurlTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurlTester.app; sourceTree = BUILT_PRODUCTS_DIR; wrapsLines = 0; };
 		0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurlTester-Info.plist"; sourceTree = "<group>"; };
 		0BD623F710DF1B29004D8C5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -147,6 +155,7 @@
 		0867D691FE84028FC02AAC07 /* objective-curl */ = {
 			isa = PBXGroup;
 			children = (
+				0BBF83D810EFD6B0005358BB /* lib */,
 				0B76051210DF12CB00BE0666 /* Test */,
 				08FB77AEFE84172EC02AAC07 /* Framework Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
@@ -219,6 +228,8 @@
 			children = (
 				0B76053010DF13B600BE0666 /* Upload.h */,
 				0B76053110DF13B600BE0666 /* Upload.m */,
+				0BBF81F510EEB1B0005358BB /* FTPCommand.h */,
+				0BBF81F610EEB1B0005358BB /* FTPCommand.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -239,6 +250,15 @@
 				0B76055010DF150200BE0666 /* EMKeychain.m */,
 			);
 			path = keychain;
+			sourceTree = "<group>";
+		};
+		0BBF83D810EFD6B0005358BB /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				0BBF83DB10EFD6CD005358BB /* ftpparse.c */,
+				0BBF83DC10EFD6CD005358BB /* ftpparse.h */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		0BD6240610DF1BF4004D8C5B /* easy includes */ = {
@@ -304,6 +324,8 @@
 				0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */,
 				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
 				0BEDAABC10EC44F300ED2C69 /* NSString+MD5.h in Headers */,
+				0BBF81F710EEB1B0005358BB /* FTPCommand.h in Headers */,
+				0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +447,8 @@
 				0B76055210DF150200BE0666 /* EMKeychain.m in Sources */,
 				0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */,
 				0BEDAABD10EC44F300ED2C69 /* NSString+MD5.m in Sources */,
+				0BBF81F810EEB1B0005358BB /* FTPCommand.m in Sources */,
+				0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,7 +551,10 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lcurl";
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-lcurl",
+				);
 				PRODUCT_NAME = "objective-curl";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = framework;
@@ -550,7 +577,10 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lcurl";
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-lcurl",
+				);
 				PRODUCT_NAME = "objective-curl";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = framework;
@@ -570,7 +600,7 @@
 				LD_OPENMP_FLAGS = "-fopenmp";
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lcurl";
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -588,7 +618,7 @@
 				HEADER_SEARCH_PATHS = "";
 				LD_OPENMP_FLAGS = "-fopenmp";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = "-lcurl";
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 				USER_HEADER_SEARCH_PATHS = "";

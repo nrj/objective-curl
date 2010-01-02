@@ -169,6 +169,8 @@
  */
 static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
+	if (ultotal == 0) return 0;
+	
 	id <TransferRecord>transfer = [client transfer];
 	
 	long totalProgressUnits = 100 * ([transfer totalFiles]);
@@ -213,7 +215,7 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 			message = [NSString stringWithFormat:@"Cancelled"];
 			break;
 		
-		case CURLE_FTP_ACCESS_DENIED:
+		case CURLE_REMOTE_ACCESS_DENIED:
 			status = TRANSFER_STATUS_FAILED;
 			message = [NSString stringWithFormat:@"Failed writing to directory %@", [transfer directory]];
 			break;

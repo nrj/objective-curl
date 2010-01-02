@@ -58,7 +58,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
 									toHost:host 
-								 directory:@"~/"
+								 directory:@""
 									  port:DEFAULT_FTP_PORT];
 }
 
@@ -112,55 +112,85 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 	
 	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
 	
-	NSDictionary *pathDict = [self enumerateFilesForUpload:filesAndDirectories withPrefix:[transfer directory]];
+	int totalFiles = 0;
+	NSArray *commands = [self createCommandsForUpload:filesAndDirectories totalFiles:&totalFiles];
 	
-	[transfer setTotalFiles:[pathDict count]];
+	[transfer setTotalFiles:totalFiles];
 	[transfer setTotalFilesUploaded:0];
 	
 	NSString *creds = [self credentials];
 	curl_easy_setopt(handle, CURLOPT_USERPWD, [creds UTF8String]);
-
-	CURLcode result = -1;
-	NSArray *files = [pathDict allKeys];
-	for (int i = 0; i < [files count]; i++)
-	{
-		FILE *fh;
-		struct stat finfo;
-		curl_off_t fsize;
 	
-		NSString *currentFile = [files objectAtIndex:i];
+	CURLcode result = -1;
+	for (int i = 0; i < [commands count]; i++)
+	{
+		FTPCommand *cmd = [commands objectAtIndex:i];
 		
-		[transfer setCurrentFile:[currentFile lastPathComponent]];
+		[transfer setCurrentFile:[[cmd localPath] lastPathComponent]];
 		
-		if(stat([currentFile UTF8String], &finfo)) 
+		if ([cmd type] == FTP_COMMAND_MKDIR)
 		{
-			NSLog(@"Couldnt open file '%s': %s", currentFile);
-			break;
+			char *mkdir = malloc(strlen("MKDIR \"\"") + strlen([[cmd remotePath] UTF8String]) + 1);
+			sprintf(mkdir, "MKDIR \"%s\"", [[cmd remotePath] UTF8String]);
+			
+			NSString *url = [NSString stringWithFormat:@"%@://%@:%d/", [self protocolPrefix], [transfer hostname], [transfer port]];
+
+			struct curl_slist *headers = NULL; 
+			headers = curl_slist_append(headers, mkdir); 
+
+			curl_easy_setopt(handle, CURLOPT_UPLOAD, 0);
+			curl_easy_setopt(handle, CURLOPT_QUOTE, headers); 
+			curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
+			
+			// Perform
+			result = curl_easy_perform(handle);
+
+			// Cleanup
+			curl_slist_free_all(headers);
+			headers = NULL;
+			free(mkdir);
+			mkdir = NULL;
+			
+			if (result != CURLE_OK)
+				break;
 		}
-		
-		fsize = (curl_off_t)finfo.st_size;
-		
-		fh = fopen([currentFile UTF8String], "rb");
-		
-		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [self protocolPrefix], [transfer hostname], [transfer port], [pathDict valueForKey:currentFile]];
-		
-		NSLog(@"URL - %@", url);
-		
-		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
-		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
-		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
-		
-		result = curl_easy_perform(handle);
-		
-		fclose(fh);
-		
-		if (result != CURLE_OK)
-			break;
-		
-		[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
+		else if ([cmd type] == FTP_COMMAND_PUT)
+		{
+			FILE *fh;
+			struct stat finfo;
+			curl_off_t fsize;
+			
+			if(stat([[cmd localPath] UTF8String], &finfo)) 
+			{
+				NSLog(@"Couldnt open file '%@'", [cmd localPath]);
+				break;
+			}
+			
+			fsize = (curl_off_t)finfo.st_size;
+			
+			fh = fopen([[cmd localPath] UTF8String], "rb");
+			
+			NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@%@", [self protocolPrefix], [transfer hostname], [transfer port], [transfer directory], [cmd remotePath]];
+			
+			curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
+			curl_easy_setopt(handle, CURLOPT_QUOTE, NULL);
+			curl_easy_setopt(handle, CURLOPT_READDATA, fh);
+			curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
+			curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
+			
+			// Perform
+			result = curl_easy_perform(handle);
+			
+			fclose(fh);
+			
+			if (result != CURLE_OK)
+				break;
+			
+			[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
+		}
 	}
 	
-	[pathDict release];
+	[commands release];
 	
 	curl_easy_cleanup(handle);
 
@@ -174,26 +204,24 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 
 
 /*
- * Enumurates a list of files and directories to be uploaded. Returns a dictionary of files where the key is the absolute path on 
- * the local file system, and the value is the relative remote path.
- *     
- *      e. g. { "/local/path/to/file" => "prefix/remote/path/to/file" }
+ * Enumurates a list of FTP commands needed to perform the upload and returns them in an array.
  */
-- (NSDictionary *)enumerateFilesForUpload:(NSArray *)files withPrefix:(NSString *)prefix;
+- (NSArray *)createCommandsForUpload:(NSArray *)files totalFiles:(int *)totalFiles
 {
-	NSMutableArray *localPaths = [[NSMutableArray alloc] init];
-	NSMutableArray *remotePaths = [[NSMutableArray alloc] init];
-	
 	NSFileManager *mgr = [NSFileManager defaultManager];
-	
+	NSMutableArray *commands = [[NSMutableArray alloc] init];
 	BOOL isDir;
 	for (int i = 0; i < [files count]; i++)
 	{
 		NSString *pathToFile = [files objectAtIndex:i];
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
-			[localPaths addObject:pathToFile];
-			[remotePaths addObject:[pathToFile lastPathComponent]];
+			FTPCommand *put = [[FTPCommand alloc] initWithType:FTP_COMMAND_PUT 
+													 localPath:pathToFile 
+													remotePath:[pathToFile lastPathComponent]];
+			[commands addObject:put];
+			
+			*totalFiles += 1;
 		}
 		else
 		{
@@ -201,18 +229,35 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 			NSString *basePath = [pathToFile lastPathComponent];
 			NSString *file;
 			
+			FTPCommand *mkdir = [[FTPCommand alloc] initWithType:FTP_COMMAND_MKDIR 
+													   localPath:pathToFile 
+													  remotePath:basePath];
+			
+			[commands addObject:mkdir];
+			
 			while (file = [dir nextObject])
 			{
 				if ([mgr fileExistsAtPath:[pathToFile stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
 				{
-					[localPaths addObject:[pathToFile stringByAppendingPathComponent:file]];
-					[remotePaths addObject:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:file]]];
+					FTPCommand *put = [[FTPCommand alloc] initWithType:FTP_COMMAND_PUT 
+															 localPath:[pathToFile stringByAppendingPathComponent:file] 
+															remotePath:[basePath stringByAppendingPathComponent:file]];
+					[commands addObject:put];
+					
+					*totalFiles += 1;
+				}
+				else
+				{
+					FTPCommand *mkdir = [[FTPCommand alloc] initWithType:FTP_COMMAND_MKDIR
+															   localPath:[pathToFile stringByAppendingPathComponent:file] 
+															  remotePath:[basePath stringByAppendingPathComponent:file]];
+					[commands addObject:mkdir];
 				}
 			}
 		}
 	}
 	
-	return [[NSDictionary alloc] initWithObjects:remotePaths forKeys:localPaths]; 
+	return commands;
 }
 
 

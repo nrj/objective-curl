@@ -8,8 +8,8 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="29"/>
 			<integer value="449"/>
+			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1226,7 +1226,7 @@
 							<object class="NSSecureTextFieldCell" key="NSCell" id="659381111">
 								<int key="NSCellFlags">343014976</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents"/>
+								<string key="NSContents">antiquing</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="366964228"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1260,7 +1260,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="510153074">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents"/>
+								<string key="NSContents">nrj</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="370322315"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1277,7 +1277,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="790701010">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">localhost</string>
+								<string key="NSContents">bender.local</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="638388920"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1374,7 +1374,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1042472093">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">~/Desktop/test-upload</string>
+								<string key="NSContents">~/Desktop/DOESNOTEXIST</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="796475260"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1410,10 +1410,6 @@
 				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1022775234">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>upload.isActiveTransfer</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CurlObject.h"
 #import "TransferStatus.h"
+#import "FTPCommand.h"
 #import "Upload.h"
 
 
@@ -26,7 +27,7 @@ int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory;
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port;
 
-- (NSDictionary *)enumerateFilesForUpload:(NSArray *)files withPrefix:(NSString *)directory;
+- (NSArray *)createCommandsForUpload:(NSArray *)files totalFiles:(int *)totalFiles;
 
 - (NSString *)credentials;
 

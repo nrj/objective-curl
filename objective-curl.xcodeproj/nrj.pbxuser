@@ -854,6 +854,8 @@
 			0BBF86A110F018A0005358BB /* PBXTextBookmark */ = 0BBF86A110F018A0005358BB /* PBXTextBookmark */;
 			0BBF86A210F018A0005358BB /* PBXTextBookmark */ = 0BBF86A210F018A0005358BB /* PBXTextBookmark */;
 			0BBF86A310F018A0005358BB /* PBXTextBookmark */ = 0BBF86A310F018A0005358BB /* PBXTextBookmark */;
+			0BBF86A610F018C2005358BB /* PBXTextBookmark */ = 0BBF86A610F018C2005358BB /* PBXTextBookmark */;
+			0BBF86A710F018C2005358BB /* PBXTextBookmark */ = 0BBF86A710F018C2005358BB /* PBXTextBookmark */;
 			0BD6228B10DF1725004D8C5B = 0BD6228B10DF1725004D8C5B /* PlistBookmark */;
 			0BD6228C10DF1725004D8C5B = 0BD6228C10DF1725004D8C5B /* PlistBookmark */;
 			0BD622AD10DF1816004D8C5B = 0BD622AD10DF1816004D8C5B /* PBXTextBookmark */;
@@ -910,8 +912,8 @@
 	0B76051410DF131500BE0666 /* CurlFTP.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1563, 6482}}";
-			sepNavSelRange = "{3143, 0}";
-			sepNavVisRange = "{2600, 2250}";
+			sepNavSelRange = "{3083, 0}";
+			sepNavVisRange = "{2600, 2245}";
 			sepNavWindowFrame = "{{15, 358}, {985, 815}}";
 		};
 	};
@@ -1262,7 +1264,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1333;
 		vrLoc = 672;
@@ -1312,7 +1314,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1482;
 		vrLoc = 821;
@@ -1412,7 +1414,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 219";
 		rLen = 563;
-		rLoc = 11473;
+		rLoc = 11468;
 		rType = 0;
 		vrLen = 1246;
 		vrLoc = 5032;
@@ -1442,7 +1444,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 219";
 		rLen = 0;
-		rLoc = 11476;
+		rLoc = 11471;
 		rType = 0;
 		vrLen = 1490;
 		vrLoc = 3500;
@@ -1882,7 +1884,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 219";
 		rLen = 0;
-		rLoc = 11476;
+		rLoc = 11471;
 		rType = 0;
 		vrLen = 852;
 		vrLoc = 0;
@@ -1932,7 +1934,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 219";
 		rLen = 0;
-		rLoc = 11476;
+		rLoc = 11471;
 		rType = 0;
 		vrLen = 852;
 		vrLoc = 0;
@@ -2191,7 +2193,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 177";
 		rLen = 0;
-		rLoc = 9547;
+		rLoc = 9542;
 		rType = 0;
 		vrLen = 1930;
 		vrLoc = 2765;
@@ -2211,7 +2213,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 149";
 		rLen = 0;
-		rLoc = 9532;
+		rLoc = 9527;
 		rType = 0;
 		vrLen = 2156;
 		vrLoc = 3549;
@@ -2341,7 +2343,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 149";
 		rLen = 0;
-		rLoc = 9532;
+		rLoc = 9527;
 		rType = 0;
 		vrLen = 1574;
 		vrLoc = 0;
@@ -2371,7 +2373,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 182";
 		rLen = 77;
-		rLoc = 9759;
+		rLoc = 9754;
 		rType = 0;
 		vrLen = 2121;
 		vrLoc = 3500;
@@ -2391,7 +2393,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 213";
 		rLen = 0;
-		rLoc = 11086;
+		rLoc = 11081;
 		rType = 0;
 		vrLen = 1807;
 		vrLoc = 3743;
@@ -2411,7 +2413,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 177";
 		rLen = 0;
-		rLoc = 9547;
+		rLoc = 9542;
 		rType = 0;
 		vrLen = 1930;
 		vrLoc = 2765;
@@ -2441,7 +2443,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1967;
 		vrLoc = 2875;
@@ -2451,7 +2453,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 142";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2089;
 		vrLoc = 2875;
@@ -2488,7 +2490,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 142";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2236;
 		vrLoc = 850;
@@ -2538,7 +2540,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 122";
 		rLen = 0;
-		rLoc = 7117;
+		rLoc = 7112;
 		rType = 0;
 		vrLen = 2164;
 		vrLoc = 2033;
@@ -2578,7 +2580,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 145";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2310;
 		vrLoc = 2303;
@@ -2588,7 +2590,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 145";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2310;
 		vrLoc = 2303;
@@ -2638,7 +2640,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 143";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2320;
 		vrLoc = 2306;
@@ -2648,7 +2650,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 137";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2359;
 		vrLoc = 2306;
@@ -2658,7 +2660,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 116";
 		rLen = 0;
-		rLoc = 6935;
+		rLoc = 6930;
 		rType = 0;
 		vrLen = 2362;
 		vrLoc = 2306;
@@ -2668,7 +2670,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 145";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2410;
 		vrLoc = 2306;
@@ -2678,7 +2680,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 144";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2257;
 		vrLoc = 2239;
@@ -2688,7 +2690,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 100";
 		rLen = 0;
-		rLoc = 6333;
+		rLoc = 6328;
 		rType = 0;
 		vrLen = 2257;
 		vrLoc = 2239;
@@ -2698,7 +2700,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 100";
 		rLen = 0;
-		rLoc = 6333;
+		rLoc = 6328;
 		rType = 0;
 		vrLen = 1755;
 		vrLoc = 2239;
@@ -2708,7 +2710,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 100";
 		rLen = 0;
-		rLoc = 6333;
+		rLoc = 6328;
 		rType = 0;
 		vrLen = 1663;
 		vrLoc = 2601;
@@ -2728,7 +2730,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 123";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 1663;
 		vrLoc = 2601;
@@ -2738,7 +2740,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 123";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 1663;
 		vrLoc = 2601;
@@ -2758,7 +2760,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1654;
 		vrLoc = 2599;
@@ -2768,7 +2770,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 136";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1629;
 		vrLoc = 2599;
@@ -2778,7 +2780,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 144";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1631;
 		vrLoc = 2599;
@@ -2788,7 +2790,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 144";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1700;
 		vrLoc = 2599;
@@ -2798,7 +2800,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 117";
 		rLen = 0;
-		rLoc = 6973;
+		rLoc = 6968;
 		rType = 0;
 		vrLen = 1655;
 		vrLoc = 2599;
@@ -2808,7 +2810,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 147";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1721;
 		vrLoc = 2599;
@@ -2818,7 +2820,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 146";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1723;
 		vrLoc = 2599;
@@ -2828,7 +2830,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 181";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1333;
 		vrLoc = 2956;
@@ -2838,7 +2840,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 153";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1333;
 		vrLoc = 2956;
@@ -2848,7 +2850,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 146";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1585;
 		vrLoc = 3181;
@@ -2858,7 +2860,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 148";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 3063;
@@ -2868,7 +2870,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1458;
 		vrLoc = 3063;
@@ -2888,7 +2890,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 123";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 1547;
 		vrLoc = 2689;
@@ -2898,7 +2900,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 135";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1561;
 		vrLoc = 3086;
@@ -2918,7 +2920,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1254;
 		vrLoc = 670;
@@ -2928,7 +2930,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 120";
 		rLen = 0;
-		rLoc = 7051;
+		rLoc = 7046;
 		rType = 0;
 		vrLen = 1613;
 		vrLoc = 2470;
@@ -2948,7 +2950,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 120";
 		rLen = 0;
-		rLoc = 7051;
+		rLoc = 7046;
 		rType = 0;
 		vrLen = 1613;
 		vrLoc = 2470;
@@ -2976,7 +2978,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 115";
 		rLen = 96;
-		rLoc = 6838;
+		rLoc = 6833;
 		rType = 0;
 		vrLen = 460;
 		vrLoc = 2599;
@@ -2996,7 +2998,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 94";
 		rLen = 0;
-		rLoc = 6231;
+		rLoc = 6226;
 		rType = 0;
 		vrLen = 1596;
 		vrLoc = 1924;
@@ -3026,7 +3028,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 207";
 		rLen = 82;
-		rLoc = 9759;
+		rLoc = 9754;
 		rType = 0;
 		vrLen = 1722;
 		vrLoc = 4954;
@@ -3036,7 +3038,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 94";
 		rLen = 0;
-		rLoc = 6231;
+		rLoc = 6226;
 		rType = 0;
 		vrLen = 1596;
 		vrLoc = 1924;
@@ -3076,7 +3078,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1495;
 		vrLoc = 2685;
@@ -3096,7 +3098,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1495;
 		vrLoc = 2685;
@@ -3116,7 +3118,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 3968;
@@ -3146,7 +3148,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1588;
 		vrLoc = 3248;
@@ -3156,7 +3158,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1113;
 		vrLoc = 4057;
@@ -3186,7 +3188,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 248";
 		rLen = 0;
-		rLoc = 11129;
+		rLoc = 11124;
 		rType = 0;
 		vrLen = 1769;
 		vrLoc = 5273;
@@ -3196,7 +3198,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 248";
 		rLen = 0;
-		rLoc = 11129;
+		rLoc = 11124;
 		rType = 0;
 		vrLen = 1563;
 		vrLoc = 2536;
@@ -3213,7 +3215,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 248";
 		rLen = 0;
-		rLoc = 11129;
+		rLoc = 11124;
 		rType = 0;
 		vrLen = 1563;
 		vrLoc = 2536;
@@ -3233,7 +3235,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1502;
 		vrLoc = 2597;
@@ -3260,7 +3262,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1502;
 		vrLoc = 2597;
@@ -3307,7 +3309,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 133";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1502;
 		vrLoc = 2597;
@@ -3327,7 +3329,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 126";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 1502;
 		vrLoc = 2597;
@@ -3337,7 +3339,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 126";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 1502;
 		vrLoc = 2597;
@@ -3357,7 +3359,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 138";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2037;
 		vrLoc = 2983;
@@ -3367,7 +3369,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 136";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2060;
 		vrLoc = 2983;
@@ -3377,7 +3379,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 255";
 		rLen = 0;
-		rLoc = 11430;
+		rLoc = 11425;
 		rType = 0;
 		vrLen = 2341;
 		vrLoc = 5166;
@@ -3387,7 +3389,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 120";
 		rLen = 0;
-		rLoc = 6944;
+		rLoc = 6939;
 		rType = 0;
 		vrLen = 2087;
 		vrLoc = 2114;
@@ -3397,7 +3399,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 161";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2129;
 		vrLoc = 2761;
@@ -3407,7 +3409,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 178";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2018;
 		vrLoc = 3127;
@@ -3417,7 +3419,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 177";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2029;
 		vrLoc = 3061;
@@ -3437,7 +3439,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 126";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 2120;
 		vrLoc = 2945;
@@ -3447,7 +3449,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 126";
 		rLen = 8;
-		rLoc = 7119;
+		rLoc = 7114;
 		rType = 0;
 		vrLen = 2120;
 		vrLoc = 2945;
@@ -3467,7 +3469,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2118;
 		vrLoc = 2945;
@@ -3477,7 +3479,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2119;
 		vrLoc = 2945;
@@ -3487,7 +3489,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2146;
 		vrLoc = 2945;
@@ -3497,7 +3499,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2146;
 		vrLoc = 2945;
@@ -3537,7 +3539,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 99";
 		rLen = 0;
-		rLoc = 6332;
+		rLoc = 6327;
 		rType = 0;
 		vrLen = 2180;
 		vrLoc = 1877;
@@ -3557,7 +3559,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 99";
 		rLen = 0;
-		rLoc = 6332;
+		rLoc = 6327;
 		rType = 0;
 		vrLen = 2180;
 		vrLoc = 1877;
@@ -3587,7 +3589,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 249";
 		rLen = 0;
-		rLoc = 11129;
+		rLoc = 11124;
 		rType = 0;
 		vrLen = 2339;
 		vrLoc = 5237;
@@ -3597,7 +3599,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 177";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2011;
 		vrLoc = 3197;
@@ -3607,7 +3609,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 178";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2007;
 		vrLoc = 3197;
@@ -3617,7 +3619,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 120";
 		rLen = 0;
-		rLoc = 6973;
+		rLoc = 6968;
 		rType = 0;
 		vrLen = 2174;
 		vrLoc = 1967;
@@ -3634,7 +3636,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 211";
 		rLen = 83;
-		rLoc = 9759;
+		rLoc = 9754;
 		rType = 0;
 		vrLen = 2347;
 		vrLoc = 5143;
@@ -3644,7 +3646,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 249";
 		rLen = 0;
-		rLoc = 11144;
+		rLoc = 11139;
 		rType = 0;
 		vrLen = 2362;
 		vrLoc = 5114;
@@ -3664,7 +3666,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 154";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1764;
 		vrLoc = 535;
@@ -3684,7 +3686,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 154";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1764;
 		vrLoc = 535;
@@ -3731,7 +3733,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 226";
 		rLen = 0;
-		rLoc = 10335;
+		rLoc = 10330;
 		rType = 0;
 		vrLen = 2007;
 		vrLoc = 3197;
@@ -3741,7 +3743,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2090;
 		vrLoc = 3022;
@@ -3751,7 +3753,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 168";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2068;
 		vrLoc = 3022;
@@ -3761,7 +3763,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 138";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2112;
 		vrLoc = 2089;
@@ -3801,7 +3803,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1927;
 		vrLoc = 670;
@@ -3811,7 +3813,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 138";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1809;
 		vrLoc = 3684;
@@ -3851,7 +3853,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1927;
 		vrLoc = 670;
@@ -3871,7 +3873,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1864;
 		vrLoc = 670;
@@ -3891,7 +3893,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1809;
 		vrLoc = 3684;
@@ -3911,7 +3913,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1809;
 		vrLoc = 3684;
@@ -3941,7 +3943,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 61";
 		rLen = 0;
-		rLoc = 5214;
+		rLoc = 5209;
 		rType = 0;
 		vrLen = 1809;
 		vrLoc = 3684;
@@ -3971,7 +3973,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1881;
 		vrLoc = 3684;
@@ -3991,7 +3993,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1881;
 		vrLoc = 3684;
@@ -4011,7 +4013,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1833;
 		vrLoc = 3684;
@@ -4041,7 +4043,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 178";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2106;
 		vrLoc = 2905;
@@ -4051,7 +4053,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 178";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2106;
 		vrLoc = 2905;
@@ -4091,7 +4093,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 179";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2020;
 		vrLoc = 3150;
@@ -4101,7 +4103,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 179";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2054;
 		vrLoc = 3150;
@@ -4111,7 +4113,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 179";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2054;
 		vrLoc = 3150;
@@ -4151,7 +4153,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 175";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2280;
 		vrLoc = 2687;
@@ -4169,7 +4171,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 116";
 		rLen = 0;
-		rLoc = 6909;
+		rLoc = 6904;
 		rType = 0;
 		vrLen = 488;
 		vrLoc = 2599;
@@ -4189,7 +4191,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 211";
 		rLen = 82;
-		rLoc = 9759;
+		rLoc = 9754;
 		rType = 0;
 		vrLen = 2071;
 		vrLoc = 4963;
@@ -4199,7 +4201,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 211";
 		rLen = 82;
-		rLoc = 9759;
+		rLoc = 9754;
 		rType = 0;
 		vrLen = 2170;
 		vrLoc = 5009;
@@ -4219,7 +4221,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 211";
 		rLen = 82;
-		rLoc = 9759;
+		rLoc = 9754;
 		rType = 0;
 		vrLen = 2071;
 		vrLoc = 4963;
@@ -4239,7 +4241,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 246";
 		rLen = 0;
-		rLoc = 11122;
+		rLoc = 11117;
 		rType = 0;
 		vrLen = 2063;
 		vrLoc = 5477;
@@ -4249,7 +4251,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 246";
 		rLen = 0;
-		rLoc = 11122;
+		rLoc = 11117;
 		rType = 0;
 		vrLen = 1925;
 		vrLoc = 3250;
@@ -4259,7 +4261,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 173";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1924;
 		vrLoc = 3250;
@@ -4269,7 +4271,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 116";
 		rLen = 0;
-		rLoc = 6909;
+		rLoc = 6904;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 2599;
@@ -4279,7 +4281,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 173";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1924;
 		vrLoc = 3250;
@@ -4289,7 +4291,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 173";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1924;
 		vrLoc = 3250;
@@ -4299,7 +4301,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 154";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2109;
 		vrLoc = 2998;
@@ -4309,7 +4311,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 154";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2081;
 		vrLoc = 2998;
@@ -4408,7 +4410,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 70";
 		rLen = 0;
-		rLoc = 4079;
+		rLoc = 4074;
 		rType = 0;
 		vrLen = 1640;
 		vrLoc = 436;
@@ -4418,7 +4420,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 154";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 2109;
 		vrLoc = 2998;
@@ -4459,7 +4461,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 101";
 		rLen = 0;
-		rLoc = 6334;
+		rLoc = 6329;
 		rType = 0;
 		vrLen = 2111;
 		vrLoc = 2031;
@@ -4579,7 +4581,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 70";
 		rLen = 0;
-		rLoc = 4079;
+		rLoc = 4074;
 		rType = 0;
 		vrLen = 1640;
 		vrLoc = 436;
@@ -4599,7 +4601,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 70";
 		rLen = 0;
-		rLoc = 4079;
+		rLoc = 4074;
 		rType = 0;
 		vrLen = 1640;
 		vrLoc = 436;
@@ -4619,7 +4621,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 69";
 		rLen = 0;
-		rLoc = 4079;
+		rLoc = 4074;
 		rType = 0;
 		vrLen = 2213;
 		vrLoc = 1278;
@@ -4629,7 +4631,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 105";
 		rLen = 0;
-		rLoc = 5915;
+		rLoc = 5910;
 		rType = 0;
 		vrLen = 2091;
 		vrLoc = 686;
@@ -4649,7 +4651,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 105";
 		rLen = 0;
-		rLoc = 5915;
+		rLoc = 5910;
 		rType = 0;
 		vrLen = 2091;
 		vrLoc = 686;
@@ -4689,7 +4691,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 105";
 		rLen = 0;
-		rLoc = 5915;
+		rLoc = 5910;
 		rType = 0;
 		vrLen = 2091;
 		vrLoc = 686;
@@ -4719,7 +4721,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 71";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 2130;
 		vrLoc = 686;
@@ -4729,7 +4731,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 79";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 2049;
 		vrLoc = 802;
@@ -4739,7 +4741,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 73";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2102;
 		vrLoc = 1035;
@@ -4749,7 +4751,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 73";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2163;
 		vrLoc = 1035;
@@ -4779,7 +4781,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 164";
 		rLen = 0;
-		rLoc = 6909;
+		rLoc = 6904;
 		rType = 0;
 		vrLen = 496;
 		vrLoc = 2518;
@@ -4797,7 +4799,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 164";
 		rLen = 0;
-		rLoc = 6909;
+		rLoc = 6904;
 		rType = 0;
 		vrLen = 496;
 		vrLoc = 2518;
@@ -4967,7 +4969,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1619;
 		vrLoc = 742;
@@ -4977,7 +4979,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1622;
 		vrLoc = 742;
@@ -4987,7 +4989,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1621;
 		vrLoc = 742;
@@ -4997,7 +4999,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1623;
 		vrLoc = 742;
@@ -5017,7 +5019,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1623;
 		vrLoc = 742;
@@ -5037,7 +5039,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1623;
 		vrLoc = 742;
@@ -5057,7 +5059,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1623;
 		vrLoc = 742;
@@ -5127,7 +5129,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1503;
 		vrLoc = 0;
@@ -5177,7 +5179,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 91";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1503;
 		vrLoc = 0;
@@ -5858,7 +5860,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 123";
 		rLen = 0;
-		rLoc = 4078;
+		rLoc = 4073;
 		rType = 0;
 		vrLen = 2037;
 		vrLoc = 1446;
@@ -5878,7 +5880,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 123";
 		rLen = 0;
-		rLoc = 4078;
+		rLoc = 4073;
 		rType = 0;
 		vrLen = 2037;
 		vrLoc = 1446;
@@ -6560,7 +6562,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 122";
 		rLen = 0;
-		rLoc = 4066;
+		rLoc = 4061;
 		rType = 0;
 		vrLen = 2059;
 		vrLoc = 1436;
@@ -6570,7 +6572,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 2124;
 		vrLoc = 1436;
@@ -6580,7 +6582,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 2124;
 		vrLoc = 1436;
@@ -6600,7 +6602,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 1884;
 		vrLoc = 639;
@@ -6630,7 +6632,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 1884;
 		vrLoc = 639;
@@ -6677,7 +6679,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 112";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1998;
 		vrLoc = 1110;
@@ -6697,7 +6699,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 112";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1522;
 		vrLoc = 171;
@@ -6717,7 +6719,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 112";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1555;
 		vrLoc = 138;
@@ -6747,7 +6749,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 112";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1522;
 		vrLoc = 171;
@@ -6897,7 +6899,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 1955;
 		vrLoc = 1337;
@@ -7060,7 +7062,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 183";
 		rLen = 0;
-		rLoc = 6812;
+		rLoc = 6807;
 		rType = 0;
 		vrLen = 546;
 		vrLoc = 4455;
@@ -7070,7 +7072,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 183";
 		rLen = 0;
-		rLoc = 6812;
+		rLoc = 6807;
 		rType = 0;
 		vrLen = 546;
 		vrLoc = 4455;
@@ -7117,7 +7119,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 183";
 		rLen = 0;
-		rLoc = 6812;
+		rLoc = 6807;
 		rType = 0;
 		vrLen = 546;
 		vrLoc = 4455;
@@ -7135,7 +7137,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 183";
 		rLen = 0;
-		rLoc = 6812;
+		rLoc = 6807;
 		rType = 0;
 		vrLen = 546;
 		vrLoc = 4455;
@@ -7310,7 +7312,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2113;
 		vrLoc = 1397;
@@ -7327,7 +7329,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 118";
 		rLen = 0;
-		rLoc = 4065;
+		rLoc = 4060;
 		rType = 0;
 		vrLen = 2293;
 		vrLoc = 1657;
@@ -7357,7 +7359,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 366";
 		rLen = 0;
-		rLoc = 12038;
+		rLoc = 12033;
 		rType = 0;
 		vrLen = 1769;
 		vrLoc = 7772;
@@ -7397,7 +7399,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 235";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1970;
 		vrLoc = 5830;
@@ -7417,7 +7419,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 253";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1970;
 		vrLoc = 5830;
@@ -7447,7 +7449,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 253";
 		rLen = 0;
-		rLoc = 7756;
+		rLoc = 7751;
 		rType = 0;
 		vrLen = 1970;
 		vrLoc = 5830;
@@ -7467,7 +7469,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 361";
 		rLen = 0;
-		rLoc = 12038;
+		rLoc = 12033;
 		rType = 0;
 		vrLen = 1980;
 		vrLoc = 7537;
@@ -7487,7 +7489,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2113;
 		vrLoc = 1397;
@@ -7517,7 +7519,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 272";
 		rLen = 0;
-		rLoc = 9603;
+		rLoc = 9598;
 		rType = 0;
 		vrLen = 230;
 		vrLoc = 6970;
@@ -7545,7 +7547,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 272";
 		rLen = 0;
-		rLoc = 9603;
+		rLoc = 9598;
 		rType = 0;
 		vrLen = 230;
 		vrLoc = 6970;
@@ -7625,7 +7627,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2193;
 		vrLoc = 2323;
@@ -7645,7 +7647,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 122";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2114;
 		vrLoc = 1397;
@@ -7665,7 +7667,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 119";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2114;
 		vrLoc = 1397;
@@ -7685,7 +7687,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 119";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2114;
 		vrLoc = 1397;
@@ -7715,7 +7717,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2137;
 		vrLoc = 1435;
@@ -7745,7 +7747,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 119";
 		rLen = 0;
-		rLoc = 4063;
+		rLoc = 4058;
 		rType = 0;
 		vrLen = 2143;
 		vrLoc = 1435;
@@ -7795,7 +7797,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 121";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2193;
 		vrLoc = 2323;
@@ -7825,7 +7827,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 213";
 		rLen = 0;
-		rLoc = 7400;
+		rLoc = 7395;
 		rType = 0;
 		vrLen = 2378;
 		vrLoc = 4912;
@@ -7835,7 +7837,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 212";
 		rLen = 0;
-		rLoc = 7399;
+		rLoc = 7394;
 		rType = 0;
 		vrLen = 2250;
 		vrLoc = 5127;
@@ -7910,7 +7912,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 215";
 		rLen = 0;
-		rLoc = 7613;
+		rLoc = 7608;
 		rType = 0;
 		vrLen = 2202;
 		vrLoc = 5309;
@@ -7920,7 +7922,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 222";
 		rLen = 0;
-		rLoc = 7525;
+		rLoc = 7520;
 		rType = 0;
 		vrLen = 2290;
 		vrLoc = 4399;
@@ -7940,7 +7942,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 258";
 		rLen = 0;
-		rLoc = 7670;
+		rLoc = 7665;
 		rType = 0;
 		vrLen = 2250;
 		vrLoc = 5049;
@@ -7950,7 +7952,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 258";
 		rLen = 0;
-		rLoc = 7670;
+		rLoc = 7665;
 		rType = 0;
 		vrLen = 1851;
 		vrLoc = 2688;
@@ -7990,7 +7992,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 150";
 		rLen = 0;
-		rLoc = 4654;
+		rLoc = 4649;
 		rType = 0;
 		vrLen = 1970;
 		vrLoc = 2969;
@@ -8030,7 +8032,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 157";
 		rLen = 0;
-		rLoc = 4581;
+		rLoc = 4576;
 		rType = 0;
 		vrLen = 1793;
 		vrLoc = 2618;
@@ -8040,7 +8042,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 267";
 		rLen = 0;
-		rLoc = 7666;
+		rLoc = 7661;
 		rType = 0;
 		vrLen = 2282;
 		vrLoc = 5491;
@@ -8100,7 +8102,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 259";
 		rLen = 0;
-		rLoc = 7487;
+		rLoc = 7482;
 		rType = 0;
 		vrLen = 2239;
 		vrLoc = 5469;
@@ -8260,7 +8262,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 128";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2182;
 		vrLoc = 1774;
@@ -8270,7 +8272,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1982;
 		vrLoc = 3223;
@@ -8280,7 +8282,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1936;
 		vrLoc = 2234;
@@ -8290,7 +8292,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1894;
 		vrLoc = 2966;
@@ -8300,7 +8302,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1959;
 		vrLoc = 2966;
@@ -8310,7 +8312,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 1959;
 		vrLoc = 2966;
@@ -8367,7 +8369,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2101;
 		vrLoc = 2026;
@@ -8425,7 +8427,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 4062;
+		rLoc = 4057;
 		rType = 0;
 		vrLen = 2187;
 		vrLoc = 5754;
@@ -8445,7 +8447,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 154";
 		rLen = 0;
-		rLoc = 4393;
+		rLoc = 4388;
 		rType = 0;
 		vrLen = 2007;
 		vrLoc = 3307;
@@ -8505,7 +8507,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 147";
 		rLen = 0;
-		rLoc = 3813;
+		rLoc = 3808;
 		rType = 0;
 		vrLen = 2012;
 		vrLoc = 3554;
@@ -8635,7 +8637,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 147";
 		rLen = 0;
-		rLoc = 3762;
+		rLoc = 3757;
 		rType = 0;
 		vrLen = 2264;
 		vrLoc = 2601;
@@ -8655,7 +8657,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 147";
 		rLen = 0;
-		rLoc = 3762;
+		rLoc = 3757;
 		rType = 0;
 		vrLen = 2264;
 		vrLoc = 2601;
@@ -8675,7 +8677,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 151";
 		rLen = 0;
-		rLoc = 3844;
+		rLoc = 3839;
 		rType = 0;
 		vrLen = 2258;
 		vrLoc = 2601;
@@ -8695,7 +8697,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 292";
 		rLen = 0;
-		rLoc = 7751;
+		rLoc = 7746;
 		rType = 0;
 		vrLen = 2258;
 		vrLoc = 6996;
@@ -8715,7 +8717,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 292";
 		rLen = 0;
-		rLoc = 7751;
+		rLoc = 7746;
 		rType = 0;
 		vrLen = 2133;
 		vrLoc = 6996;
@@ -8755,7 +8757,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 3143;
+		rLoc = 3138;
 		rType = 0;
 		vrLen = 2250;
 		vrLoc = 2600;
@@ -8765,7 +8767,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 292";
 		rLen = 0;
-		rLoc = 7751;
+		rLoc = 7746;
 		rType = 0;
 		vrLen = 2258;
 		vrLoc = 6996;
@@ -8785,7 +8787,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 149";
 		rLen = 8;
-		rLoc = 3782;
+		rLoc = 3777;
 		rType = 0;
 		vrLen = 1940;
 		vrLoc = 2933;
@@ -8805,7 +8807,7 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 140";
 		rLen = 0;
-		rLoc = 3559;
+		rLoc = 3554;
 		rType = 0;
 		vrLen = 1939;
 		vrLoc = 2933;
@@ -8825,12 +8827,32 @@
 		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
 		name = "CurlFTP.m: 130";
 		rLen = 0;
-		rLoc = 3143;
+		rLoc = 3138;
 		rType = 0;
 		vrLen = 2250;
 		vrLoc = 2600;
 	};
 	0BBF86A310F018A0005358BB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */;
+		name = "CurlSFTP.m: 196";
+		rLen = 0;
+		rLoc = 4770;
+		rType = 0;
+		vrLen = 1416;
+		vrLoc = 3957;
+	};
+	0BBF86A610F018C2005358BB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0B76051410DF131500BE0666 /* CurlFTP.m */;
+		name = "CurlFTP.m: 129";
+		rLen = 0;
+		rLoc = 3083;
+		rType = 0;
+		vrLen = 2245;
+		vrLoc = 2600;
+	};
+	0BBF86A710F018C2005358BB /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */;
 		name = "CurlSFTP.m: 196";

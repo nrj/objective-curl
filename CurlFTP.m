@@ -126,7 +126,7 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 	
 	NSMutableArray *list;
 	
-	if (forceReload || !(list = [directoryListCache objectForKey:url]))
+	if (reload || !(list = [directoryListCache objectForKey:url]))
 	{
 		list = [[NSMutableArray alloc] init];
 		

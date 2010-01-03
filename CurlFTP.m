@@ -19,13 +19,14 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
  * of these options before doing any uploads
  */
-- (id)initForUpload
+- (id)init
 {		
 	if (self = [super init])
 	{
 		[self setProtocolType:kSecProtocolTypeFTP];
 
-		curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
+		directoryListCache = [[NSMutableDictionary alloc] init];
+		
 		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
 	}
 	
@@ -48,6 +49,151 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 - (NSString * const)protocolPrefix
 {
 	return FTP_PROTOCOL_PREFIX;
+}
+
+
+/*
+ * Called by curl when a directory list needs to be written. Takes a pointer to an array that will be filled with RemoteFile objects.
+ *
+ *     See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTWRITEFUNCTION
+ */
+static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutableArray *list)
+{
+	char *line = strtok((char *)ptr, "\n");
+	
+	do
+	{
+		struct ftpparse *info = malloc(sizeof(struct ftpparse));
+		
+		if(line) 
+		{		
+			if (ftpparse(info, line, strlen(line)))
+			{
+				RemoteFile *file = [[RemoteFile alloc] init];
+				
+				[file setName:[NSString stringWithCString:info->name]];
+				[file setIsDir:info->flagtrycwd];
+				[file setSize:info->size];
+				[file setLastModified:info->mtime];
+				[file setLastModified:(long)info->mtime];
+				
+				[list addObject:file];
+			}			
+		}
+		
+		line = strtok('\0', "\n");
+		free(info);
+		
+	} while (line);
+	
+	return (size_t)(size * nmemb);
+}
+
+
+/*
+ * Returns an array of files that exist in a remote directory. Will use items in the directoryListCache if they exist. Uses 
+ * the default FTP port.
+ */
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host
+{
+	return [self listRemoteDirectory:directory 
+							  onHost:host
+						 forceReload:NO
+								port:DEFAULT_FTP_PORT];
+}
+
+
+/*
+ * Returns an array of files that exist in a remote directory. The forceReload flag will bypass using the directoryListCache and
+ * always return a fresh listing from the specified server.  Uses the default FTP port.
+ */
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload;
+{
+	return [self listRemoteDirectory:directory 
+							  onHost:host 
+						 forceReload:reload 
+								port:DEFAULT_FTP_PORT];
+}
+
+
+/*
+ * Returns an array of files that exist in a remote directory. The forceReload flag will bypass using the directoryListCache and
+ * always return a fresh listing from the specified server and port number.
+ */
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port
+{	
+	NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [self protocolPrefix], host, port, directory];
+	
+	NSMutableArray *list;
+	
+	if (!(list = [directoryListCache objectForKey:url]))
+	{
+		list = [[NSMutableArray alloc] init];
+		
+		curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
+		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, handleDirectoryList);
+		curl_easy_setopt(handle, CURLOPT_WRITEDATA, list);
+		curl_easy_setopt(handle, CURLOPT_UPLOAD, NO);
+		curl_easy_setopt(handle, CURLOPT_CUSTOMREQUEST, "LIST");
+		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
+		
+		CURLcode result = -1;
+		
+		NSLog(@"Listing directory: %@", directory);
+		
+		result = curl_easy_perform(handle);
+		
+		// TODO - add a cross-operation result handler.
+		// [self handleCurlResult:result];
+		
+		if (result == CURLE_OK)
+		{
+			[directoryListCache setObject:list forKey:url];
+		}
+		else
+		{
+			@throw [NSException exceptionWithName:@"LIST error"
+										   reason:[NSString stringWithFormat:@"Protocol: %@ CURLcode: %d", [self protocolPrefix], result] 
+										 userInfo:nil];		
+		}
+	}	
+
+
+	
+	return list;
+}
+
+
+/*
+ * Locate a remote file and return it. Uses default FTP port.
+ */
+- (RemoteFile *)existingFileOrDirectory:(NSString *)filename onHost:(NSString *)host atPath:(NSString *)path
+{
+	return [self existingFileOrDirectory:filename 
+								  onHost:host 
+								  atPath:path 
+									port:DEFAULT_FTP_PORT];
+}
+
+
+/*
+ * Locate a remote file and return it.
+ */
+- (RemoteFile *)existingFileOrDirectory:(NSString *)filename onHost:(NSString *)host atPath:(NSString *)path port:(int)port
+{
+	NSArray *list = [self listRemoteDirectory:path onHost:host forceReload:NO port:port];	
+	RemoteFile *found = nil;
+	for (int i = 0; i < [list count]; i++)
+	{
+		RemoteFile *file = (RemoteFile *)[list objectAtIndex:i];
+		if ([[file name] isEqualToString:filename])
+		{
+			found = file;
+			break;
+		}
+	}
+	
+	return found;
 }
 
 
@@ -110,7 +256,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 	[transfer setStatus:TRANSFER_STATUS_QUEUED];
 	[transfer setStatusMessage:@"Queued"];
 	
-	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+	[self performDelegateSelector:@selector(curl:transferStatusDidChange:) withObject:transfer];
 	
 	int totalFiles = 0;
 	NSArray *commands = [self createCommandsForUpload:filesAndDirectories totalFiles:&totalFiles];
@@ -128,6 +274,23 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 		
 		[transfer setCurrentFile:[[cmd localPath] lastPathComponent]];
 		
+		NSLog(@"Preparing upload of %@", [transfer currentFile]);
+		
+		RemoteFile *existing = nil;
+		if (existing = [self existingFileOrDirectory:[transfer currentFile] onHost:[transfer hostname] atPath:[transfer directory] port:[transfer port]])
+		{
+			NSLog(@"Existing File Found: %@", [existing description]);	
+		}
+		else
+		{
+			NSLog(@"No Existing File Found");
+		}
+			
+		
+		/*
+		 
+		 Temporary until I can get the existing callbacks implemented.
+		 
 		if ([cmd type] == FTP_COMMAND_MKDIR)
 		{
 			char *mkdir = malloc(strlen("MKDIR \"\"") + strlen([[cmd remotePath] UTF8String]) + 1);
@@ -188,14 +351,12 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 			
 			[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
 		}
+		 */
 	}
 	
 	[commands release];
-	
-	curl_easy_cleanup(handle);
 
 	[self setIsUploading:NO];
-
 	[self handleCurlResult:result];
 
 	[pool drain];

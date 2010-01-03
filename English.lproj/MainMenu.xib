@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="449"/>
+			<integer value="448"/>
 			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -1226,7 +1226,7 @@
 							<object class="NSSecureTextFieldCell" key="NSCell" id="659381111">
 								<int key="NSCellFlags">343014976</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">antiquing</string>
+								<string key="NSContents"/>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="366964228"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1374,7 +1374,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1042472093">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">~/Desktop/DOESNOTEXIST</string>
+								<string key="NSContents">~/Desktop/test-folder</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="796475260"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1400,6 +1400,26 @@
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
+							</object>
+						</object>
+						<object class="NSButton" id="619608322">
+							<reference key="NSNextResponder" ref="686122530"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{462, 15}, {32, 32}}</string>
+							<reference key="NSSuperview" ref="686122530"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="666794186">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">131072</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="619608322"/>
+								<int key="NSButtonFlags">-2037645057</int>
+								<int key="NSButtonFlags2">135</int>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
 					</object>
@@ -2241,6 +2261,14 @@
 						</object>
 					</object>
 					<int key="connectionID">586</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">runDirListTest:</string>
+						<reference key="source" ref="962184478"/>
+						<reference key="destination" ref="619608322"/>
+					</object>
+					<int key="connectionID">589</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3159,6 +3187,7 @@
 							<reference ref="758257373"/>
 							<reference ref="694542123"/>
 							<reference ref="403472129"/>
+							<reference ref="619608322"/>
 						</object>
 						<reference key="parent" ref="682341643"/>
 					</object>
@@ -3381,6 +3410,20 @@
 						<int key="objectID">576</int>
 						<reference key="object" ref="886080653"/>
 						<reference key="parent" ref="758257373"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">587</int>
+						<reference key="object" ref="619608322"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="666794186"/>
+						</object>
+						<reference key="parent" ref="686122530"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">588</int>
+						<reference key="object" ref="666794186"/>
+						<reference key="parent" ref="619608322"/>
 					</object>
 				</object>
 			</object>
@@ -3622,6 +3665,8 @@
 					<string>576.IBPluginDependency</string>
 					<string>58.IBPluginDependency</string>
 					<string>58.ImportedFromIB2</string>
+					<string>587.IBPluginDependency</string>
+					<string>588.IBPluginDependency</string>
 					<string>72.IBPluginDependency</string>
 					<string>72.ImportedFromIB2</string>
 					<string>73.IBPluginDependency</string>
@@ -3839,8 +3884,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{726, 766}, {696, 166}}</string>
-					<string>{{726, 766}, {696, 166}}</string>
+					<string>{{576, 788}, {696, 166}}</string>
+					<string>{{576, 788}, {696, 166}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3885,6 +3930,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="9"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3933,7 +3980,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">586</int>
+			<int key="maxID">589</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3946,11 +3993,13 @@
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cancelTransfer:</string>
+							<string>runDirListTest:</string>
 							<string>runFTPTest:</string>
 							<string>runSFTPTest:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

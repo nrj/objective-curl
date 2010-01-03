@@ -30,6 +30,7 @@
 @property(readwrite, retain) id <TransferRecord>upload;
 @property(readwrite, assign) BOOL uploadEnabled;
 
+- (IBAction)runDirListTest:(id)sender;
 - (IBAction)runFTPTest:(id)sender;
 - (IBAction)runSFTPTest:(id)sender;
 - (IBAction)cancelTransfer:(id)sender;

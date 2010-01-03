@@ -11,17 +11,28 @@
 #import "TransferStatus.h"
 #import "FTPCommand.h"
 #import "Upload.h"
+#import "RemoteFile.h"
+#import "ftpparse.h"
 
 
-extern int const DEFAULT_SFTP_PORT;
+extern int const DEFAULT_FTP_PORT;
 
 extern NSString * const FTP_PROTOCOL_PREFIX;
 
-@interface CurlFTP : CurlObject
-	
-- (id)initForUpload;
+@interface CurlFTP : CurlObject {
 
-int uploadProgressFunction(CurlFTP *client, double dltotal, double dlnow, double ultotal, double ulnow);
+	NSMutableDictionary *directoryListCache;
+	
+}
+
+static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutableArray *list);
+
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host;
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload;
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port;
+
+- (RemoteFile *)existingFileOrDirectory:(NSString *)filename onHost:(NSString *)host atPath:(NSString *)path;
+- (RemoteFile *)existingFileOrDirectory:(NSString *)filename onHost:(NSString *)host atPath:(NSString *)path port:(int)port;
 
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host;
 - (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory;

@@ -27,25 +27,49 @@
 }
 
 
+- (void)initCurlObject:(CurlObject *)curl
+{
+	[self setUploadEnabled:NO];
+	
+	[curl setVerbose:NO];
+	[curl setShowProgress:YES];
+	[curl setAuthUsername:[usernameField stringValue]];
+	[curl setAuthPassword:[passwordField stringValue]];
+	
+	[curl setDelegate:self];
+}
+
+
+- (IBAction)runDirListTest:(id)sender
+{
+	CurlSFTP *sftp = [[CurlSFTP alloc] init];
+	
+	[self initCurlObject:sftp];
+	
+	NSString *hostname = [hostnameField stringValue];
+	NSString *dir = @"~/";
+	
+	NSArray *directoryList = [sftp listRemoteDirectory:dir onHost:hostname];
+	
+	for (int i = 0; i < [directoryList count]; i++)
+	{
+		NSLog([[directoryList objectAtIndex:i] description]);
+	}
+}
+
 
 - (IBAction)runSFTPTest:(id)sender
 {	
 	[self setUploadEnabled:NO];
 	
-	CurlSFTP *sftp = [[CurlSFTP alloc] initForUpload];
+	CurlSFTP *sftp = [[CurlSFTP alloc] init];
 
-	[sftp setVerbose:YES];
-	[sftp setShowProgress:YES];
-	
-	[sftp setAuthUsername:[usernameField stringValue]];
-	[sftp setAuthPassword:[passwordField stringValue]];
-
-	[sftp setDelegate:self];
+	[self initCurlObject:sftp];
 	
 	NSString *hostname = [hostnameField stringValue];
 	NSArray *filesToUpload = [NSArray arrayWithObjects:[[filepathField stringValue] stringByExpandingTildeInPath], NULL];
 	
-	id <TransferRecord>newUpload = [sftp uploadFilesAndDirectories:filesToUpload toHost:hostname];
+	id <TransferRecord>newUpload = [sftp uploadFilesAndDirectories:filesToUpload toHost:hostname directory:@"asdf"];
 	
 	[self setUpload:newUpload];
 }
@@ -56,16 +80,10 @@
 {	
 	[self setUploadEnabled:NO];
 	
-	CurlFTP *ftp = [[CurlFTP alloc] initForUpload];
+	CurlFTP *ftp = [[CurlFTP alloc] init];
 	
-	[ftp setVerbose:NO];
-	[ftp setShowProgress:YES];
+	[self initCurlObject:ftp];
 	
-	[ftp setAuthUsername:[usernameField stringValue]];
-	[ftp setAuthPassword:[passwordField stringValue]];
-	
-	[ftp setDelegate:self];
-
 	NSString *hostname = [hostnameField stringValue];
 	NSArray *filesToUpload = [NSArray arrayWithObjects:[[filepathField stringValue] stringByExpandingTildeInPath], NULL];
 	

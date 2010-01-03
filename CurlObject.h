@@ -66,6 +66,6 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 
 - (void)handleCurlResult:(CURLcode)result;
 
-- (void)performDelegateSelector:(SEL)aSelector;
+- (void)performDelegateSelector:(SEL)aSelector withObject:(id)anObject;
 
 @end

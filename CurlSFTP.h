@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CurlFTP.h"
-#import "TransferDelegate.h"
+#import "CurlDelegate.h"
 #import "NSString+MD5.h"
 
 

@@ -29,7 +29,7 @@
 
 - (NSString *)text
 {
-		return @"";
+	return @"";
 }
 
 @end

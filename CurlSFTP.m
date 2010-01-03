@@ -101,10 +101,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	int result = CURLKHSTAT_DEFER;
 
-	if (delegate && [delegate respondsToSelector:@selector(curl:transfer:receivedUnknownHostKey:)])
-	{
-		[delegate curl:self transfer:transfer receivedUnknownHostKey:rsaFingerprint];
-	}
+	[self performDelegateSelector:@selector(curl:receivedUnknownHostKeyFingerprint:) withObject:rsaFingerprint];
 	
 	for (id key in hostKeyFingerprints)
 	{
@@ -127,10 +124,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	int result = CURLKHSTAT_DEFER;
 
-	if (delegate && [delegate respondsToSelector:@selector(curl:transfer:receivedMismatchedHostKey:)])
-	{
-		[delegate curl:self transfer:transfer receivedMismatchedHostKey:rsaFingerprint];
-	}
+	[self performDelegateSelector:@selector(curl:receivedMismatchedHostKeyFingerprint:) withObject:rsaFingerprint];
 	
 	for (id key in hostKeyFingerprints)
 	{
@@ -180,6 +174,33 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 - (NSString *)knownHostsFile
 {
 	return knownHostsFile;
+}
+
+
+/*
+ * Returns an array of files that exist in a remote directory. Will use items in the directoryListCache if they exist. Uses 
+ * the default SFTP port.
+ */
+
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host
+{
+	return [self listRemoteDirectory:directory 
+							  onHost:host
+						 forceReload:NO
+								port:DEFAULT_SFTP_PORT];
+}
+
+
+/*
+ * Returns an array of files that exist in a remote directory. The forceReload flag will bypass using the directoryListCache and
+ * always return a fresh listing from the specified server. Uses the default SFTP port.
+ */
+- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload
+{
+	return [self listRemoteDirectory:directory 
+							  onHost:host
+						 forceReload:reload
+								port:DEFAULT_SFTP_PORT];
 }
 
 

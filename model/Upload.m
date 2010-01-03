@@ -112,9 +112,10 @@
 
 - (BOOL)isActiveTransfer
 {
-	return (status == TRANSFER_STATUS_CONNECTING || 
-			status == TRANSFER_STATUS_UPLOADING || 
-			status == TRANSFER_STATUS_AUTHENTICATING);
+	return (status == TRANSFER_STATUS_QUEUED ||
+			status == TRANSFER_STATUS_CONNECTING ||
+			status == TRANSFER_STATUS_UPLOADING ||
+			status == TRANSFER_STATUS_DOWNLOADING);
 }
 
 @end

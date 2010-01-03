@@ -187,7 +187,7 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 
 		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading", actualProgress, [transfer hostname]]];
 		
-		[client performDelegateSelector:@selector(curl:transferDidProgress:)];
+		[client performDelegateSelector:@selector(curl:transferDidProgress:) withObject:transfer];
 	}
 	
 	return 0;
@@ -195,7 +195,7 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 
 
 /*
- * Used to handle a curl response code and sets either the transfer status to either TRANSFER_STATUS_COMPLETE or TRANSFER_STATUS_FAILED
+ * Used to handle a curl transfer response code and sets either the transfer status to either TRANSFER_STATUS_COMPLETE or TRANSFER_STATUS_FAILED
  * along with a detailed statusMessage of what happened.
  */
 - (void)handleCurlResult:(CURLcode)result
@@ -264,27 +264,30 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 	[transfer setStatus:status];
 	[transfer setStatusMessage:message];
 	
-	[self performDelegateSelector:@selector(curl:transferStatusDidChange:)];
+	[self performDelegateSelector:@selector(curl:transferStatusDidChange:) withObject:transfer];
 	
 	if (result == CURLE_LOGIN_DENIED)
 	{
-		[self performDelegateSelector:@selector(curl:transferFailedAuthentication:)];
+		[self performDelegateSelector:@selector(curl:transferFailedAuthentication:) withObject:transfer];
 	}
 	else if (result == CURLE_OK)
 	{
-		[self performDelegateSelector:@selector(curl:transferDidFinish:)];
+		[self performDelegateSelector:@selector(curl:transferDidFinish:) withObject:transfer];
 	}
 }
 
 
 /*
- * Quick easy way to call a selector on the delegate. This will probably change into something that can handle arguments.
+ * Quick easy way to call a selector on a delegate.
  */
-- (void)performDelegateSelector:(SEL)aSelector
+- (void)performDelegateSelector:(SEL)aSelector withObject:(id)anObject
 {		
 	if (delegate && [delegate respondsToSelector:aSelector])
 	{
-		[delegate performSelector:aSelector withObject:self withObject:transfer];
+		if (anObject != nil)
+			[delegate performSelector:aSelector withObject:self withObject:anObject];
+		else
+			[delegate performSelector:aSelector withObject:self];
 	}
 }
 

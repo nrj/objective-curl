@@ -21,18 +21,16 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
  * of these options before doing any uploads
  */
-- (id)initForUpload
+- (id)init
 {		
 	if (self = [super init])
 	{
 		[self setProtocolType:kSecProtocolTypeSSH];
-
-		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
 		
 		hostKeyFingerprints = [[NSMutableDictionary alloc] init];
+		
+		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
 
-		curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
 		curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
 		curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
 	}

@@ -18,8 +18,8 @@
 @synthesize authUsername;
 @synthesize authPassword;
 
-@synthesize transfer;
 @synthesize isUploading;
+@synthesize isDownloading;
 
 /*
  * Returns a string containing the version info of libcurl that the framework is using. 
@@ -169,9 +169,10 @@
  */
 static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
+/*
 	if (ultotal == 0) return 0;
 	
-	id <TransferRecord>transfer = [client transfer];
+//	id <TransferRecord>transfer = [client transfer];
 	
 	long totalProgressUnits = 100 * ([transfer totalFiles]);
 	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
@@ -185,11 +186,11 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 	{
 		[transfer setProgress:actualProgress];
 
-		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading", actualProgress, [transfer hostname]]];
+//		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading", actualProgress, [transfer hostname]]];
 		
-		[client performDelegateSelector:@selector(curl:transferDidProgress:) withObject:transfer];
+//		[client performDelegateSelector:@selector(curl:transferDidProgress:) withObject:transfer];
 	}
-	
+*/	
 	return 0;
 }
 
@@ -198,7 +199,7 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
  * Used to handle a curl transfer response code and sets either the transfer status to either TRANSFER_STATUS_COMPLETE or TRANSFER_STATUS_FAILED
  * along with a detailed statusMessage of what happened.
  */
-- (void)handleCurlResult:(CURLcode)result
+- (void)handleCurlResult:(CURLcode)result forObject:(RemoteObject *)task 
 {
 	NSString *message;
 	TransferStatus status;
@@ -207,7 +208,7 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 	{
 		case CURLE_OK:
 			status = TRANSFER_STATUS_COMPLETE;
-			message = [NSString stringWithFormat:@"Finished", [transfer totalFiles], [transfer hostname]];
+			message = [NSString stringWithFormat:@"Finished"];
 			break;
 		
 		case CURLE_ABORTED_BY_CALLBACK:
@@ -217,42 +218,42 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 		
 		case CURLE_REMOTE_ACCESS_DENIED:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Failed writing to directory %@", [transfer directory]];
+			message = [NSString stringWithFormat:@"Failed writing to directory %@", [task directory]];
 			break;
 			
 		case CURLE_PEER_FAILED_VERIFICATION:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Unknown host key for %@", [transfer hostname]];
+			message = [NSString stringWithFormat:@"Unknown host key for %@", [task hostname]];
 			break;
 			
 		case CURLE_FAILED_INIT:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [transfer protocolString], [transfer hostname], [transfer port]];
+			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [task protocolString], [task hostname], [task port]];
 			break;
 			
 		case CURLE_COULDNT_CONNECT:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Couldn't connect to host %@ on port %d", [transfer hostname], [transfer port]];
+			message = [NSString stringWithFormat:@"Couldn't connect to host %@ on port %d", [task hostname], [task port]];
 			break;
 			
 		case CURLE_OPERATION_TIMEOUTED:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Operation timed out to host %@", [transfer hostname]];
+			message = [NSString stringWithFormat:@"Operation timed out to host %@", [task hostname]];
 			break;
 			
 		case CURLE_COULDNT_RESOLVE_HOST:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Couldn't resolve host %@", [transfer hostname]];
+			message = [NSString stringWithFormat:@"Couldn't resolve host %@", [task hostname]];
 			break;
 			
 		case CURLE_RECV_ERROR:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Failed to receive network data from %@", [transfer hostname]];
+			message = [NSString stringWithFormat:@"Failed to receive network data from %@", [task hostname]];
 			break;
 			
 	   case CURLE_UNSUPPORTED_PROTOCOL:
 			status = TRANSFER_STATUS_FAILED;
-			message = [NSString stringWithFormat:@"Unsupported protocol %@", [transfer protocolString]];
+			message = [NSString stringWithFormat:@"Unsupported protocol %@", [task protocolString]];
 			break;
 				   
 		default:
@@ -261,34 +262,8 @@ static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, 
 			break;
 	}
 
-	[transfer setStatus:status];
-	[transfer setStatusMessage:message];
-	
-	[self performDelegateSelector:@selector(curl:transferStatusDidChange:) withObject:transfer];
-	
-	if (result == CURLE_LOGIN_DENIED)
-	{
-		[self performDelegateSelector:@selector(curl:transferFailedAuthentication:) withObject:transfer];
-	}
-	else if (result == CURLE_OK)
-	{
-		[self performDelegateSelector:@selector(curl:transferDidFinish:) withObject:transfer];
-	}
-}
-
-
-/*
- * Quick easy way to call a selector on a delegate.
- */
-- (void)performDelegateSelector:(SEL)aSelector withObject:(id)anObject
-{		
-	if (delegate && [delegate respondsToSelector:aSelector])
-	{
-		if (anObject != nil)
-			[delegate performSelector:aSelector withObject:self withObject:anObject];
-		else
-			[delegate performSelector:aSelector withObject:self];
-	}
+	[task setStatus:status];
+	[task setStatusMessage:message];
 }
 
 

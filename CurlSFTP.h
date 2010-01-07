@@ -10,7 +10,7 @@
 #import "CurlFTP.h"
 #import "CurlDelegate.h"
 #import "NSString+MD5.h"
-
+#import "NSObject+Extensions.h"
 
 extern int const DEFAULT_SFTP_PORT;
 

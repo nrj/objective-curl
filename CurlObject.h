@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TransferRecord.h"
+#import "RemoteObject.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -28,11 +28,10 @@
 	BOOL verbose;
 	BOOL showProgress;
 	BOOL isUploading;
+	BOOL isDownloading;
 	
 	NSString *authUsername;
 	NSString *authPassword;
-	
-	id <TransferRecord> transfer;
 	
 	CURL *handle;
 }
@@ -41,8 +40,8 @@
 @property(readwrite, assign) SecProtocolType protocolType;
 @property(readwrite, copy) NSString *authUsername;
 @property(readwrite, copy) NSString *authPassword;
-@property(readwrite, assign) id <TransferRecord> transfer;
 @property(readwrite, assign) BOOL isUploading;
+@property(readwrite, assign) BOOL isDownloading;
 
 + (NSString *)libcurlVersion;
 
@@ -64,8 +63,10 @@
 
 static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, double ultotal, double ulnow);
 
-- (void)handleCurlResult:(CURLcode)result;
+- (void)handleCurlResult:(CURLcode)result forObject:(RemoteObject *)task;
 
-- (void)performDelegateSelector:(SEL)aSelector withObject:(id)anObject;
+//- (void)performCurlDelegateSelector:(SEL)aSelector withObject:(id)anObject;
+//
+//- (void)performUploadDelegateSelector:(SEL)aSelector withObject:(id)anObject;
 
 @end

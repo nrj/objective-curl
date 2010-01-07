@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSString+PathExtras.h"
 #import "CurlObject.h"
+#import "CurlDelegate.h"
 #import "TransferStatus.h"
 #import "FTPCommand.h"
-#import "Upload.h"
 #import "RemoteFile.h"
+#import "RemoteFolder.h"
+#import "Upload.h"
 #import "ftpparse.h"
 
 
@@ -22,23 +25,22 @@ extern NSString * const FTP_PROTOCOL_PREFIX;
 @interface CurlFTP : CurlObject {
 
 	NSMutableDictionary *directoryListCache;
-	
+
 }
 
 static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutableArray *list);
 
-- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host;
-- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload;
-- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port;
+- (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host;
+- (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload;
+- (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port;
 
-- (RemoteFile *)existingFileOrDirectory:(NSString *)filename onHost:(NSString *)host atPath:(NSString *)path;
-- (RemoteFile *)existingFileOrDirectory:(NSString *)filename onHost:(NSString *)host atPath:(NSString *)path port:(int)port;
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host;
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory;
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port;
 
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host;
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory;
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port;
+- (void)checkUploadForOverwrites:(NSArray *)filesAndDirectories;
 
-- (NSArray *)createCommandsForUpload:(NSArray *)files totalFiles:(int *)totalFiles;
+- (NSArray *)createCommandsForUpload:(NSArray *)filesAndDirectories totalFiles:(int *)totalFiles;
 
 - (NSString *)credentials;
 

@@ -7,46 +7,17 @@
 //
 
 #import "CurlObject.h"
-#import "TransferRecord.h"
-
+#import "RemoteFolder.h"
 
 @protocol CurlDelegate 
 
 
-// Transfer Callbacks
-
+- (void)curl:(CurlObject *)client didListRemoteDirectory:(RemoteFolder *)dir;
 
 /*
  * Called when a username/password is incorrect. You would likely use this to prompt a user for credentials. 
  */
-- (void)curl:(CurlObject *)client authenticationDidFail:(id <TransferRecord>)aRecord;
-
-
-/*
- * Called after successful authentication when the upload/download starts.
- */
-- (void)curl:(CurlObject *)client transferDidBegin:(id <TransferRecord>)aRecord;
-
-
-/*
- * Called when the upload/download progress has changed (1-100%)
- */
-- (void)curl:(CurlObject *)client transferDidProgress:(id <TransferRecord>)aRecord;
-
-
-/*
- * Called when the status of the transfer changes. See "TransferStatus.h".
- */
-- (void)curl:(CurlObject *)client transferStatusDidChange:(id <TransferRecord>)aRecord;
-
-
-/*
- * Called when the upload/download has finished successfully.
- */
-- (void)curl:(CurlObject *)client transferDidFinish:(id <TransferRecord>)aRecord;
-
-
-// SSH Callbacks
+- (void)curl:(CurlObject *)client authenticationDidFail:(NSString *)username forHost:(NSString *)host;
 
 
 /*
@@ -64,15 +35,6 @@
  * so be careful when accepting this key (see above for how how to handle it).
  */
 - (void)curl:(CurlObject *)client receivedMismatchedHostKeyFingerprint:(NSString *)fingerprint;
-
-
-// Error Callbacks
-
-
-/*
- * Called when curl fails to retrieve a directory listing.
- */
-- (void)curl:(CurlObject *)client failedToRetrieveDirectoryListing:(NSString *)url;
 
 
 @end

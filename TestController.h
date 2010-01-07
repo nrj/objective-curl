@@ -8,31 +8,29 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CurlSFTP.h"
-#import "CurlFTP.h"
+
 
 @interface TestController : NSObject 
-{
-	IBOutlet NSProgressIndicator *progress;
+{	
+	CurlSFTP *sftp;
 	
-	IBOutlet NSTextField *versionLabel;	
-	IBOutlet NSTextField *filepathField;
+	IBOutlet NSWindow *sheet;
+	IBOutlet NSWindow *window;
+
+	IBOutlet NSTableView *fileView;
 	IBOutlet NSTextField *hostnameField;
 	IBOutlet NSTextField *usernameField;
 	IBOutlet NSTextField *passwordField;
-	IBOutlet NSTextField *statusLabel;
-	IBOutlet NSTextField *currentFileLabel;
+	IBOutlet NSButton *connectButton;
+	IBOutlet NSTextField *statusMessage;
 	
-	id <TransferRecord>upload;
-	
-	BOOL uploadEnabled;
+	RemoteFolder *folder;
 }
 
-@property(readwrite, retain) id <TransferRecord>upload;
-@property(readwrite, assign) BOOL uploadEnabled;
+@property(readwrite, retain) RemoteFolder *folder;
 
-- (IBAction)runDirListTest:(id)sender;
-- (IBAction)runFTPTest:(id)sender;
-- (IBAction)runSFTPTest:(id)sender;
-- (IBAction)cancelTransfer:(id)sender;
+- (IBAction)listRemoteDirectory:(id)sender;
+
+- (void)initCurlObject:(CurlObject *)curl;
 
 @end

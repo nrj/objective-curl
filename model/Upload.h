@@ -7,45 +7,34 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TransferRecord.h"
+#import "RemoteObject.h"
 
 
-@interface Upload : NSObject <TransferRecord, NSCoding>
-{
+@interface Upload : RemoteObject
+{	
 	NSString *name;
-	SecProtocolType protocol;
-	NSString *hostname;
+	NSString *currentFile;
 	NSString *directory;
-	NSString *username;	
-	int port;
-
+	NSArray *localFiles;
+	
 	int progress;
 	int totalFiles;
 	int totalFilesUploaded;
-	NSString *currentFile;
 	
-	int status;	
-	NSString *statusMessage;
 	BOOL hasBeenCancelled;
 }
 
 
 @property(readwrite, copy) NSString *name;
-@property(readwrite, assign) SecProtocolType protocol;
-@property(readwrite, copy) NSString *hostname;
 @property(readwrite, copy) NSString *directory;
-@property(readwrite, copy) NSString *username;
-@property(readwrite, assign) int port;
-
+@property(readwrite, retain) NSArray *localFiles;
 @property(readwrite, assign) int totalFiles;
 @property(readwrite, assign) int totalFilesUploaded;
 @property(readwrite, assign) int progress;
 @property(readwrite, copy) NSString *currentFile;
 
-@property(readwrite, assign) int status;
-@property(readwrite, copy) NSString *statusMessage;
 @property(readwrite, assign) BOOL hasBeenCancelled;
 
-- (NSString *)protocolString;
+
 
 @end

@@ -99,7 +99,10 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	int result = CURLKHSTAT_DEFER;
 
-	[self performDelegateSelector:@selector(curl:receivedUnknownHostKeyFingerprint:) withObject:rsaFingerprint];
+	if (delegate && [delegate respondsToSelector:@selector(curl:receivedUnknownHostKeyFingerprint:)])
+	{
+		[[delegate invokeOnMainThreadAndWaitUntilDone:YES] curl:self receivedUnknownHostKeyFingerprint:rsaFingerprint];
+	}
 	
 	for (id key in hostKeyFingerprints)
 	{
@@ -122,7 +125,10 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	int result = CURLKHSTAT_DEFER;
 
-	[self performDelegateSelector:@selector(curl:receivedMismatchedHostKeyFingerprint:) withObject:rsaFingerprint];
+	if (delegate && [delegate respondsToSelector:@selector(curl:receivedUnknownHostKeyFingerprint:)])
+	{
+		[delegate curl:self receivedUnknownHostKeyFingerprint:rsaFingerprint];
+	}
 	
 	for (id key in hostKeyFingerprints)
 	{
@@ -180,7 +186,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
  * the default SFTP port.
  */
 
-- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host
+- (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host
 {
 	return [self listRemoteDirectory:directory 
 							  onHost:host
@@ -193,7 +199,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
  * Returns an array of files that exist in a remote directory. The forceReload flag will bypass using the directoryListCache and
  * always return a fresh listing from the specified server. Uses the default SFTP port.
  */
-- (NSArray *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload
+- (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload
 {
 	return [self listRemoteDirectory:directory 
 							  onHost:host
@@ -205,7 +211,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 /*
  * Recursively upload a list of files and directories using the specified host and the users home directory.
  */
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
 									toHost:host 
@@ -217,7 +223,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 /*
  * Recursively upload a list of files and directories using the specified host and directory.
  */
-- (id <TransferRecord>)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
 									toHost:host 

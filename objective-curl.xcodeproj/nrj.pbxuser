@@ -390,6 +390,12 @@
 		vrLoc = 1028;
 	};
 	0B0B96D810F57A1B007DBFA8 /* NSString+PathExtras.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = "NSString+PathExtras.h";
+		path = "/Users/nrj/Code/Cocoa/objective-curl/extras/NSString+PathExtras.h";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1034, 640}}";
 			sepNavSelRange = "{270, 0}";
@@ -397,6 +403,12 @@
 		};
 	};
 	0B0B96D910F57A1B007DBFA8 /* NSString+PathExtras.m */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.objc;
+		name = "NSString+PathExtras.m";
+		path = "/Users/nrj/Code/Cocoa/objective-curl/extras/NSString+PathExtras.m";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1034, 663}}";
 			sepNavSelRange = "{928, 0}";
@@ -2986,6 +2998,12 @@
 		sourceTree = "<absolute>";
 	};
 	0BEDAABA10EC44F300ED2C69 /* NSString+MD5.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = "NSString+MD5.h";
+		path = "/Users/nrj/Code/Cocoa/objective-curl/extras/NSString+MD5.h";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1034, 663}}";
 			sepNavSelRange = "{375, 0}";
@@ -2993,6 +3011,12 @@
 		};
 	};
 	0BEDAABB10EC44F300ED2C69 /* NSString+MD5.m */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.objc;
+		name = "NSString+MD5.m";
+		path = "/Users/nrj/Code/Cocoa/objective-curl/extras/NSString+MD5.m";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1034, 663}}";
 			sepNavSelRange = "{147, 0}";

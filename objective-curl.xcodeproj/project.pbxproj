@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B0B96DA10F57A1B007DBFA8 /* NSString+PathExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B96D810F57A1B007DBFA8 /* NSString+PathExtras.h */; };
-		0B0B96DB10F57A1B007DBFA8 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B96D910F57A1B007DBFA8 /* NSString+PathExtras.m */; };
+		0B0B975A10F58CED007DBFA8 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B975610F58CED007DBFA8 /* NSString+MD5.h */; };
+		0B0B975B10F58CED007DBFA8 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975710F58CED007DBFA8 /* NSString+MD5.m */; };
+		0B0B975C10F58CED007DBFA8 /* NSString+PathExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */; };
+		0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */; };
 		0B2E387B10DF2C3300E82CB2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2E387A10DF2C3300E82CB2 /* MainMenu.xib */; };
 		0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B725E5310F2CC4D001C614D /* RemoteObject.h */; };
 		0B725E5610F2CC4D001C614D /* RemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B725E5410F2CC4D001C614D /* RemoteObject.m */; };
@@ -48,8 +50,6 @@
 		0BD6234A10DF1A03004D8C5B /* objective-curl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD623F810DF1B29004D8C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD623F710DF1B29004D8C5B /* main.m */; };
 		0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD6240E10DF1CA7004D8C5B /* ftp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0BEDAABC10EC44F300ED2C69 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BEDAABA10EC44F300ED2C69 /* NSString+MD5.h */; };
-		0BEDAABD10EC44F300ED2C69 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BEDAABB10EC44F300ED2C69 /* NSString+MD5.m */; };
 		0BEDAD4510EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
@@ -94,8 +94,10 @@
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		0B0B96D810F57A1B007DBFA8 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
-		0B0B96D910F57A1B007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
+		0B0B975610F58CED007DBFA8 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		0B0B975710F58CED007DBFA8 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
+		0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
 		0B725E5310F2CC4D001C614D /* RemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObject.h; sourceTree = "<group>"; };
 		0B725E5410F2CC4D001C614D /* RemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteObject.m; sourceTree = "<group>"; };
 		0B7604D410DF126200BE0666 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -133,8 +135,6 @@
 		0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurlTester-Info.plist"; sourceTree = "<group>"; };
 		0BD623F710DF1B29004D8C5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0BD6240E10DF1CA7004D8C5B /* ftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftp.h; sourceTree = "<group>"; };
-		0BEDAABA10EC44F300ED2C69 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		0BEDAABB10EC44F300ED2C69 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.0.9.7.dylib; path = /usr/lib/libcrypto.0.9.7.dylib; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* objective-curl_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curl_Prefix.pch"; sourceTree = "<group>"; };
@@ -315,12 +315,12 @@
 		0BEDAAB910EC44E200ED2C69 /* extras */ = {
 			isa = PBXGroup;
 			children = (
-				0BEDAABA10EC44F300ED2C69 /* NSString+MD5.h */,
-				0BEDAABB10EC44F300ED2C69 /* NSString+MD5.m */,
-				0B0B96D810F57A1B007DBFA8 /* NSString+PathExtras.h */,
-				0B0B96D910F57A1B007DBFA8 /* NSString+PathExtras.m */,
+				0B0B975610F58CED007DBFA8 /* NSString+MD5.h */,
+				0B0B975710F58CED007DBFA8 /* NSString+MD5.m */,
+				0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */,
+				0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */,
 			);
-			name = extras;
+			path = extras;
 			sourceTree = "<group>";
 		};
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
@@ -365,7 +365,6 @@
 				0B76055110DF150200BE0666 /* EMKeychain.h in Headers */,
 				0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */,
 				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
-				0BEDAABC10EC44F300ED2C69 /* NSString+MD5.h in Headers */,
 				0BBF81F710EEB1B0005358BB /* FTPCommand.h in Headers */,
 				0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */,
 				0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */,
@@ -375,7 +374,8 @@
 				0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */,
 				0BCD3B9B10F432A20047202F /* NSObject+Extensions.h in Headers */,
 				0BCD3B9D10F432A20047202F /* InvocationGrabber.h in Headers */,
-				0B0B96DA10F57A1B007DBFA8 /* NSString+PathExtras.h in Headers */,
+				0B0B975A10F58CED007DBFA8 /* NSString+MD5.h in Headers */,
+				0B0B975C10F58CED007DBFA8 /* NSString+PathExtras.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,7 +496,6 @@
 				0B76053310DF13B600BE0666 /* Upload.m in Sources */,
 				0B76055210DF150200BE0666 /* EMKeychain.m in Sources */,
 				0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */,
-				0BEDAABD10EC44F300ED2C69 /* NSString+MD5.m in Sources */,
 				0BBF81F810EEB1B0005358BB /* FTPCommand.m in Sources */,
 				0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */,
 				0BBF83E210EFDD28005358BB /* RemoteFile.m in Sources */,
@@ -504,7 +503,8 @@
 				0B725E5610F2CC4D001C614D /* RemoteObject.m in Sources */,
 				0BCD3B9A10F432A20047202F /* NSObject+Extensions.m in Sources */,
 				0BCD3B9C10F432A20047202F /* InvocationGrabber.m in Sources */,
-				0B0B96DB10F57A1B007DBFA8 /* NSString+PathExtras.m in Sources */,
+				0B0B975B10F58CED007DBFA8 /* NSString+MD5.m in Sources */,
+				0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -43,6 +43,12 @@
 		0BCD3B9B10F432A20047202F /* NSObject+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCD3B9710F432A20047202F /* NSObject+Extensions.h */; };
 		0BCD3B9C10F432A20047202F /* InvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCD3B9810F432A20047202F /* InvocationGrabber.m */; };
 		0BCD3B9D10F432A20047202F /* InvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCD3B9910F432A20047202F /* InvocationGrabber.h */; };
+		0BD3CFF2110CF44A00478C99 /* CurlOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3CFF0110CF44A00478C99 /* CurlOperation.h */; };
+		0BD3CFF3110CF44A00478C99 /* CurlOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3CFF1110CF44A00478C99 /* CurlOperation.m */; };
+		0BD3D011110CF5E700478C99 /* UploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D00F110CF5E700478C99 /* UploadOperation.h */; };
+		0BD3D012110CF5E700478C99 /* UploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D010110CF5E700478C99 /* UploadOperation.m */; };
+		0BD3D015110CF5F000478C99 /* ListOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D013110CF5F000478C99 /* ListOperation.h */; };
+		0BD3D016110CF5F000478C99 /* ListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D014110CF5F000478C99 /* ListOperation.m */; };
 		0BD6227910DF157B004D8C5B /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0BD622C910DF18BB004D8C5B /* objective-curl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7604D410DF126200BE0666 /* Security.framework */; };
@@ -131,6 +137,12 @@
 		0BCD3B9710F432A20047202F /* NSObject+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extensions.h"; sourceTree = "<group>"; };
 		0BCD3B9810F432A20047202F /* InvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvocationGrabber.m; sourceTree = "<group>"; };
 		0BCD3B9910F432A20047202F /* InvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvocationGrabber.h; sourceTree = "<group>"; };
+		0BD3CFF0110CF44A00478C99 /* CurlOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlOperation.h; sourceTree = "<group>"; };
+		0BD3CFF1110CF44A00478C99 /* CurlOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlOperation.m; sourceTree = "<group>"; };
+		0BD3D00F110CF5E700478C99 /* UploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadOperation.h; sourceTree = "<group>"; };
+		0BD3D010110CF5E700478C99 /* UploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadOperation.m; sourceTree = "<group>"; };
+		0BD3D013110CF5F000478C99 /* ListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListOperation.h; sourceTree = "<group>"; };
+		0BD3D014110CF5F000478C99 /* ListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListOperation.m; sourceTree = "<group>"; };
 		0BD6227310DF1564004D8C5B /* CurlTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurlTester.app; sourceTree = BUILT_PRODUCTS_DIR; wrapsLines = 0; };
 		0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurlTester-Info.plist"; sourceTree = "<group>"; };
 		0BD623F710DF1B29004D8C5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -217,6 +229,7 @@
 				0BEDAAB910EC44E200ED2C69 /* extras */,
 				0BD6240610DF1BF4004D8C5B /* easy includes */,
 				0B76054E10DF14ED00BE0666 /* keychain */,
+				0BD3CFB5110CF2F700478C99 /* operations */,
 				0B76052310DF135400BE0666 /* protocol */,
 				0B76052210DF134E00BE0666 /* model */,
 				0B76051B10DF131A00BE0666 /* enum */,
@@ -303,6 +316,19 @@
 			path = delegate;
 			sourceTree = "<group>";
 		};
+		0BD3CFB5110CF2F700478C99 /* operations */ = {
+			isa = PBXGroup;
+			children = (
+				0BD3CFF0110CF44A00478C99 /* CurlOperation.h */,
+				0BD3CFF1110CF44A00478C99 /* CurlOperation.m */,
+				0BD3D00F110CF5E700478C99 /* UploadOperation.h */,
+				0BD3D010110CF5E700478C99 /* UploadOperation.m */,
+				0BD3D013110CF5F000478C99 /* ListOperation.h */,
+				0BD3D014110CF5F000478C99 /* ListOperation.m */,
+			);
+			path = operations;
+			sourceTree = "<group>";
+		};
 		0BD6240610DF1BF4004D8C5B /* easy includes */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,6 +402,9 @@
 				0BCD3B9D10F432A20047202F /* InvocationGrabber.h in Headers */,
 				0B0B975A10F58CED007DBFA8 /* NSString+MD5.h in Headers */,
 				0B0B975C10F58CED007DBFA8 /* NSString+PathExtras.h in Headers */,
+				0BD3CFF2110CF44A00478C99 /* CurlOperation.h in Headers */,
+				0BD3D011110CF5E700478C99 /* UploadOperation.h in Headers */,
+				0BD3D015110CF5F000478C99 /* ListOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +534,9 @@
 				0BCD3B9C10F432A20047202F /* InvocationGrabber.m in Sources */,
 				0B0B975B10F58CED007DBFA8 /* NSString+MD5.m in Sources */,
 				0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */,
+				0BD3CFF3110CF44A00478C99 /* CurlOperation.m in Sources */,
+				0BD3D012110CF5E700478C99 /* UploadOperation.m in Sources */,
+				0BD3D016110CF5F000478C99 /* ListOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

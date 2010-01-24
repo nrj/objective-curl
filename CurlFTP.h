@@ -8,24 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "NSString+PathExtras.h"
+#import "UploadDelegate.h"
 #import "CurlObject.h"
-#import "CurlDelegate.h"
-#import "TransferStatus.h"
-#import "FTPCommand.h"
-#import "RemoteFile.h"
 #import "RemoteFolder.h"
+#import "RemoteFile.h"
 #import "Upload.h"
-#import "ftpparse.h"
 
 
 extern int const DEFAULT_FTP_PORT;
 
 extern NSString * const FTP_PROTOCOL_PREFIX;
 
-@interface CurlFTP : CurlObject {
-
+@interface CurlFTP : CurlObject <UploadDelegate> 
+{
 	NSMutableDictionary *directoryListCache;
-
 }
 
 static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutableArray *list);
@@ -34,13 +30,13 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 - (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload;
 - (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port;
 
+- (void)retryListRemoteDirectory:(RemoteFolder *)folder;
+
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host;
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory;
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port;
 
-- (void)checkUploadForOverwrites:(NSArray *)filesAndDirectories;
-
-- (NSArray *)createCommandsForUpload:(NSArray *)filesAndDirectories totalFiles:(int *)totalFiles;
+- (void)retryRecursiveUpload:(Upload *)upload;
 
 - (NSString *)credentials;
 

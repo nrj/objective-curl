@@ -11,7 +11,8 @@
 
 typedef enum {
 	FTP_COMMAND_PUT,
-	FTP_COMMAND_MKDIR
+	FTP_COMMAND_MKDIR,
+	FTP_COMMAND_LIST
 } FTPCommandType;
 
 

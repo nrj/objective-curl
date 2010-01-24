@@ -25,6 +25,8 @@ extern NSString * const DEFAULT_KNOWN_HOSTS;
 	NSMutableDictionary *hostKeyFingerprints;
 }
 
+@property(readwrite, copy) NSString *knownHostsFile;
+
 static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, CurlSFTP *client);
 
 - (void)setKnownHostsFile:(NSString *)filePath;

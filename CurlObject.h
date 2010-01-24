@@ -8,15 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "RemoteObject.h"
-
-#include <stdio.h>
-#include <string.h>
 #include <curl/curl.h>
-#include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <unistd.h>
 
 
 @interface CurlObject : NSObject
@@ -33,27 +26,21 @@
 	NSString *authUsername;
 	NSString *authPassword;
 	
-	CURL *handle;
+	NSOperationQueue *operationQueue;
 }
 
 @property(readwrite, assign) id delegate;
 @property(readwrite, assign) SecProtocolType protocolType;
 @property(readwrite, copy) NSString *authUsername;
 @property(readwrite, copy) NSString *authPassword;
+@property(readwrite, assign) BOOL verbose;
+@property(readwrite, assign) BOOL showProgress;
 @property(readwrite, assign) BOOL isUploading;
 @property(readwrite, assign) BOOL isDownloading;
 
 + (NSString *)libcurlVersion;
 
-- (CURL *)handle;
-
-- (void)setVerbose:(BOOL)value;
-
-- (BOOL)verbose;
-
-- (void)setShowProgress:(BOOL)value;
-
-- (BOOL)showProgress;
+- (CURL *)newHandle;
 
 - (BOOL)hasAuthUsername;
 
@@ -61,12 +48,6 @@
 
 - (NSString * const)protocolPrefix;
 
-static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, double ultotal, double ulnow);
-
 - (void)handleCurlResult:(CURLcode)result forObject:(RemoteObject *)task;
-
-//- (void)performCurlDelegateSelector:(SEL)aSelector withObject:(id)anObject;
-//
-//- (void)performUploadDelegateSelector:(SEL)aSelector withObject:(id)anObject;
 
 @end

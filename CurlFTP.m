@@ -26,8 +26,6 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 		[self setProtocolType:kSecProtocolTypeFTP];
 
 		directoryListCache = [[NSMutableDictionary alloc] init];
-		
-		curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
 	}
 	
 	return self;
@@ -45,54 +43,22 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 }
 
 
+- (CURL *)newHandle
+{
+	CURL *handle = [super newHandle];
+	
+	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
+	
+	return handle;
+}
+
+
 /*
  * Returns the URL prefix for FTP transfers.
  */
 - (NSString * const)protocolPrefix
 {
 	return FTP_PROTOCOL_PREFIX;
-}
-
-
-/*
- * Called by curl when a directory list needs to be written. Takes a pointer to an array that will be filled with RemoteFile objects.
- *
- *     See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTWRITEFUNCTION
- */
-static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutableArray *list)
-{
-	char *line = strtok((char *)ptr, "\n");
-	
-	do
-	{
-		struct ftpparse *info = malloc(sizeof(struct ftpparse));
-		
-		if(line) 
-		{	
-			if (ftpparse(info, line, strlen(line)))
-			{
-				char filename[info->namelen + 1];
-				strncpy(filename, info->name, info->namelen);
-				filename[info->namelen] = '\0';
-				
-				RemoteFile *file = [[RemoteFile alloc] init];	
-				[file setName:[NSString stringWithCString:filename]];
-				[file setIsDir:info->flagtrycwd];
-				[file setIsSymLink:(info->flagtrycwd && info->flagtryretr)];
-				[file setSize:info->size];
-				[file setLastModified:info->mtime];
-				[file setLastModified:(long)info->mtime];
-				
-				[list addObject:file];
-			}			
-		}
-		
-		line = strtok('\0', "\n");
-		free(info);
-		
-	} while (line);
-	
-	return (size_t)(size * nmemb);
 }
 
 
@@ -145,55 +111,12 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 
 
 /*
- * Thread entry point for directory listings. Takes a pointer to the RemoteFolder.  
+ * Use this method to retry a failed recursive upload.
  */
-- (void)performListRemoteDirectory:(RemoteFolder *)folder
+- (void)retryListRemoteDirectory:(RemoteFolder *)folder;
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [self protocolPrefix], 
-					 [folder hostname], [folder port], [folder path]];
-	
-	NSLog(@"Fetching remote directory: %@", url);
-	
-	NSMutableArray *list;
-	
-	if ([folder forceReload] || !(list = [directoryListCache objectForKey:url]))
-	{
-		list = [[NSMutableArray alloc] init];
-		
-		curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
-		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, handleDirectoryList);
-		curl_easy_setopt(handle, CURLOPT_WRITEDATA, list);
-		curl_easy_setopt(handle, CURLOPT_UPLOAD, NO);
-		curl_easy_setopt(handle, CURLOPT_CUSTOMREQUEST, "LIST");
-		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
-		
-		CURLcode result = -1;
-		
-		[folder setStatusMessage:[NSString stringWithFormat:@"Connecting to %@", [folder hostname]]];
-		
-		result = curl_easy_perform(handle);
-		
-		[self handleCurlResult:result forObject:folder];
-
-		[directoryListCache setObject:list forKey:url];
-	}
-	
-	[folder setFiles:list];
-	
-	if (delegate && [delegate respondsToSelector:@selector(curl:didListRemoteDirectory:)])
-	{
-		[delegate curl:self didListRemoteDirectory:folder];
-	}
-	
-//	[folder release];
-	
-	[pool drain];
-	[pool release];
 }
-
-
 
 
 /*
@@ -221,7 +144,8 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 
 
 /*
- * Recursively upload a list of files and directories using the specified host, directory and port number.
+ * Recursively upload a list of files and directories using the specified host, directory and port number. The associated Upload object
+ * is returned, however not retained.
  */
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
 {		
@@ -231,6 +155,7 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 	[upload setHostname:host];
 	[upload setPort:port];
 	[upload setDirectory:[directory pathForFTP]];
+	[upload setLocalFiles:filesAndDirectories];
 	[upload setProgress:0];
 	
 	[NSThread detachNewThreadSelector:@selector(performRecursiveUpload:)
@@ -242,186 +167,13 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 
 
 /*
- * Thread entry point for recursive uploads. Takes an TransferRecord implementation that  
+ * Use this method to retry a failed recursive upload.
  */
-- (void)performRecursiveUpload:(Upload *)upload
+- (void)retryRecursiveUpload:(Upload *)upload
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	[self checkUploadForOverwrites:[upload localFiles]];
-	
-	int totalFiles = 0;
-	
-	NSArray *commands = [self createCommandsForUpload:[upload localFiles] totalFiles:&totalFiles];
-	
-	[upload setTotalFiles:totalFiles];
-	[upload setTotalFilesUploaded:0];
-	
-	NSString *creds = [self credentials];
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [creds UTF8String]);
-	
-	CURLcode result = -1;
-	for (int i = 0; i < [commands count]; i++)
-	{
-		FTPCommand *cmd = [commands objectAtIndex:i];
-		
-		[upload setCurrentFile:[[cmd localPath] lastPathComponent]];
-		
-		NSLog(@"Preparing upload of %@", [upload currentFile]);
-		
-//		RemoteFile *existing = nil;
-//		if (existing = [self remoteFileExists:[upload currentFile] onHost:[upload hostname] atPath:[upload directory] port:[upload port]])
-//		{
-//			NSLog(@"Existing File Found: %@", [existing description]);	
-//		}
-//		else
-//		{
-//			NSLog(@"No Existing File Found");
-//		}
-			
-		/*
-		 
-		 Temporary until I can get the existing callbacks implemented.
-		 */
-		if ([cmd type] == FTP_COMMAND_MKDIR)
-		{
-			char *mkdir = malloc(strlen("MKDIR \"\"") + strlen([[cmd remotePath] UTF8String]) + 1);
-			sprintf(mkdir, "MKDIR \"%s\"", [[cmd remotePath] UTF8String]);
-			
-			NSString *url = [NSString stringWithFormat:@"%@://%@:%d/", [self protocolPrefix], [upload hostname], [upload port]];
-
-			struct curl_slist *headers = NULL; 
-			headers = curl_slist_append(headers, mkdir); 
-
-			curl_easy_setopt(handle, CURLOPT_UPLOAD, 0);
-			curl_easy_setopt(handle, CURLOPT_QUOTE, headers); 
-			curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
-			
-			// Perform
-			result = curl_easy_perform(handle);
-
-			// Cleanup
-			curl_slist_free_all(headers);
-			headers = NULL;
-			free(mkdir);
-			mkdir = NULL;
-			
-			if (result != CURLE_OK)
-				break;
-		}
-		else if ([cmd type] == FTP_COMMAND_PUT)
-		{
-			FILE *fh;
-			struct stat finfo;
-			curl_off_t fsize;
-			
-			if(stat([[cmd localPath] UTF8String], &finfo)) 
-			{
-				NSLog(@"Couldnt open file '%@'", [cmd localPath]);
-				break;
-			}
-			
-			fsize = (curl_off_t)finfo.st_size;
-			
-			fh = fopen([[cmd localPath] UTF8String], "rb");
-			
-			NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@%@", [self protocolPrefix], [upload hostname], [upload port], [upload directory], [cmd remotePath]];
-			
-			curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-			curl_easy_setopt(handle, CURLOPT_QUOTE, NULL);
-			curl_easy_setopt(handle, CURLOPT_READDATA, fh);
-			curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
-			curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
-			
-			// Perform
-			result = curl_easy_perform(handle);
-			
-			fclose(fh);
-			
-			if (result != CURLE_OK)
-				break;
-			
-			[upload setTotalFilesUploaded:[upload totalFilesUploaded] + 1];
-		}
-		// */
-	}
-	
-	[commands release];
-
-	[self setIsUploading:NO];
-	
-	[self handleCurlResult:result forObject:upload];
-
-	[pool drain];
-	[pool release];
-}
-
-
-/*
- * Checks the list of files for the upload and informs the delegate if any remote files will be overwritten. 
- */
-- (void)checkUploadForOverwrites:(NSArray *)filesAndDirectories
-{
-	
-	
-}
-
-
-/*
- * Enumurates a list of FTP commands needed to perform the upload and returns them in an array.
- */
-- (NSArray *)createCommandsForUpload:(NSArray *)files totalFiles:(int *)totalFiles
-{
-	NSFileManager *mgr = [NSFileManager defaultManager];
-	NSMutableArray *commands = [[NSMutableArray alloc] init];
-	BOOL isDir;
-	for (int i = 0; i < [files count]; i++)
-	{
-		NSString *pathToFile = [files objectAtIndex:i];
-		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
-		{
-			FTPCommand *put = [[FTPCommand alloc] initWithType:FTP_COMMAND_PUT 
-													 localPath:pathToFile 
-													remotePath:[pathToFile lastPathComponent]];
-			[commands addObject:put];
-			
-			*totalFiles += 1;
-		}
-		else
-		{
-			NSDirectoryEnumerator *dir = [mgr enumeratorAtPath:pathToFile];
-			NSString *basePath = [pathToFile lastPathComponent];
-			NSString *file;
-			
-			FTPCommand *mkdir = [[FTPCommand alloc] initWithType:FTP_COMMAND_MKDIR 
-													   localPath:pathToFile 
-													  remotePath:basePath];
-			
-			[commands addObject:mkdir];
-			
-			while (file = [dir nextObject])
-			{
-				if ([mgr fileExistsAtPath:[pathToFile stringByAppendingPathComponent:file] isDirectory:&isDir] && !isDir)
-				{
-					FTPCommand *put = [[FTPCommand alloc] initWithType:FTP_COMMAND_PUT 
-															 localPath:[pathToFile stringByAppendingPathComponent:file] 
-															remotePath:[basePath stringByAppendingPathComponent:file]];
-					[commands addObject:put];
-					
-					*totalFiles += 1;
-				}
-				else
-				{
-					FTPCommand *mkdir = [[FTPCommand alloc] initWithType:FTP_COMMAND_MKDIR
-															   localPath:[pathToFile stringByAppendingPathComponent:file] 
-															  remotePath:[basePath stringByAppendingPathComponent:file]];
-					[commands addObject:mkdir];
-				}
-			}
-		}
-	}
-	
-	return commands;
+	[NSThread detachNewThreadSelector:@selector(performRecursiveUpload:)
+							 toTarget:self 
+						   withObject:upload];	
 }
 
 
@@ -448,6 +200,45 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 	}
 
 	return creds;
+}
+
+
+# pragma mark UploadDelegate methods
+
+
+/*
+ * Called when the upload starts.
+ */
+- (void)uploadDidBegin:(Upload *)record
+{
+	
+}
+
+
+/*
+ * Called when the upload has finished successfully.
+ */
+- (void)uploadDidFinish:(Upload *)record
+{
+	
+}
+
+
+/*
+ * Called when the upload progress has changed (1-100%)
+ */
+- (void)upload:(Upload *)record didProgress:(int)percent
+{
+	
+}
+
+
+/*
+ * Called when the status of the upload changes.
+ */
+- (void)upload:(Upload *)record statusDidChange:(TransferStatus)status
+{
+	
 }
 
 

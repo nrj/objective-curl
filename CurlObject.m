@@ -18,8 +18,12 @@
 @synthesize authUsername;
 @synthesize authPassword;
 
+@synthesize verbose;
+@synthesize showProgress;
+
 @synthesize isUploading;
 @synthesize isDownloading;
+
 
 /*
  * Returns a string containing the version info of libcurl that the framework is using. 
@@ -39,21 +43,10 @@
 {
 	if (self = [super init])
 	{
+		operationQueue = [[NSOperationQueue alloc] init];
+		
 		[self setAuthUsername:@""];
 		[self setAuthPassword:@""];
-
-		handle = curl_easy_init();
-		
-		if (!handle)
-		{
-			@throw [NSException exceptionWithName:@"Initialization Error" 
-										   reason:@"Unable to initialize libcurl." 
-										 userInfo:nil];
-		}
-		
-		curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
-		curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleCurlProgress);
-		curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	}
 	
 	return self;
@@ -65,68 +58,30 @@
  */
 - (void)dealloc
 {
-	[authUsername release];
-	[authPassword release];
+	[operationQueue release], operationQueue = nil;
 	
-	if (handle)
-	{
-		curl_easy_cleanup(handle);
-	}
-	
-	curl_global_cleanup();
+	[authUsername release], authUsername = nil;
+	[authPassword release], authPassword = nil;
 	
 	[super dealloc];
 }
 
 
 /*
- * Getter for the curl_easy_handle.
+ * Generates a new curl_easy_handle.
  *
  *      See http://curl.haxx.se/libcurl/c/libcurl-easy.html
  */
-- (CURL *)handle
+- (CURL *)newHandle
 {
+	CURL *handle = curl_easy_init();
+	
+	curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
+
+	// curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleCurlProgress);
+	// curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
+	
 	return handle;
-}
-
-
-/*
- * Turn on curls internal verbose logging; output goes to stderr.
- */
-- (void)setVerbose:(BOOL)value
-{
-	if (!handle) return;
-	curl_easy_setopt(handle, CURLOPT_VERBOSE, value);
-	verbose = value;
-}
-
-
-/*
- * Getter for the verbose flag.
- */
-- (BOOL)verbose
-{
-	return verbose;
-}
-
-
-/*
- * Turn on curls internal progress meter. This needs to be turned on to receive progress callbacks.
- */
-- (void)setShowProgress:(BOOL)value
-{
-	if (!handle) return;
-	curl_easy_setopt(handle, CURLOPT_NOPROGRESS, !value);
-	showProgress = value;
-}
-
-
-/*
- * Getter for the showProgress flag.
- */
-- (BOOL)showProgress
-{
-	return showProgress;
 }
 
 
@@ -158,40 +113,6 @@
 	@throw [NSException exceptionWithName:@"No Implementation" 
 								   reason:@"Method must be implemented in a subclass." 
 								 userInfo:nil];	
-}
-
-
-/*
- * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
- * new upload progress and sets it on the transfer.
- *
- *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
- */
-static int handleCurlProgress(CurlObject *client, double dltotal, double dlnow, double ultotal, double ulnow)
-{	
-/*
-	if (ultotal == 0) return 0;
-	
-//	id <TransferRecord>transfer = [client transfer];
-	
-	long totalProgressUnits = 100 * ([transfer totalFiles]);
-	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
-	int actualProgress = (individualProgress * 100) / totalProgressUnits;
-	
-	if ([transfer hasBeenCancelled])
-	{		
-		return -1;
-	}
-	else if (actualProgress >= 0 && actualProgress > [transfer progress])
-	{
-		[transfer setProgress:actualProgress];
-
-//		[transfer setStatusMessage:[NSString stringWithFormat:@"Uploading", actualProgress, [transfer hostname]]];
-		
-//		[client performDelegateSelector:@selector(curl:transferDidProgress:) withObject:transfer];
-	}
-*/	
-	return 0;
 }
 
 

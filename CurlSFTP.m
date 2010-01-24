@@ -17,6 +17,9 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 
 @implementation CurlSFTP
 
+@synthesize knownHostsFile;
+
+
 /*
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
  * of these options before doing any uploads
@@ -31,8 +34,8 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 		
 		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
 
-		curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
-		curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
+//		curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
+//		curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
 	}
 	
 	return self;
@@ -44,9 +47,20 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
  */
 - (void)dealloc
 {
-	[knownHostsFile release];
-	[hostKeyFingerprints release];
+	[knownHostsFile release], knownHostsFile = nil;
+	[hostKeyFingerprints release], hostKeyFingerprints = nil;
+
 	[super dealloc];
+}
+
+
+- (CURL *)newHandle
+{
+	CURL *handle = [super newHandle];
+	
+	curl_easy_setopt(handle, CURLOPT_SSH_KNOWNHOSTS, [knownHostsFile UTF8String]);
+	
+	return handle;
 }
 
 
@@ -158,34 +172,11 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 							forKey:fingerprint];
 }
 
-/*
- * Set the path to use for the OpenSSH known_hosts file. Default is ~/.ssh/known_hosts
- */
-- (void)setKnownHostsFile:(NSString *)filePath
-{		
-	if (knownHostsFile != filePath)
-	{
-		[knownHostsFile release];
-		knownHostsFile = [filePath copy];		
-		curl_easy_setopt(handle, CURLOPT_SSH_KNOWNHOSTS, [knownHostsFile UTF8String]);
-	}
-}
-
-
-/*
- * Returns the path set for the OpenSSH known_hosts file.
- */
-- (NSString *)knownHostsFile
-{
-	return knownHostsFile;
-}
-
 
 /*
  * Returns an array of files that exist in a remote directory. Will use items in the directoryListCache if they exist. Uses 
  * the default SFTP port.
  */
-
 - (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host
 {
 	return [self listRemoteDirectory:directory 

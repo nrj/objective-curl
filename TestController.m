@@ -12,6 +12,7 @@
 @implementation TestController
 
 @synthesize folder;
+@synthesize upload;
 
 - (void)awakeFromNib
 {		
@@ -27,11 +28,23 @@
 
 - (void)initCurlObject:(CurlObject *)curl
 {	
-	[curl setVerbose:NO];
+	[curl setVerbose:YES];
 	[curl setShowProgress:YES];
 	[curl setAuthUsername:[usernameField stringValue]];
 	[curl setAuthPassword:[passwordField stringValue]];
 	[curl setDelegate:self];
+}
+
+
+- (IBAction)uploadFile:(id)sender
+{
+	[self initCurlObject:sftp];
+	
+	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
+	
+	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL] toHost:[hostnameField stringValue]];
+	
+	[self setUpload:newUpload];
 }
 
 

@@ -22,7 +22,7 @@
 	[fileView setDelegate:self];
 	[fileView setDoubleAction:@selector(navigateRemoteDirectory:)];
 	
-	sftp = [[CurlSFTP alloc] init];
+	ftp = [[CurlFTP alloc] init];
 }
 
 
@@ -38,11 +38,11 @@
 
 - (IBAction)uploadFile:(id)sender
 {
-	[self initCurlObject:sftp];
+	[self initCurlObject:ftp];
 	
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
-	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL] toHost:[hostnameField stringValue]];
+	Upload *newUpload = [ftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL] toHost:[hostnameField stringValue]];
 	
 	[self setUpload:newUpload];
 }
@@ -50,11 +50,11 @@
 
 - (IBAction)listRemoteDirectory:(id)sender
 {
-	[self initCurlObject:sftp];
+	[self initCurlObject:ftp];
 	
 	NSString *hostname = [hostnameField stringValue];
 	
-	RemoteFolder *remoteFolder = [sftp listRemoteDirectory:@"" onHost:hostname];
+	RemoteFolder *remoteFolder = [ftp listRemoteDirectory:@"" onHost:hostname];
 	
 	[self setFolder:remoteFolder];
 }
@@ -68,7 +68,7 @@
 		if ([file isDir])
 		{
 			NSString *newPath = [[folder path] appendPathForFTP:[file name]];
-			[self setFolder:[sftp listRemoteDirectory:newPath onHost:[folder hostname]]];
+			[self setFolder:[ftp listRemoteDirectory:newPath onHost:[folder hostname]]];
 		}
 	}
 }
@@ -80,29 +80,29 @@
 }
 
 
-- (void)curl:(CurlSFTP *)client receivedUnknownHostKeyFingerprint:(NSString *)fingerprint
-{
-	NSAlert *alert = [NSAlert alertWithMessageText:@"Unknown Host Key Fingerprint" 
-									 defaultButton:@"Allow" 
-								   alternateButton:@"Always" 
-									   otherButton:@"Deny" 
-						 informativeTextWithFormat:fingerprint];
-	
-	int answer = [NSApp runModalForWindow:[alert window]];
-	
-	switch (answer)
-	{
-		case 1: 
-			[client acceptHostKeyFingerprint:fingerprint permanently:NO];
-			break;
-		case 0:
-			[client acceptHostKeyFingerprint:fingerprint permanently:YES];
-			break;
-		default:
-			[client rejectHostKeyFingerprint:fingerprint];
-			break;
-	}
-}
+//- (void)curl:(CurlSFTP *)client receivedUnknownHostKeyFingerprint:(NSString *)fingerprint
+//{
+//	NSAlert *alert = [NSAlert alertWithMessageText:@"Unknown Host Key Fingerprint" 
+//									 defaultButton:@"Allow" 
+//								   alternateButton:@"Always" 
+//									   otherButton:@"Deny" 
+//						 informativeTextWithFormat:fingerprint];
+//	
+//	int answer = [NSApp runModalForWindow:[alert window]];
+//	
+//	switch (answer)
+//	{
+//		case 1: 
+//			[client acceptHostKeyFingerprint:fingerprint permanently:NO];
+//			break;
+//		case 0:
+//			[client acceptHostKeyFingerprint:fingerprint permanently:YES];
+//			break;
+//		default:
+//			[client rejectHostKeyFingerprint:fingerprint];
+//			break;
+//	}
+//}
 
 
 #pragma mark TableView Delegate methods

@@ -1422,7 +1422,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="18424731">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">/Users/nrj/Desktop/upload-test</string>
+								<string key="NSContents">/Users/nrj/Desktop/i haz spaces</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="889008429"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -3741,8 +3741,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{795, 82}, {438, 337}}</string>
-					<string>{{795, 82}, {438, 337}}</string>
+					<string>{{655, 82}, {438, 337}}</string>
+					<string>{{655, 82}, {438, 337}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

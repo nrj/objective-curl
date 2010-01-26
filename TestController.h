@@ -7,12 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "CurlSFTP.h"
+#import "CurlFTP.h"
 
 
 @interface TestController : NSObject 
 {	
-	CurlSFTP *sftp;
+	CurlFTP *ftp;
 	
 	Upload *upload;
 	RemoteFolder *folder;

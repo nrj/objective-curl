@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NSString+PathExtras.h"
+#import "FTPUploadOperation.h"
 #import "UploadDelegate.h"
 #import "CurlObject.h"
 #import "RemoteFolder.h"
@@ -16,8 +17,6 @@
 
 
 extern int const DEFAULT_FTP_PORT;
-
-extern NSString * const FTP_PROTOCOL_PREFIX;
 
 @interface CurlFTP : CurlObject <UploadDelegate> 
 {

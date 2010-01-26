@@ -11,14 +11,11 @@
 
 int const DEFAULT_SFTP_PORT	= 22;
 
-NSString * const SFTP_PROTOCOL_PREFIX = @"sftp";
-
 NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 
 @implementation CurlSFTP
 
 @synthesize knownHostsFile;
-
 
 /*
  * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
@@ -33,9 +30,6 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 		hostKeyFingerprints = [[NSMutableDictionary alloc] init];
 		
 		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
-
-//		curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
-//		curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
 	}
 	
 	return self;
@@ -54,54 +48,18 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 }
 
 
+/*
+ * Generates a new curl_easy_handle with SFTP-specific options set.
+ *
+ *      See http://curl.haxx.se/libcurl/c/libcurl-easy.html
+ */
 - (CURL *)newHandle
 {
 	CURL *handle = [super newHandle];
 	
 	curl_easy_setopt(handle, CURLOPT_SSH_KNOWNHOSTS, [knownHostsFile UTF8String]);
-	
+
 	return handle;
-}
-
-
-/*
- * Returns the URL prefix for SFTP transfers.
- */
-- (NSString * const)protocolPrefix
-{
-	return SFTP_PROTOCOL_PREFIX;
-}
-
-
-/*
- * Invoked by curl when the known_host key matching is done. Returns a curl_khstat that determines how to proceed. 
- *
- *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSHKEYFUNCTION
- */
-static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, CurlSFTP *client)
-{			
-	int result = -1;
-	NSString *fingerprint = [NSString formattedMD5:foundKey->key length:foundKey->len];
-	switch (type)
-	{
-		case CURLKHMATCH_OK:
-			result = CURLKHSTAT_FINE;
-			break;
-			
-		case CURLKHMATCH_MISSING:
-			result = [client handleUnknownHostKey:fingerprint];
-			break;
-
-		case CURLKHMATCH_MISMATCH:
-			result = [client handleMismatchedHostKey:fingerprint];
-			break;
-			
-		default:
-			NSLog(@"Unknown curl_khmatch type: %d", type);
-			break;
-	}
-	
-	return result;
 }
 
 

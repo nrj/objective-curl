@@ -37,7 +37,7 @@
 
 
 /*
- * Initialize the curl handle and set non-protocol-specific options. Throws an error if we can't initialize curl.
+ * Initialize the operation queue, and other property defaults.
  */
 - (id)init
 {
@@ -77,9 +77,8 @@
 	CURL *handle = curl_easy_init();
 	
 	curl_easy_setopt(handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_WHATEVER);
-
-	// curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleCurlProgress);
-	// curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
+	curl_easy_setopt(handle, CURLOPT_VERBOSE, [self verbose]);
+	curl_easy_setopt(handle, CURLOPT_NOPROGRESS, ![self showProgress]);
 	
 	return handle;
 }

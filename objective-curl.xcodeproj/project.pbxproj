@@ -29,8 +29,8 @@
 		0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
 		0BB383B210EB1DF9003DD538 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
 		0BB383B310EB1DF9003DD538 /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
-		0BBF81F710EEB1B0005358BB /* FTPCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* FTPCommand.h */; };
-		0BBF81F810EEB1B0005358BB /* FTPCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* FTPCommand.m */; };
+		0BBF81F710EEB1B0005358BB /* TransferInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* TransferInfo.h */; };
+		0BBF81F810EEB1B0005358BB /* TransferInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* TransferInfo.m */; };
 		0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83DB10EFD6CD005358BB /* ftpparse.c */; };
 		0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DC10EFD6CD005358BB /* ftpparse.h */; };
 		0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DF10EFDD28005358BB /* RemoteFile.h */; };
@@ -45,10 +45,12 @@
 		0BCD3B9D10F432A20047202F /* InvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCD3B9910F432A20047202F /* InvocationGrabber.h */; };
 		0BD3CFF2110CF44A00478C99 /* CurlOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3CFF0110CF44A00478C99 /* CurlOperation.h */; };
 		0BD3CFF3110CF44A00478C99 /* CurlOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3CFF1110CF44A00478C99 /* CurlOperation.m */; };
-		0BD3D011110CF5E700478C99 /* UploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D00F110CF5E700478C99 /* UploadOperation.h */; };
-		0BD3D012110CF5E700478C99 /* UploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D010110CF5E700478C99 /* UploadOperation.m */; };
+		0BD3D011110CF5E700478C99 /* FTPUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D00F110CF5E700478C99 /* FTPUploadOperation.h */; };
+		0BD3D012110CF5E700478C99 /* FTPUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D010110CF5E700478C99 /* FTPUploadOperation.m */; };
 		0BD3D015110CF5F000478C99 /* ListOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D013110CF5F000478C99 /* ListOperation.h */; };
 		0BD3D016110CF5F000478C99 /* ListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D014110CF5F000478C99 /* ListOperation.m */; };
+		0BD3D14E110D1D8E00478C99 /* SFTPUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D14C110D1D8E00478C99 /* SFTPUploadOperation.h */; };
+		0BD3D14F110D1D8E00478C99 /* SFTPUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D14D110D1D8E00478C99 /* SFTPUploadOperation.m */; };
 		0BD6227910DF157B004D8C5B /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0BD622C910DF18BB004D8C5B /* objective-curl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7604D410DF126200BE0666 /* Security.framework */; };
@@ -123,8 +125,8 @@
 		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
 		0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
-		0BBF81F510EEB1B0005358BB /* FTPCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPCommand.h; sourceTree = "<group>"; };
-		0BBF81F610EEB1B0005358BB /* FTPCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPCommand.m; sourceTree = "<group>"; };
+		0BBF81F510EEB1B0005358BB /* TransferInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferInfo.h; sourceTree = "<group>"; };
+		0BBF81F610EEB1B0005358BB /* TransferInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferInfo.m; sourceTree = "<group>"; };
 		0BBF83DB10EFD6CD005358BB /* ftpparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftpparse.c; sourceTree = "<group>"; };
 		0BBF83DC10EFD6CD005358BB /* ftpparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpparse.h; sourceTree = "<group>"; };
 		0BBF83DF10EFDD28005358BB /* RemoteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteFile.h; sourceTree = "<group>"; };
@@ -139,10 +141,12 @@
 		0BCD3B9910F432A20047202F /* InvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvocationGrabber.h; sourceTree = "<group>"; };
 		0BD3CFF0110CF44A00478C99 /* CurlOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlOperation.h; sourceTree = "<group>"; };
 		0BD3CFF1110CF44A00478C99 /* CurlOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlOperation.m; sourceTree = "<group>"; };
-		0BD3D00F110CF5E700478C99 /* UploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadOperation.h; sourceTree = "<group>"; };
-		0BD3D010110CF5E700478C99 /* UploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadOperation.m; sourceTree = "<group>"; };
+		0BD3D00F110CF5E700478C99 /* FTPUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPUploadOperation.h; sourceTree = "<group>"; };
+		0BD3D010110CF5E700478C99 /* FTPUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPUploadOperation.m; sourceTree = "<group>"; };
 		0BD3D013110CF5F000478C99 /* ListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListOperation.h; sourceTree = "<group>"; };
 		0BD3D014110CF5F000478C99 /* ListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListOperation.m; sourceTree = "<group>"; };
+		0BD3D14C110D1D8E00478C99 /* SFTPUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTPUploadOperation.h; sourceTree = "<group>"; };
+		0BD3D14D110D1D8E00478C99 /* SFTPUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTPUploadOperation.m; sourceTree = "<group>"; };
 		0BD6227310DF1564004D8C5B /* CurlTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurlTester.app; sourceTree = BUILT_PRODUCTS_DIR; wrapsLines = 0; };
 		0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurlTester-Info.plist"; sourceTree = "<group>"; };
 		0BD623F710DF1B29004D8C5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -265,8 +269,8 @@
 			children = (
 				0B76053010DF13B600BE0666 /* Upload.h */,
 				0B76053110DF13B600BE0666 /* Upload.m */,
-				0BBF81F510EEB1B0005358BB /* FTPCommand.h */,
-				0BBF81F610EEB1B0005358BB /* FTPCommand.m */,
+				0BBF81F510EEB1B0005358BB /* TransferInfo.h */,
+				0BBF81F610EEB1B0005358BB /* TransferInfo.m */,
 				0B725E5310F2CC4D001C614D /* RemoteObject.h */,
 				0B725E5410F2CC4D001C614D /* RemoteObject.m */,
 				0BBF83DF10EFDD28005358BB /* RemoteFile.h */,
@@ -321,8 +325,10 @@
 			children = (
 				0BD3CFF0110CF44A00478C99 /* CurlOperation.h */,
 				0BD3CFF1110CF44A00478C99 /* CurlOperation.m */,
-				0BD3D00F110CF5E700478C99 /* UploadOperation.h */,
-				0BD3D010110CF5E700478C99 /* UploadOperation.m */,
+				0BD3D00F110CF5E700478C99 /* FTPUploadOperation.h */,
+				0BD3D010110CF5E700478C99 /* FTPUploadOperation.m */,
+				0BD3D14C110D1D8E00478C99 /* SFTPUploadOperation.h */,
+				0BD3D14D110D1D8E00478C99 /* SFTPUploadOperation.m */,
 				0BD3D013110CF5F000478C99 /* ListOperation.h */,
 				0BD3D014110CF5F000478C99 /* ListOperation.m */,
 			);
@@ -391,7 +397,7 @@
 				0B76055110DF150200BE0666 /* EMKeychain.h in Headers */,
 				0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */,
 				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
-				0BBF81F710EEB1B0005358BB /* FTPCommand.h in Headers */,
+				0BBF81F710EEB1B0005358BB /* TransferInfo.h in Headers */,
 				0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */,
 				0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */,
 				0BBF87BA10F191C7005358BB /* CurlDelegate.h in Headers */,
@@ -403,8 +409,9 @@
 				0B0B975A10F58CED007DBFA8 /* NSString+MD5.h in Headers */,
 				0B0B975C10F58CED007DBFA8 /* NSString+PathExtras.h in Headers */,
 				0BD3CFF2110CF44A00478C99 /* CurlOperation.h in Headers */,
-				0BD3D011110CF5E700478C99 /* UploadOperation.h in Headers */,
+				0BD3D011110CF5E700478C99 /* FTPUploadOperation.h in Headers */,
 				0BD3D015110CF5F000478C99 /* ListOperation.h in Headers */,
+				0BD3D14E110D1D8E00478C99 /* SFTPUploadOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +532,7 @@
 				0B76053310DF13B600BE0666 /* Upload.m in Sources */,
 				0B76055210DF150200BE0666 /* EMKeychain.m in Sources */,
 				0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */,
-				0BBF81F810EEB1B0005358BB /* FTPCommand.m in Sources */,
+				0BBF81F810EEB1B0005358BB /* TransferInfo.m in Sources */,
 				0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */,
 				0BBF83E210EFDD28005358BB /* RemoteFile.m in Sources */,
 				0BBF887F10F1D0F8005358BB /* RemoteFolder.m in Sources */,
@@ -535,8 +542,9 @@
 				0B0B975B10F58CED007DBFA8 /* NSString+MD5.m in Sources */,
 				0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */,
 				0BD3CFF3110CF44A00478C99 /* CurlOperation.m in Sources */,
-				0BD3D012110CF5E700478C99 /* UploadOperation.m in Sources */,
+				0BD3D012110CF5E700478C99 /* FTPUploadOperation.m in Sources */,
 				0BD3D016110CF5F000478C99 /* ListOperation.m in Sources */,
+				0BD3D14F110D1D8E00478C99 /* SFTPUploadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

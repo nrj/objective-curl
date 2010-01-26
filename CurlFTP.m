@@ -11,21 +11,19 @@
 
 int const DEFAULT_FTP_PORT = 21;
 
-NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
-
 @implementation CurlFTP
 
+
 /*
- * Initializes the class instance for performing FTP uploads. If you don't use this method then you will have to manually set some or all 
- * of these options before doing any uploads
+ * Initialize a directory list cache and other property defaults;
  */
 - (id)init
 {		
 	if (self = [super init])
 	{
-		[self setProtocolType:kSecProtocolTypeFTP];
-
 		directoryListCache = [[NSMutableDictionary alloc] init];
+
+		[self setProtocolType:kSecProtocolTypeFTP];
 	}
 	
 	return self;
@@ -43,22 +41,85 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 }
 
 
+/*
+ * Generates a new curl_easy_handle with FTP-specific options set.
+ *
+ *      See http://curl.haxx.se/libcurl/c/libcurl-easy.html
+ */
 - (CURL *)newHandle
 {
 	CURL *handle = [super newHandle];
 	
 	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
 	
 	return handle;
 }
 
 
 /*
- * Returns the URL prefix for FTP transfers.
+ * Recursively upload a list of files and directories using the specified host and the users home directory.
  */
-- (NSString * const)protocolPrefix
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
 {
-	return FTP_PROTOCOL_PREFIX;
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+								 directory:@""
+									  port:DEFAULT_FTP_PORT];
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host and directory.
+ */
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+								 directory:directory
+									  port:DEFAULT_FTP_PORT];	
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host, directory and port number. The associated Upload object
+ * is returned, however not retained.
+ */
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
+{		
+	Upload *upload = [[Upload alloc] init];
+	
+	[upload setProtocol:[self protocolType]];
+	[upload setHostname:host];
+	[upload setPort:port];
+	[upload setDirectory:[directory pathForFTP]];
+	[upload setLocalFiles:filesAndDirectories];
+	[upload setProgress:0];
+
+	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle]];
+	
+	[operation setTransfer:upload];
+	
+	[operationQueue addOperation:operation];
+
+	[operation release];
+	
+	return upload;
+}
+
+
+/*
+ * Use this method to retry a failed recursive upload.
+ */
+- (void)retryRecursiveUpload:(Upload *)upload
+{
+	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle]];
+	
+	[operation setTransfer:upload];
+	
+	[operationQueue addOperation:operation];
+	
+	[operation release];
 }
 
 
@@ -116,64 +177,6 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 - (void)retryListRemoteDirectory:(RemoteFolder *)folder;
 {
 	
-}
-
-
-/*
- * Recursively upload a list of files and directories using the specified host and the users home directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
-								 directory:@""
-									  port:DEFAULT_FTP_PORT];
-}
-
-
-/*
- * Recursively upload a list of files and directories using the specified host and directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
-								 directory:directory
-									  port:DEFAULT_FTP_PORT];	
-}
-
-
-/*
- * Recursively upload a list of files and directories using the specified host, directory and port number. The associated Upload object
- * is returned, however not retained.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
-{		
-	Upload *upload = [[Upload alloc] init];
-	
-	[upload setProtocol:[self protocolType]];
-	[upload setHostname:host];
-	[upload setPort:port];
-	[upload setDirectory:[directory pathForFTP]];
-	[upload setLocalFiles:filesAndDirectories];
-	[upload setProgress:0];
-	
-	[NSThread detachNewThreadSelector:@selector(performRecursiveUpload:)
-							 toTarget:self 
-						   withObject:upload];
-	
-	return upload;
-}
-
-
-/*
- * Use this method to retry a failed recursive upload.
- */
-- (void)retryRecursiveUpload:(Upload *)upload
-{
-	[NSThread detachNewThreadSelector:@selector(performRecursiveUpload:)
-							 toTarget:self 
-						   withObject:upload];	
 }
 
 

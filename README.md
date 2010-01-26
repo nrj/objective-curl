@@ -1,4 +1,10 @@
-The objective-curl framework is an easy-to-use interface to the [libcurl C API](http://curl.haxx.se/libcurl/c/) for Cocoa developers. My first and foremost efforts are primarily focusing on FTP support. There are a couple frameworks out there for libcurl that subclass NSURLHandle, which has been deprecated since 10.4. This framework is designed for newer Cocoa applicaations using OS X 10.5 and higher - it uses  [NSObject](http://developer.apple.com/mac/library/documentation/cocoa/reference/Foundation/Classes/NSObject_Class/Reference/Reference.html), [NSOperation](http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Reference/NSOperation_class/Reference/Reference.html) and [NSOperationQueue](http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Reference/NSOperationQueue_class/Reference/Reference.html#//apple_ref/occ/cl/NSOperationQueue) for threading and your traditional cocoa delegate patterns.
+The objective-curl framework is an easy-to-use interface to the [libcurl C API](http://curl.haxx.se/libcurl/c/) for Cocoa developers. My first and foremost efforts are primarily focusing on FTP support. There are a couple frameworks out there for libcurl that subclass NSURLHandle, which has been deprecated since 10.4. This framework is designed for newer Cocoa applicaations using OS X 10.5 and higher. 
+
+All curl objects are subclasses of  [NSObject](http://developer.apple.com/mac/library/documentation/cocoa/reference/Foundation/Classes/NSObject_Class/Reference/Reference.html).
+
+Threading is done with  [NSOperation](http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Reference/NSOperation_class/Reference/Reference.html) and [NSOperationQueue](http://developer.apple.com/mac/library/DOCUMENTATION/Cocoa/Reference/NSOperationQueue_class/Reference/Reference.html#//apple_ref/occ/cl/NSOperationQueue).
+
+The framework also uses common Cocoa delegate patterns.
 
 ## Simple FTP/SFTP Example
 

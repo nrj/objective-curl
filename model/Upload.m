@@ -19,13 +19,14 @@
 @synthesize totalFiles;
 @synthesize totalFilesUploaded;
 @synthesize currentFile;
-
-@synthesize hasBeenCancelled;
+@synthesize isUploading;
+@synthesize cancelled;
 
 - (id)init
 {
 	if (self = [super init])
 	{
+		[self setStatus:0];
 		[self setProgress:0];
 		[self setTotalFiles:0];
 		[self setTotalFilesUploaded:0];
@@ -44,14 +45,9 @@
 	[super dealloc];
 }
 
-
-
 - (BOOL)isActiveTransfer
 {
-	return (status == TRANSFER_STATUS_QUEUED ||
-			status == TRANSFER_STATUS_CONNECTING ||
-			status == TRANSFER_STATUS_UPLOADING ||
-			status == TRANSFER_STATUS_DOWNLOADING);
+	return (status == TRANSFER_STATUS_QUEUED || status == TRANSFER_STATUS_UPLOADING);
 }
 
 @end

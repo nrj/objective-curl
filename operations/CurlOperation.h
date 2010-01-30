@@ -16,8 +16,11 @@
 @interface CurlOperation : NSOperation 
 {
 	CURL *handle;
+	id delegate;
 }
 
-- (id)initWithHandle:(CURL *)aHandle;
+@property(readwrite, assign) id delegate;
+
+- (id)initWithHandle:(CURL *)aHandle delegate:(id)aDelegate;
 
 @end

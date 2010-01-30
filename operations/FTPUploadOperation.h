@@ -7,8 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NSObject+Extensions.h"
 #import "CurlOperation.h"
 #import "TransferInfo.h"
+#import "UploadDelegate.h"
 #import "Upload.h"
 
 
@@ -22,10 +24,15 @@ extern NSString * const TMP_FILENAME;
 
 @property(readwrite, retain) Upload *transfer;
 
-static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, double ultotal, double ulnow);
+static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow);
 
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files;
 
 - (NSString *)protocolPrefix;
+
+- (void)handleUploadResult:(CURLcode)result;
+- (void)handleUploadFailure:(CURLcode)result;
+
+- (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
 
 @end

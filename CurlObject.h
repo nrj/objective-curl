@@ -35,8 +35,6 @@
 @property(readwrite, copy) NSString *authPassword;
 @property(readwrite, assign) BOOL verbose;
 @property(readwrite, assign) BOOL showProgress;
-@property(readwrite, assign) BOOL isUploading;
-@property(readwrite, assign) BOOL isDownloading;
 
 + (NSString *)libcurlVersion;
 
@@ -45,9 +43,5 @@
 - (BOOL)hasAuthUsername;
 
 - (BOOL)hasAuthPassword;
-
-- (NSString * const)protocolPrefix;
-
-- (void)handleCurlResult:(CURLcode)result forObject:(RemoteObject *)task;
 
 @end

@@ -14,6 +14,7 @@
 @synthesize folder;
 @synthesize upload;
 
+
 - (void)awakeFromNib
 {		
 	NSLog([CurlObject libcurlVersion]);
@@ -28,7 +29,7 @@
 
 - (void)initCurlObject:(CurlObject *)curl
 {	
-	[curl setVerbose:YES];
+	[curl setVerbose:NO];
 	[curl setShowProgress:YES];
 	[curl setAuthUsername:[usernameField stringValue]];
 	[curl setAuthPassword:[passwordField stringValue]];
@@ -59,6 +60,7 @@
 	[self setFolder:remoteFolder];
 }
 
+
 - (IBAction)navigateRemoteDirectory:(id)sender
 {
 	if (folder && [fileView clickedRow] != -1)
@@ -77,6 +79,64 @@
 - (void)curl:(CurlObject *)client didListRemoteDirectory:(RemoteFolder *)dir
 {
 	[fileView reloadData];
+}
+
+
+#pragma mark UploadDelegate methods
+
+
+- (void)uploadDidBegin:(Upload *)record
+{
+	NSLog(@"uploadDidBegin");
+}
+
+
+- (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
+{
+	NSLog(@"uploadDidProgress - %@", percent);	
+}
+
+
+- (void)uploadDidFinish:(Upload *)record
+{
+	NSLog(@"uploadDidFinish");
+}
+
+
+- (void)uploadDidFail:(Upload *)record withStatus:(NSString *)message
+{
+	NSLog(@"uploadDidFail - %@", message);
+}
+
+
+- (void)uploadWasCancelled:(Upload *)record
+{
+	NSLog(@"uploadWasCancelled");
+}
+
+
+#pragma mark TableView Delegate methods
+
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+{
+	if (folder && [folder files] != NULL)
+	{
+		return [[folder files] count];
+	}
+	
+	return 0;
+}
+
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	if (folder && [folder files] != NULL)
+	{
+		RemoteFile *file = (RemoteFile *)[[folder files] objectAtIndex:rowIndex];
+		return [file name];
+	}
+	return nil;
 }
 
 
@@ -103,31 +163,6 @@
 //			break;
 //	}
 //}
-
-
-#pragma mark TableView Delegate methods
-
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-	if (folder && [folder files] != NULL)
-	{
-		return [[folder files] count];
-	}
-	
-	return 0;
-}
-
-
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-	if (folder && [folder files] != NULL)
-	{
-		RemoteFile *file = (RemoteFile *)[[folder files] objectAtIndex:rowIndex];
-		return [file name];
-	}
-	return nil;
-}
 
 
 @end

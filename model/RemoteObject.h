@@ -15,14 +15,12 @@
 	NSString *hostname;
 	int port;
 	int status;	
-	NSString *statusMessage;
 }
 
 @property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, copy) NSString *hostname;
 @property(readwrite, assign) int port;
 @property(readwrite, assign) int status;
-@property(readwrite, copy) NSString *statusMessage;
 
 - (NSString *)protocolString;
 

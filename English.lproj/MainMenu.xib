@@ -1377,22 +1377,6 @@
 								<reference key="NSTextColor" ref="1002444076"/>
 							</object>
 						</object>
-						<object class="NSTextField" id="1009495474">
-							<reference key="NSNextResponder" ref="686122530"/>
-							<int key="NSvFlags">290</int>
-							<string key="NSFrame">{{10, 13}, {421, 14}}</string>
-							<reference key="NSSuperview" ref="686122530"/>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="710412127">
-								<int key="NSCellFlags">68288064</int>
-								<int key="NSCellFlags2">71435264</int>
-								<string key="NSContents">Upload Status</string>
-								<reference key="NSSupport" ref="26"/>
-								<reference key="NSControlView" ref="1009495474"/>
-								<reference key="NSBackgroundColor" ref="907046648"/>
-								<reference key="NSTextColor" ref="1002444076"/>
-							</object>
-						</object>
 						<object class="NSButton" id="348785713">
 							<reference key="NSNextResponder" ref="686122530"/>
 							<int key="NSvFlags">289</int>
@@ -1436,7 +1420,7 @@
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
 							<string key="NSFrame">{{12, 66}, {417, 12}}</string>
 							<reference key="NSSuperview" ref="686122530"/>
-							<int key="NSpiFlags">24840</int>
+							<int key="NSpiFlags">16648</int>
 							<double key="NSMaxValue">1.000000e+02</double>
 						</object>
 					</object>
@@ -2133,30 +2117,6 @@
 						<reference key="destination" ref="208798762"/>
 					</object>
 					<int key="connectionID">641</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: upload.statusMessage</string>
-						<reference key="source" ref="1009495474"/>
-						<reference key="destination" ref="962184478"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1009495474"/>
-							<reference key="NSDestination" ref="962184478"/>
-							<string key="NSLabel">value: upload.statusMessage</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">upload.statusMessage</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">645</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">uploadStatusMessage</string>
-						<reference key="source" ref="962184478"/>
-						<reference key="destination" ref="1009495474"/>
-					</object>
-					<int key="connectionID">646</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3071,7 +3031,6 @@
 							<reference ref="889008429"/>
 							<reference ref="348785713"/>
 							<reference ref="208798762"/>
-							<reference ref="1009495474"/>
 						</object>
 						<reference key="parent" ref="682341643"/>
 					</object>
@@ -3269,20 +3228,6 @@
 						<int key="objectID">630</int>
 						<reference key="object" ref="916500852"/>
 						<reference key="parent" ref="686122530"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">635</int>
-						<reference key="object" ref="1009495474"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="710412127"/>
-						</object>
-						<reference key="parent" ref="686122530"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">636</int>
-						<reference key="object" ref="710412127"/>
-						<reference key="parent" ref="1009495474"/>
 					</object>
 				</object>
 			</object>
@@ -3522,8 +3467,6 @@
 					<string>626.IBPluginDependency</string>
 					<string>627.IBPluginDependency</string>
 					<string>630.IBPluginDependency</string>
-					<string>635.IBPluginDependency</string>
-					<string>636.IBPluginDependency</string>
 					<string>72.IBPluginDependency</string>
 					<string>72.ImportedFromIB2</string>
 					<string>73.IBPluginDependency</string>
@@ -3779,8 +3722,6 @@
 					<string>{{335, 413}, {475, 153}}</string>
 					<string>{{335, 413}, {475, 153}}</string>
 					<boolean value="NO"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

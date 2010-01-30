@@ -95,14 +95,16 @@ int const DEFAULT_FTP_PORT = 21;
 	[upload setDirectory:[directory pathForFTP]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setProgress:0];
-
-	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle]];
+	
+	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:[self delegate]];
 	
 	[operation setTransfer:upload];
 	
 	[operationQueue addOperation:operation];
 
 	[operation release];
+	
+	[upload setStatus:TRANSFER_STATUS_QUEUED];
 	
 	return upload;
 }
@@ -113,7 +115,7 @@ int const DEFAULT_FTP_PORT = 21;
  */
 - (void)retryRecursiveUpload:(Upload *)upload
 {
-	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle]];
+	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:[self delegate]];
 	
 	[operation setTransfer:upload];
 	
@@ -203,45 +205,6 @@ int const DEFAULT_FTP_PORT = 21;
 	}
 
 	return creds;
-}
-
-
-# pragma mark UploadDelegate methods
-
-
-/*
- * Called when the upload starts.
- */
-- (void)uploadDidBegin:(Upload *)record
-{
-	
-}
-
-
-/*
- * Called when the upload has finished successfully.
- */
-- (void)uploadDidFinish:(Upload *)record
-{
-	
-}
-
-
-/*
- * Called when the upload progress has changed (1-100%)
- */
-- (void)upload:(Upload *)record didProgress:(int)percent
-{
-	
-}
-
-
-/*
- * Called when the status of the upload changes.
- */
-- (void)upload:(Upload *)record statusDidChange:(TransferStatus)status
-{
-	
 }
 
 

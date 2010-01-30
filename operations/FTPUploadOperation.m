@@ -23,25 +23,39 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
  */
-static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, double ultotal, double ulnow)
+static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
-	if (ultotal == 0) return 0;
+	Upload *transfer = [operation transfer];
 	 
 	long totalProgressUnits = 100 * ([transfer totalFiles]);
 	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
-
+	if (ulnow == 0 && ultotal == 0) individualProgress = 100;
 	int actualProgress = (individualProgress * 100) / totalProgressUnits;
 	 
-	if ([transfer hasBeenCancelled])
-	{		
+	if ([transfer cancelled])
+	{
 		return -1;
 	}
-	else if (actualProgress >= 0 && actualProgress > [transfer progress])
+	else if (actualProgress >= 0)
 	{
-		[transfer setProgress:actualProgress];
-	 
-		// TODO - Notify delegates of progress and update status message here maybe?
-	 }
+		if (![transfer isUploading])
+		{
+			[transfer setIsUploading:YES];
+			[transfer setStatus:TRANSFER_STATUS_UPLOADING];
+			
+			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) 
+										withArgument:nil];
+		}
+		
+		if (actualProgress > [transfer progress])
+		{
+			[transfer setProgress:actualProgress];
+		
+			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
+										withArgument:[NSNumber numberWithInt:actualProgress]];
+		}
+	}
+	
 	return 0;
 }
 
@@ -53,10 +67,13 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+	// Transfer Status set to QUEUED.
+	[transfer setStatus:TRANSFER_STATUS_QUEUED];
+		
 	// Set curl options
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
 	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
-	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, transfer);
+	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
 	
 	// Enumurate files and directories to upload
@@ -65,6 +82,9 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 	[transfer setTotalFiles:[filesToUpload count]];
 	[transfer setTotalFilesUploaded:0];
 
+	CURLcode result = -1;
+	
+	// Start the recursive upload.
 	for (int i = 0; i < [filesToUpload count]; i++)
 	{
 		TransferInfo *file = [filesToUpload objectAtIndex:i];
@@ -100,8 +120,6 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 		}
 		curl_easy_setopt(handle, CURLOPT_POSTQUOTE, commands);
 		
-		CURLcode result = -1;
-		
 		// Perform
 		result = curl_easy_perform(handle);
 		
@@ -110,25 +128,114 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 		curl_slist_free_all(commands);
 		
 		if (result != CURLE_OK)
-			break;
+			break;			
 		
 		[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
 	}
 	
-//	[self setIsUploading:NO];
-//	[self handleCurlResult:result forObject:transfer];
-
+	// We are no longer uploading.
+	[transfer setIsUploading:NO];
+	
+	// Process the result of the upload.
+	[self handleUploadResult:result];
+	
+	// Cleanup.
 	[filesToUpload release];
 	[transfer release];
 
+	// Done.
 	[pool drain];
 	[pool release];
 }
 
 
-- (NSString *)protocolPrefix
+/*
+ * Called when the upload loop execution has finished. Updates the state of the upload and notifies delegates.
+ *
+ */
+- (void)handleUploadResult:(CURLcode)result
 {
-	return FTP_PROTOCOL_PREFIX;
+	if (result == CURLE_OK && [transfer totalFiles] == [transfer totalFilesUploaded])
+	{
+		// Success!
+		[transfer setStatus:TRANSFER_STATUS_COMPLETE];
+		
+		// Notify Delegates		
+		[self performUploadDelegateSelector:@selector(uploadDidFinish:) 
+							   withArgument:nil];
+	}
+	else if (result == CURLE_ABORTED_BY_CALLBACK)
+	{
+		// Cancelled!
+		[transfer setStatus:TRANSFER_STATUS_CANCELLED];
+
+		// Notify Delegate
+		[self performUploadDelegateSelector:@selector(uploadWasCancelled:) 
+							   withArgument:nil];
+	}
+	else
+	{
+		// Uh Ohz.
+		[self handleUploadFailure:result];
+	}
+	
+	curl_easy_cleanup(handle);
+
+	curl_global_cleanup();
+}
+
+
+/*
+ * Called when the upload was unsuccessfull. Updates the transfer status, message, and notifies delegates.
+ *
+ */
+- (void)handleUploadFailure:(CURLcode)result
+{
+	NSString *message;
+	
+	switch (result)
+	{		
+		case CURLE_REMOTE_ACCESS_DENIED:
+			message = [NSString stringWithFormat:@"Failed writing to directory %@", [transfer directory]];
+			break;
+			
+		case CURLE_PEER_FAILED_VERIFICATION:
+			message = [NSString stringWithFormat:@"Unknown host key for %@", [transfer hostname]];
+			break;
+			
+		case CURLE_FAILED_INIT:
+			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [transfer protocolString], [transfer hostname], [transfer port]];
+			break;
+			
+		case CURLE_COULDNT_CONNECT:
+			message = [NSString stringWithFormat:@"Couldn't connect to host %@ on port %d", [transfer hostname], [transfer port]];
+			break;
+		
+		case CURLE_OPERATION_TIMEOUTED:
+			message = [NSString stringWithFormat:@"Operation timed out to host %@", [transfer hostname]];
+			break;
+			
+		case CURLE_COULDNT_RESOLVE_HOST:
+			message = [NSString stringWithFormat:@"Couldn't resolve host %@", [transfer hostname]];
+			break;
+			
+		case CURLE_RECV_ERROR:
+			message = [NSString stringWithFormat:@"Failed to receive network data from %@", [transfer hostname]];
+			break;
+		
+		case CURLE_UNSUPPORTED_PROTOCOL:
+			message = [NSString stringWithFormat:@"Unsupported protocol %@", [transfer protocolString]];
+			break;
+				   
+		default:
+			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", result];
+			break;
+	}
+	
+	[transfer setStatus:TRANSFER_STATUS_FAILED];
+	
+	[self performUploadDelegateSelector:@selector(uploadDidFail:withStatus:)
+						   withArgument:message];
 }
 
 
@@ -138,7 +245,7 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
  */
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files
 {
-	NSMutableArray *transfers = [[NSMutableArray alloc] init];
+	NSMutableArray *filesToUpload = [[NSMutableArray alloc] init];
 	NSFileManager *mgr = [NSFileManager defaultManager];
 	
 	BOOL isDir;
@@ -167,7 +274,7 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 					info = [[TransferInfo alloc] initWithLocalPath:nextPath 
 														remotePath:[basePath stringByAppendingPathComponent:filename]];
 
-					[transfers addObject:info];
+					[filesToUpload addObject:info];
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
@@ -176,7 +283,7 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 
 					[info setIsEmptyDirectory:YES];
 					
-					[transfers addObject:info];
+					[filesToUpload addObject:info];
 				}
 			}
 		}
@@ -184,14 +291,45 @@ static int handleUploadProgress(Upload *transfer, double dltotal, double dlnow, 
 		{
 			info = [[TransferInfo alloc] initWithLocalPath:pathToFile 
 												remotePath:[pathToFile lastPathComponent]];
-			
+		
 			[info setIsEmptyDirectory:YES];
 		}
 		
-		[transfers addObject:info];
+		[filesToUpload addObject:info];
 	}
 	
-	return [transfers autorelease];
+	return [filesToUpload autorelease];
+}
+
+
+/*
+ * Calls an UploadDelegate method on the main thread.
+ */
+- (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg
+{
+	if (delegate && [delegate respondsToSelector:aSelector])
+	{
+		if (arg)
+		{
+			[[delegate invokeOnMainThread] performSelector:aSelector 
+												withObject:transfer 
+												withObject:arg];
+		}
+		else
+		{
+			[[delegate invokeOnMainThread] performSelector:aSelector 
+												withObject:transfer];
+		}
+	}
+}
+
+
+/*
+ * Returns the prefix for the protocol being used. (ftp, sftp, etc.)
+ */
+- (NSString *)protocolPrefix
+{
+	return FTP_PROTOCOL_PREFIX;
 }
 
 

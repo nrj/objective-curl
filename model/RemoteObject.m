@@ -11,16 +11,14 @@
 
 @implementation RemoteObject
 
-@synthesize protocol;
 @synthesize hostname;
+@synthesize protocol;
 @synthesize port;
 @synthesize status;
-@synthesize statusMessage;
 
 - (void)dealloc
 {
 	[hostname release];
-	[statusMessage release];
 	
 	[super dealloc];
 }

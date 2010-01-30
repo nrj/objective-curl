@@ -18,7 +18,7 @@
 
 extern int const DEFAULT_FTP_PORT;
 
-@interface CurlFTP : CurlObject <UploadDelegate> 
+@interface CurlFTP : CurlObject
 {
 	NSMutableDictionary *directoryListCache;
 }

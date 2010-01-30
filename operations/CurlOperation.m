@@ -13,12 +13,15 @@
 
 @implementation CurlOperation
 
+@synthesize delegate;
 
-- (id)initWithHandle:(CURL *)aHandle
+- (id)initWithHandle:(CURL *)aHandle delegate:(id)aDelegate
 {
 	if (self = [super init])
 	{
 		handle = aHandle;
+		
+		[self setDelegate:aDelegate];
 	}
 	
 	return self;

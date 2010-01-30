@@ -23,7 +23,7 @@
 	[fileView setDelegate:self];
 	[fileView setDoubleAction:@selector(navigateRemoteDirectory:)];
 	
-	ftp = [[CurlFTP alloc] init];
+	sftp = [[CurlSFTP alloc] init];
 }
 
 
@@ -39,11 +39,11 @@
 
 - (IBAction)uploadFile:(id)sender
 {
-	[self initCurlObject:ftp];
+	[self initCurlObject:sftp];
 	
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
-	Upload *newUpload = [ftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL] toHost:[hostnameField stringValue]];
+	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL] toHost:[hostnameField stringValue]];
 	
 	[self setUpload:newUpload];
 }
@@ -51,11 +51,11 @@
 
 - (IBAction)listRemoteDirectory:(id)sender
 {
-	[self initCurlObject:ftp];
+	[self initCurlObject:sftp];
 	
 	NSString *hostname = [hostnameField stringValue];
 	
-	RemoteFolder *remoteFolder = [ftp listRemoteDirectory:@"" onHost:hostname];
+	RemoteFolder *remoteFolder = [sftp listRemoteDirectory:@"" onHost:hostname];
 	
 	[self setFolder:remoteFolder];
 }
@@ -70,7 +70,7 @@
 		if ([file isDir])
 		{
 			NSString *newPath = [[folder path] appendPathForFTP:[file name]];
-			[self setFolder:[ftp listRemoteDirectory:newPath onHost:[folder hostname]]];
+			[self setFolder:[sftp listRemoteDirectory:newPath onHost:[folder hostname]]];
 		}
 	}
 }

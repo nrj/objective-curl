@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CurlFTP.h"
 #import "CurlDelegate.h"
+#import "SFTPUploadOperation.h"
 #import "NSString+MD5.h"
 #import "NSObject+Extensions.h"
 
@@ -24,11 +25,6 @@ extern NSString * const DEFAULT_KNOWN_HOSTS;
 }
 
 @property(readwrite, copy) NSString *knownHostsFile;
-
-static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, CurlSFTP *client);
-
-- (void)setKnownHostsFile:(NSString *)filePath;
-- (NSString *)knownHostsFile;
 
 - (int)handleUnknownHostKey:(NSString *)rsaFingerprint;
 - (int)handleMismatchedHostKey:(NSString *)rsaFingerprint;

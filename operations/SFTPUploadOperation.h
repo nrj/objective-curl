@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "FTPUploadOperation.h"
+#import "NSString+MD5.h"
 
 extern NSString * const SFTP_PROTOCOL_PREFIX;
 

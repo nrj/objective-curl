@@ -61,7 +61,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 
 
 /*
- * Thread entry point for recursive FTPUploads.
+ * Thread entry point for recursive FTP uploads.
  */
 - (void)main 
 {
@@ -144,7 +144,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	[transfer release];
 
 	// Done.
-	[pool drain];
 	[pool release];
 }
 
@@ -325,7 +324,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 
 
 /*
- * Returns the prefix for the protocol being used. (ftp, sftp, etc.)
+ * Returns the prefix for the protocol being used. In this case "ftp"
  */
 - (NSString *)protocolPrefix
 {

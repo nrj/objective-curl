@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSString+PathExtras.h"
-#import "FTPUploadOperation.h"
-#import "UploadDelegate.h"
 #import "CurlObject.h"
 #import "RemoteFolder.h"
 #import "RemoteFile.h"
 #import "Upload.h"
+#import "NSString+PathExtras.h"
+#import "FTPUploadOperation.h"
+#import "ListOperation.h"
+#import "UploadDelegate.h"
 
 
 extern int const DEFAULT_FTP_PORT;

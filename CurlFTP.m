@@ -21,9 +21,9 @@ int const DEFAULT_FTP_PORT = 21;
 {		
 	if (self = [super init])
 	{
-		directoryListCache = [[NSMutableDictionary alloc] init];
-
 		[self setProtocolType:kSecProtocolTypeFTP];
+		
+		directoryListCache = [[NSMutableDictionary alloc] init];
 	}
 	
 	return self;
@@ -87,7 +87,7 @@ int const DEFAULT_FTP_PORT = 21;
  */
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
 {		
-	Upload *upload = [[Upload alloc] init];
+	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocolType]];
 	[upload setHostname:host];
@@ -96,13 +96,14 @@ int const DEFAULT_FTP_PORT = 21;
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setProgress:0];
 	
-	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:[self delegate]];
+	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] 
+															   delegate:[self delegate]];
 	
-	[operation setTransfer:upload];
+	[op setTransfer:upload];
 	
-	[operationQueue addOperation:operation];
+	[operationQueue addOperation:op];
 
-	[operation release];
+	[op release];
 	
 	[upload setStatus:TRANSFER_STATUS_QUEUED];
 	
@@ -115,13 +116,14 @@ int const DEFAULT_FTP_PORT = 21;
  */
 - (void)retryRecursiveUpload:(Upload *)upload
 {
-	FTPUploadOperation *operation = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:[self delegate]];
+	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] 
+															   delegate:[self delegate]];
 	
-	[operation setTransfer:upload];
+	[op setTransfer:upload];
 	
-	[operationQueue addOperation:operation];
+	[operationQueue addOperation:op];
 	
-	[operation release];
+	[op release];
 }
 
 
@@ -157,7 +159,7 @@ int const DEFAULT_FTP_PORT = 21;
  */
 - (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port
 {	
-	RemoteFolder *folder = [[RemoteFolder alloc] init];
+	RemoteFolder *folder = [[[RemoteFolder alloc] init] autorelease];
 	
 	[folder setProtocol:[self protocolType]];
 	[folder setHostname:host];
@@ -165,9 +167,13 @@ int const DEFAULT_FTP_PORT = 21;
 	[folder setPath:[directory pathForFTP]];
 	[folder setForceReload:reload];
 	
-	[NSThread detachNewThreadSelector:@selector(performListRemoteDirectory:)
-							 toTarget:self 
-						   withObject:folder];
+	
+	ListOperation *op = [[ListOperation alloc] initWithHandle:[self newHandle] 
+													 delegate:[self delegate]];
+	
+	[op setFolder:folder];
+	
+	[operationQueue addOperation:op];
 	
 	return folder;	
 }

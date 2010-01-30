@@ -64,6 +64,59 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 
 
 /*
+ * Recursively upload a list of files and directories using the specified host and the users home directory.
+ */
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+								 directory:@"~/"
+									  port:DEFAULT_SFTP_PORT];
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host and directory.
+ */
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:host 
+								 directory:directory
+									  port:DEFAULT_SFTP_PORT];	
+}
+
+
+/*
+ * Recursively upload a list of files and directories using the specified host and directory.
+ */
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
+{
+	Upload *upload = [[[Upload alloc] init] autorelease];
+	
+	[upload setProtocol:[self protocolType]];
+	[upload setHostname:host];
+	[upload setPort:port];
+	[upload setDirectory:[directory pathForFTP]];
+	[upload setLocalFiles:filesAndDirectories];
+	[upload setProgress:0];
+	
+	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithHandle:[self newHandle] 
+																 delegate:[self delegate]];
+	
+	[op setTransfer:upload];
+	
+	[operationQueue addOperation:op];
+	
+	[op release];
+	
+	[upload setStatus:TRANSFER_STATUS_QUEUED];
+	
+	return upload;
+}
+
+
+/*
  * Search the acceptedHostKeys dictionary for the RSA fingerprint and return accordingly. If it is not found the Inform the delegate 
  * that the host we're trying to connect to has an unknown RSA fingerprint.
  */
@@ -154,30 +207,6 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 							  onHost:host
 						 forceReload:reload
 								port:DEFAULT_SFTP_PORT];
-}
-
-
-/*
- * Recursively upload a list of files and directories using the specified host and the users home directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
-								 directory:@"~/"
-									  port:DEFAULT_SFTP_PORT];
-}
-
-
-/*
- * Recursively upload a list of files and directories using the specified host and directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
-								 directory:directory
-									  port:DEFAULT_SFTP_PORT];	
 }
 
 

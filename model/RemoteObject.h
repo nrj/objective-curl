@@ -19,6 +19,8 @@
 	NSString *path;
 	int port;
 	TransferStatus status;
+	BOOL isConnecting;
+	BOOL cancelled;
 }
 
 @property(readwrite, assign) SecProtocolType protocol;
@@ -28,6 +30,8 @@
 @property(readwrite, copy) NSString *path;
 @property(readwrite, assign) int port;
 @property(readwrite, assign) TransferStatus status;
+@property(readwrite, assign) BOOL isConnecting;
+@property(readwrite, assign) BOOL cancelled;
 
 - (NSString *)protocolString;
 

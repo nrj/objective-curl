@@ -10,6 +10,7 @@
 #import "NSObject+Extensions.h"
 #import "TransferInfo.h"
 #import "TransferStatus.h"
+#import "CurlDelegate.h"
 #import "UploadDelegate.h"
 #import "CurlFTP.h"
 
@@ -59,6 +60,8 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
+	curl_easy_setopt(handle, CURLOPT_CONNECTINGFUNCTION, handleConnecting);
+	curl_easy_setopt(handle, CURLOPT_CONNECTINGDATA, self);
 	
 	// Enumurate files and directories to upload
 	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles]] retain];
@@ -116,9 +119,6 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 		
 		[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
 	}
-	
-	// We are no longer uploading.
-	[transfer setIsUploading:NO];
 		
 	// Cleanup.
 	[filesToUpload release];
@@ -150,13 +150,16 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	{
 		// [operation cancel]; ?
 		
+		
 		return -1;
 	}
 	else if (actualProgress >= 0)
 	{
 		if (![transfer isUploading])
 		{
+			[transfer setIsConnecting:NO];
 			[transfer setIsUploading:YES];
+			
 			[transfer setStatus:TRANSFER_STATUS_UPLOADING];
 			
 			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) 
@@ -176,12 +179,31 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 }
 
 
+static int handleConnecting(CURL *curl, FTPUploadOperation *operation)
+{
+	Upload *transfer = [operation transfer];
+	
+	if (![transfer isConnecting])
+	{
+		[transfer setIsUploading:NO];
+		[transfer setIsConnecting:YES];
+		
+		[transfer setStatus:TRANSFER_STATUS_CONNECTING];
+		
+		[operation performCurlDelegateSelector:@selector(curlDidStartConnecting:)];
+	}
+	
+	return [transfer cancelled];
+}
+
 /*
  * Called when the upload loop execution has finished. Updates the state of the upload and notifies delegates.
  *
  */
 - (void)handleUploadResult:(CURLcode)result
 {
+	[transfer setIsUploading:NO];
+
 	if (result == CURLE_OK && [transfer totalFiles] == [transfer totalFilesUploaded])
 	{
 		// Success!
@@ -305,18 +327,24 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	{
 		if (arg)
 		{
-			[[[client delegate] invokeOnMainThread] performSelector:aSelector 
-												withObject:transfer 
-												withObject:arg];
+			[[[client delegate] invokeOnMainThread] performSelector:aSelector withObject:transfer withObject:arg];
 		}
 		else
 		{
-			[[[client delegate] invokeOnMainThread] performSelector:aSelector 
-												withObject:transfer];
+			[[[client delegate] invokeOnMainThread] performSelector:aSelector withObject:transfer];
 		}
 	}
 }
 
+		
+- (void)performCurlDelegateSelector:(SEL)aSelector
+{
+	if ([client delegate] && [[client delegate] respondsToSelector:aSelector])
+	{
+		[[[client delegate] invokeOnMainThread] performSelector:aSelector withObject:transfer];
+	}
+}
+		
 
 /*
  * Returns the prefix for the protocol being used. In this case "ftp"

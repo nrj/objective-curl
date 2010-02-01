@@ -11,10 +11,6 @@
 
 @implementation RemoteObject 
 
-// TODO - create - (void)handleFailedRemoteOperation:(CurlOperation *)operation withObject:(id <ThisProtocol>)object
-// TODO - invoke a delegate method with the failed operation, message, and object. 
-// TODO - add a retryOperation: method to CurlObject which will add it back to the queue
-
 @synthesize hostname;
 @synthesize username;
 @synthesize password;
@@ -22,6 +18,8 @@
 @synthesize protocol;
 @synthesize port;
 @synthesize status;
+@synthesize isConnecting;
+@synthesize cancelled;
 
 - (void)dealloc
 {

@@ -29,7 +29,7 @@
 
 - (void)initCurlObject:(CurlObject *)curl
 {	
-	[curl setVerbose:YES];
+	[curl setVerbose:NO];
 	[curl setShowProgress:YES];
 	[curl setDelegate:self];
 }
@@ -83,22 +83,12 @@
 }
 
 
-#pragma mark SSHDelegate methods
+#pragma mark CurlDelegate methods
 
 
-- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+- (void)curlDidStartConnecting:(RemoteObject *)task
 {
-	NSLog(@"acceptUnknownFingerprint: %@ forHost: %@", fingerprint, hostname);
-	
-	return 0;
-}
-
-
-- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
-{
-	NSLog(@"acceptMismatchedFingerprint: %@ forHost: %@", fingerprint, hostname);
-	
-	return 0;
+	NSLog(@"Connecting to '%@'...", [task hostname]);
 }
 
 
@@ -140,6 +130,25 @@
 - (void)uploadDidFail:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
 {
 	NSLog(@"uploadDidFail: %@", message);
+}
+
+
+#pragma mark SSHDelegate methods
+
+
+- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+{
+	NSLog(@"acceptUnknownFingerprint: %@ forHost: %@", fingerprint, hostname);
+	
+	return 0;
+}
+
+
+- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+{
+	NSLog(@"acceptMismatchedFingerprint: %@ forHost: %@", fingerprint, hostname);
+	
+	return 0;
 }
 
 

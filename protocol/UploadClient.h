@@ -6,11 +6,15 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "CurlClient.h"
 
 @class Upload;
 
-@protocol UploadClient <CurlClient>
+@protocol UploadClient
+
+- (CURL *)newHandle;
+
+- (void)setDelegate:(id)delegate;
+- (id)delegate;
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username;
 

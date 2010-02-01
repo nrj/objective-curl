@@ -14,7 +14,6 @@
 		0B2E387B10DF2C3300E82CB2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2E387A10DF2C3300E82CB2 /* MainMenu.xib */; };
 		0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEB86111501A1005A5F84 /* SSHDelegate.h */; };
 		0B5FEE6E11165123005A5F84 /* UploadClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEE6D11165123005A5F84 /* UploadClient.h */; };
-		0B5FEFF811166AE0005A5F84 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEFF711166AE0005A5F84 /* CurlClient.h */; };
 		0B5FF03A11166DE8005A5F84 /* sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FF03911166DE8005A5F84 /* sftp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B725E5310F2CC4D001C614D /* RemoteObject.h */; };
 		0B725E5610F2CC4D001C614D /* RemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B725E5410F2CC4D001C614D /* RemoteObject.m */; };
@@ -46,6 +45,7 @@
 		0BCD3B9B10F432A20047202F /* NSObject+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCD3B9710F432A20047202F /* NSObject+Extensions.h */; };
 		0BCD3B9C10F432A20047202F /* InvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCD3B9810F432A20047202F /* InvocationGrabber.m */; };
 		0BCD3B9D10F432A20047202F /* InvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCD3B9910F432A20047202F /* InvocationGrabber.h */; };
+		0BD2F7A91116BE5400652A3F /* CurlDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD2F7A81116BE5400652A3F /* CurlDelegate.h */; };
 		0BD3CFF2110CF44A00478C99 /* CurlOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3CFF0110CF44A00478C99 /* CurlOperation.h */; };
 		0BD3CFF3110CF44A00478C99 /* CurlOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3CFF1110CF44A00478C99 /* CurlOperation.m */; };
 		0BD3D011110CF5E700478C99 /* FTPUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D00F110CF5E700478C99 /* FTPUploadOperation.h */; };
@@ -111,7 +111,6 @@
 		0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
 		0B5FEB86111501A1005A5F84 /* SSHDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSHDelegate.h; sourceTree = "<group>"; };
 		0B5FEE6D11165123005A5F84 /* UploadClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadClient.h; sourceTree = "<group>"; };
-		0B5FEFF711166AE0005A5F84 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClient.h; sourceTree = "<group>"; };
 		0B5FF03911166DE8005A5F84 /* sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sftp.h; sourceTree = "<group>"; };
 		0B725E5310F2CC4D001C614D /* RemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObject.h; sourceTree = "<group>"; };
 		0B725E5410F2CC4D001C614D /* RemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteObject.m; sourceTree = "<group>"; };
@@ -145,6 +144,7 @@
 		0BCD3B9710F432A20047202F /* NSObject+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extensions.h"; sourceTree = "<group>"; };
 		0BCD3B9810F432A20047202F /* InvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvocationGrabber.m; sourceTree = "<group>"; };
 		0BCD3B9910F432A20047202F /* InvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvocationGrabber.h; sourceTree = "<group>"; };
+		0BD2F7A81116BE5400652A3F /* CurlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlDelegate.h; sourceTree = "<group>"; };
 		0BD3CFF0110CF44A00478C99 /* CurlOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlOperation.h; sourceTree = "<group>"; };
 		0BD3CFF1110CF44A00478C99 /* CurlOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlOperation.m; sourceTree = "<group>"; };
 		0BD3D00F110CF5E700478C99 /* FTPUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPUploadOperation.h; sourceTree = "<group>"; };
@@ -292,7 +292,6 @@
 			children = (
 				0BBF87B710F191C7005358BB /* delegate */,
 				0B5FEE6D11165123005A5F84 /* UploadClient.h */,
-				0B5FEFF711166AE0005A5F84 /* CurlClient.h */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -323,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				0BBF87B910F191C7005358BB /* UploadDelegate.h */,
+				0BD2F7A81116BE5400652A3F /* CurlDelegate.h */,
 				0B5FEB86111501A1005A5F84 /* SSHDelegate.h */,
 			);
 			path = delegate;
@@ -422,8 +422,8 @@
 				0BD3D14E110D1D8E00478C99 /* SFTPUploadOperation.h in Headers */,
 				0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */,
 				0B5FEE6E11165123005A5F84 /* UploadClient.h in Headers */,
-				0B5FEFF811166AE0005A5F84 /* CurlClient.h in Headers */,
 				0B5FF03A11166DE8005A5F84 /* sftp.h in Headers */,
+				0BD2F7A91116BE5400652A3F /* CurlDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

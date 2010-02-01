@@ -7,7 +7,7 @@
 //
 
 #import "Upload.h"
-#import "TransferStatus.h"
+#import "UploadClient.h"
 
 @protocol UploadDelegate
 
@@ -17,24 +17,37 @@
  */
 - (void)uploadDidBegin:(Upload *)record;
 
+
 /*
  * Called when the upload progress has changed (1-100%)
  */
 - (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
+
 
 /*
  * Called when the upload has finished successfully.
  */
 - (void)uploadDidFinish:(Upload *)record;
 
-/*
- * Called when the upload has failed.
- */
-- (void)uploadDidFail:(Upload *)record withStatus:(NSString *)message;
 
 /*
  * Called when the upload was cancelled.
  */
 - (void)uploadWasCancelled:(Upload *)record;
+
+
+/*
+ * Called when the upload has failed because of authentication. With this method you prompt the user to enter new
+ * credentials, correct them on the upload record given to you and invoke [client retryUpload:record] to try again.
+ */
+- (void)uploadDidFailAuthentication:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+
+
+/*
+ * Called when the upload has failed. The message will contain useful information of what went wrong. If possible  
+ * correct the property values on the upload record given to you and invoke [client retryUpload:record] to try again.
+ */
+- (void)uploadDidFail:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+
 
 @end

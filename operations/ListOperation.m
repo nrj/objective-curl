@@ -7,7 +7,9 @@
 //
 
 #import "ListOperation.h"
-
+#import "RemoteFolder.h"
+#import "RemoteFile.h"
+#import "ftpparse.h"
 
 @implementation ListOperation
 

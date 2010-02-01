@@ -8,12 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 #import "FTPUploadOperation.h"
-#import "NSString+MD5.h"
+#import "SSHDelegate.h"
+
 
 extern NSString * const SFTP_PROTOCOL_PREFIX;
 
-@interface SFTPUploadOperation : FTPUploadOperation
+@interface SFTPUploadOperation : FTPUploadOperation <SSHDelegate>
 
-static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, Upload *transfer);
+static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, SFTPUploadOperation *operation);
+
+- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname;
+- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname;
+
+- (void)showUnknownKeyWarningForHost:(NSString *)hostname;
+- (void)showMismatchKeyWarningForHost:(NSString *)hostname;
 
 @end

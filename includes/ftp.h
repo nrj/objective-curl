@@ -6,6 +6,3 @@
 //  Copyright 2009. All rights reserved.
 //
 
-
-#import "CurlFTP.h"
-#import "Upload.h"

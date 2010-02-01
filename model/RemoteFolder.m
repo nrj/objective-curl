@@ -11,10 +11,6 @@
 
 @implementation RemoteFolder
 
-/* 
- * Remote Path
- */
-@synthesize path;
 
 /*
  * Array of RemoteFile objects.

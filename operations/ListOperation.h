@@ -8,9 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CurlOperation.h"
-#import "RemoteFolder.h"
-#import "RemoteFile.h"
-#import "ftpparse.h"
+
+@class RemoteFolder;
 
 @interface ListOperation : CurlOperation
 {

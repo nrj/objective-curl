@@ -26,4 +26,31 @@
 	return [values componentsJoinedByString:@":"];
 }
 
++ (NSString *)formattedMD5FromBase64:(const char *)data length:(unsigned long)len
+{
+	BIO *b64, *bmem;
+	
+	char *buffer = (char *)malloc(len);
+	memset(buffer, 0, len);
+	
+	b64 = BIO_new(BIO_f_base64());
+	
+	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+	
+	bmem = BIO_new_mem_buf((char *)data, len);
+	bmem = BIO_push(b64, bmem);
+	
+	BIO_read(bmem, buffer, len);
+	
+	BIO_free_all(bmem);
+	
+	NSString *result = [NSString formattedMD5:buffer length:len];
+	
+	free(buffer);
+	
+	return result;
+}
+
+
+
 @end

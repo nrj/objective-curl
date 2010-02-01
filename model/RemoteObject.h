@@ -7,21 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TransferStatus.h"
 
 
-@interface RemoteObject : NSObject 
+@interface RemoteObject : NSObject
 {
 	SecProtocolType protocol;
 	NSString *hostname;
+	NSString *username;
+	NSString *password;
+	NSString *path;
 	int port;
-	int status;	
+	TransferStatus status;
 }
 
 @property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, copy) NSString *hostname;
+@property(readwrite, copy) NSString *username;
+@property(readwrite, copy) NSString *password;
+@property(readwrite, copy) NSString *path;
 @property(readwrite, assign) int port;
-@property(readwrite, assign) int status;
+@property(readwrite, assign) TransferStatus status;
 
 - (NSString *)protocolString;
+
+- (BOOL)hasAuthUsername;
+
+- (BOOL)hasAuthPassword;
 
 @end

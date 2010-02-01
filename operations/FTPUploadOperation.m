@@ -7,6 +7,11 @@
 //
 
 #import "FTPUploadOperation.h"
+#import "NSObject+Extensions.h"
+#import "TransferInfo.h"
+#import "TransferStatus.h"
+#import "UploadDelegate.h"
+#import "CurlFTP.h"
 
 
 NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
@@ -14,49 +19,28 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 @implementation FTPUploadOperation
 
+@synthesize client;
 @synthesize transfer;
 
 
-/*
- * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
- * new upload progress and sets it on the transfer.
- *
- *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
- */
-static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow)
-{	
-	Upload *transfer = [operation transfer];
-	 
-	long totalProgressUnits = 100 * ([transfer totalFiles]);
-	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
-	if (ulnow == 0 && ultotal == 0) individualProgress = 100;
-	int actualProgress = (individualProgress * 100) / totalProgressUnits;
-	 
-	if ([transfer cancelled])
+- (id)initWithClient:(id <UploadClient>)aClient transfer:(Upload *)aTransfer
+{
+	if (self = [super init])
 	{
-		return -1;
-	}
-	else if (actualProgress >= 0)
-	{
-		if (![transfer isUploading])
-		{
-			[transfer setIsUploading:YES];
-			[transfer setStatus:TRANSFER_STATUS_UPLOADING];
-			
-			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) 
-										withArgument:nil];
-		}
+		[self setClient:aClient];
+		[self setTransfer:aTransfer];
 		
-		if (actualProgress > [transfer progress])
-		{
-			[transfer setProgress:actualProgress];
-		
-			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
-										withArgument:[NSNumber numberWithInt:actualProgress]];
-		}
+		handle = [client newHandle];
 	}
+	return self;	
+}
+
+
+- (void)dealloc
+{
+	[transfer release];
 	
-	return 0;
+	[super dealloc];
 }
 
 
@@ -72,7 +56,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 		
 	// Set curl options
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
 	
@@ -105,7 +89,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 		NSString *relativePath = ([file isEmptyDirectory] ? [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath]);
 		
 		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@%@", [self protocolPrefix], 
-						 [transfer hostname], [transfer port], [transfer directory], relativePath];
+						 [transfer hostname], [transfer port], [transfer path], relativePath];
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
@@ -135,16 +119,60 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	
 	// We are no longer uploading.
 	[transfer setIsUploading:NO];
-	
+		
+	// Cleanup.
+	[filesToUpload release];
+
 	// Process the result of the upload.
 	[self handleUploadResult:result];
 	
-	// Cleanup.
-	[filesToUpload release];
-	[transfer release];
-
 	// Done.
 	[pool release];
+}
+
+
+/*
+ * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
+ * new upload progress and sets it on the transfer.
+ *
+ *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
+ */
+static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow)
+{	
+	Upload *transfer = [operation transfer];
+	
+	long totalProgressUnits = 100 * ([transfer totalFiles]);
+	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
+	if (ulnow == 0 && ultotal == 0) individualProgress = 100;
+	int actualProgress = (individualProgress * 100) / totalProgressUnits;
+	
+	if ([transfer cancelled])
+	{
+		// [operation cancel]; ?
+		
+		return -1;
+	}
+	else if (actualProgress >= 0)
+	{
+		if (![transfer isUploading])
+		{
+			[transfer setIsUploading:YES];
+			[transfer setStatus:TRANSFER_STATUS_UPLOADING];
+			
+			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) 
+										withArgument:nil];
+		}
+		
+		if (actualProgress > [transfer progress])
+		{
+			[transfer setProgress:actualProgress];
+			
+			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
+										withArgument:[NSNumber numberWithInt:actualProgress]];
+		}
+	}
+	
+	return 0;
 }
 
 
@@ -173,68 +201,35 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 							   withArgument:nil];
 	}
 	else
-	{
-		// Uh Ohz.
-		[self handleUploadFailure:result];
+	{		
+		// Figure out what went wrong, and notify delegate
+		[self handleUploadFailed:result];
 	}
-	
-	curl_easy_cleanup(handle);
-
-	curl_global_cleanup();
 }
 
 
-/*
- * Called when the upload was unsuccessfull. Updates the transfer status, message, and notifies delegates.
- *
- */
-- (void)handleUploadFailure:(CURLcode)result
+
+- (void)handleUploadFailed:(CURLcode)result
 {
-	NSString *message;
-	
-	switch (result)
-	{		
-		case CURLE_REMOTE_ACCESS_DENIED:
-			message = [NSString stringWithFormat:@"Failed writing to directory %@", [transfer directory]];
-			break;
-			
-		case CURLE_PEER_FAILED_VERIFICATION:
-			message = [NSString stringWithFormat:@"Unknown host key for %@", [transfer hostname]];
-			break;
-			
-		case CURLE_FAILED_INIT:
-			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [transfer protocolString], [transfer hostname], [transfer port]];
-			break;
-			
-		case CURLE_COULDNT_CONNECT:
-			message = [NSString stringWithFormat:@"Couldn't connect to host %@ on port %d", [transfer hostname], [transfer port]];
-			break;
-		
-		case CURLE_OPERATION_TIMEOUTED:
-			message = [NSString stringWithFormat:@"Operation timed out to host %@", [transfer hostname]];
-			break;
-			
-		case CURLE_COULDNT_RESOLVE_HOST:
-			message = [NSString stringWithFormat:@"Couldn't resolve host %@", [transfer hostname]];
-			break;
-			
-		case CURLE_RECV_ERROR:
-			message = [NSString stringWithFormat:@"Failed to receive network data from %@", [transfer hostname]];
-			break;
-		
-		case CURLE_UNSUPPORTED_PROTOCOL:
-			message = [NSString stringWithFormat:@"Unsupported protocol %@", [transfer protocolString]];
-			break;
-				   
-		default:
-			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", result];
-			break;
-	}
-	
+	// The upload operation failed.
 	[transfer setStatus:TRANSFER_STATUS_FAILED];
+
+	NSString *message = [self getFailureDetailsForStatus:result withObject:transfer];
 	
-	[self performUploadDelegateSelector:@selector(uploadDidFail:withStatus:)
-						   withArgument:message];
+	if (result == CURLE_LOGIN_DENIED)
+	{
+		if ([client delegate] && [[client delegate] respondsToSelector:@selector(uploadDidFailAuthentication:client:message:)])
+		{
+			[[[client delegate] invokeOnMainThread] uploadDidFailAuthentication:transfer client:client message:message];
+		}
+	}
+	else
+	{
+		if ([client delegate] && [[client delegate] respondsToSelector:@selector(uploadDidFail:client:message:)])
+		{
+			[[[client delegate] invokeOnMainThread] uploadDidFail:transfer client:client message:message];
+		}
+	}
 }
 
 
@@ -306,17 +301,17 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
  */
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg
 {
-	if (delegate && [delegate respondsToSelector:aSelector])
+	if ([client delegate] && [[client delegate] respondsToSelector:aSelector])
 	{
 		if (arg)
 		{
-			[[delegate invokeOnMainThread] performSelector:aSelector 
+			[[[client delegate] invokeOnMainThread] performSelector:aSelector 
 												withObject:transfer 
 												withObject:arg];
 		}
 		else
 		{
-			[[delegate invokeOnMainThread] performSelector:aSelector 
+			[[[client delegate] invokeOnMainThread] performSelector:aSelector 
 												withObject:transfer];
 		}
 	}
@@ -329,6 +324,32 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 - (NSString *)protocolPrefix
 {
 	return FTP_PROTOCOL_PREFIX;
+}
+
+
+/* 
+ * Returns a string that can be used for FTP authentication, "username:password", if no username is specified then "anonymous" will 
+ * be used. If a username is present but no password is set, then the users keychain is checked.
+ */
+- (NSString *)credentials
+{
+	NSString *creds;
+	if ([transfer hasAuthUsername])
+	{
+		if (![transfer hasAuthPassword])
+		{
+			// Try Keychain
+		}
+		
+		creds = [NSString stringWithFormat:@"%@:%@", [transfer username], [transfer password]];
+	}
+	else
+	{
+		// Try anonymous login
+		creds = [NSString stringWithFormat:@"anonymous:"];
+	}
+	
+	return creds;
 }
 
 

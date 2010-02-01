@@ -29,10 +29,8 @@
 
 - (void)initCurlObject:(CurlObject *)curl
 {	
-	[curl setVerbose:NO];
+	[curl setVerbose:YES];
 	[curl setShowProgress:YES];
-	[curl setAuthUsername:[usernameField stringValue]];
-	[curl setAuthPassword:[passwordField stringValue]];
 	[curl setDelegate:self];
 }
 
@@ -43,7 +41,10 @@
 	
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
-	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL] toHost:[hostnameField stringValue]];
+	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
+												 toHost:[hostnameField stringValue] 
+											   username:[usernameField stringValue] 
+											   password:[passwordField stringValue]];
 	
 	[self setUpload:newUpload];
 }
@@ -82,6 +83,25 @@
 }
 
 
+#pragma mark SSHDelegate methods
+
+
+- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+{
+	NSLog(@"acceptUnknownFingerprint: %@ forHost: %@", fingerprint, hostname);
+	
+	return 0;
+}
+
+
+- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+{
+	NSLog(@"acceptMismatchedFingerprint: %@ forHost: %@", fingerprint, hostname);
+	
+	return 0;
+}
+
+
 #pragma mark UploadDelegate methods
 
 
@@ -103,15 +123,23 @@
 }
 
 
-- (void)uploadDidFail:(Upload *)record withStatus:(NSString *)message
-{
-	NSLog(@"uploadDidFail - %@", message);
-}
-
-
 - (void)uploadWasCancelled:(Upload *)record
 {
 	NSLog(@"uploadWasCancelled");
+}
+
+
+- (void)uploadDidFailAuthentication:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+{
+	NSLog(@"uploadDidFailAuthentication: %@", message);
+	
+	[client retryUpload:upload];
+}
+
+
+- (void)uploadDidFail:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+{
+	NSLog(@"uploadDidFail: %@", message);
 }
 
 
@@ -138,31 +166,6 @@
 	}
 	return nil;
 }
-
-
-//- (void)curl:(CurlSFTP *)client receivedUnknownHostKeyFingerprint:(NSString *)fingerprint
-//{
-//	NSAlert *alert = [NSAlert alertWithMessageText:@"Unknown Host Key Fingerprint" 
-//									 defaultButton:@"Allow" 
-//								   alternateButton:@"Always" 
-//									   otherButton:@"Deny" 
-//						 informativeTextWithFormat:fingerprint];
-//	
-//	int answer = [NSApp runModalForWindow:[alert window]];
-//	
-//	switch (answer)
-//	{
-//		case 1: 
-//			[client acceptHostKeyFingerprint:fingerprint permanently:NO];
-//			break;
-//		case 0:
-//			[client acceptHostKeyFingerprint:fingerprint permanently:YES];
-//			break;
-//		default:
-//			[client rejectHostKeyFingerprint:fingerprint];
-//			break;
-//	}
-//}
 
 
 @end

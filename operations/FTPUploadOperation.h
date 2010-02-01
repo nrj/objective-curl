@@ -7,12 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "NSObject+Extensions.h"
 #import "CurlOperation.h"
-#import "TransferInfo.h"
-#import "UploadDelegate.h"
-#import "Upload.h"
+#import "UploadClient.h"
 
+@class Upload;
 
 extern NSString * const FTP_PROTOCOL_PREFIX;
 extern NSString * const TMP_FILENAME;
@@ -20,19 +18,25 @@ extern NSString * const TMP_FILENAME;
 @interface FTPUploadOperation : CurlOperation 
 {
 	Upload *transfer;
+	id <UploadClient>client;
 }
 
 @property(readwrite, retain) Upload *transfer;
+@property(readwrite, assign) id <UploadClient>client;
 
 static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow);
 
+- (id)initWithClient:(id <UploadClient>)aClient transfer:(Upload *)aTransfer;
+
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files;
+
+- (void)handleUploadResult:(CURLcode)result;
+- (void)handleUploadFailed:(CURLcode)result;
+
+- (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
 
 - (NSString *)protocolPrefix;
 
-- (void)handleUploadResult:(CURLcode)result;
-- (void)handleUploadFailure:(CURLcode)result;
-
-- (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
+- (NSString *)credentials;
 
 @end

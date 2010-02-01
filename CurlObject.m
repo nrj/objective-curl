@@ -7,17 +7,13 @@
 //
 
 #import "CurlObject.h"
-#import "TransferStatus.h"
+
 
 
 @implementation CurlObject
 
 @synthesize delegate;
 @synthesize protocolType;
-
-@synthesize authUsername;
-@synthesize authPassword;
-
 @synthesize verbose;
 @synthesize showProgress;
 
@@ -41,9 +37,6 @@
 	if (self = [super init])
 	{
 		operationQueue = [[NSOperationQueue alloc] init];
-		
-		[self setAuthUsername:@""];
-		[self setAuthPassword:@""];
 	}
 	
 	return self;
@@ -56,10 +49,7 @@
 - (void)dealloc
 {
 	[operationQueue release], operationQueue = nil;
-	
-	[authUsername release], authUsername = nil;
-	[authPassword release], authPassword = nil;
-	
+		
 	[super dealloc];
 }
 
@@ -78,24 +68,6 @@
 	curl_easy_setopt(handle, CURLOPT_NOPROGRESS, ![self showProgress]);
 	
 	return handle;
-}
-
-
-/*
- * Convenience function... do we have a username set for auth?
- */
-- (BOOL)hasAuthUsername
-{
-	return (authUsername != NULL && ![authUsername isEqualToString:@""]);
-}
-
-
-/*
- * Convenience function... do we have a password set for auth?
- */
-- (BOOL)hasAuthPassword
-{
-	return (authPassword != NULL && ![authPassword isEqualToString:@""]);
 }
 
 

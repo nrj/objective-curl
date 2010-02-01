@@ -12,15 +12,13 @@
 #include <curl/curl.h>
 #include <sys/stat.h>
 
+@class RemoteObject;
 
 @interface CurlOperation : NSOperation 
 {
 	CURL *handle;
-	id delegate;
 }
 
-@property(readwrite, assign) id delegate;
-
-- (id)initWithHandle:(CURL *)aHandle delegate:(id)aDelegate;
+- (NSString *)getFailureDetailsForStatus:(CURLcode)status withObject:(RemoteObject *)object;
 
 @end

@@ -7,6 +7,9 @@
 //
 
 #import "CurlSFTP.h"
+#import "Upload.h"
+#import "SFTPUploadOperation.h"
+#import "NSString+PathExtras.h"
 
 
 int const DEFAULT_SFTP_PORT	= 22;
@@ -27,8 +30,6 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	{
 		[self setProtocolType:kSecProtocolTypeSSH];
 		
-		hostKeyFingerprints = [[NSMutableDictionary alloc] init];
-		
 		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
 	}
 	
@@ -42,7 +43,6 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 - (void)dealloc
 {
 	[knownHostsFile release], knownHostsFile = nil;
-	[hostKeyFingerprints release], hostKeyFingerprints = nil;
 
 	[super dealloc];
 }
@@ -63,51 +63,54 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 }
 
 
-/*
- * Recursively upload a list of files and directories using the specified host and the users home directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
+									toHost:hostname
+								  username:username
+								  password:@""
 								 directory:@"~/"
 									  port:DEFAULT_SFTP_PORT];
 }
 
 
-/*
- * Recursively upload a list of files and directories using the specified host and directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
+									toHost:hostname
+								  username:username
+								  password:password
+								 directory:@""
+									  port:DEFAULT_SFTP_PORT];	
+}
+
+
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory
+{
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:hostname
+								  username:username
+								  password:password
 								 directory:directory
 									  port:DEFAULT_SFTP_PORT];	
 }
 
 
-/*
- * Recursively upload a list of files and directories using the specified host and directory.
- */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory port:(int)port
 {
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocolType]];
-	[upload setHostname:host];
+	[upload setHostname:hostname];
+	[upload setUsername:username];
+	[upload setPassword:password];
+	[upload setPath:[directory pathForFTP]];
 	[upload setPort:port];
-	[upload setDirectory:[directory pathForFTP]];
+	
 	[upload setLocalFiles:filesAndDirectories];
-	[upload setProgress:0];
 	
-	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithHandle:[self newHandle] 
-																 delegate:[self delegate]];
-	
-	[op setTransfer:upload];
-	
+	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithClient:self transfer:upload];
 	[operationQueue addOperation:op];
-	
 	[op release];
 	
 	[upload setStatus:TRANSFER_STATUS_QUEUED];
@@ -116,71 +119,13 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 }
 
 
-/*
- * Search the acceptedHostKeys dictionary for the RSA fingerprint and return accordingly. If it is not found the Inform the delegate 
- * that the host we're trying to connect to has an unknown RSA fingerprint.
- */
-- (int)handleUnknownHostKey:(NSString *)rsaFingerprint
+- (void)retryUpload:(Upload *)upload
 {
-	int result = CURLKHSTAT_DEFER;
-
-	if (delegate && [delegate respondsToSelector:@selector(curl:receivedUnknownHostKeyFingerprint:)])
-	{
-		[[delegate invokeOnMainThreadAndWaitUntilDone:YES] curl:self receivedUnknownHostKeyFingerprint:rsaFingerprint];
-	}
+	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithClient:self transfer:upload];
+	[operationQueue addOperation:op];
+	[op release];
 	
-	for (id key in hostKeyFingerprints)
-	{
-		if ([rsaFingerprint isEqual:key])
-		{
-			result = [[hostKeyFingerprints valueForKey:key] intValue];
-			break;
-		}
-	}
-	
-	return result;
-}
-
-
-/*
- * Search the acceptedHostKeys dictionary for the RSA fingerprint and return accordingly. If it is not found the Inform the delegate 
- * that the host we're trying to connect to has an mismatched RSA fingerprint.
- */		
-- (int)handleMismatchedHostKey:(NSString *)rsaFingerprint
-{
-	int result = CURLKHSTAT_DEFER;
-
-	if (delegate && [delegate respondsToSelector:@selector(curl:receivedUnknownHostKeyFingerprint:)])
-	{
-		[delegate curl:self receivedUnknownHostKeyFingerprint:rsaFingerprint];
-	}
-	
-	for (id key in hostKeyFingerprints)
-	{
-		if ([rsaFingerprint isEqual:key])
-		{
-			result = [[hostKeyFingerprints valueForKey:key] intValue];
-			break;
-		}
-	}
-	
-	return result;
-}
-				
-
-- (void)acceptHostKeyFingerprint:(NSString *)fingerprint permanently:(BOOL)permanent
-{
-	int status = (permanent ? CURLKHSTAT_FINE_ADD_TO_FILE : CURLKHSTAT_FINE);
-	
-	[hostKeyFingerprints setObject:[NSNumber numberWithInt:status] 
-							forKey:fingerprint];	
-}
-
-
-- (void)rejectHostKeyFingerprint:(NSString *)fingerprint
-{
-	[hostKeyFingerprints setObject:[NSNumber numberWithInt:CURLKHSTAT_REJECT] 
-							forKey:fingerprint];
+	[upload setStatus:TRANSFER_STATUS_QUEUED];	
 }
 
 
@@ -207,31 +152,6 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 							  onHost:host
 						 forceReload:reload
 								port:DEFAULT_SFTP_PORT];
-}
-
-
-/* 
- * Overridden since there is no anonymous login for SFTP. Instead try public_key authentication if we don't have a username/password.
- */
-- (NSString *)credentials
-{
-	NSString *creds;
-	if ([self hasAuthUsername])
-	{
-		if (![self hasAuthPassword])
-		{
-			// TODO - Try Keychain and set password here
-		}
-		
-		creds = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
-	}
-	else
-	{
-		// Try anonymous login
-		creds = [NSString stringWithFormat:@"anonymous:"];
-	}
-	
-	return creds;
 }
 
 

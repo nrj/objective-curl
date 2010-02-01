@@ -14,7 +14,6 @@
 {	
 	NSString *name;
 	NSString *currentFile;
-	NSString *directory;
 	NSArray *localFiles;
 	
 	int progress;
@@ -27,7 +26,6 @@
 
 
 @property(readwrite, copy) NSString *name;
-@property(readwrite, copy) NSString *directory;
 @property(readwrite, retain) NSArray *localFiles;
 @property(readwrite, assign) int totalFiles;
 @property(readwrite, assign) int totalFilesUploaded;
@@ -35,7 +33,6 @@
 @property(readwrite, copy) NSString *currentFile;
 @property(readwrite, assign) BOOL isUploading;
 @property(readwrite, assign) BOOL cancelled;
-
 
 
 @end

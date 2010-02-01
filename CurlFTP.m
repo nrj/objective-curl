@@ -7,6 +7,9 @@
 //
 
 #import "CurlFTP.h"
+#import "FTPUploadOperation.h"
+#import "Upload.h"
+#import "NSString+PathExtras.h"
 
 
 int const DEFAULT_FTP_PORT = 21;
@@ -51,7 +54,6 @@ int const DEFAULT_FTP_PORT = 21;
 	CURL *handle = [super newHandle];
 	
 	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
 	
 	return handle;
 }
@@ -60,10 +62,12 @@ int const DEFAULT_FTP_PORT = 21;
 /*
  * Recursively upload a list of files and directories using the specified host and the users home directory.
  */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
+									toHost:hostname 
+								  username:username
+								  password:@""
 								 directory:@""
 									  port:DEFAULT_FTP_PORT];
 }
@@ -72,12 +76,14 @@ int const DEFAULT_FTP_PORT = 21;
 /*
  * Recursively upload a list of files and directories using the specified host and directory.
  */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:host 
-								 directory:directory
-									  port:DEFAULT_FTP_PORT];	
+									toHost:hostname 
+								  username:username
+								  password:password
+								 directory:@""
+									  port:DEFAULT_FTP_PORT];
 }
 
 
@@ -85,24 +91,31 @@ int const DEFAULT_FTP_PORT = 21;
  * Recursively upload a list of files and directories using the specified host, directory and port number. The associated Upload object
  * is returned, however not retained.
  */
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)host directory:(NSString *)directory port:(int)port
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory
 {		
+	return [self uploadFilesAndDirectories:filesAndDirectories 
+									toHost:hostname 
+								  username:username
+								  password:password
+								 directory:directory
+									  port:DEFAULT_FTP_PORT];	
+}
+
+- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory port:(int)port
+{
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocolType]];
-	[upload setHostname:host];
+	[upload setHostname:hostname];
+	[upload setUsername:username];
+	[upload setPassword:password];
+	[upload setPath:[directory pathForFTP]];
 	[upload setPort:port];
-	[upload setDirectory:[directory pathForFTP]];
+	
 	[upload setLocalFiles:filesAndDirectories];
-	[upload setProgress:0];
 	
-	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] 
-															   delegate:[self delegate]];
-	
-	[op setTransfer:upload];
-	
+	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithClient:self transfer:upload];
 	[operationQueue addOperation:op];
-
 	[op release];
 	
 	[upload setStatus:TRANSFER_STATUS_QUEUED];
@@ -110,20 +123,13 @@ int const DEFAULT_FTP_PORT = 21;
 	return upload;
 }
 
-
-/*
- * Use this method to retry a failed recursive upload.
- */
-- (void)retryRecursiveUpload:(Upload *)upload
+- (void)retryUpload:(Upload *)upload
 {
-	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] 
-															   delegate:[self delegate]];
-	
-	[op setTransfer:upload];
-	
+	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithClient:self transfer:upload];
 	[operationQueue addOperation:op];
-	
 	[op release];
+	
+	[upload setStatus:TRANSFER_STATUS_QUEUED];	
 }
 
 
@@ -159,58 +165,23 @@ int const DEFAULT_FTP_PORT = 21;
  */
 - (RemoteFolder *)listRemoteDirectory:(NSString *)directory onHost:(NSString *)host forceReload:(BOOL)reload port:(int)port
 {	
-	RemoteFolder *folder = [[[RemoteFolder alloc] init] autorelease];
-	
-	[folder setProtocol:[self protocolType]];
-	[folder setHostname:host];
-	[folder setPort:port];
-	[folder setPath:[directory pathForFTP]];
-	[folder setForceReload:reload];
-	
-	
-	ListOperation *op = [[ListOperation alloc] initWithHandle:[self newHandle] 
-													 delegate:[self delegate]];
-	
-	[op setFolder:folder];
-	
-	[operationQueue addOperation:op];
-	
-	return folder;	
-}
-
-
-/*
- * Use this method to retry a failed recursive upload.
- */
-- (void)retryListRemoteDirectory:(RemoteFolder *)folder;
-{
-	
-}
-
-
-/* 
- * Returns a string that can be used for FTP authentication, "username:password", if no username is specified then "anonymous" will 
- * be used. If a username is present but no password is set, then the users keychain is checked.
- */
-- (NSString *)credentials
-{
-	NSString *creds;
-	if ([self hasAuthUsername])
-	{
-		if (![self hasAuthPassword])
-		{
-			// Try Keychain
-		}
-		
-		creds = [NSString stringWithFormat:@"%@:%@", authUsername, authPassword];
-	}
-	else
-	{
-		// Try anonymous login
-		creds = [NSString stringWithFormat:@"anonymous:"];
-	}
-
-	return creds;
+//	RemoteFolder *folder = [[[RemoteFolder alloc] init] autorelease];
+//	
+//	[folder setProtocol:[self protocolType]];
+//	[folder setHostname:host];
+//	[folder setPort:port];
+//	[folder setPath:[directory pathForFTP]];
+//	[folder setForceReload:reload];
+//	
+//	
+//	ListOperation *op = [[ListOperation alloc] initWithClient:self transfer:folder];
+//	
+//	[op setFolder:folder];
+//	
+//	[operationQueue addOperation:op];
+//	
+//	return folder;
+	return nil;
 }
 
 

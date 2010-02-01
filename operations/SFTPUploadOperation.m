@@ -7,6 +7,9 @@
 //
 
 #import "SFTPUploadOperation.h"
+#import "Upload.h"
+#import "NSString+MD5.h"
+#import "NSObject+Extensions.h"
 
 
 NSString * const SFTP_PROTOCOL_PREFIX = @"sftp";
@@ -19,11 +22,13 @@ NSString * const SFTP_PROTOCOL_PREFIX = @"sftp";
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSHKEYFUNCTION
  */
-static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, Upload *transfer)
+static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, SFTPUploadOperation *operation)
 {			
 	int result = -1;
 	
-	//NSString *fingerprint = [NSString formattedMD5:foundKey->key length:foundKey->len];
+	Upload *transfer = [operation transfer];
+	
+	NSString *receivedKey = [NSString formattedMD5:foundKey->key length:foundKey->len];
 	
 	switch (type)
 	{
@@ -32,14 +37,15 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 			break;
 			
 		case CURLKHMATCH_MISSING:
-			result = CURLKHSTAT_FINE;
+			result = [operation acceptUnknownFingerprint:receivedKey forHost:[transfer hostname]];
 			break;
 			
 		case CURLKHMATCH_MISMATCH:
-			result = CURLKHSTAT_FINE;
+			result = [operation acceptMismatchedFingerprint:receivedKey forHost:[transfer hostname]];
 			break;
 		
 		default:
+			result = CURLKHSTAT_REJECT;
 			NSLog(@"Unknown curl_khmatch type: %d", type);
 			break;
 	}
@@ -65,11 +71,79 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 
 
 /*
+ * How should we handle the unknown host key fingerprint. If a delegate implementation exists then query
+ * the delegate for an answer. Otherwise proceed.
+ *
+ */
+- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+{
+	int answer = CURLKHSTAT_DEFER;
+	
+	if ([client delegate] && [[client delegate] respondsToSelector:@selector(acceptUnknownFingerprint:forHost:)])
+	{
+		answer = [[[client delegate] invokeOnMainThreadAndWaitUntilDone:YES] acceptUnknownFingerprint:fingerprint forHost:hostname];
+	}
+	else
+	{
+		[self showUnknownKeyWarningForHost:hostname];
+	}
+	
+	return answer;
+}
+
+
+/*
+ * How should we handle the mismatched host key fingerprint. If a delegate implementation exists then query
+ * the delegate for an answer. Otherwise proceed.
+ *
+ */
+- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+{	
+	int answer = CURLKHSTAT_DEFER;
+	
+	if ([client delegate] && [[client delegate] respondsToSelector:@selector(acceptMismatchedFingerprint:forHost:)])
+	{
+		answer = [[[client delegate] invokeOnMainThreadAndWaitUntilDone:YES] acceptMismatchedFingerprint:fingerprint forHost:hostname];
+	}
+	else
+	{
+		[self showMismatchKeyWarningForHost:hostname];	
+	}
+	
+	return answer;
+}
+
+
+/*
  * Returns the prefix for the protocol being used. In this case "sftp".
  */
 - (NSString *)protocolPrefix
 {
 	return SFTP_PROTOCOL_PREFIX;
+}
+
+
+/*
+ * Log warning for unknown hostKey.
+ */
+- (void)showUnknownKeyWarningForHost:(NSString *)hostname
+{
+	NSLog(@"The authenticity of host '%@' can't be established.", hostname);
+	NSLog(@"See the SSHDelegate protocol for how to implement 'acceptUnknownFingerprint:forHost:'"); 
+}
+
+
+/*
+ * Log warning for mismatched hostKey.
+ */
+- (void)showMismatchKeyWarningForHost:(NSString *)hostname
+{
+	NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	NSLog(@"@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @");
+	NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	NSLog(@"Someone could be eavesdropping on you right now (man-in-the-middle attack)!");
+	NSLog(@"It is also possible that the RSA host key for '%@' has just been changed.", hostname);
+	NSLog(@"See the SSHDelegate protocol for how to implement 'acceptMismatchedFingerprint:forHost:'"); 
 }
 
 

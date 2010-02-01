@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "CurlSFTP.h"
+#import <objective-curl/sftp.h>
 
 
 @interface TestController : NSObject 

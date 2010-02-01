@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RemoteObject.h"
 #include <curl/curl.h>
 #include <sys/stat.h>
 
@@ -20,28 +19,17 @@
 	
 	BOOL verbose;
 	BOOL showProgress;
-	BOOL isUploading;
-	BOOL isDownloading;
-	
-	NSString *authUsername;
-	NSString *authPassword;
-	
+		
 	NSOperationQueue *operationQueue;
 }
 
 @property(readwrite, assign) id delegate;
 @property(readwrite, assign) SecProtocolType protocolType;
-@property(readwrite, copy) NSString *authUsername;
-@property(readwrite, copy) NSString *authPassword;
 @property(readwrite, assign) BOOL verbose;
 @property(readwrite, assign) BOOL showProgress;
 
 + (NSString *)libcurlVersion;
 
 - (CURL *)newHandle;
-
-- (BOOL)hasAuthUsername;
-
-- (BOOL)hasAuthPassword;
 
 @end

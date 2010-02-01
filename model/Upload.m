@@ -13,7 +13,6 @@
 @implementation Upload
 
 @synthesize name;
-@synthesize directory;
 @synthesize localFiles;
 @synthesize progress;
 @synthesize totalFiles;
@@ -40,7 +39,6 @@
 	[name release];
 	[localFiles release];
 	[hostname release];
-	[directory release];
 	[currentFile release];
 	[super dealloc];
 }
@@ -49,5 +47,6 @@
 {
 	return (status == TRANSFER_STATUS_QUEUED || status == TRANSFER_STATUS_UPLOADING);
 }
+
 
 @end

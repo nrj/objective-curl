@@ -37,7 +37,6 @@
 {
 	[name release];
 	[localFiles release];
-	[hostname release];
 	[currentFile release];
 	[super dealloc];
 }

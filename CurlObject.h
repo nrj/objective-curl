@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <curl/curl.h>
 #include <sys/stat.h>
+#import "curl.h"
 
 
 @interface CurlObject : NSObject

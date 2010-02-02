@@ -24,21 +24,15 @@
 	[fileView setDoubleAction:@selector(navigateRemoteDirectory:)];
 	
 	sftp = [[CurlSFTP alloc] init];
-}
 
-
-- (void)initCurlObject:(CurlObject *)curl
-{	
-	[curl setVerbose:NO];
-	[curl setShowProgress:YES];
-	[curl setDelegate:self];
+	[sftp setVerbose:NO];
+	[sftp setShowProgress:YES];
+	[sftp setDelegate:self];
 }
 
 
 - (IBAction)uploadFile:(id)sender
 {
-	[self initCurlObject:sftp];
-	
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
 	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
@@ -51,9 +45,7 @@
 
 
 - (IBAction)listRemoteDirectory:(id)sender
-{
-	[self initCurlObject:sftp];
-	
+{	
 	NSString *hostname = [hostnameField stringValue];
 	
 	RemoteFolder *remoteFolder = [sftp listRemoteDirectory:@"" onHost:hostname];
@@ -83,12 +75,22 @@
 }
 
 
-#pragma mark CurlDelegate methods
+#pragma mark ConnectionDelegate methods
 
 
 - (void)curlDidStartConnecting:(RemoteObject *)task
 {
-	NSLog(@"Connecting to '%@'...", [task hostname]);
+	NSLog(@"curlDidStartConnecting");
+}
+
+- (void)curlDidConnect:(RemoteObject *)task
+{
+	NSLog(@"curlDidConnect");
+}
+
+- (void)curlDidFailToConnect:(RemoteObject *)task
+{
+	NSLog(@"curlDidFailToConnect");
 }
 
 

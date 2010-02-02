@@ -34,8 +34,6 @@
 @property(readwrite, retain) Upload *upload;
 @property(readwrite, retain) RemoteFolder *folder;
 
-- (void)initCurlObject:(CurlObject *)curl;
-
 - (IBAction)listRemoteDirectory:(id)sender;
 - (IBAction)uploadFile:(id)sender;
 

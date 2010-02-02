@@ -1,5 +1,5 @@
 //
-//  CurlDelegate.h
+//  ConnectionDelegate.h
 //  objective-curl
 //
 //  Created by nrj on 2/1/10.
@@ -8,19 +8,16 @@
 
 
 
-@protocol CurlDelegate
+@protocol ConnectionDelegate
 
 
 - (void)curlDidStartConnecting:(RemoteObject *)task;
 
 
-- (void)curlDidSuccessfullyConnect:(RemoteObject *)task;
+- (void)curlDidConnect:(RemoteObject *)task;
 
 
 - (void)curlDidFailToConnect:(RemoteObject *)task;
-
-
-- (void)curlDidFailAuthentication:(RemoteObject *)task;
 
 
 @end

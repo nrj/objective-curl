@@ -10,7 +10,7 @@
 #import "NSObject+Extensions.h"
 #import "TransferInfo.h"
 #import "TransferStatus.h"
-#import "CurlDelegate.h"
+#import "ConnectionDelegate.h"
 #import "UploadDelegate.h"
 #import "CurlFTP.h"
 
@@ -30,8 +30,6 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	{
 		[self setClient:aClient];
 		[self setTransfer:aTransfer];
-		
-		handle = [client newHandle];
 	}
 	return self;	
 }
@@ -51,6 +49,8 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 - (void)main 
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	handle = [client newHandle];
 	
 	// Transfer Status set to QUEUED.
 	[transfer setStatus:TRANSFER_STATUS_QUEUED];
@@ -178,19 +178,41 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	return 0;
 }
 
-
-static int handleConnecting(CURL *curl, FTPUploadOperation *operation)
-{
+/*
+ * Called periodically during the connection process with the current status of the connection.
+ *
+ */
+static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOperation *operation)
+{	
 	Upload *transfer = [operation transfer];
 	
-	if (![transfer isConnecting])
+	switch (status)
 	{
-		[transfer setIsUploading:NO];
-		[transfer setIsConnecting:YES];
+		case CURL_CONN_STILL:
+			// Still trying to connect...
+			if (![transfer isConnecting])
+			{
+				[transfer setIsConnecting:YES];
+				[transfer setStatus:TRANSFER_STATUS_CONNECTING];
+				[operation performConnectionDelegateSelector:@selector(curlDidStartConnecting:)];
+			}
+			break;
 		
-		[transfer setStatus:TRANSFER_STATUS_CONNECTING];
-		
-		[operation performCurlDelegateSelector:@selector(curlDidStartConnecting:)];
+		case CURL_CONN_OK:
+			// Got a connection!
+			if ([transfer isConnecting])
+			{
+				[transfer setIsConnecting:NO];
+				[operation performConnectionDelegateSelector:@selector(curlDidConnect:)];
+			}
+			
+		case CURL_CONN_ERROR:
+			// Couldn't get a connection.
+			if ([transfer isConnecting])
+			{
+				[transfer setIsConnecting:NO];
+				[operation performConnectionDelegateSelector:@selector(curlDidFailToConnect:)];
+			}
 	}
 	
 	return [transfer cancelled];
@@ -337,7 +359,7 @@ static int handleConnecting(CURL *curl, FTPUploadOperation *operation)
 }
 
 		
-- (void)performCurlDelegateSelector:(SEL)aSelector
+- (void)performConnectionDelegateSelector:(SEL)aSelector
 {
 	if ([client delegate] && [[client delegate] respondsToSelector:aSelector])
 	{

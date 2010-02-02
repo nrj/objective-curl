@@ -25,7 +25,7 @@ extern NSString * const TMP_FILENAME;
 @property(readwrite, assign) id <UploadClient>client;
 
 static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow);
-static int handleConnecting(CURL *curl, FTPUploadOperation *operation);
+static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOperation *operation);
 
 - (id)initWithClient:(id <UploadClient>)aClient transfer:(Upload *)aTransfer;
 
@@ -35,7 +35,7 @@ static int handleConnecting(CURL *curl, FTPUploadOperation *operation);
 - (void)handleUploadFailed:(CURLcode)result;
 
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
-- (void)performCurlDelegateSelector:(SEL)aSelector;
+- (void)performConnectionDelegateSelector:(SEL)aSelector;
 
 - (NSString *)protocolPrefix;
 

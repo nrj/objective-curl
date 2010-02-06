@@ -49,7 +49,13 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	// Start the recursive upload.
 	for (int i = 0; i < [filesToUpload count]; i++)
 	{
-		PendingTransfer *file = [filesToUpload objectAtIndex:i];
+		PendingTransfer *file = [filesToUpload objectAtIndex:i] != [NSNull null] ? [filesToUpload objectAtIndex:i] : nil;
+		
+		if (!file)
+		{
+			NSLog(@"Local file not found: %@", [[transfer localFiles] objectAtIndex:i]);
+			continue;
+		}
 		
 		[transfer setCurrentFile:[[file localPath] lastPathComponent]];
 			
@@ -67,7 +73,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 		NSString *relativePath = ([file isEmptyDirectory] ? [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath]);
 		
 		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@%@", [self protocolPrefix], 
-						 [transfer hostname], [transfer port], [transfer path], relativePath];
+							[transfer hostname], [transfer port], [transfer path], relativePath];
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
@@ -227,7 +233,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	{		
 		NSString *pathToFile = [files objectAtIndex:i];
 		
-		PendingTransfer *info = NULL;
+		PendingTransfer *info;
 		
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
@@ -261,12 +267,16 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 				}
 			}
 		}
-		else
+		else if ([mgr fileExistsAtPath:pathToFile])
 		{
 			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile 
 												remotePath:[pathToFile lastPathComponent]];
 		
 			[info setIsEmptyDirectory:YES];
+		}
+		else
+		{
+			info = (id)[NSNull null];
 		}
 		
 		[filesToUpload addObject:info];

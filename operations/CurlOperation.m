@@ -54,7 +54,11 @@
 	NSString *message;
 	
 	switch (status)
-	{		
+	{	
+		case -1:
+			message = [NSString stringWithFormat:@"Nothing to do."];
+			break;
+			
 		case CURLE_LOGIN_DENIED:
 			message = [NSString stringWithFormat:@"Invalid login for %@@%@", [object username], [object hostname]];
 			break;
@@ -90,7 +94,7 @@
 		case CURLE_UNSUPPORTED_PROTOCOL:
 			message = [NSString stringWithFormat:@"Unsupported protocol %@", [object protocolString]];
 			break;
-			
+		
 		default:
 			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", status];
 			break;

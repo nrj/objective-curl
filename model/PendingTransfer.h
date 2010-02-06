@@ -10,6 +10,9 @@
 #import <stdio.h>
 #import <sys/stat.h>
 
+#define NULL_DEVICE "/dev/null"
+
+
 @interface PendingTransfer : NSObject 
 {
 	NSString *localPath;

@@ -33,7 +33,7 @@
 	
 	if ([self isEmptyDirectory])
 	{
-		fh = fopen("/dev/null", "rb");
+		fh = fopen(NULL_DEVICE, "rb");
 	}
 	else
 	{
@@ -47,7 +47,7 @@
 {	
 	if([self isEmptyDirectory])
 	{
-		return stat("/dev/null", info);
+		return stat(NULL_DEVICE, info);
 	}
 	else
 	{

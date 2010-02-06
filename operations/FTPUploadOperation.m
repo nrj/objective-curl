@@ -8,9 +8,8 @@
 
 #import "FTPUploadOperation.h"
 #import "NSObject+Extensions.h"
-#import "TransferInfo.h"
+#import "PendingTransfer.h"
 #import "TransferStatus.h"
-#import "ConnectionDelegate.h"
 #import "UploadDelegate.h"
 #import "CurlFTP.h"
 
@@ -20,27 +19,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 @implementation FTPUploadOperation
 
-@synthesize client;
 @synthesize transfer;
-
-
-- (id)initWithClient:(id <UploadClient>)aClient transfer:(Upload *)aTransfer
-{
-	if (self = [super init])
-	{
-		[self setClient:aClient];
-		[self setTransfer:aTransfer];
-	}
-	return self;	
-}
-
-
-- (void)dealloc
-{
-	[transfer release];
-	
-	[super dealloc];
-}
 
 
 /*
@@ -50,8 +29,6 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	handle = [client newHandle];
-	
 	// Transfer Status set to QUEUED.
 	[transfer setStatus:TRANSFER_STATUS_QUEUED];
 		
@@ -60,8 +37,6 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
-	curl_easy_setopt(handle, CURLOPT_CONNECTINGFUNCTION, handleConnecting);
-	curl_easy_setopt(handle, CURLOPT_CONNECTINGDATA, self);
 	
 	// Enumurate files and directories to upload
 	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles]] retain];
@@ -74,7 +49,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	// Start the recursive upload.
 	for (int i = 0; i < [filesToUpload count]; i++)
 	{
-		TransferInfo *file = [filesToUpload objectAtIndex:i];
+		PendingTransfer *file = [filesToUpload objectAtIndex:i];
 		
 		[transfer setCurrentFile:[[file localPath] lastPathComponent]];
 			
@@ -178,45 +153,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	return 0;
 }
 
-/*
- * Called periodically during the connection process with the current status of the connection.
- *
- */
-static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOperation *operation)
-{	
-	Upload *transfer = [operation transfer];
-	
-	switch (status)
-	{
-		case CURL_CONN_STILL:
-			// Still trying to connect...
-			if (![transfer isConnecting])
-			{
-				[transfer setIsConnecting:YES];
-				[transfer setStatus:TRANSFER_STATUS_CONNECTING];
-				[operation performConnectionDelegateSelector:@selector(curlDidStartConnecting:)];
-			}
-			break;
-		
-		case CURL_CONN_OK:
-			// Got a connection!
-			if ([transfer isConnecting])
-			{
-				[transfer setIsConnecting:NO];
-				[operation performConnectionDelegateSelector:@selector(curlDidConnect:)];
-			}
-			
-		case CURL_CONN_ERROR:
-			// Couldn't get a connection.
-			if ([transfer isConnecting])
-			{
-				[transfer setIsConnecting:NO];
-				[operation performConnectionDelegateSelector:@selector(curlDidFailToConnect:)];
-			}
-	}
-	
-	return [transfer cancelled];
-}
 
 /*
  * Called when the upload loop execution has finished. Updates the state of the upload and notifies delegates.
@@ -262,23 +198,23 @@ static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOper
 	
 	if (result == CURLE_LOGIN_DENIED)
 	{
-		if ([client delegate] && [[client delegate] respondsToSelector:@selector(uploadDidFailAuthentication:client:message:)])
+		if (delegate && [delegate respondsToSelector:@selector(uploadDidFailAuthentication:message:)])
 		{
-			[[[client delegate] invokeOnMainThread] uploadDidFailAuthentication:transfer client:client message:message];
+			[[delegate invokeOnMainThread] uploadDidFailAuthentication:transfer message:message];
 		}
 	}
 	else
 	{
-		if ([client delegate] && [[client delegate] respondsToSelector:@selector(uploadDidFail:client:message:)])
+		if (delegate && [delegate respondsToSelector:@selector(uploadDidFail:message:)])
 		{
-			[[[client delegate] invokeOnMainThread] uploadDidFail:transfer client:client message:message];
+			[[delegate invokeOnMainThread] uploadDidFail:transfer message:message];
 		}
 	}
 }
 
 
 /*
- * Takes a list of files and directories and returns an array of TransferInfo objects.
+ * Takes a list of files and directories and returns an array of PendingTransfer objects.
  * 
  */
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files
@@ -291,11 +227,11 @@ static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOper
 	{		
 		NSString *pathToFile = [files objectAtIndex:i];
 		
-		TransferInfo *info = NULL;
+		PendingTransfer *info = NULL;
 		
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
-			info = [[TransferInfo alloc] initWithLocalPath:pathToFile remotePath:[pathToFile lastPathComponent]];
+			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile remotePath:[pathToFile lastPathComponent]];
 		}
 		else if ([[mgr contentsOfDirectoryAtPath:pathToFile error:nil] count] > 0)
 		{
@@ -309,14 +245,14 @@ static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOper
 				
 				if ([mgr fileExistsAtPath:nextPath isDirectory:&isDir] && !isDir)
 				{
-					info = [[TransferInfo alloc] initWithLocalPath:nextPath 
+					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
 														remotePath:[basePath stringByAppendingPathComponent:filename]];
 
 					[filesToUpload addObject:info];
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
-					info = [[TransferInfo alloc] initWithLocalPath:nextPath 
+					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
 														remotePath:[basePath stringByAppendingPathComponent:filename]];
 
 					[info setIsEmptyDirectory:YES];
@@ -327,7 +263,7 @@ static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOper
 		}
 		else
 		{
-			info = [[TransferInfo alloc] initWithLocalPath:pathToFile 
+			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile 
 												remotePath:[pathToFile lastPathComponent]];
 		
 			[info setIsEmptyDirectory:YES];
@@ -345,25 +281,16 @@ static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOper
  */
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg
 {
-	if ([client delegate] && [[client delegate] respondsToSelector:aSelector])
+	if (delegate && [delegate respondsToSelector:aSelector])
 	{
 		if (arg)
 		{
-			[[[client delegate] invokeOnMainThread] performSelector:aSelector withObject:transfer withObject:arg];
+			[[delegate invokeOnMainThread] performSelector:aSelector withObject:transfer withObject:arg];
 		}
 		else
 		{
-			[[[client delegate] invokeOnMainThread] performSelector:aSelector withObject:transfer];
+			[[delegate invokeOnMainThread] performSelector:aSelector withObject:transfer];
 		}
-	}
-}
-
-		
-- (void)performConnectionDelegateSelector:(SEL)aSelector
-{
-	if ([client delegate] && [[client delegate] respondsToSelector:aSelector])
-	{
-		[[[client delegate] invokeOnMainThread] performSelector:aSelector withObject:transfer];
 	}
 }
 		
@@ -400,6 +327,17 @@ static int handleConnecting(CURL *curl, enum curl_connstat status, FTPUploadOper
 	}
 	
 	return creds;
+}
+
+
+/*
+ * Cleanup. Release the transfer.
+ */
+- (void)dealloc
+{
+	[transfer release];
+	
+	[super dealloc];
 }
 
 

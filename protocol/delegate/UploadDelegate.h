@@ -7,7 +7,7 @@
 //
 
 #import "Upload.h"
-#import "UploadClient.h"
+
 
 @protocol UploadDelegate
 
@@ -40,14 +40,14 @@
  * Called when the upload has failed because of authentication. With this method you prompt the user to enter new
  * credentials, correct them on the upload record given to you and invoke [client retryUpload:record] to try again.
  */
-- (void)uploadDidFailAuthentication:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+- (void)uploadDidFailAuthentication:(Upload *)record message:(NSString *)message;
 
 
 /*
  * Called when the upload has failed. The message will contain useful information of what went wrong. If possible  
  * correct the property values on the upload record given to you and invoke [client retryUpload:record] to try again.
  */
-- (void)uploadDidFail:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+- (void)uploadDidFail:(Upload *)record message:(NSString *)message;
 
 
 @end

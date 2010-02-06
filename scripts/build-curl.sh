@@ -1,6 +1,8 @@
 #!/bin/bash
+CURL_VERSION="curl-7.19.7"
+PROJECT_LIBS="/Users/nrj/Code/Cocoa/objective-curl/lib"
 
-PROJECT_LIBS=/Users/nrj/Code/Cocoa/objective-curl/lib
+cd $CURL_VERSION
 
 make clean
 

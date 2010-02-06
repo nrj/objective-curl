@@ -11,11 +11,11 @@
 
 @implementation RemoteObject 
 
+@synthesize protocol;
 @synthesize hostname;
+@synthesize path;
 @synthesize username;
 @synthesize password;
-@synthesize path;
-@synthesize protocol;
 @synthesize port;
 @synthesize status;
 @synthesize isConnecting;

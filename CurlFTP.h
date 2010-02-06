@@ -8,24 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "CurlObject.h"
-#import "UploadClient.h"
+#import "CurlClient.h"
 
 @class Upload, RemoteFolder;
 
 extern int const DEFAULT_FTP_PORT;
 
-@interface CurlFTP : CurlObject <UploadClient>
+@interface CurlFTP : CurlObject <CurlClient>
 {
 	NSMutableDictionary *directoryListCache;
 }
-
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username;
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password;
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory;
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory port:(int)port;
-- (void)retryUpload:(Upload *)upload;
-
+- (void)upload:(Upload *)record;
 
 static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutableArray *list);
 

@@ -23,11 +23,11 @@
 	[fileView setDelegate:self];
 	[fileView setDoubleAction:@selector(navigateRemoteDirectory:)];
 	
-	sftp = [[CurlSFTP alloc] init];
+	ftp = [[CurlFTP alloc] init];
 
-	[sftp setVerbose:NO];
-	[sftp setShowProgress:YES];
-	[sftp setDelegate:self];
+	[ftp setVerbose:YES];
+	[ftp setShowProgress:YES];
+	[ftp setDelegate:self];
 }
 
 
@@ -35,7 +35,7 @@
 {
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
-	Upload *newUpload = [sftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
+	Upload *newUpload = [ftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
 												 toHost:[hostnameField stringValue] 
 											   username:[usernameField stringValue] 
 											   password:[passwordField stringValue]];
@@ -48,7 +48,7 @@
 {	
 	NSString *hostname = [hostnameField stringValue];
 	
-	RemoteFolder *remoteFolder = [sftp listRemoteDirectory:@"" onHost:hostname];
+	RemoteFolder *remoteFolder = [ftp listRemoteDirectory:@"" onHost:hostname];
 	
 	[self setFolder:remoteFolder];
 }
@@ -63,7 +63,7 @@
 		if ([file isDir])
 		{
 			NSString *newPath = [[folder path] appendPathForFTP:[file name]];
-			[self setFolder:[sftp listRemoteDirectory:newPath onHost:[folder hostname]]];
+			[self setFolder:[ftp listRemoteDirectory:newPath onHost:[folder hostname]]];
 		}
 	}
 }
@@ -121,15 +121,13 @@
 }
 
 
-- (void)uploadDidFailAuthentication:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+- (void)uploadDidFailAuthentication:(Upload *)record message:(NSString *)message;
 {
 	NSLog(@"uploadDidFailAuthentication: %@", message);
-	
-	[client retryUpload:upload];
 }
 
 
-- (void)uploadDidFail:(Upload *)record client:(id <UploadClient>)client message:(NSString *)message;
+- (void)uploadDidFail:(Upload *)record message:(NSString *)message;
 {
 	NSLog(@"uploadDidFail: %@", message);
 }

@@ -12,7 +12,7 @@
 
 @interface TestController : NSObject 
 {	
-	CurlSFTP *sftp;
+	CurlFTP *ftp;
 	
 	Upload *upload;
 	

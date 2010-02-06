@@ -10,7 +10,7 @@
 #import <stdio.h>
 #import <sys/stat.h>
 
-@interface TransferInfo : NSObject 
+@interface PendingTransfer : NSObject 
 {
 	NSString *localPath;
 	NSString *remotePath;

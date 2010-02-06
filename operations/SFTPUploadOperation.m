@@ -79,9 +79,9 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	int answer = CURLKHSTAT_DEFER;
 	
-	if ([client delegate] && [[client delegate] respondsToSelector:@selector(acceptUnknownFingerprint:forHost:)])
+	if (delegate && [delegate respondsToSelector:@selector(acceptUnknownFingerprint:forHost:)])
 	{
-		answer = [[[client delegate] invokeOnMainThreadAndWaitUntilDone:YES] acceptUnknownFingerprint:fingerprint forHost:hostname];
+		answer = [[delegate invokeOnMainThreadAndWaitUntilDone:YES] acceptUnknownFingerprint:fingerprint forHost:hostname];
 	}
 	else
 	{
@@ -101,9 +101,9 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {	
 	int answer = CURLKHSTAT_DEFER;
 	
-	if ([client delegate] && [[client delegate] respondsToSelector:@selector(acceptMismatchedFingerprint:forHost:)])
+	if (delegate && [delegate respondsToSelector:@selector(acceptMismatchedFingerprint:forHost:)])
 	{
-		answer = [[[client delegate] invokeOnMainThreadAndWaitUntilDone:YES] acceptMismatchedFingerprint:fingerprint forHost:hostname];
+		answer = [[delegate invokeOnMainThreadAndWaitUntilDone:YES] acceptMismatchedFingerprint:fingerprint forHost:hostname];
 	}
 	else
 	{

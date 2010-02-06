@@ -10,14 +10,19 @@
 
 #import <Cocoa/Cocoa.h>
 #include <sys/stat.h>
-#include "curl.h"
+#include <curl/curl.h>
 
 @class RemoteObject;
 
 @interface CurlOperation : NSOperation 
 {
 	CURL *handle;
+	id delegate;
 }
+
+@property(readwrite, assign) id delegate;
+
+- (id)initWithHandle:(CURL *)aHandle delegate:(id)aDelegate;
 
 - (NSString *)getFailureDetailsForStatus:(CURLcode)status withObject:(RemoteObject *)object;
 

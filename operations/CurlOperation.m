@@ -14,16 +14,41 @@
 
 @implementation CurlOperation
 
+@synthesize delegate;
 
+
+/*
+ * Init with the curl handle to use, and a UploadDelegate.
+ */
+- (id)initWithHandle:(CURL *)aHandle delegate:(id)aDelegate
+{
+	if (self = [super init])
+	{
+		handle = aHandle;
+		
+		[self setDelegate:aDelegate];
+	}
+
+	return self;
+}
+
+
+/*
+ * Cleanup. Closes any open connections.
+ */
 - (void)dealloc
 {
 	curl_easy_cleanup(handle);
-	curl_global_cleanup();
 
+	curl_global_cleanup();
+	
 	[super dealloc];
 }
 
 
+/*
+ * Return a failure status message for CURLcode.
+ */
 - (NSString *)getFailureDetailsForStatus:(CURLcode)status withObject:(RemoteObject *)object
 {
 	NSString *message;

@@ -1,42 +1,10 @@
-Only in curl-7.19.7-patched/include/curl: curl
-diff -urB curl-7.19.7/include/curl/curl.h curl-7.19.7-patched/include/curl/curl.h
---- curl-7.19.7/include/curl/curl.h	2009-10-17 14:31:50.000000000 -0400
-+++ curl-7.19.7-patched/include/curl/curl.h	2010-02-02 01:31:57.000000000 -0500
-@@ -549,6 +549,17 @@
-                           enum curl_khmatch, /* libcurl's view on the keys */
-                           void *clientp); /* custom pointer passed from app */
- 
-+/* set of connect status passed into callback */
-+enum curl_connstat {
-+  CURL_CONN_STILL,   /* still connecting */
-+  CURL_CONN_OK,      /* successfully connected */
-+  CURL_CONN_ERROR,   /* failed connecting */
-+  CURL_CONN_LAST     /* not for use, marker for last-in-list */
-+};
-+
-+/* custom callback for current connection status */
-+typedef int (*curl_connecting_callback)(CURL *curl, enum curl_connstat st, void *ptr);
-+
- /* parameter for the CURLOPT_USE_SSL option */
- typedef enum {
-   CURLUSESSL_NONE,    /* do not attempt to use SSL */
-@@ -1280,6 +1291,12 @@
-   /* set the SSH host key callback custom pointer */
-   CINIT(SSH_KEYDATA, OBJECTPOINT, 185),
- 
-+  /* set a connect status callback, must point to a curl_connecting_callback */
-+  CINIT(CONNECTINGFUNCTION, FUNCTIONPOINT, 186),
-+
-+  /* set the curl_connecting_callback custom pointer */
-+  CINIT(CONNECTINGDATA, OBJECTPOINT, 187),
-+
-   CURLOPT_LASTENTRY /* the last unused */
- } CURLoption;
- 
-Only in curl-7.19.7-patched/lib: Makefile
-diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
---- curl-7.19.7/lib/connect.c	2009-10-01 17:17:15.000000000 -0400
-+++ curl-7.19.7-patched/lib/connect.c	2010-02-02 01:32:15.000000000 -0500
+Index: lib/connect.c
+===================================================================
+RCS file: /cvsroot/curl/curl/lib/connect.c,v
+retrieving revision 1.224
+diff -u -p -r1.224 connect.c
+--- lib/connect.c	30 Dec 2009 17:59:56 -0000	1.224
++++ lib/connect.c	7 Jan 2010 22:51:36 -0000
 @@ -5,7 +5,7 @@
   *                            | (__| |_| |  _ <| |___
   *                             \___|\___/|_| \_\_____|
@@ -54,7 +22,7 @@ diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
  
  /* The last #include file should be: */
  #include "memdebug.h"
-@@ -192,7 +193,8 @@
+@@ -192,7 +193,8 @@ long Curl_timeleft(struct connectdata *c
  #define WAITCONN_FDSET_ERROR   2
  
  static
@@ -64,7 +32,7 @@ diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
                  long timeout_msec)
  {
    int rc;
-@@ -203,24 +205,52 @@
+@@ -203,21 +205,34 @@ int waitconnect(curl_socket_t sockfd, /*
    (void)verifyconnect(sockfd, NULL);
  #endif
  
@@ -88,7 +56,7 @@ diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
 +    rc = Curl_socket_ready(CURL_SOCKET_BAD, sockfd, (int)(timeout_msec>1000?
 +                                                          1000:timeout_msec));
 +
-+    if(Curl_connUpdate(conn, CURL_CONN_STILL))
++    if(Curl_pgrsUpdate(conn))
 +      return CURLE_ABORTED_BY_CALLBACK;
 +
 +    if(-1 == rc)
@@ -113,25 +81,7 @@ diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
    return WAITCONN_CONNECTED;
  }
  
-+/*
-+ * Invokes the connect status callback with the current status.
-+ */
-+int Curl_connUpdate(struct connectdata *conn, enum curl_connstat status)
-+{
-+	int rc = 0;
-+	struct SessionHandle *data = conn->data;
-+	if (data->set.fconnecting && data->set.fconnecting_userp) {
-+		rc = data->set.fconnecting(data, status, (void *)data->set.fconnecting_userp);
-+    } else if (data->set.fconnecting) {
-+		rc = data->set.fconnecting(data, status, NULL);
-+	}
-+	return rc;
-+}
-+
- static CURLcode bindlocal(struct connectdata *conn,
-                           curl_socket_t sockfd, int af)
- {
-@@ -553,12 +583,13 @@
+@@ -553,7 +568,7 @@ CURLcode Curl_is_connected(struct connec
    Curl_expire(data, allow);
  
    /* check for connect without timeout as we want to return immediately */
@@ -140,22 +90,7 @@ diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
  
    if(WAITCONN_CONNECTED == rc) {
      int error;
-     if(verifyconnect(sockfd, &error)) {
-       /* we are connected, awesome! */
-+      Curl_connUpdate(conn, CURL_CONN_OK);
-       *connected = TRUE;
-       return CURLE_OK;
-     }
-@@ -595,6 +626,8 @@
-    * If the connection failed here, we should attempt to connect to the "next
-    * address" for the given host.
-    */
-+  if (code == CURLE_COULDNT_CONNECT)
-+    Curl_connUpdate(conn, CURL_CONN_ERROR);
- 
-   return code;
- }
-@@ -823,7 +856,7 @@
+@@ -823,7 +838,7 @@ singleipconnect(struct connectdata *conn
      case EAGAIN:
  #endif
  #endif
@@ -164,76 +99,3 @@ diff -urB curl-7.19.7/lib/connect.c curl-7.19.7-patched/lib/connect.c
        break;
      default:
        /* unknown error, fallthrough and try another address! */
-@@ -846,6 +879,7 @@
- 
-   if(!rc && isconnected) {
-     /* we are connected, awesome! */
-+    Curl_connUpdate(conn, CURL_CONN_OK);
-     *connected = TRUE; /* this is a true connect */
-     infof(data, "connected\n");
-     return sockfd;
-@@ -858,6 +892,8 @@
-   }
- 
-   /* connect failed or timed out */
-+  Curl_connUpdate(conn, CURL_CONN_ERROR);
-+
-   sclose(sockfd);
- 
-   return CURL_SOCKET_BAD;
-diff -urB curl-7.19.7/lib/connect.h curl-7.19.7-patched/lib/connect.h
---- curl-7.19.7/lib/connect.h	2009-07-09 17:47:24.000000000 -0400
-+++ curl-7.19.7-patched/lib/connect.h	2010-02-02 01:32:15.000000000 -0500
-@@ -54,6 +54,11 @@
-                              long *param_longp,
-                              struct connectdata **connp);
- 
-+/*
-+ * Used to invoke the connect status callback if set.
-+ */
-+int Curl_connUpdate(struct connectdata *conn, enum curl_connstat status);
-+
- #ifdef WIN32
- /* When you run a program that uses the Windows Sockets API, you may
-    experience slow performance when you copy data to a TCP server.
-Only in curl-7.19.7-patched/lib: curl_config.h
-Only in curl-7.19.7-patched/lib: lib
-Only in curl-7.19.7-patched/lib: stamp-h1
-diff -urB curl-7.19.7/lib/url.c curl-7.19.7-patched/lib/url.c
---- curl-7.19.7/lib/url.c	2009-10-17 14:31:50.000000000 -0400
-+++ curl-7.19.7-patched/lib/url.c	2010-02-02 01:32:15.000000000 -0500
-@@ -2229,6 +2229,21 @@
-      */
-     data->set.ssh_keyfunc_userp = va_arg(param, void *);
-     break;
-+
-+  case CURLOPT_CONNECTINGFUNCTION:
-+    /*
-+     * set a cancelable callback function for the connecting process
-+     */
-+    data->set.fconnecting = va_arg(param, curl_connecting_callback);
-+    break;
-+
-+  case CURLOPT_CONNECTINGDATA:
-+    /*
-+     * set a custom pointer for the curl_connecting_callback
-+     */
-+    data->set.fconnecting_userp = va_arg(param, void *);
-+    break;
-+
- #endif /* HAVE_LIBSSH2_KNOWNHOST_API */
- 
- #endif /* USE_LIBSSH2 */
-diff -urB curl-7.19.7/lib/urldata.h curl-7.19.7-patched/lib/urldata.h
---- curl-7.19.7/lib/urldata.h	2009-10-29 17:26:30.000000000 -0400
-+++ curl-7.19.7-patched/lib/urldata.h	2010-02-02 01:32:15.000000000 -0500
-@@ -1519,6 +1519,9 @@
-   curl_sshkeycallback ssh_keyfunc; /* key matching callback */
-   void *ssh_keyfunc_userp;         /* custom pointer to callback */
- 
-+  curl_connecting_callback fconnecting; /* connect status callback */
-+  void *fconnecting_userp;              /* custom pointer to callback */
-+
- /* Here follows boolean settings that define how to behave during
-    this session. They are STATIC, set by libcurl users or at least initially
-    and they don't change during operations. */

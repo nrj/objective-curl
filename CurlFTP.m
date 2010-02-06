@@ -106,30 +106,25 @@ int const DEFAULT_FTP_PORT = 21;
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocolType]];
+	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
 	[upload setPassword:password];
 	[upload setPath:[directory pathForFTP]];
 	[upload setPort:port];
 	
-	[upload setLocalFiles:filesAndDirectories];
-	
-	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithClient:self transfer:upload];
-	[operationQueue addOperation:op];
-	[op release];
-	
-	[upload setStatus:TRANSFER_STATUS_QUEUED];
+	[self upload:upload];
 	
 	return upload;
 }
 
-- (void)retryUpload:(Upload *)upload
+- (void)upload:(Upload *)record
 {
-	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithClient:self transfer:upload];
+	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
+
+	[op setTransfer:record];
 	[operationQueue addOperation:op];
 	[op release];
-	
-	[upload setStatus:TRANSFER_STATUS_QUEUED];	
 }
 
 

@@ -1,15 +1,15 @@
 //
-//  TransferInfo.m
+//  PendingTransfer.m
 //  objective-curl
 //
 //  Created by nrj on 1/1/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "TransferInfo.h"
+#import "PendingTransfer.h"
 
 
-@implementation TransferInfo
+@implementation PendingTransfer
 
 @synthesize localPath;
 @synthesize remotePath;

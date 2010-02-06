@@ -1,5 +1,5 @@
 //
-//  UploadClient.h
+//  CurlClient.h
 //  objective-curl
 //
 //  Created by nrj on 1/31/10.
@@ -9,12 +9,13 @@
 
 @class Upload;
 
-@protocol UploadClient
+@protocol CurlClient
 
 - (CURL *)newHandle;
 
-- (void)setDelegate:(id)delegate;
 - (id)delegate;
+
+- (void)setDelegate:(id)delegate;
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username;
 
@@ -24,6 +25,6 @@
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory port:(int)port;
 
-- (void)retryUpload:(Upload *)upload;
+- (void)upload:(Upload *)record;
 
 @end

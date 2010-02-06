@@ -101,31 +101,26 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocolType]];
+	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
 	[upload setPassword:password];
 	[upload setPath:[directory pathForFTP]];
 	[upload setPort:port];
-	
-	[upload setLocalFiles:filesAndDirectories];
-	
-	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithClient:self transfer:upload];
-	[operationQueue addOperation:op];
-	[op release];
-	
-	[upload setStatus:TRANSFER_STATUS_QUEUED];
+			
+	[self upload:upload];
 	
 	return upload;
 }
 
 
-- (void)retryUpload:(Upload *)upload
+- (void)upload:(Upload *)record
 {
-	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithClient:self transfer:upload];
+	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
+	
+	[op setTransfer:record];
 	[operationQueue addOperation:op];
 	[op release];
-	
-	[upload setStatus:TRANSFER_STATUS_QUEUED];	
 }
 
 

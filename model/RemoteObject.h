@@ -19,7 +19,7 @@
 	NSString *path;
 	int port;
 	TransferStatus status;
-	BOOL isConnecting;
+	BOOL connected;
 	BOOL cancelled;
 }
 
@@ -30,7 +30,7 @@
 @property(readwrite, copy) NSString *path;
 @property(readwrite, assign) int port;
 @property(readwrite, assign) TransferStatus status;
-@property(readwrite, assign) BOOL isConnecting;
+@property(readwrite, assign) BOOL connected;
 @property(readwrite, assign) BOOL cancelled;
 
 - (NSString *)protocolString;

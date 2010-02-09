@@ -13,6 +13,7 @@
 @interface TestController : NSObject 
 {	
 	CurlFTP *ftp;
+	CurlSFTP *sftp;
 	
 	Upload *upload;
 	
@@ -29,6 +30,7 @@
 	IBOutlet NSTextField *listStatusMessage;
 	IBOutlet NSTextField *uploadStatusMessage;
 	IBOutlet NSProgressIndicator *progressBar;
+	IBOutlet NSMatrix *typeSelector;
 }
 
 @property(readwrite, retain) Upload *upload;

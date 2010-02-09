@@ -10,7 +10,7 @@
 #import "CurlOperation.h"
 #import "CurlClient.h"
 
-@class Upload;
+@class Upload, PendingTransfer;
 
 extern NSString * const FTP_PROTOCOL_PREFIX;
 extern NSString * const TMP_FILENAME;
@@ -22,7 +22,7 @@ extern NSString * const TMP_FILENAME;
 
 @property(readwrite, retain) Upload *transfer;
 
-static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow);
+static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files;
 

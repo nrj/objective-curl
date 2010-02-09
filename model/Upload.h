@@ -19,8 +19,6 @@
 	int progress;
 	int totalFiles;
 	int totalFilesUploaded;
-	
-	BOOL isUploading;
 }
 
 
@@ -30,7 +28,5 @@
 @property(readwrite, assign) int totalFilesUploaded;
 @property(readwrite, assign) int progress;
 @property(readwrite, copy) NSString *currentFile;
-@property(readwrite, assign) BOOL isUploading;
-
 
 @end

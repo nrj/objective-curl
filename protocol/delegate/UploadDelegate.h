@@ -13,39 +13,43 @@
 
 
 /*
- * Called when the upload starts.
+ * Called when the upload starts the connection process.
  */
+- (void)uploadIsConnecting:(Upload *)record;
+
+
+/*
+ * Called when the upload has started.
+ */ 
 - (void)uploadDidBegin:(Upload *)record;
 
 
 /*
- * Called when the upload progress has changed (1-100%)
+ * Called when the upload has progressed, 1-100%.
  */
 - (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
 
 
 /*
- * Called when the upload has finished successfully.
+ * Called when the upload process has finished successfully.
  */
 - (void)uploadDidFinish:(Upload *)record;
 
 
 /*
- * Called when the upload was cancelled.
+ * Called if the upload was cancelled.
  */
 - (void)uploadWasCancelled:(Upload *)record;
 
 
 /*
- * Called when the upload has failed because of authentication. With this method you prompt the user to enter new
- * credentials, correct them on the upload record given to you and invoke [client retryUpload:record] to try again.
+ * Called if the upload has failed because of authentication.
  */
 - (void)uploadDidFailAuthentication:(Upload *)record message:(NSString *)message;
 
 
 /*
- * Called when the upload has failed. The message will contain useful information of what went wrong. If possible  
- * correct the property values on the upload record given to you and invoke [client retryUpload:record] to try again.
+ * Called when the upload has failed. The message will contain a useful description of what went wrong.
  */
 - (void)uploadDidFail:(Upload *)record message:(NSString *)message;
 

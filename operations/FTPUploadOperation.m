@@ -21,7 +21,6 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 @synthesize transfer;
 
-
 /*
  * Thread entry point for recursive FTP uploads.
  */
@@ -46,9 +45,10 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 	CURLcode result = -1;
 	
-	// Start the recursive upload.
 	for (int i = 0; i < [filesToUpload count]; i++)
 	{
+		// Begin Uploading.
+		
 		PendingTransfer *file = [filesToUpload objectAtIndex:i] != [NSNull null] ? [filesToUpload objectAtIndex:i] : nil;
 		
 		if (!file)
@@ -78,27 +78,44 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
 		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
+
+		// If we are trying to upload an empty directory we place an empty file inside of it
+		// and create a quote command to clean it up after.
 		
-		struct curl_slist *commands = NULL;
+		struct curl_slist *postRun = NULL;
+		char *removeTempFile = NULL;
+
 		if ([file isEmptyDirectory])
 		{			
-			char *del = malloc(strlen("DELE ") + [TMP_FILENAME length] + 1);
-			sprintf(del, "DELE %s", [TMP_FILENAME UTF8String]);
-			commands = curl_slist_append(commands, del);
+			// TODO : this is FTP specific
+			//char *del = malloc(strlen("DELE ") + [TMP_FILENAME length] + 1);
+			//sprintf(del, "DELE %s", [TMP_FILENAME UTF8String]);
+			
+			// TODO : this is SFTP specific
+			NSString *tmpFile = [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME];			
+			removeTempFile = malloc(strlen("rm \"%s\"") + [tmpFile length] + 1);
+			sprintf(removeTempFile, "rm \"%s\"", [tmpFile UTF8String]);
+			
+			postRun = curl_slist_append(postRun, removeTempFile);
 		}
-		curl_easy_setopt(handle, CURLOPT_POSTQUOTE, commands);
+
+		// Add quote commands, if any.
+		curl_easy_setopt(handle, CURLOPT_POSTQUOTE, postRun);
 		
 		// Perform
 		result = curl_easy_perform(handle);
 		
+		// Cleanup.
+		curl_slist_free_all(postRun);
+		free(removeTempFile);
 		fclose(fh);
 		
-		curl_slist_free_all(commands);
-		
+		// If this upload wasn't successful, bail out.
 		if (result != CURLE_OK)
 			break;			
 		
-		[transfer setTotalFilesUploaded:[transfer totalFilesUploaded] + 1];
+		// Increment total files uploaded
+		[transfer setTotalFilesUploaded:(i + 1)];
 	}
 		
 	// Cleanup.
@@ -112,52 +129,64 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 }
 
 
+
 /*
  * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
  * new upload progress and sets it on the transfer.
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
  */
-static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, double dlnow, double ultotal, double ulnow)
+static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
 	Upload *transfer = [operation transfer];
-	
-	long totalProgressUnits = 100 * ([transfer totalFiles]);
-	long individualProgress = ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
-	if (ulnow == 0 && ultotal == 0) individualProgress = 100;
-	int actualProgress = (individualProgress * 100) / totalProgressUnits;
-	
-	if ([transfer cancelled])
-	{
-		// [operation cancel]; ?
+
+	if (!connected)
+	{		
 		
-		
-		return -1;
-	}
-	else if (actualProgress >= 0)
-	{
-		if (![transfer isUploading])
+		if ([transfer status] != TRANSFER_STATUS_CONNECTING)
 		{
-			[transfer setIsConnecting:NO];
-			[transfer setIsUploading:YES];
-			
+			// Connecting ...
+			[transfer setConnected:NO];
+			[transfer setStatus:TRANSFER_STATUS_CONNECTING];
+
+			// Notify the delegate
+			[operation performUploadDelegateSelector:@selector(uploadIsConnecting:) withArgument:nil];
+		}
+		
+	}
+	else
+	{
+		
+		if (![transfer connected])
+		{
+			// We have a connection.
+			[transfer setConnected:YES];
 			[transfer setStatus:TRANSFER_STATUS_UPLOADING];
 			
-			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) 
-										withArgument:nil];
+			// Notify the delegate
+			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) withArgument:nil];
 		}
 		
-		if (actualProgress > [transfer progress])
+		// Calculate progress
+		
+		long totalProgress = 100 * [transfer totalFiles];
+		long progressNow = (ulnow == 0 && ultotal == 0) ? 
+			([transfer totalFilesUploaded] + 1) * 100 : ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
+		int percentComplete = (progressNow * 100) / totalProgress;
+		
+		if (percentComplete > [transfer progress])
 		{
-			[transfer setProgress:actualProgress];
+			[transfer setProgress:percentComplete];
 			
 			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
-										withArgument:[NSNumber numberWithInt:actualProgress]];
+										withArgument:[NSNumber numberWithInt:percentComplete]];
 		}
-	}
+		
+	}	
 	
-	return 0;
+	return [transfer cancelled];
 }
+
 
 
 /*
@@ -166,8 +195,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
  */
 - (void)handleUploadResult:(CURLcode)result
 {
-	[transfer setIsUploading:NO];
-
 	if (result == CURLE_OK && [transfer totalFiles] == [transfer totalFilesUploaded])
 	{
 		// Success!
@@ -188,13 +215,17 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	}
 	else
 	{		
-		// Figure out what went wrong, and notify delegate
+		// Handle Failure
 		[self handleUploadFailed:result];
 	}
 }
 
 
 
+/*
+ * Handles a failed upload. Figures out what went wrong and notifies the delegate. 
+ *
+ */
 - (void)handleUploadFailed:(CURLcode)result
 {
 	// The upload operation failed.
@@ -219,8 +250,9 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 }
 
 
+
 /*
- * Takes a list of files and directories and returns an array of PendingTransfer objects.
+ * Takes in a list of files and directories to be uploaded, and returns an array of PendingTransfers.
  * 
  */
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files
@@ -252,14 +284,14 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 				if ([mgr fileExistsAtPath:nextPath isDirectory:&isDir] && !isDir)
 				{
 					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
-														remotePath:[basePath stringByAppendingPathComponent:filename]];
+									remotePath:[basePath stringByAppendingPathComponent:filename]];
 
 					[filesToUpload addObject:info];
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
 					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
-														remotePath:[basePath stringByAppendingPathComponent:filename]];
+									remotePath:[basePath stringByAppendingPathComponent:filename]];
 
 					[info setIsEmptyDirectory:YES];
 					
@@ -286,8 +318,10 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 }
 
 
+
 /*
  * Calls an UploadDelegate method on the main thread.
+ *
  */
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg
 {
@@ -303,20 +337,13 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 		}
 	}
 }
-		
 
-/*
- * Returns the prefix for the protocol being used. In this case "ftp"
- */
-- (NSString *)protocolPrefix
-{
-	return FTP_PROTOCOL_PREFIX;
-}
 
 
 /* 
  * Returns a string that can be used for FTP authentication, "username:password", if no username is specified then "anonymous" will 
  * be used. If a username is present but no password is set, then the users keychain is checked.
+ *
  */
 - (NSString *)credentials
 {
@@ -340,8 +367,21 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 }
 
 
+
+/*
+ * Returns the prefix for the protocol being used. In this case "ftp"
+ *
+ */
+- (NSString *)protocolPrefix
+{
+	return FTP_PROTOCOL_PREFIX;
+}
+
+
+
 /*
  * Cleanup. Release the transfer.
+ *
  */
 - (void)dealloc
 {
@@ -349,6 +389,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, double dltotal, d
 	
 	[super dealloc];
 }
+
 
 
 @end

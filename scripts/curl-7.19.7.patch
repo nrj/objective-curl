@@ -1,10 +1,18 @@
-Index: lib/connect.c
-===================================================================
-RCS file: /cvsroot/curl/curl/lib/connect.c,v
-retrieving revision 1.224
-diff -u -p -r1.224 connect.c
---- lib/connect.c	30 Dec 2009 17:59:56 -0000	1.224
-+++ lib/connect.c	7 Jan 2010 22:51:36 -0000
+diff -ruB curl-7.19.7-orig/include/curl/curl.h curl-7.19.7-patched/include/curl/curl.h
+--- curl-7.19.7-orig/include/curl/curl.h	2009-10-17 14:31:50.000000000 -0400
++++ curl-7.19.7-patched/include/curl/curl.h	2010-02-08 10:15:50.000000000 -0500
+@@ -170,6 +170,7 @@
+ };
+ 
+ typedef int (*curl_progress_callback)(void *clientp,
++                                      int connected,
+                                       double dltotal,
+                                       double dlnow,
+                                       double ultotal,
+Only in curl-7.19.7-patched/lib: Makefile
+diff -ruB curl-7.19.7-orig/lib/connect.c curl-7.19.7-patched/lib/connect.c
+--- curl-7.19.7-orig/lib/connect.c	2009-10-01 17:17:15.000000000 -0400
++++ curl-7.19.7-patched/lib/connect.c	2010-02-08 10:15:27.000000000 -0500
 @@ -5,7 +5,7 @@
   *                            | (__| |_| |  _ <| |___
   *                             \___|\___/|_| \_\_____|
@@ -22,7 +30,7 @@ diff -u -p -r1.224 connect.c
  
  /* The last #include file should be: */
  #include "memdebug.h"
-@@ -192,7 +193,8 @@ long Curl_timeleft(struct connectdata *c
+@@ -192,7 +193,8 @@
  #define WAITCONN_FDSET_ERROR   2
  
  static
@@ -32,7 +40,7 @@ diff -u -p -r1.224 connect.c
                  long timeout_msec)
  {
    int rc;
-@@ -203,21 +205,34 @@ int waitconnect(curl_socket_t sockfd, /*
+@@ -203,21 +205,34 @@
    (void)verifyconnect(sockfd, NULL);
  #endif
  
@@ -81,7 +89,7 @@ diff -u -p -r1.224 connect.c
    return WAITCONN_CONNECTED;
  }
  
-@@ -553,7 +568,7 @@ CURLcode Curl_is_connected(struct connec
+@@ -553,7 +568,7 @@
    Curl_expire(data, allow);
  
    /* check for connect without timeout as we want to return immediately */
@@ -90,7 +98,7 @@ diff -u -p -r1.224 connect.c
  
    if(WAITCONN_CONNECTED == rc) {
      int error;
-@@ -823,7 +838,7 @@ singleipconnect(struct connectdata *conn
+@@ -823,7 +838,7 @@
      case EAGAIN:
  #endif
  #endif
@@ -99,3 +107,14 @@ diff -u -p -r1.224 connect.c
        break;
      default:
        /* unknown error, fallthrough and try another address! */
+diff -ruB curl-7.19.7-orig/lib/progress.c curl-7.19.7-patched/lib/progress.c
+--- curl-7.19.7-orig/lib/progress.c	2009-10-31 14:51:51.000000000 -0400
++++ curl-7.19.7-patched/lib/progress.c	2010-02-08 10:15:27.000000000 -0500
+@@ -341,6 +341,7 @@
+       /* There's a callback set, so we call that instead of writing
+          anything ourselves. This really is the way to go. */
+       result= data->set.fprogress(data->set.progress_client,
++                                  data->progress.flags ? 1 : 0,
+                                   (double)data->progress.size_dl,
+                                   (double)data->progress.downloaded,
+                                   (double)data->progress.size_ul,

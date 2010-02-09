@@ -95,6 +95,10 @@
 			message = [NSString stringWithFormat:@"Unsupported protocol %@", [object protocolString]];
 			break;
 		
+		case CURLE_QUOTE_ERROR:
+			message = [NSString stringWithFormat:@"%@ quote command invalid", [object protocolString]];
+			break;
+			
 		default:
 			message = [NSString stringWithFormat:@"Unhandled Status Code: %d", status];
 			break;

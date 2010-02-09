@@ -18,8 +18,8 @@
 @synthesize password;
 @synthesize port;
 @synthesize status;
-@synthesize isConnecting;
 @synthesize cancelled;
+@synthesize connected;
 
 - (void)dealloc
 {

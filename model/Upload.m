@@ -18,7 +18,6 @@
 @synthesize totalFiles;
 @synthesize totalFilesUploaded;
 @synthesize currentFile;
-@synthesize isUploading;
 
 - (id)init
 {

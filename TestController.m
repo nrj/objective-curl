@@ -24,10 +24,14 @@
 	[fileView setDoubleAction:@selector(navigateRemoteDirectory:)];
 	
 	ftp = [[CurlFTP alloc] init];
-
-	[ftp setVerbose:YES];
+	[ftp setVerbose:NO];
 	[ftp setShowProgress:YES];
-	[ftp setDelegate:self];
+	[ftp setDelegate:self];	
+	
+	sftp = [[CurlSFTP alloc] init];
+	[sftp setVerbose:NO];
+	[sftp setShowProgress:YES];
+	[sftp setDelegate:self];
 }
 
 
@@ -35,10 +39,12 @@
 {
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
-	Upload *newUpload = [ftp uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
-												 toHost:[hostnameField stringValue] 
-											   username:[usernameField stringValue] 
-											   password:[passwordField stringValue]];
+	id <CurlClient>client = [typeSelector selectedRow] == 0 ? (id <CurlClient>)sftp : (id <CurlClient>)ftp;
+	
+	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
+												   toHost:[hostnameField stringValue] 
+												 username:[usernameField stringValue] 
+												 password:[passwordField stringValue]];
 	
 	[self setUpload:newUpload];
 }
@@ -75,26 +81,13 @@
 }
 
 
-#pragma mark ConnectionDelegate methods
-
-
-- (void)curlDidStartConnecting:(RemoteObject *)task
-{
-	NSLog(@"curlDidStartConnecting");
-}
-
-- (void)curlDidConnect:(RemoteObject *)task
-{
-	NSLog(@"curlDidConnect");
-}
-
-- (void)curlDidFailToConnect:(RemoteObject *)task
-{
-	NSLog(@"curlDidFailToConnect");
-}
-
-
 #pragma mark UploadDelegate methods
+
+
+- (void)uploadIsConnecting:(Upload *)record
+{
+	NSLog(@"uploadIsConnecting");
+}
 
 
 - (void)uploadDidBegin:(Upload *)record

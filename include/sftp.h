@@ -11,4 +11,3 @@
 #import "Upload.h"
 #import "RemoteFile.h"
 #import "RemoteFolder.h"
-#import "NSString+PathExtras.h"

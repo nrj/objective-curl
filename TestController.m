@@ -11,17 +11,12 @@
 
 @implementation TestController
 
-@synthesize folder;
 @synthesize upload;
 
 
 - (void)awakeFromNib
 {		
 	NSLog([CurlObject libcurlVersion]);
-	
-	[fileView setDataSource:self];
-	[fileView setDelegate:self];
-	[fileView setDoubleAction:@selector(navigateRemoteDirectory:)];
 	
 	ftp = [[CurlFTP alloc] init];
 	[ftp setVerbose:NO];
@@ -47,37 +42,6 @@
 												 password:[passwordField stringValue]];
 	
 	[self setUpload:newUpload];
-}
-
-
-- (IBAction)listRemoteDirectory:(id)sender
-{	
-	NSString *hostname = [hostnameField stringValue];
-	
-	RemoteFolder *remoteFolder = [ftp listRemoteDirectory:@"" onHost:hostname];
-	
-	[self setFolder:remoteFolder];
-}
-
-
-- (IBAction)navigateRemoteDirectory:(id)sender
-{
-	if (folder && [fileView clickedRow] != -1)
-	{
-		RemoteFile *file = (RemoteFile*)[[folder files] objectAtIndex:[fileView clickedRow]];
-		
-		if ([file isDir])
-		{
-			NSString *newPath = [[folder path] appendPathForFTP:[file name]];
-			[self setFolder:[ftp listRemoteDirectory:newPath onHost:[folder hostname]]];
-		}
-	}
-}
-
-
-- (void)curl:(CurlObject *)client didListRemoteDirectory:(RemoteFolder *)dir
-{
-	[fileView reloadData];
 }
 
 
@@ -142,31 +106,6 @@
 	NSLog(@"acceptMismatchedFingerprint: %@ forHost: %@", fingerprint, hostname);
 	
 	return 0;
-}
-
-
-#pragma mark TableView Delegate methods
-
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-	if (folder && [folder files] != NULL)
-	{
-		return [[folder files] count];
-	}
-	
-	return 0;
-}
-
-
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-	if (folder && [folder files] != NULL)
-	{
-		RemoteFile *file = (RemoteFile *)[[folder files] objectAtIndex:rowIndex];
-		return [file name];
-	}
-	return nil;
 }
 
 

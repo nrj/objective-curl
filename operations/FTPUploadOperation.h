@@ -32,6 +32,8 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
 
+- (char *)removeTempFileCommand:(NSString *)basePath;
+
 - (NSString *)protocolPrefix;
 
 - (NSString *)credentials;

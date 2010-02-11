@@ -87,16 +87,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 		if ([file isEmptyDirectory])
 		{			
-			// TODO : this is FTP specific
-			//char *del = malloc(strlen("DELE ") + [TMP_FILENAME length] + 1);
-			//sprintf(del, "DELE %s", [TMP_FILENAME UTF8String]);
-			
-			// TODO : this is SFTP specific
-			NSString *tmpFile = [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME];			
-			removeTempFile = malloc(strlen("rm \"%s\"") + [tmpFile length] + 1);
-			sprintf(removeTempFile, "rm \"%s\"", [tmpFile UTF8String]);
-			
-			postRun = curl_slist_append(postRun, removeTempFile);
+			postRun = curl_slist_append(postRun, [self removeTempFileCommand:[file remotePath]]);
 		}
 
 		// Add quote commands, if any.
@@ -364,6 +355,18 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	}
 	
 	return creds;
+}
+
+
+/*
+ * Returns a char pointer containing the delete temp file command. Be sure to call free() on the result.
+ *
+ */
+- (char *)removeTempFileCommand:(NSString *)basePath
+{
+	char *command = malloc(strlen("DELE ") + [TMP_FILENAME length] + 1);
+	sprintf(command, "DELE %s", [TMP_FILENAME UTF8String]);
+	return command;
 }
 
 

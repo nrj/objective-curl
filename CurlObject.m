@@ -8,8 +8,6 @@
 
 #import "CurlObject.h"
 
-
-
 @implementation CurlObject
 
 @synthesize delegate;

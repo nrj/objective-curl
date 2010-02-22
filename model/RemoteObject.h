@@ -21,7 +21,12 @@
 	TransferStatus status;
 	BOOL connected;
 	BOOL cancelled;
+	
+	void *pointer;
+	NSString *name;
+	NSString *statusMessage;
 }
+
 
 @property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, copy) NSString *hostname;
@@ -32,6 +37,13 @@
 @property(readwrite, assign) TransferStatus status;
 @property(readwrite, assign) BOOL connected;
 @property(readwrite, assign) BOOL cancelled;
+/*
+ * Note: These 2 properties are not used by the framework; use them as you wish.
+ */
+@property(readwrite, assign) void *pointer;
+@property(readwrite, copy) NSString *name;
+@property(readwrite, copy) NSString *statusMessage;
+
 
 - (NSString *)protocolString;
 

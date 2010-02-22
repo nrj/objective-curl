@@ -12,7 +12,6 @@
 
 @implementation Upload
 
-@synthesize name;
 @synthesize localFiles;
 @synthesize progress;
 @synthesize totalFiles;
@@ -34,15 +33,14 @@
 
 - (void)dealloc
 {
-	[name release];
 	[localFiles release];
 	[currentFile release];
 	[super dealloc];
 }
 
-- (BOOL)isActiveTransfer
+- (BOOL)isActive
 {
-	return (status == TRANSFER_STATUS_QUEUED || status == TRANSFER_STATUS_UPLOADING);
+	return (status == TRANSFER_STATUS_QUEUED || status == TRANSFER_STATUS_CONNECTING || status == TRANSFER_STATUS_UPLOADING);
 }
 
 

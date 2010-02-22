@@ -21,12 +21,18 @@
 @synthesize cancelled;
 @synthesize connected;
 
+@synthesize pointer;
+@synthesize name;
+@synthesize statusMessage;
+
+
 - (void)dealloc
 {
 	[hostname release], hostname = nil;
 	[username release], username = nil;
 	[password release], password = nil;
 	[path release], path = nil;
+	[statusMessage release], statusMessage = nil;
 	
 	[super dealloc];
 }

@@ -28,7 +28,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 {		
 	if (self = [super init])
 	{
-		[self setProtocolType:kSecProtocolTypeSSH];
+		[self setProtocol:kSecProtocolTypeSSH];
 		
 		[self setKnownHostsFile:[DEFAULT_KNOWN_HOSTS stringByExpandingTildeInPath]];
 	}
@@ -100,7 +100,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 {
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
-	[upload setProtocol:[self protocolType]];
+	[upload setProtocol:[self protocol]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
@@ -117,6 +117,11 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 - (void)upload:(Upload *)record
 {
 	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
+	
+	if (![record hasAuthPassword] && [self usesKeychainForPasswords])
+	{
+		[record setPassword:[self getPasswordFromKeychain:record]];
+	}
 	
 	[op setTransfer:record];
 	[operationQueue addOperation:op];

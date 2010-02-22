@@ -10,26 +10,31 @@
 #include <sys/stat.h>
 #include <curl/curl.h>
 
+@class RemoteObject;
 
 @interface CurlObject : NSObject
 {	
 	id delegate;
 
-	SecProtocolType protocolType;
+	SecProtocolType protocol;
 	
 	BOOL verbose;
 	BOOL showProgress;
-		
+	BOOL usesKeychainForPasswords;
+	
 	NSOperationQueue *operationQueue;
 }
 
 @property(readwrite, assign) id delegate;
-@property(readwrite, assign) SecProtocolType protocolType;
+@property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, assign) BOOL verbose;
 @property(readwrite, assign) BOOL showProgress;
+@property(readwrite, assign) BOOL usesKeychainForPasswords;
 
 + (NSString *)libcurlVersion;
 
 - (CURL *)newHandle;
+
+- (NSString *)getPasswordFromKeychain:(RemoteObject *)object;
 
 @end

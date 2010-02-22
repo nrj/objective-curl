@@ -13,10 +13,10 @@
 		0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */; };
 		0B1CC2B51117332600AC5959 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0B2E387B10DF2C3300E82CB2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2E387A10DF2C3300E82CB2 /* MainMenu.xib */; };
-		0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEB86111501A1005A5F84 /* SSHDelegate.h */; };
-		0B5FEE6E11165123005A5F84 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEE6D11165123005A5F84 /* CurlClient.h */; };
-		0B5FF03A11166DE8005A5F84 /* sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FF03911166DE8005A5F84 /* sftp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B725E5310F2CC4D001C614D /* RemoteObject.h */; };
+		0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEB86111501A1005A5F84 /* SSHDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B5FEE6E11165123005A5F84 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEE6D11165123005A5F84 /* CurlClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B5FF03A11166DE8005A5F84 /* objective-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FF03911166DE8005A5F84 /* objective-curl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B725E5310F2CC4D001C614D /* RemoteObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B725E5610F2CC4D001C614D /* RemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B725E5410F2CC4D001C614D /* RemoteObject.m */; };
 		0B76051710DF131500BE0666 /* CurlFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76051310DF131500BE0666 /* CurlFTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76051810DF131500BE0666 /* CurlFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76051410DF131500BE0666 /* CurlFTP.m */; };
@@ -27,7 +27,7 @@
 		0B76053310DF13B600BE0666 /* Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053110DF13B600BE0666 /* Upload.m */; };
 		0B76055110DF150200BE0666 /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76054F10DF150200BE0666 /* EMKeychain.h */; settings = {ATTRIBUTES = (); }; };
 		0B76055210DF150200BE0666 /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76055010DF150200BE0666 /* EMKeychain.m */; };
-		0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB380A110E84BF4003DD538 /* CurlSFTP.h */; };
+		0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB380A110E84BF4003DD538 /* CurlSFTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */; };
 		0BB383AE10EB1DF3003DD538 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
 		0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
@@ -37,10 +37,10 @@
 		0BBF81F810EEB1B0005358BB /* PendingTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* PendingTransfer.m */; };
 		0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83DB10EFD6CD005358BB /* ftpparse.c */; };
 		0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DC10EFD6CD005358BB /* ftpparse.h */; };
-		0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DF10EFDD28005358BB /* RemoteFile.h */; };
+		0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DF10EFDD28005358BB /* RemoteFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BBF83E210EFDD28005358BB /* RemoteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83E010EFDD28005358BB /* RemoteFile.m */; };
-		0BBF87BB10F191C7005358BB /* UploadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF87B910F191C7005358BB /* UploadDelegate.h */; };
-		0BBF887E10F1D0F8005358BB /* RemoteFolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF887C10F1D0F8005358BB /* RemoteFolder.h */; };
+		0BBF87BB10F191C7005358BB /* UploadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF87B910F191C7005358BB /* UploadDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0BBF887E10F1D0F8005358BB /* RemoteFolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF887C10F1D0F8005358BB /* RemoteFolder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BBF887F10F1D0F8005358BB /* RemoteFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF887D10F1D0F8005358BB /* RemoteFolder.m */; };
 		0BCD3B9A10F432A20047202F /* NSObject+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCD3B9610F432A20047202F /* NSObject+Extensions.m */; };
 		0BCD3B9B10F432A20047202F /* NSObject+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BCD3B9710F432A20047202F /* NSObject+Extensions.h */; };
@@ -59,7 +59,6 @@
 		0BD6232310DF1982004D8C5B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		0BD6234A10DF1A03004D8C5B /* objective-curl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD623F810DF1B29004D8C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD623F710DF1B29004D8C5B /* main.m */; };
-		0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD6240E10DF1CA7004D8C5B /* ftp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BEDAD4510EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
@@ -110,7 +109,7 @@
 		0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
 		0B5FEB86111501A1005A5F84 /* SSHDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSHDelegate.h; sourceTree = "<group>"; };
 		0B5FEE6D11165123005A5F84 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClient.h; sourceTree = "<group>"; };
-		0B5FF03911166DE8005A5F84 /* sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sftp.h; sourceTree = "<group>"; };
+		0B5FF03911166DE8005A5F84 /* objective-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curl.h"; sourceTree = "<group>"; };
 		0B725E5310F2CC4D001C614D /* RemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObject.h; sourceTree = "<group>"; };
 		0B725E5410F2CC4D001C614D /* RemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteObject.m; sourceTree = "<group>"; };
 		0B7604D410DF126200BE0666 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -154,7 +153,6 @@
 		0BD6227310DF1564004D8C5B /* CurlTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurlTester.app; sourceTree = BUILT_PRODUCTS_DIR; wrapsLines = 0; };
 		0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CurlTester-Info.plist"; sourceTree = "<group>"; };
 		0BD623F710DF1B29004D8C5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0BD6240E10DF1CA7004D8C5B /* ftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftp.h; sourceTree = "<group>"; };
 		0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.0.9.7.dylib; path = /usr/lib/libcrypto.0.9.7.dylib; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* objective-curl_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curl_Prefix.pch"; sourceTree = "<group>"; };
@@ -343,8 +341,7 @@
 		0BD6240610DF1BF4004D8C5B /* include */ = {
 			isa = PBXGroup;
 			children = (
-				0BD6240E10DF1CA7004D8C5B /* ftp.h */,
-				0B5FF03911166DE8005A5F84 /* sftp.h */,
+				0B5FF03911166DE8005A5F84 /* objective-curl.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -400,7 +397,6 @@
 				0B76052110DF134600BE0666 /* TransferStatus.h in Headers */,
 				0B76053210DF13B600BE0666 /* Upload.h in Headers */,
 				0B76055110DF150200BE0666 /* EMKeychain.h in Headers */,
-				0BD6240F10DF1CA7004D8C5B /* ftp.h in Headers */,
 				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
 				0BBF81F710EEB1B0005358BB /* PendingTransfer.h in Headers */,
 				0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */,
@@ -418,7 +414,7 @@
 				0BD3D14E110D1D8E00478C99 /* SFTPUploadOperation.h in Headers */,
 				0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */,
 				0B5FEE6E11165123005A5F84 /* CurlClient.h in Headers */,
-				0B5FF03A11166DE8005A5F84 /* sftp.h in Headers */,
+				0B5FF03A11166DE8005A5F84 /* objective-curl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

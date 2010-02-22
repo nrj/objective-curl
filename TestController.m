@@ -22,11 +22,13 @@
 	[ftp setVerbose:NO];
 	[ftp setShowProgress:YES];
 	[ftp setDelegate:self];	
+	[ftp setUsesKeychainForPasswords:YES];
 	
 	sftp = [[CurlSFTP alloc] init];
 	[sftp setVerbose:NO];
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
+	[sftp setUsesKeychainForPasswords:YES];
 }
 
 
@@ -38,8 +40,7 @@
 	
 	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
 												   toHost:[hostnameField stringValue] 
-												 username:[usernameField stringValue] 
-												 password:[passwordField stringValue]];
+												 username:[usernameField stringValue]];
 	
 	[self setUpload:newUpload];
 }

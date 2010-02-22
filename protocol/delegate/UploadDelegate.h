@@ -6,7 +6,8 @@
 //  Copyright 2010x. All rights reserved.
 //
 
-#import "Upload.h"
+
+@class Upload;
 
 
 @protocol UploadDelegate

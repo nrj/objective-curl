@@ -9,10 +9,9 @@
 #import "FTPUploadOperation.h"
 #import "NSObject+Extensions.h"
 #import "PendingTransfer.h"
-#import "TransferStatus.h"
+#import "Upload.h"
 #import "UploadDelegate.h"
-#import "CurlFTP.h"
-
+#import "TransferStatus.h"
 
 NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 NSString * const TMP_FILENAME = @".objective-curl-tmp";
@@ -341,11 +340,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	NSString *creds;
 	if ([transfer hasAuthUsername])
 	{
-		if (![transfer hasAuthPassword])
-		{
-			// Try Keychain
-		}
-		
 		creds = [NSString stringWithFormat:@"%@:%@", [transfer username], [transfer password]];
 	}
 	else

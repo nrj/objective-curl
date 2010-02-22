@@ -24,7 +24,7 @@ int const DEFAULT_FTP_PORT = 21;
 {		
 	if (self = [super init])
 	{
-		[self setProtocolType:kSecProtocolTypeFTP];
+		[self setProtocol:kSecProtocolTypeFTP];
 		
 		directoryListCache = [[NSMutableDictionary alloc] init];
 	}
@@ -105,7 +105,7 @@ int const DEFAULT_FTP_PORT = 21;
 {
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
-	[upload setProtocol:[self protocolType]];
+	[upload setProtocol:[self protocol]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
@@ -121,7 +121,12 @@ int const DEFAULT_FTP_PORT = 21;
 - (void)upload:(Upload *)record
 {
 	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
-
+	
+	if (![record hasAuthPassword] && [self usesKeychainForPasswords])
+	{
+		[record setPassword:[self getPasswordFromKeychain:record]];
+	}
+	
 	[op setTransfer:record];
 	[operationQueue addOperation:op];
 	[op release];

@@ -12,7 +12,6 @@
 
 @interface Upload : RemoteObject
 {	
-	NSString *name;
 	NSString *currentFile;
 	NSArray *localFiles;
 	
@@ -22,11 +21,12 @@
 }
 
 
-@property(readwrite, copy) NSString *name;
 @property(readwrite, retain) NSArray *localFiles;
 @property(readwrite, assign) int totalFiles;
 @property(readwrite, assign) int totalFilesUploaded;
 @property(readwrite, assign) int progress;
 @property(readwrite, copy) NSString *currentFile;
+
+- (BOOL)isActive;
 
 @end

@@ -22,9 +22,6 @@
 - (void)setShowProgress:(BOOL)showProgress;
 - (BOOL)showProgress;
 
-- (void)setUsesKeychainForPasswords:(BOOL)useKeychain;
-- (BOOL)usesKeychainForPasswords;
-
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username;
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password;

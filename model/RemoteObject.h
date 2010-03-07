@@ -13,6 +13,7 @@
 @interface RemoteObject : NSObject
 {
 	SecProtocolType protocol;
+	NSString *protocolPrefix;
 	NSString *hostname;
 	NSString *username;
 	NSString *password;
@@ -22,13 +23,13 @@
 	BOOL connected;
 	BOOL cancelled;
 	
-	void *pointer;
 	NSString *name;
 	NSString *statusMessage;
 }
 
 
 @property(readwrite, assign) SecProtocolType protocol;
+@property(readwrite, copy) NSString *protocolPrefix;
 @property(readwrite, copy) NSString *hostname;
 @property(readwrite, copy) NSString *username;
 @property(readwrite, copy) NSString *password;
@@ -40,15 +41,14 @@
 /*
  * Note: These 2 properties are not used by the framework; use them as you wish.
  */
-@property(readwrite, assign) void *pointer;
 @property(readwrite, copy) NSString *name;
 @property(readwrite, copy) NSString *statusMessage;
 
 
-- (NSString *)protocolString;
-
 - (BOOL)hasAuthUsername;
 
 - (BOOL)hasAuthPassword;
+
+- (NSString *)uri;
 
 @end

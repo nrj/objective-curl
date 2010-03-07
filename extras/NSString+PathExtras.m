@@ -39,4 +39,14 @@
 	return [[self stringByAppendingPathComponent:path] pathForFTP];
 }
 
+- (NSString *)stringByRemovingTildePrefix
+{
+	if ([[self substringToIndex:2] isEqualToString:@"~/"])
+	{
+		return [self substringFromIndex:2];
+	}
+	
+	return self;
+}
+
 @end

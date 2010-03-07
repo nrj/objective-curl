@@ -12,8 +12,9 @@
 #import "Upload.h"
 #import "UploadDelegate.h"
 #import "TransferStatus.h"
+#import "NSString+PathExtras.h"
 
-NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
+
 NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 @implementation FTPUploadOperation
@@ -26,10 +27,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 - (void)main 
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	// Transfer Status set to QUEUED.
-	[transfer setStatus:TRANSFER_STATUS_QUEUED];
-		
+			
 	// Set curl options
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
 	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
@@ -37,7 +35,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
 	
 	// Enumurate files and directories to upload
-	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles]] retain];
+	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles] prefix:[transfer path]] retain];
 
 	[transfer setTotalFiles:[filesToUpload count]];
 	[transfer setTotalFilesUploaded:0];
@@ -48,7 +46,8 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	{
 		// Begin Uploading.
 		
-		PendingTransfer *file = [filesToUpload objectAtIndex:i] != [NSNull null] ? [filesToUpload objectAtIndex:i] : nil;
+		PendingTransfer *file = [filesToUpload objectAtIndex:i] != [NSNull null] ? 
+									[filesToUpload objectAtIndex:i] : nil;
 		
 		if (!file)
 		{
@@ -69,10 +68,11 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 		
 		curl_off_t fsize = (curl_off_t)finfo.st_size;
 		
-		NSString *relativePath = ([file isEmptyDirectory] ? [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath]);
+		NSString *relativePath = [file isEmptyDirectory] ? 
+									[[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath];
 		
-		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@%@", [self protocolPrefix], 
-							[transfer hostname], [transfer port], [transfer path], relativePath];
+		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [transfer protocolPrefix], 
+							[transfer hostname], [transfer port], relativePath];
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
@@ -86,7 +86,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 		if ([file isEmptyDirectory])
 		{			
-			postRun = curl_slist_append(postRun, [self removeTempFileCommand:[file remotePath]]);
+			postRun = curl_slist_append(postRun, [self removeTempFileCommand:[relativePath stringByRemovingTildePrefix]]);
 		}
 
 		// Add quote commands, if any.
@@ -245,7 +245,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
  * Takes in a list of files and directories to be uploaded, and returns an array of PendingTransfers.
  * 
  */
-- (NSArray *)enumerateFilesToUpload:(NSArray *)files
+- (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix
 {
 	NSMutableArray *filesToUpload = [[NSMutableArray alloc] init];
 	NSFileManager *mgr = [NSFileManager defaultManager];
@@ -259,7 +259,8 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 		
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
-			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile remotePath:[pathToFile lastPathComponent]];
+			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile
+						remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
 		}
 		else if ([[mgr contentsOfDirectoryAtPath:pathToFile error:nil] count] > 0)
 		{
@@ -274,14 +275,14 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 				if ([mgr fileExistsAtPath:nextPath isDirectory:&isDir] && !isDir)
 				{
 					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
-									remotePath:[basePath stringByAppendingPathComponent:filename]];
+									remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
 					[filesToUpload addObject:info];
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
 					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
-									remotePath:[basePath stringByAppendingPathComponent:filename]];
+								remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
 					[info setIsEmptyDirectory:YES];
 					
@@ -292,7 +293,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 		else if ([mgr fileExistsAtPath:pathToFile])
 		{
 			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile 
-												remotePath:[pathToFile lastPathComponent]];
+						remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
 		
 			[info setIsEmptyDirectory:YES];
 		}
@@ -356,24 +357,12 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
  * Returns a char pointer containing the delete temp file command. Be sure to call free() on the result.
  *
  */
-- (char *)removeTempFileCommand:(NSString *)basePath
+- (char *)removeTempFileCommand:(NSString *)tmpFilePath
 {
 	char *command = malloc(strlen("DELE ") + [TMP_FILENAME length] + 1);
 	sprintf(command, "DELE %s", [TMP_FILENAME UTF8String]);
 	return command;
 }
-
-
-
-/*
- * Returns the prefix for the protocol being used. In this case "ftp"
- *
- */
-- (NSString *)protocolPrefix
-{
-	return FTP_PROTOCOL_PREFIX;
-}
-
 
 
 /*
@@ -386,7 +375,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	
 	[super dealloc];
 }
-
 
 
 @end

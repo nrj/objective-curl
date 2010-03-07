@@ -14,6 +14,9 @@ extern int const DEFAULT_SFTP_PORT;
 
 extern NSString * const DEFAULT_KNOWN_HOSTS;
 
+extern NSString * const SFTP_PROTOCOL_PREFIX;
+
+
 @interface CurlSFTP : CurlFTP <CurlClient>
 {
 	NSString *knownHostsFile;

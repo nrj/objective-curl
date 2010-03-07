@@ -72,7 +72,7 @@
 			break;
 			
 		case CURLE_FAILED_INIT:
-			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [object protocolString], [object hostname], [object port]];
+			message = [NSString stringWithFormat:@"Failed to initialize %@ on %@:%d", [object protocolPrefix], [object hostname], [object port]];
 			break;
 			
 		case CURLE_COULDNT_CONNECT:
@@ -92,11 +92,11 @@
 			break;
 			
 		case CURLE_UNSUPPORTED_PROTOCOL:
-			message = [NSString stringWithFormat:@"Unsupported protocol %@", [object protocolString]];
+			message = [NSString stringWithFormat:@"Unsupported protocol %@", [object protocolPrefix]];
 			break;
 		
 		case CURLE_QUOTE_ERROR:
-			message = [NSString stringWithFormat:@"%@ quote command invalid", [object protocolString]];
+			message = [NSString stringWithFormat:@"%@ quote command invalid", [object protocolPrefix]];
 			break;
 			
 		default:

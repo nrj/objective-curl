@@ -14,9 +14,13 @@
 
 int const DEFAULT_SFTP_PORT	= 22;
 
+NSString * const SFTP_PROTOCOL_PREFIX = @"sftp";
+
 NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 
+
 @implementation CurlSFTP
+
 
 @synthesize knownHostsFile;
 
@@ -101,6 +105,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocol]];
+	[upload setProtocolPrefix:SFTP_PROTOCOL_PREFIX];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
@@ -118,10 +123,10 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 {
 	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
 	
-	if (![record hasAuthPassword] && [self usesKeychainForPasswords])
-	{
-		[record setPassword:[self getPasswordFromKeychain:record]];
-	}
+	[record setProgress:0];
+	[record setStatus:TRANSFER_STATUS_QUEUED];
+	[record setConnected:NO];
+	[record setCancelled:NO];	
 	
 	[op setTransfer:record];
 	[operationQueue addOperation:op];

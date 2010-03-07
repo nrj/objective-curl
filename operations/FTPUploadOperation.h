@@ -10,10 +10,10 @@
 #import "CurlOperation.h"
 #import "CurlClient.h"
 
-@class Upload, PendingTransfer;
 
-extern NSString * const FTP_PROTOCOL_PREFIX;
 extern NSString * const TMP_FILENAME;
+
+@class Upload, PendingTransfer;
 
 @interface FTPUploadOperation : CurlOperation 
 {
@@ -24,7 +24,7 @@ extern NSString * const TMP_FILENAME;
 
 static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 
-- (NSArray *)enumerateFilesToUpload:(NSArray *)files;
+- (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix;
 
 - (void)handleUploadResult:(CURLcode)result;
 
@@ -33,8 +33,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
 
 - (char *)removeTempFileCommand:(NSString *)basePath;
-
-- (NSString *)protocolPrefix;
 
 - (NSString *)credentials;
 

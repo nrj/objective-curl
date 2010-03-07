@@ -25,8 +25,6 @@
 		0B76052110DF134600BE0666 /* TransferStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76051F10DF134600BE0666 /* TransferStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76053210DF13B600BE0666 /* Upload.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76053010DF13B600BE0666 /* Upload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B76053310DF13B600BE0666 /* Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053110DF13B600BE0666 /* Upload.m */; };
-		0B76055110DF150200BE0666 /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B76054F10DF150200BE0666 /* EMKeychain.h */; settings = {ATTRIBUTES = (); }; };
-		0B76055210DF150200BE0666 /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76055010DF150200BE0666 /* EMKeychain.m */; };
 		0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB380A110E84BF4003DD538 /* CurlSFTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */; };
 		0BB383AE10EB1DF3003DD538 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
@@ -55,7 +53,6 @@
 		0BD3D14E110D1D8E00478C99 /* SFTPUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BD3D14C110D1D8E00478C99 /* SFTPUploadOperation.h */; };
 		0BD3D14F110D1D8E00478C99 /* SFTPUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD3D14D110D1D8E00478C99 /* SFTPUploadOperation.m */; };
 		0BD622C910DF18BB004D8C5B /* objective-curl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
-		0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7604D410DF126200BE0666 /* Security.framework */; };
 		0BD6232310DF1982004D8C5B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		0BD6234A10DF1A03004D8C5B /* objective-curl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* objective-curl.framework */; };
 		0BD623F810DF1B29004D8C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD623F710DF1B29004D8C5B /* main.m */; };
@@ -112,7 +109,6 @@
 		0B5FF03911166DE8005A5F84 /* objective-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curl.h"; sourceTree = "<group>"; };
 		0B725E5310F2CC4D001C614D /* RemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObject.h; sourceTree = "<group>"; };
 		0B725E5410F2CC4D001C614D /* RemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteObject.m; sourceTree = "<group>"; };
-		0B7604D410DF126200BE0666 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0B76051310DF131500BE0666 /* CurlFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlFTP.h; sourceTree = "<group>"; };
 		0B76051410DF131500BE0666 /* CurlFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlFTP.m; sourceTree = "<group>"; };
 		0B76051510DF131500BE0666 /* CurlObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlObject.h; sourceTree = "<group>"; };
@@ -122,8 +118,6 @@
 		0B76053110DF13B600BE0666 /* Upload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Upload.m; sourceTree = "<group>"; };
 		0B76053410DF13DB00BE0666 /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
 		0B76053510DF13DB00BE0666 /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
-		0B76054F10DF150200BE0666 /* EMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeychain.h; sourceTree = "<group>"; };
-		0B76055010DF150200BE0666 /* EMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKeychain.m; sourceTree = "<group>"; };
 		0B8DC51C10DF26E70042F200 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		0BB380A110E84BF4003DD538 /* CurlSFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSFTP.h; sourceTree = "<group>"; };
 		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
@@ -174,7 +168,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BD6231F10DF1962004D8C5B /* Security.framework in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				0BB383AE10EB1DF3003DD538 /* libcurl.4.dylib in Frameworks */,
 				0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */,
@@ -234,7 +227,6 @@
 			children = (
 				0BEDAAB910EC44E200ED2C69 /* extras */,
 				0BD6240610DF1BF4004D8C5B /* include */,
-				0B76054E10DF14ED00BE0666 /* keychain */,
 				0BD3CFB5110CF2F700478C99 /* operations */,
 				0B76052310DF135400BE0666 /* protocol */,
 				0B76052210DF134E00BE0666 /* model */,
@@ -290,15 +282,6 @@
 				0B5FEE6D11165123005A5F84 /* CurlClient.h */,
 			);
 			path = protocol;
-			sourceTree = "<group>";
-		};
-		0B76054E10DF14ED00BE0666 /* keychain */ = {
-			isa = PBXGroup;
-			children = (
-				0B76054F10DF150200BE0666 /* EMKeychain.h */,
-				0B76055010DF150200BE0666 /* EMKeychain.m */,
-			);
-			path = keychain;
 			sourceTree = "<group>";
 		};
 		0BBF83D810EFD6B0005358BB /* lib */ = {
@@ -363,7 +346,6 @@
 				0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */,
 				0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */,
 				0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */,
-				0B7604D410DF126200BE0666 /* Security.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -396,7 +378,6 @@
 				0B76051910DF131500BE0666 /* CurlObject.h in Headers */,
 				0B76052110DF134600BE0666 /* TransferStatus.h in Headers */,
 				0B76053210DF13B600BE0666 /* Upload.h in Headers */,
-				0B76055110DF150200BE0666 /* EMKeychain.h in Headers */,
 				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
 				0BBF81F710EEB1B0005358BB /* PendingTransfer.h in Headers */,
 				0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */,
@@ -533,7 +514,6 @@
 				0B76051810DF131500BE0666 /* CurlFTP.m in Sources */,
 				0B76051A10DF131500BE0666 /* CurlObject.m in Sources */,
 				0B76053310DF13B600BE0666 /* Upload.m in Sources */,
-				0B76055210DF150200BE0666 /* EMKeychain.m in Sources */,
 				0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */,
 				0BBF81F810EEB1B0005358BB /* PendingTransfer.m in Sources */,
 				0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */,

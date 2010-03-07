@@ -12,7 +12,7 @@
 #import "NSObject+Extensions.h"
 
 
-NSString * const SFTP_PROTOCOL_PREFIX = @"sftp";
+
 
 @implementation SFTPUploadOperation
 
@@ -118,21 +118,11 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
  * Returns a char pointer containing the delete temp file command. Be sure to call free() on the result.
  *
  */
-- (char *)removeTempFileCommand:(NSString *)basePath
-{
-	NSString *path = [basePath stringByAppendingPathComponent:TMP_FILENAME];			
-	char *command = malloc(strlen("rm \"%s\"") + [path length] + 1);
-	sprintf(command, "rm \"%s\"", [path UTF8String]);
+- (char *)removeTempFileCommand:(NSString *)tmpFilePath
+{	
+	char *command = malloc(strlen("RM \"\"") + [tmpFilePath length] + 1);
+	sprintf(command, "RM \"%s\"", [tmpFilePath UTF8String]);
 	return command;
-}
-
-
-/*
- * Returns the prefix for the protocol being used. In this case "sftp".
- */
-- (NSString *)protocolPrefix
-{
-	return SFTP_PROTOCOL_PREFIX;
 }
 
 

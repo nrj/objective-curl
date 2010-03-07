@@ -10,9 +10,13 @@
 #import "CurlObject.h"
 #import "CurlClient.h"
 
+
 @class Upload, RemoteFolder;
 
+extern NSString * const FTP_PROTOCOL_PREFIX;
+
 extern int const DEFAULT_FTP_PORT;
+
 
 @interface CurlFTP : CurlObject <CurlClient>
 {

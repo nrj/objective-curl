@@ -20,7 +20,6 @@
 	
 	BOOL verbose;
 	BOOL showProgress;
-	BOOL usesKeychainForPasswords;
 	
 	NSOperationQueue *operationQueue;
 }
@@ -29,12 +28,9 @@
 @property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, assign) BOOL verbose;
 @property(readwrite, assign) BOOL showProgress;
-@property(readwrite, assign) BOOL usesKeychainForPasswords;
 
 + (NSString *)libcurlVersion;
 
 - (CURL *)newHandle;
-
-- (NSString *)getPasswordFromKeychain:(RemoteObject *)object;
 
 @end

@@ -13,5 +13,6 @@
 
 - (NSString *)pathForFTP;
 - (NSString *)appendPathForFTP:(NSString *)path;
+- (NSString *)stringByRemovingTildePrefix;
 
 @end

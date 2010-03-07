@@ -8,7 +8,7 @@
 
 #import "CurlObject.h"
 #import "RemoteObject.h"
-#import "EMKeychain.h"
+
 
 @implementation CurlObject
 
@@ -16,7 +16,7 @@
 @synthesize protocol;
 @synthesize verbose;
 @synthesize showProgress;
-@synthesize usesKeychainForPasswords;
+
 
 /*
  * Returns a string containing the version info of libcurl that the framework is using. 
@@ -68,23 +68,6 @@
 	curl_easy_setopt(handle, CURLOPT_NOPROGRESS, ![self showProgress]);
 	
 	return handle;
-}
-
-/*
- * Looks up a users password in the Keychain and returns it. If not found returns @"".
- *
- */
-- (NSString *)getPasswordFromKeychain:(RemoteObject *)object;
-{
-	EMInternetKeychainItem *keychainItem = [EMInternetKeychainItem internetKeychainItemForServer:[object hostname] 
-																					withUsername:[object username] 
-																							path:@""
-																							port:[object port] 
-																						protocol:[object protocol]];
-	
-	NSLog(@"Keychain password = %@", [keychainItem password]);
-	
-	return [keychainItem password] ? [keychainItem password] : @"";
 }
 
 

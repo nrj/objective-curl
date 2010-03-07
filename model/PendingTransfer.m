@@ -55,4 +55,9 @@
 	}
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<PendingTransfer localPath='%@' remotePath='%@' isEmptyDirectory='%d'", localPath, remotePath, isEmptyDirectory];
+}
+
 @end

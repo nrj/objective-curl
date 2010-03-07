@@ -12,6 +12,7 @@
 @implementation RemoteObject 
 
 @synthesize protocol;
+@synthesize protocolPrefix;
 @synthesize hostname;
 @synthesize path;
 @synthesize username;
@@ -21,13 +22,13 @@
 @synthesize cancelled;
 @synthesize connected;
 
-@synthesize pointer;
 @synthesize name;
 @synthesize statusMessage;
 
 
 - (void)dealloc
 {
+	[protocolPrefix release], protocolPrefix = nil;
 	[hostname release], hostname = nil;
 	[username release], username = nil;
 	[password release], password = nil;
@@ -37,11 +38,6 @@
 	[super dealloc];
 }
 
-- (NSString *)protocolString
-{
-	return [[[NSFileTypeForHFSTypeCode(protocol) stringByTrimmingCharactersInSet:[NSCharacterSet punctuationCharacterSet]] 
-			 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] uppercaseString];
-}
 
 /*
  * Convenience function... do we have a username set for auth?
@@ -58,6 +54,12 @@
 - (BOOL)hasAuthPassword
 {
 	return (password != NULL && ![password isEqualToString:@""]);
+}
+
+
+- (NSString *)uri
+{
+	return [NSString stringWithFormat:@"%@://%@@%@:%d/%@", protocolPrefix, username, hostname, port, path];
 }
 
 

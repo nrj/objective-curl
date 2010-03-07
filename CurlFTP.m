@@ -14,6 +14,9 @@
 
 int const DEFAULT_FTP_PORT = 21;
 
+NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
+
+
 @implementation CurlFTP
 
 
@@ -106,6 +109,7 @@ int const DEFAULT_FTP_PORT = 21;
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocol]];
+	[upload setProtocolPrefix:FTP_PROTOCOL_PREFIX];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
@@ -121,12 +125,12 @@ int const DEFAULT_FTP_PORT = 21;
 - (void)upload:(Upload *)record
 {
 	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
-	
-	if (![record hasAuthPassword] && [self usesKeychainForPasswords])
-	{
-		[record setPassword:[self getPasswordFromKeychain:record]];
-	}
-	
+		
+	[record setProgress:0];
+	[record setStatus:TRANSFER_STATUS_QUEUED];
+	[record setConnected:NO];
+	[record setCancelled:NO];
+
 	[op setTransfer:record];
 	[operationQueue addOperation:op];
 	[op release];

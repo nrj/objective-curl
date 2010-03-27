@@ -12,11 +12,21 @@
 
 @implementation Upload
 
+
 @synthesize localFiles;
+@synthesize currentFile;
+
+@synthesize progressInfo;
+
 @synthesize progress;
 @synthesize totalFiles;
 @synthesize totalFilesUploaded;
-@synthesize currentFile;
+
+@synthesize totalBytes;
+@synthesize totalBytesUploaded;
+@synthesize bytesPerSecond;
+@synthesize secondsRemaining;
+
 
 - (id)init
 {
@@ -35,7 +45,35 @@
 {
 	[localFiles release];
 	[currentFile release];
+
+	if (progressInfo)
+	{
+		[progressInfo release];
+	}
+	
 	[super dealloc];
+}
+
+- (void)initProgressInfo
+{	
+	progressInfo = [[NSMutableArray alloc] initWithCapacity:totalFiles];
+	
+	for (int i = 0; i < totalFiles; i++)
+	{
+		[progressInfo addObject:[NSNumber numberWithDouble:0]];
+	}
+}
+
+- (void)updateProgressInfo
+{
+	double tbu = 0;
+	
+	for (int i = 0; i < [progressInfo count]; i++)
+	{
+		tbu += [[progressInfo objectAtIndex:i] doubleValue];
+	}
+	
+	[self setTotalBytesUploaded:tbu];
 }
 
 - (BOOL)isActive

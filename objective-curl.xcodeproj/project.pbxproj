@@ -13,7 +13,6 @@
 		0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */; };
 		0B1CC2B51117332600AC5959 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0B2E387B10DF2C3300E82CB2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2E387A10DF2C3300E82CB2 /* MainMenu.xib */; };
-		0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEB86111501A1005A5F84 /* SSHDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B5FEE6E11165123005A5F84 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEE6D11165123005A5F84 /* CurlClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B5FF03A11166DE8005A5F84 /* objective-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FF03911166DE8005A5F84 /* objective-curl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B725E5310F2CC4D001C614D /* RemoteObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -104,7 +103,6 @@
 		0B0B975710F58CED007DBFA8 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
 		0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
-		0B5FEB86111501A1005A5F84 /* SSHDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSHDelegate.h; sourceTree = "<group>"; };
 		0B5FEE6D11165123005A5F84 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClient.h; sourceTree = "<group>"; };
 		0B5FF03911166DE8005A5F84 /* objective-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curl.h"; sourceTree = "<group>"; };
 		0B725E5310F2CC4D001C614D /* RemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObject.h; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				0BBF87B910F191C7005358BB /* UploadDelegate.h */,
-				0B5FEB86111501A1005A5F84 /* SSHDelegate.h */,
 			);
 			path = delegate;
 			sourceTree = "<group>";
@@ -393,7 +390,6 @@
 				0BD3D011110CF5E700478C99 /* FTPUploadOperation.h in Headers */,
 				0BD3D015110CF5F000478C99 /* ListOperation.h in Headers */,
 				0BD3D14E110D1D8E00478C99 /* SFTPUploadOperation.h in Headers */,
-				0B5FEB87111501A1005A5F84 /* SSHDelegate.h in Headers */,
 				0B5FEE6E11165123005A5F84 /* CurlClient.h in Headers */,
 				0B5FF03A11166DE8005A5F84 /* objective-curl.h in Headers */,
 			);

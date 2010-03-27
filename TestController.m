@@ -36,7 +36,7 @@
 	
 	id <CurlClient>client = [typeSelector selectedRow] == 0 ? (id <CurlClient>)sftp : (id <CurlClient>)ftp;
 	
-	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]  
+	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]
 												   toHost:[hostnameField stringValue] 
 												 username:[usernameField stringValue]
 												 password:[passwordField stringValue]
@@ -81,32 +81,23 @@
 }
 
 
-- (void)uploadDidFailAuthentication:(Upload *)record message:(NSString *)message;
-{
-	NSLog(@"uploadDidFailAuthentication: %@", message);
-}
-
-
 - (void)uploadDidFail:(Upload *)record message:(NSString *)message;
 {
 	NSLog(@"uploadDidFail: %@", message);
 }
 
 
-#pragma mark SSHDelegate methods
-
-
-- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+- (int)acceptUnknownHostFingerprint:(NSString *)fingerprint forUpload:(NSString *)record
 {
-	NSLog(@"acceptUnknownFingerprint: %@ forHost: %@", fingerprint, hostname);
+	NSLog(@"acceptUnknownHostFingerprint: %@", fingerprint);
 	
 	return 0;
 }
 
 
-- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+- (int)acceptMismatchedHostFingerprint:(NSString *)fingerprint forUpload:(NSString *)record
 {
-	NSLog(@"acceptMismatchedFingerprint: %@ forHost: %@", fingerprint, hostname);
+	NSLog(@"acceptMismatchedHostFingerprint: %@", fingerprint);
 	
 	return 0;
 }

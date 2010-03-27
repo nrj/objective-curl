@@ -9,7 +9,6 @@
 #import "CurlSFTP.h"
 #import "Upload.h"
 #import "UploadDelegate.h"
-#import "SSHDelegate.h"
 #import "RemoteFile.h"
 #import "RemoteFolder.h"
 #import "TransferStatus.h"

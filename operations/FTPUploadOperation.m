@@ -34,12 +34,20 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
 	
+	double totalBytes = 0;
+	
 	// Enumurate files and directories to upload
-	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles] prefix:[transfer path]] retain];
+	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles] 
+													prefix:[transfer path] 
+												totalBytes:&totalBytes] retain];
 
 	[transfer setTotalFiles:[filesToUpload count]];
 	[transfer setTotalFilesUploaded:0];
+	[transfer setTotalBytes:totalBytes];
+	[transfer setTotalBytesUploaded:0];
 
+	[transfer initProgressInfo];
+	
 	CURLcode result = -1;
 	
 	for (int i = 0; i < [filesToUpload count]; i++)
@@ -105,9 +113,11 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 			break;			
 		
 		// Increment total files uploaded
-		[transfer setTotalFilesUploaded:(i + 1)];
+		[transfer setTotalFilesUploaded:i + 1];
 	}
-		
+	
+	NSLog(@"%d of %d Files Uploaded", [transfer totalFilesUploaded], [transfer totalFiles]);
+	
 	// Cleanup.
 	[filesToUpload release];
 
@@ -156,20 +166,27 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) withArgument:nil];
 		}
+				
+		// Add the total bytes uploaded
+		[[transfer progressInfo] replaceObjectAtIndex:[transfer totalFilesUploaded]
+										   withObject:[NSNumber numberWithDouble:ulnow]];
 		
-		// Calculate progress
+		[transfer updateProgressInfo];
 		
 		long totalProgress = 100 * [transfer totalFiles];
 		long progressNow = (ulnow == 0 && ultotal == 0) ? 
 			([transfer totalFilesUploaded] + 1) * 100 : ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
 		int percentComplete = (progressNow * 100) / totalProgress;
 		
-		if (percentComplete > [transfer progress])
+		if (percentComplete >= [transfer progress])
 		{
+			// Set the current progress
 			[transfer setProgress:percentComplete];
-			
+						
+			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
 										withArgument:[NSNumber numberWithInt:percentComplete]];
+			
 		}
 		
 	}	
@@ -219,23 +236,27 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 - (void)handleUploadFailed:(CURLcode)result
 {
 	// The upload operation failed.
-	[transfer setStatus:TRANSFER_STATUS_FAILED];
+	int status;
+	switch (result)
+	{
+		// Auth Failure
+		case CURLE_LOGIN_DENIED:
+			status = TRANSFER_STATUS_LOGIN_DENIED;
+			break;
+			
+		// General Failure
+		default:
+			status = TRANSFER_STATUS_FAILED;
+			break;
+	}
+	
+	[transfer setStatus:status];
 
 	NSString *message = [self getFailureDetailsForStatus:result withObject:transfer];
 	
-	if (result == CURLE_LOGIN_DENIED)
+	if (delegate && [delegate respondsToSelector:@selector(uploadDidFail:message:)])
 	{
-		if (delegate && [delegate respondsToSelector:@selector(uploadDidFailAuthentication:message:)])
-		{
-			[[delegate invokeOnMainThread] uploadDidFailAuthentication:transfer message:message];
-		}
-	}
-	else
-	{
-		if (delegate && [delegate respondsToSelector:@selector(uploadDidFail:message:)])
-		{
-			[[delegate invokeOnMainThread] uploadDidFail:transfer message:message];
-		}
+		[[delegate invokeOnMainThread] uploadDidFail:transfer message:message];
 	}
 }
 
@@ -245,7 +266,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
  * Takes in a list of files and directories to be uploaded, and returns an array of PendingTransfers.
  * 
  */
-- (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix
+- (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes
 {
 	NSMutableArray *filesToUpload = [[NSMutableArray alloc] init];
 	NSFileManager *mgr = [NSFileManager defaultManager];
@@ -255,11 +276,17 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	{		
 		NSString *pathToFile = [files objectAtIndex:i];
 		
-		PendingTransfer *info;
+		NSDictionary *info = [mgr fileAttributesAtPath:pathToFile 
+										  traverseLink:YES];
+		
+		NSLog(@"Got File Info");
+		*totalBytes += [[info objectForKey:NSFileSize] doubleValue];
+		
+		PendingTransfer *pendingTransfer;
 		
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
-			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile
+			pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:pathToFile
 						remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
 		}
 		else if ([[mgr contentsOfDirectoryAtPath:pathToFile error:nil] count] > 0)
@@ -274,35 +301,35 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 				
 				if ([mgr fileExistsAtPath:nextPath isDirectory:&isDir] && !isDir)
 				{
-					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
+					pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:nextPath 
 									remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
-					[filesToUpload addObject:info];
+					[filesToUpload addObject:transfer];
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
-					info = [[PendingTransfer alloc] initWithLocalPath:nextPath 
+					pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:nextPath 
 								remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
-					[info setIsEmptyDirectory:YES];
+					[pendingTransfer setIsEmptyDirectory:YES];
 					
-					[filesToUpload addObject:info];
+					[filesToUpload addObject:transfer];
 				}
 			}
 		}
 		else if ([mgr fileExistsAtPath:pathToFile])
 		{
-			info = [[PendingTransfer alloc] initWithLocalPath:pathToFile 
+			pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:pathToFile 
 						remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
 		
-			[info setIsEmptyDirectory:YES];
+			[pendingTransfer setIsEmptyDirectory:YES];
 		}
 		else
 		{
-			info = (id)[NSNull null];
+			pendingTransfer = (id)[NSNull null];
 		}
 		
-		[filesToUpload addObject:info];
+		[filesToUpload addObject:pendingTransfer];
 	}
 	
 	return [filesToUpload autorelease];

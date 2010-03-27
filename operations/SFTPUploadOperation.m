@@ -37,11 +37,11 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 			break;
 			
 		case CURLKHMATCH_MISSING:
-			result = [operation acceptUnknownFingerprint:receivedKey forHost:[transfer hostname]];
+			result = [operation acceptUnknownHostFingerprint:receivedKey forUpload:transfer];
 			break;
 			
 		case CURLKHMATCH_MISMATCH:
-			result = [operation acceptMismatchedFingerprint:receivedKey forHost:[transfer hostname]];
+			result = [operation acceptMismatchedHostFingerprint:receivedKey forUpload:transfer];
 			break;
 		
 		default:
@@ -75,17 +75,18 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
  * the delegate for an answer. Otherwise proceed.
  *
  */
-- (int)acceptUnknownFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+- (int)acceptUnknownHostFingerprint:(NSString *)fingerprint forUpload:(Upload *)record
 {
 	int answer = CURLKHSTAT_DEFER;
 	
-	if (delegate && [delegate respondsToSelector:@selector(acceptUnknownFingerprint:forHost:)])
+	if (delegate && [delegate respondsToSelector:@selector(acceptUnknownHostFingerprint:forUpload:)])
 	{
-		answer = [[delegate invokeOnMainThreadAndWaitUntilDone:YES] acceptUnknownFingerprint:fingerprint forHost:hostname];
+		answer = [[delegate invokeOnMainThreadAndWaitUntilDone:YES] 
+					acceptUnknownHostFingerprint:fingerprint forUpload:record];
 	}
 	else
 	{
-		[self showUnknownKeyWarningForHost:hostname];
+		[self showUnknownKeyWarningForHost:[record hostname]];
 	}
 	
 	return answer;
@@ -97,17 +98,18 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
  * the delegate for an answer. Otherwise proceed.
  *
  */
-- (int)acceptMismatchedFingerprint:(NSString *)fingerprint forHost:(NSString *)hostname
+- (int)acceptMismatchedHostFingerprint:(NSString *)fingerprint forUpload:(Upload *)record
 {	
 	int answer = CURLKHSTAT_DEFER;
 	
-	if (delegate && [delegate respondsToSelector:@selector(acceptMismatchedFingerprint:forHost:)])
+	if (delegate && [delegate respondsToSelector:@selector(acceptMismatchedHostFingerprint:forUpload:)])
 	{
-		answer = [[delegate invokeOnMainThreadAndWaitUntilDone:YES] acceptMismatchedFingerprint:fingerprint forHost:hostname];
+		answer = [[delegate invokeOnMainThreadAndWaitUntilDone:YES] 
+					acceptMismatchedHostFingerprint:fingerprint forUpload:record];
 	}
 	else
 	{
-		[self showMismatchKeyWarningForHost:hostname];	
+		[self showMismatchKeyWarningForHost:[record hostname]];	
 	}
 	
 	return answer;
@@ -132,7 +134,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 - (void)showUnknownKeyWarningForHost:(NSString *)hostname
 {
 	NSLog(@"The authenticity of host '%@' can't be established.", hostname);
-	NSLog(@"See the SSHDelegate protocol for how to implement 'acceptUnknownFingerprint:forHost:'"); 
+	NSLog(@"See the UploadDelegate protocol for how to implement 'acceptUnknownHostFingerprint:forUpload:'"); 
 }
 
 
@@ -146,7 +148,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 	NSLog(@"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 	NSLog(@"Someone could be eavesdropping on you right now (man-in-the-middle attack)!");
 	NSLog(@"It is also possible that the RSA host key for '%@' has just been changed.", hostname);
-	NSLog(@"See the SSHDelegate protocol for how to implement 'acceptMismatchedFingerprint:forHost:'"); 
+	NSLog(@"See the SSHDelegate protocol for how to implement 'acceptMismatchedHostFingerprint:forUpload:'"); 
 }
 
 

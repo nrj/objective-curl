@@ -24,7 +24,7 @@ extern NSString * const TMP_FILENAME;
 
 static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 
-- (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix;
+- (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes;
 
 - (void)handleUploadResult:(CURLcode)result;
 

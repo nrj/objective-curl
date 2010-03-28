@@ -117,8 +117,6 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 		[transfer setTotalFilesUploaded:i + 1];
 	}
 	
-	NSLog(@"%d of %d Files Uploaded", [transfer totalFilesUploaded], [transfer totalFiles]);
-	
 	// Cleanup.
 	[filesToUpload release];
 
@@ -282,7 +280,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 		NSDictionary *info = [mgr fileAttributesAtPath:pathToFile 
 										  traverseLink:YES];
 		
-		NSLog(@"Got File Info");
 		*totalBytes += [[info objectForKey:NSFileSize] doubleValue];
 		
 		PendingTransfer *pendingTransfer;
@@ -290,7 +287,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
 			pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:pathToFile
-						remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
+									remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
 		}
 		else if ([[mgr contentsOfDirectoryAtPath:pathToFile error:nil] count] > 0)
 		{
@@ -307,7 +304,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 					pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:nextPath 
 									remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
-					[filesToUpload addObject:transfer];
+					[filesToUpload addObject:pendingTransfer];
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
@@ -316,7 +313,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 
 					[pendingTransfer setIsEmptyDirectory:YES];
 					
-					[filesToUpload addObject:transfer];
+					[filesToUpload addObject:pendingTransfer];
 				}
 			}
 		}
@@ -421,7 +418,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
 	
-	[[NSTimer scheduledTimerWithTimeInterval:1.0
+	[[NSTimer scheduledTimerWithTimeInterval:2.0
 									  target:self
 									selector:@selector(calculateBytesPerSecond:)
 									userInfo:nil
@@ -438,10 +435,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	{
 		double bps = [transfer totalBytesUploaded] - [transfer lastBytesUploaded];
 		double sr  = ([transfer totalBytes] - [transfer totalBytesUploaded]) / bps;
-
-		//NSLog(@"%.1f KB/s", (bps / 1024));
-		//NSLog(@"%.1f MB/s", (bps / 1048576));
-		//NSLog(@"%.0f second(s) remaining", sr);
 		
 		[transfer setBytesPerSecond:bps];
 		[transfer setSecondsRemaining:sr];

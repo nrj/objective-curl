@@ -13,7 +13,7 @@
 
 extern NSString * const TMP_FILENAME;
 
-@class Upload, PendingTransfer;
+@class Upload;
 
 @interface FTPUploadOperation : CurlOperation 
 {
@@ -35,5 +35,11 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 - (char *)removeTempFileCommand:(NSString *)basePath;
 
 - (NSString *)credentials;
+
+- (void)startByteTimer;
+
+- (void)enterByteTimerThread;
+
+- (void)calculateBytesPerSecond:(NSTimer *)timer;
 
 @end

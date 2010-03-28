@@ -1111,7 +1111,7 @@
 							<object class="NSSecureTextFieldCell" key="NSCell" id="659381111">
 								<int key="NSCellFlags">343014976</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents"/>
+								<string key="NSContents">yaynocops</string>
 								<object class="NSFont" key="NSSupport" id="26">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>

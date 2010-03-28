@@ -13,36 +13,49 @@
 @interface Upload : RemoteObject
 {	
 	NSArray *localFiles;
+
 	NSString *currentFile;
 	
 	NSMutableArray *progressInfo;
 	
 	int progress;
+	
 	int totalFiles;
+	
 	int totalFilesUploaded;
 	
 	double totalBytes;
+	
 	double totalBytesUploaded;
-
+	
+	double lastBytesUploaded;
+	
 	double bytesPerSecond;
+	
 	double secondsRemaining;
 }
 
-
 @property(readwrite, retain) NSArray *localFiles;
+
 @property(readwrite, copy) NSString *currentFile;
 
 @property(readwrite, retain) NSMutableArray *progressInfo;
 
 @property(readwrite, assign) int progress;
+
 @property(readwrite, assign) int totalFiles;
+
 @property(readwrite, assign) int totalFilesUploaded;
 
 @property(readwrite, assign) double totalBytes;
-@property(readwrite, assign) double totalBytesUploaded;
-@property(readwrite, assign) double bytesPerSecond;
-@property(readwrite, assign) double secondsRemaining;
 
+@property(readwrite, assign) double totalBytesUploaded;
+
+@property(readwrite, assign) double lastBytesUploaded;
+
+@property(readwrite, assign) double bytesPerSecond;
+
+@property(readwrite, assign) double secondsRemaining;
 
 - (void)initProgressInfo;
 

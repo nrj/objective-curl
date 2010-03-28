@@ -14,17 +14,25 @@
 
 
 @synthesize localFiles;
+
 @synthesize currentFile;
 
 @synthesize progressInfo;
 
 @synthesize progress;
+
 @synthesize totalFiles;
+
 @synthesize totalFilesUploaded;
 
+@synthesize lastBytesUploaded;
+
 @synthesize totalBytes;
+
 @synthesize totalBytesUploaded;
+
 @synthesize bytesPerSecond;
+
 @synthesize secondsRemaining;
 
 

@@ -21,6 +21,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 @synthesize transfer;
 
+
 /*
  * Thread entry point for recursive FTP uploads.
  */
@@ -45,9 +46,9 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	[transfer setTotalFilesUploaded:0];
 	[transfer setTotalBytes:totalBytes];
 	[transfer setTotalBytesUploaded:0];
-
+	[transfer setLastBytesUploaded:0];
 	[transfer initProgressInfo];
-	
+			
 	CURLcode result = -1;
 	
 	for (int i = 0; i < [filesToUpload count]; i++)
@@ -165,6 +166,9 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 			
 			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) withArgument:nil];
+			
+			// Start the BPS timer
+			[operation startByteTimer];
 		}
 				
 		// Add the total bytes uploaded
@@ -193,7 +197,6 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	
 	return [transfer cancelled];
 }
-
 
 
 /*
@@ -401,6 +404,53 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	[transfer release];
 	
 	[super dealloc];
+}
+
+
+- (void)startByteTimer
+{
+	NSThread* timerThread = [[NSThread alloc] initWithTarget:self 
+													selector:@selector(enterByteTimerThread) 
+													  object:nil];
+	[timerThread start];
+}
+
+
+- (void)enterByteTimerThread
+{
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+	NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
+	
+	[[NSTimer scheduledTimerWithTimeInterval:1.0
+									  target:self
+									selector:@selector(calculateBytesPerSecond:)
+									userInfo:nil
+									 repeats:YES] retain];
+	
+	[runLoop run];
+	[pool release];
+}
+
+
+- (void)calculateBytesPerSecond:(NSTimer *)timer
+{
+	if ([transfer isActive])
+	{
+		double bps = [transfer totalBytesUploaded] - [transfer lastBytesUploaded];
+		double sr  = ([transfer totalBytes] - [transfer totalBytesUploaded]) / bps;
+
+		//NSLog(@"%.1f KB/s", (bps / 1024));
+		//NSLog(@"%.1f MB/s", (bps / 1048576));
+		//NSLog(@"%.0f second(s) remaining", sr);
+		
+		[transfer setBytesPerSecond:bps];
+		[transfer setSecondsRemaining:sr];
+		[transfer setLastBytesUploaded:[transfer totalBytesUploaded]];
+	}
+	else
+	{
+		[timer invalidate];
+	}
 }
 
 

@@ -65,7 +65,7 @@
 
 - (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
 {
-	NSLog(@"uploadDidProgress - %@", percent);	
+	//NSLog(@"uploadDidProgress - %@", percent);
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "TestController.h"
+#import <objective-curl/objective-curl.h>
 
 
 @implementation TestController
@@ -24,7 +25,7 @@
 	[ftp setDelegate:self];	
 	
 	sftp = [[CurlSFTP alloc] init];
-	[sftp setVerbose:YES];
+	[sftp setVerbose:NO];
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
 }
@@ -36,7 +37,7 @@
 	
 	id <CurlClient>client = [typeSelector selectedRow] == 0 ? (id <CurlClient>)sftp : (id <CurlClient>)ftp;
 	
-	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]
+	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:@"/Users/nrj/Desktop/empty-folder1", @"/Users/nrj/Desktop/empty-folder2", @"/Users/nrj/Desktop/empty-folder3", NULL]
 												   toHost:[hostnameField stringValue] 
 												 username:[usernameField stringValue]
 												 password:[passwordField stringValue]
@@ -65,7 +66,14 @@
 
 - (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
 {
-	//NSLog(@"uploadDidProgress - %@", percent);
+	NSLog(@".");
+	//	NSLog(@"Uploading %d of %d Files", [upload totalFilesUploaded], [upload totalFiles]);
+	NSLog(@"  Current File: %.0f of %.0f Bytes Uploaded (%d%%)", 
+			[[record currentTransfer] totalBytesUploaded], [[record currentTransfer] totalBytes], [[record currentTransfer] percentComplete]);
+	
+	NSLog(@"Total Progress: %.0f of %.0f Bytes Uploaded (%d%%)", 
+			[record totalBytesUploaded], [record totalBytes], [record progress]);
+	NSLog(@"");
 }
 
 

@@ -128,7 +128,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	[record setConnected:NO];
 	[record setCancelled:NO];	
 	
-	[op setTransfer:record];
+	[op setUpload:record];
 	[operationQueue addOperation:op];
 	[op release];
 }

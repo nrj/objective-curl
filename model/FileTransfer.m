@@ -1,19 +1,31 @@
 //
-//  PendingTransfer.m
+//  FileTransfer.m
 //  objective-curl
 //
 //  Created by nrj on 1/1/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 cocoaism.com. All rights reserved.
 //
 
-#import "PendingTransfer.h"
+#import "FileTransfer.h"
 
 
-@implementation PendingTransfer
+@implementation FileTransfer
+
 
 @synthesize localPath;
+
 @synthesize remotePath;
+
 @synthesize isEmptyDirectory;
+
+@synthesize percentComplete;
+
+@synthesize totalBytes;
+
+@synthesize totalBytesUploaded;
+
+@synthesize fileNotFound;
+
 
 - (id)initWithLocalPath:(NSString *)aLocalPath remotePath:(NSString *)aRemotePath
 {
@@ -21,7 +33,10 @@
 	{
 		[self setLocalPath:aLocalPath];
 		[self setRemotePath:aRemotePath];
-		[self setIsEmptyDirectory:NO];
+		
+		percentComplete		= 0;
+		totalBytes			= 0;
+		totalBytesUploaded	= 0;
 	}
 	
 	return self;
@@ -57,7 +72,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<PendingTransfer localPath='%@' remotePath='%@' isEmptyDirectory='%d'", localPath, remotePath, isEmptyDirectory];
+	return [NSString stringWithFormat:@"<FileTransfer localPath='%@' remotePath='%@' isEmptyDirectory='%d'", localPath, remotePath, isEmptyDirectory];
 }
 
 @end

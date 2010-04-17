@@ -8,7 +8,7 @@
 
 #import "FTPUploadOperation.h"
 #import "NSObject+Extensions.h"
-#import "PendingTransfer.h"
+#import "FileTransfer.h"
 #import "Upload.h"
 #import "UploadDelegate.h"
 #import "TransferStatus.h"
@@ -19,7 +19,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 @implementation FTPUploadOperation
 
-@synthesize transfer;
+@synthesize upload;
 
 
 /*
@@ -38,56 +38,46 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	double totalBytes = 0;
 	
 	// Enumurate files and directories to upload
-	NSArray *filesToUpload = [[self enumerateFilesToUpload:[transfer localFiles] 
-													prefix:[transfer path] 
+	NSArray *filesToUpload = [[self enumerateFilesToUpload:[upload localFiles] 
+													prefix:[upload path] 
 												totalBytes:&totalBytes] retain];
+	
+	[upload setTransfers:filesToUpload];
 
-	[transfer setTotalFiles:[filesToUpload count]];
-	[transfer setTotalFilesUploaded:0];
-	[transfer setTotalBytes:totalBytes];
-	[transfer setTotalBytesUploaded:0];
-	[transfer setLastBytesUploaded:0];
-	[transfer initProgressInfo];
+	[upload setTotalFiles:[filesToUpload count]];
+	[upload setTotalFilesUploaded:0];
+
+	[upload setTotalBytes:totalBytes];
+	[upload setTotalBytesUploaded:0];
+	
 			
 	CURLcode result = -1;
 	
 	for (int i = 0; i < [filesToUpload count]; i++)
 	{
 		// Begin Uploading.
+		FileTransfer *file = [filesToUpload objectAtIndex:i];
 		
-		PendingTransfer *file = [filesToUpload objectAtIndex:i] != [NSNull null] ? 
-									[filesToUpload objectAtIndex:i] : nil;
+		[upload setCurrentTransfer:file];
 		
-		if (!file)
+		if ([file fileNotFound])
 		{
-			NSLog(@"Local file not found: %@", [[transfer localFiles] objectAtIndex:i]);
+			NSLog(@"Local file not found: %@", [file localPath]);
+
 			continue;
 		}
-		
-		[transfer setCurrentFile:[[file localPath] lastPathComponent]];
-			
+					
 		FILE *fh = [file getHandle];
-		struct stat finfo;
 		
-		if ([file getInfo:&finfo])
-		{
-			NSLog(@"Unable to open file %@", [file localPath]);
-			break;
-		}
+		NSString *relativePath = [file isEmptyDirectory] ? [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath];
 		
-		curl_off_t fsize = (curl_off_t)finfo.st_size;
-		
-		NSString *relativePath = [file isEmptyDirectory] ? 
-									[[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath];
-		
-		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [transfer protocolPrefix], 
-							[transfer hostname], [transfer port], relativePath];
+		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [upload protocolPrefix], [upload hostname], [upload port], relativePath];
 		
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
-		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)fsize);
+		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)[file totalBytes]);
 		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
 
-		// If we are trying to upload an empty directory we place an empty file inside of it
+		// If we are trying to upload an empty directory we upload an empty file inside of it
 		// and create a quote command to clean it up after.
 		
 		struct curl_slist *postRun = NULL;
@@ -114,7 +104,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 			break;			
 		
 		// Increment total files uploaded
-		[transfer setTotalFilesUploaded:i + 1];
+		[upload setTotalFilesUploaded:i + 1];
 	}
 	
 	// Cleanup.
@@ -131,22 +121,22 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 /*
  * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
- * new upload progress and sets it on the transfer.
+ * new upload progress and sets it on the upload.
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
  */
 static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
-	Upload *transfer = [operation transfer];
-
+	Upload *upload = [operation upload];
+	
 	if (!connected)
 	{		
 		
-		if ([transfer status] != TRANSFER_STATUS_CONNECTING)
+		if ([upload status] != TRANSFER_STATUS_CONNECTING)
 		{
 			// Connecting ...
-			[transfer setConnected:NO];
-			[transfer setStatus:TRANSFER_STATUS_CONNECTING];
+			[upload setConnected:NO];
+			[upload setStatus:TRANSFER_STATUS_CONNECTING];
 
 			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadIsConnecting:) withArgument:nil];
@@ -155,12 +145,11 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	}
 	else
 	{
-		
-		if (![transfer connected])
+		if (![upload connected])
 		{
 			// We have a connection.
-			[transfer setConnected:YES];
-			[transfer setStatus:TRANSFER_STATUS_UPLOADING];
+			[upload setConnected:YES];
+			[upload setStatus:TRANSFER_STATUS_UPLOADING];
 			
 			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) withArgument:nil];
@@ -168,32 +157,36 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 			// Start the BPS timer
 			[operation startByteTimer];
 		}
-				
-		// Add the total bytes uploaded
-		[[transfer progressInfo] replaceObjectAtIndex:[transfer totalFilesUploaded]
-										   withObject:[NSNumber numberWithDouble:ulnow]];
 		
-		[transfer updateProgressInfo];
+		// Compute the current files bytes uploaded
+		double currentBytesUploaded = [[upload currentTransfer] isEmptyDirectory] ? [[upload currentTransfer] totalBytes] : ulnow;
 		
-		long totalProgress = 100 * [transfer totalFiles];
-		long progressNow = (ulnow == 0 && ultotal == 0) ? 
-			([transfer totalFilesUploaded] + 1) * 100 : ([transfer totalFilesUploaded] * 100) + (ulnow * 100 / ultotal);
-		int percentComplete = (progressNow * 100) / totalProgress;
+		// Compute the total bytes uploaded
+		double totalBytesUploaded = [upload totalBytesUploaded] + (currentBytesUploaded - [[upload currentTransfer] totalBytesUploaded]);
 		
-		if (percentComplete >= [transfer progress])
+		// Compute current files percentage complete
+		double percentComplete = [[upload currentTransfer] isEmptyDirectory] ? 100 : (ulnow * 100 / ultotal);
+		
+		[[upload currentTransfer] setTotalBytesUploaded:currentBytesUploaded];
+		[[upload currentTransfer] setPercentComplete:percentComplete];
+		
+		[upload setTotalBytesUploaded:totalBytesUploaded];
+		
+		// Compute the total percent complete of the entire transfer
+		int progressNow = ([upload totalBytesUploaded] * 100 / [upload totalBytes]);
+						
+		if (progressNow > [upload progress])
 		{
 			// Set the current progress
-			[transfer setProgress:percentComplete];
+			[upload setProgress:progressNow];
 						
 			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
-										withArgument:[NSNumber numberWithInt:percentComplete]];
-			
+										withArgument:[NSNumber numberWithInt:progressNow]];
 		}
-		
 	}	
 	
-	return [transfer cancelled];
+	return [upload cancelled];
 }
 
 
@@ -203,10 +196,10 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
  */
 - (void)handleUploadResult:(CURLcode)result
 {
-	if (result == CURLE_OK && [transfer totalFiles] == [transfer totalFilesUploaded])
+	if (result == CURLE_OK && [upload totalFiles] == [upload totalFilesUploaded])
 	{
 		// Success!
-		[transfer setStatus:TRANSFER_STATUS_COMPLETE];
+		[upload setStatus:TRANSFER_STATUS_COMPLETE];
 		
 		// Notify Delegates		
 		[self performUploadDelegateSelector:@selector(uploadDidFinish:) 
@@ -215,7 +208,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	else if (result == CURLE_ABORTED_BY_CALLBACK)
 	{
 		// Cancelled!
-		[transfer setStatus:TRANSFER_STATUS_CANCELLED];
+		[upload setStatus:TRANSFER_STATUS_CANCELLED];
 
 		// Notify Delegate
 		[self performUploadDelegateSelector:@selector(uploadWasCancelled:) 
@@ -251,20 +244,20 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 			break;
 	}
 	
-	[transfer setStatus:status];
+	[upload setStatus:status];
 
-	NSString *message = [self getFailureDetailsForStatus:result withObject:transfer];
+	NSString *message = [self getFailureDetailsForStatus:result withObject:upload];
 	
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidFail:message:)])
 	{
-		[[delegate invokeOnMainThread] uploadDidFail:transfer message:message];
+		[[delegate invokeOnMainThread] uploadDidFail:upload message:message];
 	}
 }
 
 
 
 /*
- * Takes in a list of files and directories to be uploaded, and returns an array of PendingTransfers.
+ * Takes in a list of files and directories to be uploaded, and returns an array of FileTransfers.
  * 
  */
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes
@@ -276,21 +269,20 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	for (int i = 0; i < [files count]; i++)
 	{		
 		NSString *pathToFile = [files objectAtIndex:i];
-		
-		NSDictionary *info = [mgr fileAttributesAtPath:pathToFile 
-										  traverseLink:YES];
-		
-		*totalBytes += [[info objectForKey:NSFileSize] doubleValue];
-		
-		PendingTransfer *pendingTransfer;
+				
+		FileTransfer *pendingTransfer = nil;
 		
 		if ([mgr fileExistsAtPath:pathToFile isDirectory:&isDir] && !isDir)
 		{
-			pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:pathToFile
+			// Regular File
+			
+			pendingTransfer = [[FileTransfer alloc] initWithLocalPath:pathToFile
 									remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
 		}
 		else if ([[mgr contentsOfDirectoryAtPath:pathToFile error:nil] count] > 0)
 		{
+			// Non-Empty Directory
+			
 			NSDirectoryEnumerator *dir = [mgr enumeratorAtPath:pathToFile];
 			NSString *basePath = [pathToFile lastPathComponent];
 			NSString *filename = NULL;
@@ -301,34 +293,53 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 				
 				if ([mgr fileExistsAtPath:nextPath isDirectory:&isDir] && !isDir)
 				{
-					pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:nextPath 
-									remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
-
-					[filesToUpload addObject:pendingTransfer];
+					pendingTransfer = [[FileTransfer alloc] initWithLocalPath:nextPath 
+										remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
+					
 				}
 				else if ([[mgr contentsOfDirectoryAtPath:nextPath error:nil] count] == 0)
 				{
-					pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:nextPath 
-								remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
+					pendingTransfer = [[FileTransfer alloc] initWithLocalPath:nextPath 
+										remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
 					[pendingTransfer setIsEmptyDirectory:YES];
-					
-					[filesToUpload addObject:pendingTransfer];
 				}
+				
+				[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
+															  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
+				
+				// Add to totalBytes
+				*totalBytes += [pendingTransfer totalBytes];
+				
+				[filesToUpload addObject:pendingTransfer];				
 			}
-		}
-		else if ([mgr fileExistsAtPath:pathToFile])
-		{
-			pendingTransfer = [[PendingTransfer alloc] initWithLocalPath:pathToFile 
-						remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
-		
-			[pendingTransfer setIsEmptyDirectory:YES];
+			
+			continue;
 		}
 		else
 		{
-			pendingTransfer = (id)[NSNull null];
+			pendingTransfer = [[FileTransfer alloc] initWithLocalPath:pathToFile 
+								remotePath:[prefix stringByAppendingPathComponent:[pathToFile lastPathComponent]]];
+			
+			if ([mgr fileExistsAtPath:pathToFile])
+			{
+				// Empty Directory
+				[pendingTransfer setIsEmptyDirectory:YES];
+			}
+			else
+			{
+				// Not Found	
+				[pendingTransfer setFileNotFound:YES];
+			}
 		}
 		
+		[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
+													  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
+		
+		// Add to totalBytes
+		*totalBytes += [pendingTransfer totalBytes];
+		
+						
 		[filesToUpload addObject:pendingTransfer];
 	}
 	
@@ -347,11 +358,11 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 	{
 		if (arg)
 		{
-			[[delegate invokeOnMainThread] performSelector:aSelector withObject:transfer withObject:arg];
+			[[delegate invokeOnMainThread] performSelector:aSelector withObject:upload withObject:arg];
 		}
 		else
 		{
-			[[delegate invokeOnMainThread] performSelector:aSelector withObject:transfer];
+			[[delegate invokeOnMainThread] performSelector:aSelector withObject:upload];
 		}
 	}
 }
@@ -366,9 +377,9 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 - (NSString *)credentials
 {
 	NSString *creds;
-	if ([transfer hasAuthUsername])
+	if ([upload hasAuthUsername])
 	{
-		creds = [NSString stringWithFormat:@"%@:%@", [transfer username], [transfer password]];
+		creds = [NSString stringWithFormat:@"%@:%@", [upload username], [upload password]];
 	}
 	else
 	{
@@ -393,12 +404,12 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 
 
 /*
- * Cleanup. Release the transfer.
+ * Cleanup. Release the upload.
  *
  */
 - (void)dealloc
 {
-	[transfer release];
+	[upload release];
 	
 	[super dealloc];
 }
@@ -431,14 +442,14 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 
 - (void)calculateBytesPerSecond:(NSTimer *)timer
 {
-	if ([transfer isActive])
+	if ([upload isActive])
 	{
-		double bps = [transfer totalBytesUploaded] - [transfer lastBytesUploaded];
-		double sr  = ([transfer totalBytes] - [transfer totalBytesUploaded]) / bps;
+		double bps = [upload totalBytesUploaded] - [upload lastBytesUploaded];
+		double sr  = ([upload totalBytes] - [upload totalBytesUploaded]) / bps;
 		
-		[transfer setBytesPerSecond:bps];
-		[transfer setSecondsRemaining:sr];
-		[transfer setLastBytesUploaded:[transfer totalBytesUploaded]];
+		[upload setBytesPerSecond:bps];
+		[upload setSecondsRemaining:sr];
+		[upload setLastBytesUploaded:[upload totalBytesUploaded]];
 	}
 	else
 	{

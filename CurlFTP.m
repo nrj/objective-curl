@@ -131,7 +131,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 	[record setConnected:NO];
 	[record setCancelled:NO];
 
-	[op setTransfer:record];
+	[op setUpload:record];
 	[operationQueue addOperation:op];
 	[op release];
 }

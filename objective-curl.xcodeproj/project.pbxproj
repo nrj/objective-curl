@@ -30,8 +30,8 @@
 		0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
 		0BB383B210EB1DF9003DD538 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
 		0BB383B310EB1DF9003DD538 /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
-		0BBF81F710EEB1B0005358BB /* PendingTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* PendingTransfer.h */; };
-		0BBF81F810EEB1B0005358BB /* PendingTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* PendingTransfer.m */; };
+		0BBF81F710EEB1B0005358BB /* FileTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* FileTransfer.h */; };
+		0BBF81F810EEB1B0005358BB /* FileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* FileTransfer.m */; };
 		0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83DB10EFD6CD005358BB /* ftpparse.c */; };
 		0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DC10EFD6CD005358BB /* ftpparse.h */; };
 		0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DF10EFDD28005358BB /* RemoteFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -121,8 +121,8 @@
 		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
 		0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
-		0BBF81F510EEB1B0005358BB /* PendingTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingTransfer.h; sourceTree = "<group>"; };
-		0BBF81F610EEB1B0005358BB /* PendingTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingTransfer.m; sourceTree = "<group>"; };
+		0BBF81F510EEB1B0005358BB /* FileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTransfer.h; sourceTree = "<group>"; };
+		0BBF81F610EEB1B0005358BB /* FileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTransfer.m; sourceTree = "<group>"; };
 		0BBF83DB10EFD6CD005358BB /* ftpparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftpparse.c; sourceTree = "<group>"; };
 		0BBF83DC10EFD6CD005358BB /* ftpparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpparse.h; sourceTree = "<group>"; };
 		0BBF83DF10EFDD28005358BB /* RemoteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteFile.h; sourceTree = "<group>"; };
@@ -261,8 +261,8 @@
 			children = (
 				0B76053010DF13B600BE0666 /* Upload.h */,
 				0B76053110DF13B600BE0666 /* Upload.m */,
-				0BBF81F510EEB1B0005358BB /* PendingTransfer.h */,
-				0BBF81F610EEB1B0005358BB /* PendingTransfer.m */,
+				0BBF81F510EEB1B0005358BB /* FileTransfer.h */,
+				0BBF81F610EEB1B0005358BB /* FileTransfer.m */,
 				0B725E5310F2CC4D001C614D /* RemoteObject.h */,
 				0B725E5410F2CC4D001C614D /* RemoteObject.m */,
 				0BBF83DF10EFDD28005358BB /* RemoteFile.h */,
@@ -376,7 +376,7 @@
 				0B76052110DF134600BE0666 /* TransferStatus.h in Headers */,
 				0B76053210DF13B600BE0666 /* Upload.h in Headers */,
 				0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */,
-				0BBF81F710EEB1B0005358BB /* PendingTransfer.h in Headers */,
+				0BBF81F710EEB1B0005358BB /* FileTransfer.h in Headers */,
 				0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */,
 				0BBF83E110EFDD28005358BB /* RemoteFile.h in Headers */,
 				0BBF87BB10F191C7005358BB /* UploadDelegate.h in Headers */,
@@ -511,7 +511,7 @@
 				0B76051A10DF131500BE0666 /* CurlObject.m in Sources */,
 				0B76053310DF13B600BE0666 /* Upload.m in Sources */,
 				0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */,
-				0BBF81F810EEB1B0005358BB /* PendingTransfer.m in Sources */,
+				0BBF81F810EEB1B0005358BB /* FileTransfer.m in Sources */,
 				0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */,
 				0BBF83E210EFDD28005358BB /* RemoteFile.m in Sources */,
 				0BBF887F10F1D0F8005358BB /* RemoteFolder.m in Sources */,

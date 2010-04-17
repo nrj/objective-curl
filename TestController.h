@@ -7,7 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <objective-curl/objective-curl.h>
+
+@class Upload;
+@class CurlFTP, CurlSFTP;
 
 
 @interface TestController : NSObject 

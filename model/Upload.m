@@ -15,9 +15,9 @@
 
 @synthesize localFiles;
 
-@synthesize currentFile;
+@synthesize transfers;
 
-@synthesize progressInfo;
+@synthesize currentTransfer;
 
 @synthesize progress;
 
@@ -25,11 +25,11 @@
 
 @synthesize totalFilesUploaded;
 
-@synthesize lastBytesUploaded;
-
 @synthesize totalBytes;
 
 @synthesize totalBytesUploaded;
+
+@synthesize lastBytesUploaded;
 
 @synthesize bytesPerSecond;
 
@@ -44,6 +44,9 @@
 		[self setProgress:0];
 		[self setTotalFiles:0];
 		[self setTotalFilesUploaded:0];
+		[self setTotalBytes:0];
+		[self setTotalBytesUploaded:0];
+		[self setLastBytesUploaded:0];
 	}
 
 	return self;
@@ -52,36 +55,9 @@
 - (void)dealloc
 {
 	[localFiles release];
-	[currentFile release];
-
-	if (progressInfo)
-	{
-		[progressInfo release];
-	}
+	[transfers release];
 	
 	[super dealloc];
-}
-
-- (void)initProgressInfo
-{	
-	progressInfo = [[NSMutableArray alloc] initWithCapacity:totalFiles];
-	
-	for (int i = 0; i < totalFiles; i++)
-	{
-		[progressInfo addObject:[NSNumber numberWithDouble:0]];
-	}
-}
-
-- (void)updateProgressInfo
-{
-	double tbu = 0;
-	
-	for (int i = 0; i < [progressInfo count]; i++)
-	{
-		tbu += [[progressInfo objectAtIndex:i] doubleValue];
-	}
-	
-	[self setTotalBytesUploaded:tbu];
 }
 
 - (BOOL)isActive

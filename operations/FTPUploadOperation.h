@@ -17,10 +17,10 @@ extern NSString * const TMP_FILENAME;
 
 @interface FTPUploadOperation : CurlOperation 
 {
-	Upload *transfer;
+	Upload *upload;
 }
 
-@property(readwrite, retain) Upload *transfer;
+@property(readwrite, retain) Upload *upload;
 
 static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 

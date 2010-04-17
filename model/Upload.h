@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "RemoteObject.h"
 
+@class FileTransfer;
+
 
 @interface Upload : RemoteObject
 {	
 	NSArray *localFiles;
-
-	NSString *currentFile;
 	
-	NSMutableArray *progressInfo;
+	NSArray *transfers;
+	
+	FileTransfer *currentTransfer;
 	
 	int progress;
 	
@@ -35,11 +37,12 @@
 	double secondsRemaining;
 }
 
+
 @property(readwrite, retain) NSArray *localFiles;
 
-@property(readwrite, copy) NSString *currentFile;
+@property(readwrite, retain) NSArray *transfers;
 
-@property(readwrite, retain) NSMutableArray *progressInfo;
+@property(readwrite, assign) FileTransfer *currentTransfer;
 
 @property(readwrite, assign) int progress;
 
@@ -57,10 +60,8 @@
 
 @property(readwrite, assign) double secondsRemaining;
 
-- (void)initProgressInfo;
-
-- (void)updateProgressInfo;
 
 - (BOOL)isActive;
+
 
 @end

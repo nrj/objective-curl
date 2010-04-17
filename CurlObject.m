@@ -12,9 +12,13 @@
 
 @implementation CurlObject
 
+
 @synthesize delegate;
+
 @synthesize protocol;
+
 @synthesize verbose;
+
 @synthesize showProgress;
 
 

@@ -26,7 +26,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {			
 	int result = -1;
 	
-	Upload *transfer = [operation transfer];
+	Upload *transfer = [operation upload];
 	
 	NSString *receivedKey = [NSString formattedMD5:foundKey->key length:foundKey->len];
 	

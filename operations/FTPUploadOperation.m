@@ -175,7 +175,7 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 		// Compute the total percent complete of the entire transfer
 		int progressNow = ([upload totalBytesUploaded] * 100 / [upload totalBytes]);
 						
-		if (progressNow > [upload progress])
+		if (progressNow >= [upload progress])
 		{
 			// Set the current progress
 			[upload setProgress:progressNow];

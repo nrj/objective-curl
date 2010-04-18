@@ -37,7 +37,7 @@
 	
 	id <CurlClient>client = [typeSelector selectedRow] == 0 ? (id <CurlClient>)sftp : (id <CurlClient>)ftp;
 	
-	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:@"/Users/nrj/Desktop/empty-folder1", @"/Users/nrj/Desktop/empty-folder2", @"/Users/nrj/Desktop/empty-folder3", NULL]
+	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]
 												   toHost:[hostnameField stringValue] 
 												 username:[usernameField stringValue]
 												 password:[passwordField stringValue]

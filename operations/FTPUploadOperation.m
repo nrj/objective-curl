@@ -304,6 +304,10 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 
 					[pendingTransfer setIsEmptyDirectory:YES];
 				}
+				else
+				{
+					continue;
+				}
 				
 				[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
 															  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
@@ -333,14 +337,16 @@ static int handleUploadProgress(FTPUploadOperation *operation, int connected, do
 			}
 		}
 		
+		
 		[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
 													  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
 		
 		// Add to totalBytes
 		*totalBytes += [pendingTransfer totalBytes];
-		
+	
 						
 		[filesToUpload addObject:pendingTransfer];
+		
 	}
 	
 	return [filesToUpload autorelease];

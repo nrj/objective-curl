@@ -30,7 +30,7 @@
 		0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
 		0BB383B210EB1DF9003DD538 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
 		0BB383B310EB1DF9003DD538 /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
-		0BBF81F710EEB1B0005358BB /* FileTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* FileTransfer.h */; };
+		0BBF81F710EEB1B0005358BB /* FileTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* FileTransfer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BBF81F810EEB1B0005358BB /* FileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* FileTransfer.m */; };
 		0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83DB10EFD6CD005358BB /* ftpparse.c */; };
 		0BBF83DE10EFD6CD005358BB /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF83DC10EFD6CD005358BB /* ftpparse.h */; };

@@ -1,12 +1,8 @@
-//
-//  CurlOperation.h
-//  objective-curl
-//  
-//  Base class for all curl related operations.
-//
-//  Created by nrj on 1/24/10.
-//  Copyright 2010. All rights reserved.
-//
+/*!
+    @header CurlOperation.h
+    @abstract   Abstract class used for as the base for all transfer operations.  
+    @discussion Abstract class used for as the base for all transfer operations.
+*/
 
 #import <Cocoa/Cocoa.h>
 #include <sys/stat.h>

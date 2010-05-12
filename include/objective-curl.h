@@ -1,9 +1,8 @@
-//
-//  objective-curl.h
-//
-//  Created by nrj on 1/31/10.
-//  Copyright 2010. All rights reserved.
-//
+/*!
+    @header objective-curl.h
+    @abstract   Main framework include file.
+    @discussion This header file includes all public classes referenced by the framework.
+*/
 
 
 #import "CurlSFTP.h"

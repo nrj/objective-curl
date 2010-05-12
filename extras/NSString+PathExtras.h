@@ -1,10 +1,9 @@
-//
-//  NSString+PathExtras.h
-//  objective-curl
-//
-//  Created by nrj on 1/6/10.
-//  Copyright 2010. All rights reserved.
-//
+/*!
+    @header NSString+PathExtras
+    @abstract   Category methods for creating FTP-safe paths.
+    @discussion Category methods for creating FTP-safe paths.
+*/
+
 
 #import <Foundation/Foundation.h>
 

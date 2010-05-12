@@ -1,10 +1,9 @@
-//
-//  NSString+MD5.h
-//  objective-curl
-//
-//  Created by nrj on 12/30/09.
-//  Copyright 2009. All rights reserved.
-//
+/*!
+    @header NSString+MD5.h
+    @abstract Category methods for creating MD5 hashes as strings.
+    @discussion Category methods for creating MD5 hashes as strings.
+*/
+
 
 #import <Foundation/Foundation.h>
 #include <openssl/md5.h>

@@ -15,6 +15,7 @@
 @synthesize protocolPrefix;
 @synthesize hostname;
 @synthesize path;
+@synthesize url;
 @synthesize username;
 @synthesize password;
 @synthesize port;
@@ -33,6 +34,7 @@
 	[username release], username = nil;
 	[password release], password = nil;
 	[path release], path = nil;
+	[url release], url = nil;
 	[statusMessage release], statusMessage = nil;
 	
 	[super dealloc];

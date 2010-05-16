@@ -18,6 +18,8 @@
 	NSString *username;
 	NSString *password;
 	NSString *path;
+	NSString *url;
+	
 	int port;
 	TransferStatus status;
 	BOOL connected;
@@ -34,6 +36,7 @@
 @property(readwrite, copy) NSString *username;
 @property(readwrite, copy) NSString *password;
 @property(readwrite, copy) NSString *path;
+@property(readwrite, copy) NSString *url;
 @property(readwrite, assign) int port;
 @property(readwrite, assign) TransferStatus status;
 @property(readwrite, assign) BOOL connected;

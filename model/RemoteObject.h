@@ -15,12 +15,17 @@
 	SecProtocolType protocol;
 	NSString *protocolPrefix;
 	NSString *hostname;
-	NSString *username;
-	NSString *password;
+	int port;
 	NSString *path;
 	NSString *url;
+
+	NSString *username;
+	NSString *password;
+
+	BOOL usePublicKeyAuth;
+	NSString *privateKeyFile;
+	NSString *publicKeyFile;
 	
-	int port;
 	TransferStatus status;
 	BOOL connected;
 	BOOL cancelled;
@@ -33,11 +38,17 @@
 @property(readwrite, assign) SecProtocolType protocol;
 @property(readwrite, copy) NSString *protocolPrefix;
 @property(readwrite, copy) NSString *hostname;
-@property(readwrite, copy) NSString *username;
-@property(readwrite, copy) NSString *password;
+@property(readwrite, assign) int port;
 @property(readwrite, copy) NSString *path;
 @property(readwrite, copy) NSString *url;
-@property(readwrite, assign) int port;
+
+@property(readwrite, copy) NSString *username;
+@property(readwrite, copy) NSString *password;
+
+@property(readwrite, assign) BOOL usePublicKeyAuth;
+@property(readwrite, copy) NSString *privateKeyFile;
+@property(readwrite, copy) NSString *publicKeyFile;
+
 @property(readwrite, assign) TransferStatus status;
 @property(readwrite, assign) BOOL connected;
 @property(readwrite, assign) BOOL cancelled;

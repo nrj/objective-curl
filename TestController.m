@@ -25,7 +25,7 @@
 	[ftp setDelegate:self];	
 	
 	sftp = [[CurlSFTP alloc] init];
-	[sftp setVerbose:NO];
+	[sftp setVerbose:YES];
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
 }
@@ -42,6 +42,10 @@
 												 username:[usernameField stringValue]
 												 password:[passwordField stringValue]
 												directory:@"tmp"];
+	
+	[newUpload setUsePublicKeyAuth:YES];
+	[newUpload setPrivateKeyFile:[@"~/.ssh/id_rsa" stringByExpandingTildeInPath]];
+	[newUpload setPublicKeyFile:[@"~/.ssh/id_rsa.pub" stringByExpandingTildeInPath]];
 	
 	NSLog(@"Upload Base URI = %@", [newUpload uri]);
 	

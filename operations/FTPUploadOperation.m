@@ -31,9 +31,10 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 			
 	// Set curl options
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
+	
+	[self setAuthOptions];
 	
 	double totalBytes = 0;
 	
@@ -117,6 +118,11 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	[pool release];
 }
 
+
+- (void)setAuthOptions
+{
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);	
+}
 
 
 /*

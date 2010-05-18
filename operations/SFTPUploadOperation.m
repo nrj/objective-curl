@@ -70,6 +70,19 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 }
 
 
+- (void)setAuthOptions
+{
+	[super setAuthOptions];
+	
+	if ([upload usePublicKeyAuth])
+	{
+		curl_easy_setopt(handle, CURLOPT_SSH_PRIVATE_KEYFILE, [[upload privateKeyFile] UTF8String]);
+		curl_easy_setopt(handle, CURLOPT_SSH_PUBLIC_KEYFILE, [[upload publicKeyFile] UTF8String]);
+		curl_easy_setopt(handle, CURLOPT_KEYPASSWD, [[upload password] UTF8String]);
+	}
+}
+
+
 /*
  * How should we handle the unknown host key fingerprint. If a delegate implementation exists then query
  * the delegate for an answer. Otherwise proceed.

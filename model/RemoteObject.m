@@ -14,11 +14,17 @@
 @synthesize protocol;
 @synthesize protocolPrefix;
 @synthesize hostname;
+@synthesize port;
 @synthesize path;
 @synthesize url;
+
 @synthesize username;
 @synthesize password;
-@synthesize port;
+
+@synthesize usePublicKeyAuth;
+@synthesize privateKeyFile;
+@synthesize publicKeyFile;
+
 @synthesize status;
 @synthesize cancelled;
 @synthesize connected;
@@ -33,6 +39,8 @@
 	[hostname release], hostname = nil;
 	[username release], username = nil;
 	[password release], password = nil;
+	[privateKeyFile release], privateKeyFile = nil;
+	[publicKeyFile release], publicKeyFile = nil;
 	[path release], path = nil;
 	[url release], url = nil;
 	[statusMessage release], statusMessage = nil;

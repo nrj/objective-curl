@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0A228111A9CB5700D73D5D /* .empty in Resources */ = {isa = PBXBuildFile; fileRef = 0B0A228011A9CB5700D73D5D /* .empty */; };
 		0B0B975A10F58CED007DBFA8 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B975610F58CED007DBFA8 /* NSString+MD5.h */; };
 		0B0B975B10F58CED007DBFA8 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975710F58CED007DBFA8 /* NSString+MD5.m */; };
 		0B0B975C10F58CED007DBFA8 /* NSString+PathExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */; };
@@ -109,6 +110,7 @@
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0B0A228011A9CB5700D73D5D /* .empty */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .empty; sourceTree = "<group>"; };
 		0B0B975610F58CED007DBFA8 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		0B0B975710F58CED007DBFA8 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0B0A228011A9CB5700D73D5D /* .empty */,
 				0BD6227510DF1564004D8C5B /* CurlTester-Info.plist */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
@@ -506,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */,
+				0B0A228111A9CB5700D73D5D /* .empty in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

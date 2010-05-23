@@ -41,15 +41,22 @@
 	return self;
 }
 
+- (NSString *)getEmptyFilePath
+{
+	NSString *str = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents/Frameworks/objective-curl.framework/Resources/.empty"];
+	
+	return str;
+}
+
 - (FILE *)getHandle
 {
 	FILE *fh = NULL;
 	
 	if ([self isEmptyDirectory])
 	{
-		fh = fopen(NULL_DEVICE, "rb");
+		fh = fopen([[self getEmptyFilePath] UTF8String], "rb");
 	}
-	else
+	else	
 	{
 		fh = fopen([localPath UTF8String], "rb");
 	}
@@ -61,7 +68,7 @@
 {	
 	if([self isEmptyDirectory])
 	{
-		return stat(NULL_DEVICE, info);
+		return stat([[self getEmptyFilePath] UTF8String], info);
 	}
 	else
 	{

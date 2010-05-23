@@ -25,6 +25,8 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 
 - (void)setAuthOptions;
 
+- (NSString *)urlForTransfer:(FileTransfer *)file;
+
 - (void)setFileSpecificOptions:(FileTransfer *)file;
 
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes;

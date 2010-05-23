@@ -9,8 +9,6 @@
 #import <stdio.h>
 #import <sys/stat.h>
 
-#define NULL_DEVICE "/dev/null"
-
 
 @interface FileTransfer : NSObject 
 {
@@ -47,5 +45,6 @@
 
 - (int)getInfo:(struct stat *)info;
 
+- (NSString *)getEmptyFilePath;
 
 @end

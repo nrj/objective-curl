@@ -12,6 +12,17 @@
 @implementation CurlS3
 
 
+- (id)init
+{		
+	if (self = [super init])
+	{
+		[self setProtocol:kSecProtocolTypeHTTPS];
+	}
+	
+	return self;
+}
+
+
 - (NSString *)protocolPrefix
 {
 	return @"https";

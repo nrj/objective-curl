@@ -14,7 +14,7 @@
 #import "NSString+PathExtras.h"
 
 
-NSString * const TMP_FILENAME = @".objective-curl-tmp";
+NSString * const TMP_FILENAME = @".empty";
 
 
 @implementation UploadOperation
@@ -74,28 +74,27 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 		
 		FILE *fh = [file getHandle];
 		
-		NSString *relativePath = [file isEmptyDirectory] ? 
-			[[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [[file remotePath] stringByRemovingTildePrefix];
+		NSString *url = [self urlForTransfer:file];
 		
-		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [upload protocolPrefix], [upload hostname], [upload port], relativePath];
+		NSLog(@"URL = %@", url);
 		
-		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)[file totalBytes]);
+		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
-
+		
 		// If we are trying to upload an empty directory we upload an empty file inside of it
 		// and create a quote command to clean it up after.
 		
 		struct curl_slist *postRun = NULL;
 		char *removeTempFile = NULL;
 
-		if ([file isEmptyDirectory])
-		{			
-			postRun = curl_slist_append(postRun, [self removeTempFileCommand:[relativePath stringByRemovingTildePrefix]]);
-		}
+//		if ([file isEmptyDirectory])
+//		{			
+//			postRun = curl_slist_append(postRun, [self removeTempFileCommand:[relativePath stringByRemovingTildePrefix]]);
+//		}
 
 		// Add quote commands, if any.
-		curl_easy_setopt(handle, CURLOPT_POSTQUOTE, postRun);
+//		curl_easy_setopt(handle, CURLOPT_POSTQUOTE, postRun);
 		
 		// Perform
 		result = curl_easy_perform(handle);
@@ -121,6 +120,18 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	
 	// Done.
 	[pool release];
+}
+
+
+- (NSString *)urlForTransfer:(FileTransfer *)file
+{
+	NSString *relativePath = [file isEmptyDirectory] ? 
+		[[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath];
+	
+	NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", 
+		[upload protocolPrefix], [upload hostname], [upload port], relativePath];
+	
+	return url;
 }
 
 
@@ -326,9 +337,15 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 					continue;
 				}
 				
-				[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
-															  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
-				
+				if ([pendingTransfer isEmptyDirectory] || [pendingTransfer fileNotFound])
+				{
+					[pendingTransfer setTotalBytes:0];
+				}
+				else
+				{
+					[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
+																  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
+				}
 				// Add to totalBytes
 				*totalBytes += [pendingTransfer totalBytes];
 				
@@ -354,9 +371,15 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 			}
 		}
 		
-		
-		[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
-													  traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
+		if ([pendingTransfer isEmptyDirectory] || [pendingTransfer fileNotFound])
+		{
+			[pendingTransfer setTotalBytes:0];
+		}
+		else
+		{
+			[pendingTransfer setTotalBytes:[[[mgr fileAttributesAtPath:[pendingTransfer localPath] 
+													traverseLink:YES] objectForKey:NSFileSize] doubleValue]];
+		}
 		
 		// Add to totalBytes
 		*totalBytes += [pendingTransfer totalBytes];

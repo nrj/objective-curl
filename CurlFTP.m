@@ -120,7 +120,7 @@
 	[upload setHostname:hostname];
 	[upload setUsername:username];
 	[upload setPassword:password];
-	[upload setPath:[directory pathForFTP]];
+	[upload setPath:[directory stringByRemovingTildePrefix]];
 	[upload setPort:port];
 	
 	[self upload:upload];

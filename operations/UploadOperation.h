@@ -1,9 +1,8 @@
 //
-//  FTPUploadOperation.h
+//  UploadOperation.h
 //  objective-curl
 //
-//  Created by nrj on 1/24/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Cocoa/Cocoa.h>
@@ -13,18 +12,20 @@
 
 extern NSString * const TMP_FILENAME;
 
-@class Upload;
+@class Upload, FileTransfer;
 
-@interface FTPUploadOperation : CurlOperation 
+@interface UploadOperation : CurlOperation 
 {
 	Upload *upload;
 }
 
 @property(readwrite, retain) Upload *upload;
 
-static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
+static int handleUploadProgress(UploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 
 - (void)setAuthOptions;
+
+- (void)setFileSpecificOptions:(FileTransfer *)file;
 
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes;
 

@@ -1,21 +1,20 @@
 //
-//  SFTPUploadOperation.h
+//  SSHUploadOperation.h
 //  objective-curl
 //
-//  Created by nrj on 1/24/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Cocoa/Cocoa.h>
-#import "FTPUploadOperation.h"
+#import "UploadOperation.h"
 
 @class Upload;
 
 extern NSString * const SFTP_PROTOCOL_PREFIX;
 
-@interface SFTPUploadOperation : FTPUploadOperation
+@interface SSHUploadOperation : UploadOperation
 
-static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, SFTPUploadOperation *operation);
+static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, SSHUploadOperation *operation);
 
 - (int)acceptUnknownHostFingerprint:(NSString *)fingerprint forUpload:(Upload *)record;
 - (int)acceptMismatchedHostFingerprint:(NSString *)fingerprint forUpload:(Upload *)record;

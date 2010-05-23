@@ -2,8 +2,7 @@
 //  RemoteFile.h
 //  objective-curl
 //
-//  Created by nrj on 1/2/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Cocoa/Cocoa.h>

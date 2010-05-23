@@ -2,8 +2,7 @@
 //  ListOperation.h
 //  objective-curl
 //
-//  Created by nrj on 1/24/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Cocoa/Cocoa.h>

@@ -5,7 +5,7 @@
 */
 
 
-#import "CurlSFTP.h"
+#import "CurlSCP.h"
 #import "Upload.h"
 #import "FileTransfer.h"
 #import "UploadDelegate.h"

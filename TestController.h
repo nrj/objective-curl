@@ -2,20 +2,19 @@
 //  TestController.h
 //  objective-curl
 //
-//  Created by nrj on 12/7/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Cocoa/Cocoa.h>
 
-@class Upload;
-@class CurlFTP, CurlSFTP;
-
+@class Upload, CurlFTP, CurlSFTP, CurlSCP, CurlS3;
 
 @interface TestController : NSObject 
 {	
 	CurlFTP *ftp;
 	CurlSFTP *sftp;
+	CurlSCP *scp;
+	CurlS3 *s3;
 	
 	Upload *upload;
 		

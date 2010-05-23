@@ -1,12 +1,11 @@
 //
-//  FTPUploadOperation.m
+//  UploadOperation.m
 //  objective-curl
 //
-//  Created by nrj on 1/24/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
-#import "FTPUploadOperation.h"
+#import "UploadOperation.h"
 #import "NSObject+Extensions.h"
 #import "FileTransfer.h"
 #import "Upload.h"
@@ -17,7 +16,9 @@
 
 NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
-@implementation FTPUploadOperation
+
+@implementation UploadOperation
+
 
 @synthesize upload;
 
@@ -34,6 +35,7 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
 	
+	// Set interface specific auth options
 	[self setAuthOptions];
 	
 	double totalBytes = 0;
@@ -67,10 +69,13 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 
 			continue;
 		}
-					
+		
+		[self setFileSpecificOptions:file];
+		
 		FILE *fh = [file getHandle];
 		
-		NSString *relativePath = [file isEmptyDirectory] ? [[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath];
+		NSString *relativePath = [file isEmptyDirectory] ? 
+			[[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [[file remotePath] stringByRemovingTildePrefix];
 		
 		NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", [upload protocolPrefix], [upload hostname], [upload port], relativePath];
 		
@@ -125,13 +130,19 @@ NSString * const TMP_FILENAME = @".objective-curl-tmp";
 }
 
 
+- (void)setFileSpecificOptions:(FileTransfer *)file
+{
+	// Abstract
+}
+
+
 /*
  * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
  * new upload progress and sets it on the upload.
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
  */
-static int handleUploadProgress(FTPUploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow)
+static int handleUploadProgress(UploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow)
 {	
 	Upload *upload = [operation upload];
 	

@@ -2,8 +2,7 @@
 //  NSString+PathExtras.m
 //  objective-curl
 //
-//  Created by nrj on 1/6/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import "NSString+PathExtras.h"

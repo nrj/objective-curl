@@ -2,19 +2,14 @@
 //  CurlSFTP.m
 //  objective-curl
 //
-//  Created by nrj on 12/27/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import "CurlSFTP.h"
 #import "Upload.h"
-#import "SFTPUploadOperation.h"
+#import "SSHUploadOperation.h"
 #import "NSString+PathExtras.h"
 
-
-int const DEFAULT_SFTP_PORT	= 22;
-
-NSString * const SFTP_PROTOCOL_PREFIX = @"sftp";
 
 NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 
@@ -67,6 +62,18 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 }
 
 
+- (NSString *)protocolPrefix
+{
+	return @"sftp";
+}
+
+
+- (int)defaultPort
+{
+	return 22;
+}
+
+
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username
 {
 	return [self uploadFilesAndDirectories:filesAndDirectories 
@@ -74,7 +81,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 								  username:username
 								  password:@""
 								 directory:@"~/"
-									  port:DEFAULT_SFTP_PORT];
+									  port:[self defaultPort]];
 }
 
 
@@ -85,7 +92,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 								  username:username
 								  password:password
 								 directory:@""
-									  port:DEFAULT_SFTP_PORT];	
+									  port:[self defaultPort]];	
 }
 
 
@@ -96,7 +103,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 								  username:username
 								  password:password
 								 directory:directory
-									  port:DEFAULT_SFTP_PORT];	
+									  port:[self defaultPort]];	
 }
 
 
@@ -105,7 +112,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocol]];
-	[upload setProtocolPrefix:SFTP_PROTOCOL_PREFIX];
+	[upload setProtocolPrefix:[self protocolPrefix]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
@@ -121,7 +128,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 
 - (void)upload:(Upload *)record
 {
-	SFTPUploadOperation *op = [[SFTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
+	SSHUploadOperation *op = [[SSHUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
 	
 	[record setProgress:0];
 	[record setStatus:TRANSFER_STATUS_QUEUED];
@@ -143,7 +150,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	return [self listRemoteDirectory:directory 
 							  onHost:host
 						 forceReload:NO
-								port:DEFAULT_SFTP_PORT];
+								port:[self defaultPort]];
 }
 
 
@@ -156,7 +163,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	return [self listRemoteDirectory:directory 
 							  onHost:host
 						 forceReload:reload
-								port:DEFAULT_SFTP_PORT];
+								port:[self defaultPort]];
 }
 
 

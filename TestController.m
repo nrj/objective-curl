@@ -2,8 +2,7 @@
 //  TestController.m
 //  objective-curl
 //
-//  Created by nrj on 12/7/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import "TestController.h"
@@ -25,9 +24,19 @@
 	[ftp setDelegate:self];	
 	
 	sftp = [[CurlSFTP alloc] init];
-	[sftp setVerbose:YES];
+	[sftp setVerbose:NO];
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
+	
+	scp = [[CurlSCP alloc] init];
+	[scp setVerbose:NO];
+	[scp setShowProgress:YES];
+	[scp setDelegate:self];
+	
+	s3 = [[CurlS3 alloc] init];
+	[s3 setVerbose:YES];
+	[s3 setShowProgress:YES];
+	[s3 setDelegate:self];
 }
 
 
@@ -35,17 +44,34 @@
 {
 	NSString *file = [[fileField stringValue] stringByExpandingTildeInPath];
 	
-	id <CurlClient>client = [typeSelector selectedRow] == 0 ? (id <CurlClient>)sftp : (id <CurlClient>)ftp;
+	id <CurlClient>client = nil;
 	
+	switch([typeSelector selectedColumn])
+	{
+		default:
+		case 0:
+			client = (id <CurlClient>)sftp;
+			break;
+		case 1:
+			client = (id <CurlClient>)ftp;
+			break;
+		case 2:
+			client = (id <CurlClient>)scp;
+			break;
+		case 3:
+			client = (id <CurlClient>)s3;
+			break;
+	}
+
 	Upload *newUpload = [client uploadFilesAndDirectories:[NSArray arrayWithObjects:file, NULL]
 												   toHost:[hostnameField stringValue] 
 												 username:[usernameField stringValue]
 												 password:[passwordField stringValue]
-												directory:@"tmp"];
+												directory:@"nickjensen"];
 	
-	[newUpload setUsePublicKeyAuth:YES];
-	[newUpload setPrivateKeyFile:[@"~/.ssh/id_rsa" stringByExpandingTildeInPath]];
-	[newUpload setPublicKeyFile:[@"~/.ssh/id_rsa.pub" stringByExpandingTildeInPath]];
+//	[newUpload setUsePublicKeyAuth:YES];
+//	[newUpload setPrivateKeyFile:[@"~/.ssh/id_rsa" stringByExpandingTildeInPath]];
+//	[newUpload setPublicKeyFile:[@"~/.ssh/id_rsa.pub" stringByExpandingTildeInPath]];
 	
 	NSLog(@"Upload Base URI = %@", [newUpload uri]);
 	

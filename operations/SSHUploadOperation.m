@@ -1,20 +1,17 @@
 //
-//  SFTPUploadOperation.m
+//  SSHUploadOperation.m
 //  objective-curl
 //
-//  Created by nrj on 1/24/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
-#import "SFTPUploadOperation.h"
+#import "SSHUploadOperation.h"
 #import "Upload.h"
 #import "NSString+MD5.h"
 #import "NSObject+Extensions.h"
 
 
-
-
-@implementation SFTPUploadOperation
+@implementation SSHUploadOperation
 
 
 /*
@@ -22,7 +19,7 @@
  *
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSHKEYFUNCTION
  */
-static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, SFTPUploadOperation *operation)
+static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const struct curl_khkey *foundKey, enum curl_khmatch type, SSHUploadOperation *operation)
 {			
 	int result = -1;
 	

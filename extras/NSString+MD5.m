@@ -2,8 +2,7 @@
 //  NSString+MD5.m
 //  objective-curl
 //
-//  Created by nrj on 12/30/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import "NSString+MD5.h"

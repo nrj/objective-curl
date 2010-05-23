@@ -2,8 +2,7 @@
 //  CurlFTP.h
 //  objective-curl
 //
-//  Created by nrj on 12/14/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Foundation/Foundation.h>
@@ -13,15 +12,14 @@
 
 @class Upload, RemoteFolder;
 
-extern NSString * const FTP_PROTOCOL_PREFIX;
-
-extern int const DEFAULT_FTP_PORT;
-
 
 @interface CurlFTP : CurlObject <CurlClient>
 {
 	NSMutableDictionary *directoryListCache;
 }
+
+- (NSString *)protocolPrefix;
+- (int)defaultPort;
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username;
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password;

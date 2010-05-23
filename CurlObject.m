@@ -2,8 +2,7 @@
 //  CurlObject.m
 //  objective-curl
 //
-//  Created by nrj on 12/14/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import "CurlObject.h"

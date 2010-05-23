@@ -2,8 +2,7 @@
 //  UploadDelegate.h
 //  objective-curl
 //
-//  Created by nrj on 1/3/10.
-//  Copyright 2010x. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 

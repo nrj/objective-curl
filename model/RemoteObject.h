@@ -2,8 +2,7 @@
 //  RemoteObject.h
 //  objective-curl
 //
-//  Created by nrj on 1/4/10.
-//  Copyright 2010. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import <Foundation/Foundation.h>

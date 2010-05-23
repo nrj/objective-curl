@@ -28,7 +28,7 @@ The framework also uses common Cocoa delegate patterns.
     // SFTP is simply a subclass of FTP and could be used in the exact same way
 
 ## License
-Copyright (c) 2009 Nick Jensen
+Copyright (c) 2009 Nick Jensen <http://goto11.net>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

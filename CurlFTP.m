@@ -2,19 +2,13 @@
 //  CurlFTP.m
 //  objective-curl
 //
-//  Created by nrj on 12/14/09.
-//  Copyright 2009. All rights reserved.
+//  Copyright 2010 Nick Jensen <http://goto11.net>
 //
 
 #import "CurlFTP.h"
-#import "FTPUploadOperation.h"
+#import "UploadOperation.h"
 #import "Upload.h"
 #import "NSString+PathExtras.h"
-
-
-int const DEFAULT_FTP_PORT = 21;
-
-NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 
 
 @implementation CurlFTP
@@ -62,6 +56,18 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 }
 
 
+- (NSString *)protocolPrefix
+{
+	return @"ftp";
+}
+
+
+- (int)defaultPort
+{
+	return 21;
+}
+
+
 /*
  * Recursively upload a list of files and directories using the specified host and the users home directory.
  */
@@ -72,7 +78,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 								  username:username
 								  password:@""
 								 directory:@""
-									  port:DEFAULT_FTP_PORT];
+									  port:[self defaultPort]];
 }
 
 
@@ -86,7 +92,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 								  username:username
 								  password:password
 								 directory:@""
-									  port:DEFAULT_FTP_PORT];
+									  port:[self defaultPort]];
 }
 
 
@@ -101,7 +107,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 								  username:username
 								  password:password
 								 directory:directory
-									  port:DEFAULT_FTP_PORT];	
+									  port:[self defaultPort]];	
 }
 
 - (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory port:(int)port
@@ -109,7 +115,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 	Upload *upload = [[[Upload alloc] init] autorelease];
 	
 	[upload setProtocol:[self protocol]];
-	[upload setProtocolPrefix:FTP_PROTOCOL_PREFIX];
+	[upload setProtocolPrefix:[self protocolPrefix]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
@@ -124,7 +130,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 
 - (void)upload:(Upload *)record
 {
-	FTPUploadOperation *op = [[FTPUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
+	UploadOperation *op = [[UploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
 		
 	[record setProgress:0];
 	[record setStatus:TRANSFER_STATUS_QUEUED];
@@ -146,7 +152,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 	return [self listRemoteDirectory:directory 
 							  onHost:host
 						 forceReload:NO
-								port:DEFAULT_FTP_PORT];
+								port:[self defaultPort]];
 }
 
 
@@ -159,7 +165,7 @@ NSString * const FTP_PROTOCOL_PREFIX = @"ftp";
 	return [self listRemoteDirectory:directory 
 							  onHost:host 
 						 forceReload:reload 
-								port:DEFAULT_FTP_PORT];
+								port:[self defaultPort]];
 }
 
 

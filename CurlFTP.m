@@ -41,21 +41,6 @@
 }
 
 
-/*
- * Generates a new curl_easy_handle with FTP-specific options set.
- *
- *      See http://curl.haxx.se/libcurl/c/libcurl-easy.html
- */
-- (CURL *)newHandle
-{
-	CURL *handle = [super newHandle];
-	
-	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
-	
-	return handle;
-}
-
-
 - (NSString *)protocolPrefix
 {
 	return @"ftp";

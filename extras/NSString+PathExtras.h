@@ -10,8 +10,7 @@
 
 @interface NSString (PathExtras)
 
-- (NSString *)pathForFTP;
-- (NSString *)appendPathForFTP:(NSString *)path;
+- (NSString *)stringByAddingTildePrefix;
 - (NSString *)stringByRemovingTildePrefix;
 
 @end

@@ -14,6 +14,8 @@
 		0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */; };
 		0B1CC2B51117332600AC5959 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0B2E387B10DF2C3300E82CB2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2E387A10DF2C3300E82CB2 /* MainMenu.xib */; };
+		0B40BA0711AF479E00158EEB /* S3ErrorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B40BA0511AF479E00158EEB /* S3ErrorParser.h */; };
+		0B40BA0811AF479E00158EEB /* S3ErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B40BA0611AF479E00158EEB /* S3ErrorParser.m */; };
 		0B5FEE6E11165123005A5F84 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FEE6D11165123005A5F84 /* CurlClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B5FF03A11166DE8005A5F84 /* objective-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5FF03911166DE8005A5F84 /* objective-curl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B725E5510F2CC4D001C614D /* RemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B725E5310F2CC4D001C614D /* RemoteObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,6 +117,8 @@
 		0B0B975710F58CED007DBFA8 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
 		0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
+		0B40BA0511AF479E00158EEB /* S3ErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3ErrorParser.h; sourceTree = "<group>"; };
+		0B40BA0611AF479E00158EEB /* S3ErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3ErrorParser.m; sourceTree = "<group>"; };
 		0B5FEE6D11165123005A5F84 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClient.h; sourceTree = "<group>"; };
 		0B5FF03911166DE8005A5F84 /* objective-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curl.h"; sourceTree = "<group>"; };
 		0B725E5310F2CC4D001C614D /* RemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObject.h; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 		08FB77AEFE84172EC02AAC07 /* Framework Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0B40BA0411AF477E00158EEB /* util */,
 				0BEDAAB910EC44E200ED2C69 /* extras */,
 				0BD6240610DF1BF4004D8C5B /* include */,
 				0BD3CFB5110CF2F700478C99 /* operations */,
@@ -264,6 +269,15 @@
 				0B80542F11A900AA00CEA13A /* CurlS3.m */,
 			);
 			name = "Framework Classes";
+			sourceTree = "<group>";
+		};
+		0B40BA0411AF477E00158EEB /* util */ = {
+			isa = PBXGroup;
+			children = (
+				0B40BA0511AF479E00158EEB /* S3ErrorParser.h */,
+				0B40BA0611AF479E00158EEB /* S3ErrorParser.m */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 		0B76051210DF12CB00BE0666 /* Test */ = {
@@ -430,6 +444,7 @@
 				0B80545911A9035600CEA13A /* S3UploadOperation.h in Headers */,
 				0B8054A111A9070600CEA13A /* NSFileManager+MimeType.h in Headers */,
 				0BE0A34111A90E3400FBFB1F /* NSString+S3.h in Headers */,
+				0B40BA0711AF479E00158EEB /* S3ErrorParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +583,7 @@
 				0B80545A11A9035600CEA13A /* S3UploadOperation.m in Sources */,
 				0B8054A211A9070600CEA13A /* NSFileManager+MimeType.m in Sources */,
 				0BE0A34211A90E3400FBFB1F /* NSString+S3.m in Sources */,
+				0B40BA0811AF479E00158EEB /* S3ErrorParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

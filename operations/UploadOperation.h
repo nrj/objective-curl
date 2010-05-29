@@ -10,9 +10,8 @@
 #import "CurlClient.h"
 
 
-extern NSString * const TMP_FILENAME;
-
 @class Upload, FileTransfer;
+
 
 @interface UploadOperation : CurlOperation 
 {
@@ -23,11 +22,11 @@ extern NSString * const TMP_FILENAME;
 
 static int handleUploadProgress(UploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 
-- (void)setAuthOptions;
-
-- (NSString *)urlForTransfer:(FileTransfer *)file;
+- (void)setProtocolSpecificOptions;
 
 - (void)setFileSpecificOptions:(FileTransfer *)file;
+
+- (NSString *)urlForTransfer:(FileTransfer *)file;
 
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes;
 
@@ -36,8 +35,6 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 - (void)handleUploadFailed:(CURLcode)result;
 
 - (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
-
-- (char *)removeTempFileCommand:(NSString *)basePath;
 
 - (NSString *)credentials;
 

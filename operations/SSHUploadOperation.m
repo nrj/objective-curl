@@ -7,7 +7,9 @@
 
 #import "SSHUploadOperation.h"
 #import "Upload.h"
+#import "FileTransfer.h"
 #import "NSString+MD5.h"
+#import "NSString+PathExtras.h"
 #import "NSObject+Extensions.h"
 
 
@@ -51,25 +53,12 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 }
 
 
-/*
- * Thread entry point for recursive SFTP uploads.
- */
-- (void)main
+- (void)setProtocolSpecificOptions
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	[super setProtocolSpecificOptions];
 	
 	curl_easy_setopt(handle, CURLOPT_SSH_KEYFUNCTION, hostKeyCallback);
 	curl_easy_setopt(handle, CURLOPT_SSH_KEYDATA, self);
-
-	[super main];
-	
-	[pool release];
-}
-
-
-- (void)setAuthOptions
-{
-	[super setAuthOptions];
 	
 	if ([upload usePublicKeyAuth])
 	{
@@ -77,6 +66,33 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 		curl_easy_setopt(handle, CURLOPT_SSH_PUBLIC_KEYFILE, [[upload publicKeyFile] UTF8String]);
 		curl_easy_setopt(handle, CURLOPT_KEYPASSWD, [[upload password] UTF8String]);
 	}
+}
+
+
+- (void)setFileSpecificOptions:(FileTransfer *)file
+{
+	if ([file isEmptyDirectory])
+	{
+		const char *removeTempFile = [[NSString stringWithFormat:@"RM \"%@\"", [[file remotePath] stringByRemovingTildePrefix]] UTF8String];
+		
+		printf("\nQuote Command is %s\n", removeTempFile);
+		
+		[file appendPostQuote:removeTempFile];
+	}
+	
+	curl_easy_setopt(handle, CURLOPT_POSTQUOTE, [file postQuote]);
+}
+
+
+- (NSString *)urlForTransfer:(FileTransfer *)file
+{
+	NSString *filePath = [[file remotePath] stringByRemovingTildePrefix];
+		
+	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:filePath];
+		
+	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
+		
+	return url;
 }
 
 
@@ -123,18 +139,6 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 	}
 	
 	return answer;
-}
-
-
-/*
- * Returns a char pointer containing the delete temp file command. Be sure to call free() on the result.
- *
- */
-- (char *)removeTempFileCommand:(NSString *)tmpFilePath
-{	
-	char *command = malloc(strlen("RM \"\"") + [tmpFilePath length] + 1);
-	sprintf(command, "RM \"%s\"", [tmpFilePath UTF8String]);
-	return command;
 }
 
 

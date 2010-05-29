@@ -1,8 +1,10 @@
-/*!
-    @header CurlOperation.h
-    @abstract   Abstract class used for as the base for all transfer operations.  
-    @discussion Abstract class used for as the base for all transfer operations.
-*/
+//
+//  CurlOperation.h
+//  objective-curl
+//
+//  Copyright 2010 Nick Jensen <http://goto11.net>
+//
+
 
 #import <Cocoa/Cocoa.h>
 #include <sys/stat.h>

@@ -7,7 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CurlFTP.h"
-
+#import "CurlClient.h"
 
 extern int const DEFAULT_SFTP_PORT;
 

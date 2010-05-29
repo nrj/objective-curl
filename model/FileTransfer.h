@@ -8,12 +8,15 @@
 #import <Cocoa/Cocoa.h>
 #import <stdio.h>
 #import <sys/stat.h>
-
+#import <curl/curl.h>
 
 @interface FileTransfer : NSObject 
 {
 	NSString *localPath;
 	NSString *remotePath;
+	
+	struct curl_slist *headers;
+	struct curl_slist *postQuote;
 	
 	BOOL isEmptyDirectory;
 	BOOL fileNotFound;
@@ -41,10 +44,24 @@
 
 - (id)initWithLocalPath:(NSString *)aLocalPath remotePath:(NSString *)aRemotePath;
 
+- (struct curl_slist *)headers;
+
+- (void)appendHeader:(const char *)header;
+
+- (void)cleanupHeaders;
+
+- (struct curl_slist *)postQuote;
+
+- (void)appendPostQuote:(const char *)quote;
+
+- (void)cleanupPostQuotes;
+
 - (FILE *)getHandle;
 
 - (int)getInfo:(struct stat *)info;
 
 - (NSString *)getEmptyFilePath;
+
++ (NSString *)emptyFilename;
 
 @end

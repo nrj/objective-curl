@@ -2,10 +2,9 @@
 //  CurlOperation.m
 //  objective-curl
 //
-//  Base class for all curl related operations.
-//
 //  Copyright 2010 Nick Jensen <http://goto11.net>
 //
+
 
 #import "CurlOperation.h"
 #import "RemoteObject.h"

@@ -117,7 +117,7 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	[upload setHostname:hostname];
 	[upload setUsername:username];
 	[upload setPassword:password];
-	[upload setPath:[directory pathForFTP]];
+	[upload setPath:directory];
 	[upload setPort:port];
 			
 	[self upload:upload];

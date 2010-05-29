@@ -10,24 +10,38 @@
 
 @implementation NSFileManager (MimeType)
 
-
 + (NSString *)mimeTypeForFileAtPath:(NSString *)path
 {
-	NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]];
-	NSURLResponse *resp = nil;
-	NSError *err = nil;
+	BOOL isDir = NO;
+	NSFileManager *mgr = [[NSFileManager alloc] init];
+	NSString *mimeType = @"";
 	
-	[NSURLConnection sendSynchronousRequest:req 
-						  returningResponse:&resp 
-									  error:&err];
-	
-	if (err)
+	if ([mgr fileExistsAtPath:path isDirectory:&isDir] && isDir)
 	{
-		NSLog(@"Error trying to get MimeType of file: %@ - %@", path, [err description]);
-		return @"";
+		mimeType = @"application/x-directory";
+	}
+	else
+	{
+		NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]];
+		NSURLResponse *resp = nil;
+		NSError *err = nil;
+		
+		[NSURLConnection sendSynchronousRequest:req 
+								returningResponse:&resp 
+											error:&err];
+		if (!err)
+		{
+			mimeType = [resp MIMEType];
+		}
+		else
+		{
+			NSLog(@"Error trying to get MimeType of file: %@ - %@", path, [err description]);
+		}
 	}
 	
-	return [resp MIMEType];
+	[mgr release];
+		
+	return mimeType;
 }
 
 @end

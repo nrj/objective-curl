@@ -33,6 +33,9 @@
 		[self setLocalPath:aLocalPath];
 		[self setRemotePath:aRemotePath];
 		
+		headers = NULL;
+		postQuote = NULL;
+		
 		percentComplete		= 0;
 		totalBytes			= 0;
 		totalBytesUploaded	= 0;
@@ -41,11 +44,64 @@
 	return self;
 }
 
+
+- (void)dealloc
+{
+	[localPath release]; localPath = nil;
+	[remotePath release]; remotePath = nil;
+	if (headers) {
+		curl_slist_free_all(headers); headers = nil;
+	}
+	if (postQuote) {
+		curl_slist_free_all(postQuote); postQuote = nil;
+	}
+	[super dealloc];
+}
+
+
 - (NSString *)getEmptyFilePath
 {
-	NSString *str = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents/Frameworks/objective-curl.framework/Resources/.empty"];
+	NSArray *pathComponents = [NSArray arrayWithObjects:[[NSBundle bundleForClass:[self class]] bundlePath], @"Resources", [FileTransfer emptyFilename], NULL];
 	
-	return str;
+	return [NSString pathWithComponents:pathComponents];
+}
+
+- (struct curl_slist *)headers
+{
+	return headers;
+}
+
+- (void)appendHeader:(const char *)header
+{
+	headers = curl_slist_append(headers, header);
+}
+
+- (void)cleanupHeaders
+{
+	if (headers)
+	{
+		curl_slist_free_all(headers);
+		headers = NULL;
+	}
+}
+
+- (struct curl_slist *)postQuote
+{
+	return postQuote;
+}
+
+- (void)appendPostQuote:(const char *)quote
+{
+	postQuote = curl_slist_append(postQuote, quote);
+}
+
+- (void)cleanupPostQuotes
+{
+	if (postQuote)
+	{
+		curl_slist_free_all(postQuote);
+		postQuote = NULL;
+	}
 }
 
 - (FILE *)getHandle
@@ -64,6 +120,7 @@
 	return fh;
 }
 
+
 - (int)getInfo:(struct stat *)info
 {	
 	if([self isEmptyDirectory])
@@ -76,9 +133,16 @@
 	}
 }
 
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<FileTransfer localPath='%@' remotePath='%@' isEmptyDirectory='%d'", localPath, remotePath, isEmptyDirectory];
+}
+
+
++ (NSString *)emptyFilename
+{
+	return @".empty";
 }
 
 @end

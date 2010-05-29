@@ -14,9 +14,6 @@
 #import "NSString+PathExtras.h"
 
 
-NSString * const TMP_FILENAME = @".empty";
-
-
 @implementation UploadOperation
 
 
@@ -30,13 +27,13 @@ NSString * const TMP_FILENAME = @".empty";
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 			
-	// Set curl options
+	// Set options for uploading
 	curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSDATA, self);
 	curl_easy_setopt(handle, CURLOPT_PROGRESSFUNCTION, handleUploadProgress);
 	
 	// Set interface specific auth options
-	[self setAuthOptions];
+	[self setProtocolSpecificOptions];
 	
 	double totalBytes = 0;
 	
@@ -82,26 +79,16 @@ NSString * const TMP_FILENAME = @".empty";
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
 		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
 		
-		// If we are trying to upload an empty directory we upload an empty file inside of it
-		// and create a quote command to clean it up after.
-		
-		struct curl_slist *postRun = NULL;
-		char *removeTempFile = NULL;
-
-//		if ([file isEmptyDirectory])
-//		{			
-//			postRun = curl_slist_append(postRun, [self removeTempFileCommand:[relativePath stringByRemovingTildePrefix]]);
-//		}
-
-		// Add quote commands, if any.
-//		curl_easy_setopt(handle, CURLOPT_POSTQUOTE, postRun);
-		
 		// Perform
 		result = curl_easy_perform(handle);
 		
-		// Cleanup.
-		curl_slist_free_all(postRun);
-		free(removeTempFile);
+		// Cleanup any headers
+		[file cleanupHeaders];
+		
+		// Cleanup any quote commands
+		[file cleanupPostQuotes];
+		
+		// Close the file handle
 		fclose(fh);
 		
 		// If this upload wasn't successful, bail out.
@@ -112,7 +99,7 @@ NSString * const TMP_FILENAME = @".empty";
 		[upload setTotalFilesUploaded:i + 1];
 	}
 	
-	// Cleanup.
+	// Cleanup the files array.
 	[filesToUpload release];
 
 	// Process the result of the upload.
@@ -125,25 +112,33 @@ NSString * const TMP_FILENAME = @".empty";
 
 - (NSString *)urlForTransfer:(FileTransfer *)file
 {
-	NSString *relativePath = [file isEmptyDirectory] ? 
-		[[file remotePath] stringByAppendingPathComponent:TMP_FILENAME] : [file remotePath];
+	NSString *filePath = [[file remotePath] stringByAddingTildePrefix];
 	
-	NSString *url = [NSString stringWithFormat:@"%@://%@:%d/%@", 
-		[upload protocolPrefix], [upload hostname], [upload port], relativePath];
+	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:filePath];
+	
+	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
 	
 	return url;
 }
 
 
-- (void)setAuthOptions
+- (void)setProtocolSpecificOptions
 {
-	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);	
+	curl_easy_setopt(handle, CURLOPT_USERPWD, [[self credentials] UTF8String]);
+	curl_easy_setopt(handle, CURLOPT_FTP_CREATE_MISSING_DIRS, 1L);
 }
 
 
 - (void)setFileSpecificOptions:(FileTransfer *)file
-{
-	// Abstract
+{ 	
+	if ([file isEmptyDirectory])
+	 {
+		 const char *removeTempFile = [[NSString stringWithFormat:@"DELE %@", [FileTransfer emptyFilename]] UTF8String];
+
+		 [file appendPostQuote:removeTempFile];
+	 }	
+	
+	curl_easy_setopt(handle, CURLOPT_POSTQUOTE, [file postQuote]);
 }
 
 
@@ -214,7 +209,7 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 		}
 	}	
 	
-	return [upload cancelled];
+	return ([upload cancelled] || [upload status] == TRANSFER_STATUS_FAILED);
 }
 
 
@@ -233,7 +228,7 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 		[self performUploadDelegateSelector:@selector(uploadDidFinish:) 
 							   withArgument:nil];
 	}
-	else if (result == CURLE_ABORTED_BY_CALLBACK)
+	else if ([upload cancelled])
 	{
 		// Cancelled!
 		[upload setStatus:TRANSFER_STATUS_CANCELLED];
@@ -283,9 +278,9 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 }
 
 
-
 /*
  * Takes in a list of files and directories to be uploaded, and returns an array of FileTransfers.
+ * Gets the job done, but the code is a mess and I'm pretty sure it's leaking.
  * 
  */
 - (NSArray *)enumerateFilesToUpload:(NSArray *)files prefix:(NSString *)prefix totalBytes:(double *)totalBytes
@@ -331,6 +326,8 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 										remotePath:[prefix stringByAppendingPathComponent:[basePath stringByAppendingPathComponent:filename]]];
 
 					[pendingTransfer setIsEmptyDirectory:YES];
+					[pendingTransfer setRemotePath:[[pendingTransfer remotePath] 
+								stringByAppendingPathComponent:[FileTransfer emptyFilename]]];
 				}
 				else
 				{
@@ -363,6 +360,9 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 			{
 				// Empty Directory
 				[pendingTransfer setIsEmptyDirectory:YES];
+				[pendingTransfer setRemotePath:[[pendingTransfer remotePath] 
+												stringByAppendingPathComponent:[FileTransfer emptyFilename]]];
+
 			}
 			else
 			{
@@ -391,7 +391,6 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 	
 	return [filesToUpload autorelease];
 }
-
 
 
 /*
@@ -434,18 +433,6 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 	}
 	
 	return creds;
-}
-
-
-/*
- * Returns a char pointer containing the delete temp file command. Be sure to call free() on the result.
- *
- */
-- (char *)removeTempFileCommand:(NSString *)tmpFilePath
-{
-	char *command = malloc(strlen("DELE ") + [TMP_FILENAME length] + 1);
-	sprintf(command, "DELE %s", [TMP_FILENAME UTF8String]);
-	return command;
 }
 
 

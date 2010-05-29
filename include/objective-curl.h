@@ -6,6 +6,7 @@
 
 
 #import "CurlSCP.h"
+#import "CurlS3.h"
 #import "Upload.h"
 #import "FileTransfer.h"
 #import "UploadDelegate.h"

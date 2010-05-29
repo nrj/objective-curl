@@ -6,6 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <objective-curl/objective-curl.h>
 
 @class Upload, CurlFTP, CurlSFTP, CurlSCP, CurlS3;
 
@@ -23,6 +24,7 @@
 	IBOutlet NSTextField *hostnameField;
 	IBOutlet NSTextField *usernameField;
 	IBOutlet NSTextField *passwordField;
+	IBOutlet NSTextField *remoteDirField;
 	IBOutlet NSButton *connectButton;
 	IBOutlet NSTextField *fileField;
 	IBOutlet NSProgressIndicator *progressBar;

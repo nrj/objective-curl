@@ -10,7 +10,8 @@
 
 @implementation NSString (PathExtras)
 
-- (NSString *)pathForFTP
+
+- (NSString *)stringByAddingTildePrefix
 {
 	if ([self isEqualToString:@""])
 		return @"~/";
@@ -23,20 +24,9 @@
 	else
 		path = [NSMutableString stringWithString:self];
 	
-	// SFTP requires a trailing slash.
-	if(![[path substringFromIndex:([path length] - 1)] isEqualToString:@"/"])
-		[path appendString:@"/"];
-	
 	return path;
 }
 
-- (NSString *)appendPathForFTP:(NSString *)path;
-{
-	if ([path isEqualToString:@"."])
-		return self;
-	
-	return [[self stringByAppendingPathComponent:path] pathForFTP];
-}
 
 - (NSString *)stringByRemovingTildePrefix
 {
@@ -47,5 +37,6 @@
 	
 	return self;
 }
+
 
 @end

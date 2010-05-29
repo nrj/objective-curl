@@ -6,7 +6,7 @@
 //
 
 #import "TestController.h"
-#import <objective-curl/objective-curl.h>
+
 
 
 @implementation TestController
@@ -15,8 +15,8 @@
 
 
 - (void)awakeFromNib
-{		
-	NSLog([CurlObject libcurlVersion]);
+{	
+	NSLog(@"Version: %@", [CurlObject libcurlVersion]);
 	
 	ftp = [[CurlFTP alloc] init];
 	[ftp setVerbose:NO];
@@ -24,12 +24,12 @@
 	[ftp setDelegate:self];	
 	
 	sftp = [[CurlSFTP alloc] init];
-	[sftp setVerbose:NO];
+	[sftp setVerbose:YES];
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
 	
 	scp = [[CurlSCP alloc] init];
-	[scp setVerbose:NO];
+	[scp setVerbose:YES];
 	[scp setShowProgress:YES];
 	[scp setDelegate:self];
 	
@@ -46,7 +46,7 @@
 	
 	id <CurlClient>client = nil;
 	
-	switch([typeSelector selectedColumn])
+	switch([typeSelector selectedRow])
 	{
 		default:
 		case 0:
@@ -67,7 +67,7 @@
 												   toHost:[hostnameField stringValue] 
 												 username:[usernameField stringValue]
 												 password:[passwordField stringValue]
-												directory:@"nickjensen"];
+												directory:[remoteDirField stringValue]];
 	
 //	[newUpload setUsePublicKeyAuth:YES];
 //	[newUpload setPrivateKeyFile:[@"~/.ssh/id_rsa" stringByExpandingTildeInPath]];
@@ -96,14 +96,14 @@
 
 - (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
 {
-	NSLog(@".");
+//	NSLog(@".");
 	//	NSLog(@"Uploading %d of %d Files", [upload totalFilesUploaded], [upload totalFiles]);
-	NSLog(@"  Current File: %.0f of %.0f Bytes Uploaded (%d%%)", 
-			[[record currentTransfer] totalBytesUploaded], [[record currentTransfer] totalBytes], [[record currentTransfer] percentComplete]);
-	
-	NSLog(@"Total Progress: %.0f of %.0f Bytes Uploaded (%d%%)", 
-			[record totalBytesUploaded], [record totalBytes], [record progress]);
-	NSLog(@"");
+//	NSLog(@"  Current File: %.0f of %.0f Bytes Uploaded (%d%%)", 
+//			[[record currentTransfer] totalBytesUploaded], [[record currentTransfer] totalBytes], [[record currentTransfer] percentComplete]);
+//	
+//	NSLog(@"Total Progress: %.0f of %.0f Bytes Uploaded (%d%%)", 
+//			[record totalBytesUploaded], [record totalBytes], [record progress]);
+//	NSLog(@"");
 }
 
 

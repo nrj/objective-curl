@@ -5,11 +5,14 @@
 */
 
 
-#import "CurlSCP.h"
 #import "CurlS3.h"
+#import "CurlSFTP.h"
 #import "Upload.h"
 #import "FileTransfer.h"
 #import "UploadDelegate.h"
 #import "RemoteFile.h"
 #import "RemoteFolder.h"
 #import "TransferStatus.h"
+#import "CurlClientType.h"
+
+

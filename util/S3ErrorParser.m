@@ -6,23 +6,38 @@
 //
 
 #import "S3ErrorParser.h"
+#import "S3ErrorCodes.h"
+#import "TransferStatus.h"
+
+
+const NSString * S3ErrorCodeKey		= @"S3ErrorCode";
+
+const NSString * S3ErrorMessageKey	= @"S3ErrorMessage";
 
 
 @implementation S3ErrorParser
 
 
-+ (NSString *)parseErrorMessage:(NSString *)resp 
++ (NSDictionary *)parseErrorDetails:(NSString *)resp
 {
+	NSString *s3ErrorCode	 = @"Unknown";
+	NSString *s3ErrorMessage = @"Amazon S3 Error";
 	NSError *err = nil;
-	NSString *s3ErrorMessage = @"Unknown Amazon S3 Error";
 	NSXMLDocument *xml = [[NSXMLDocument alloc] initWithXMLString:resp 
 														  options:NSXMLDocumentTidyXML
 															error:&err];
+	
+	
+
 	if (!err) {
-		NSXMLNode *msgNode = [[xml nodesForXPath:@"./Error/Message" error:nil] objectAtIndex:0];
-		NSXMLNode *codeNode = [[xml nodesForXPath:@"./Error/Code" error:nil] objectAtIndex:0];
+		NSXMLNode *msgNode, *codeNode = nil;
 		
-		s3ErrorMessage = [NSString stringWithFormat:@"%@: %@", [codeNode stringValue], [msgNode stringValue]];
+		msgNode  = [[xml nodesForXPath:@"./Error/Message" error:nil] objectAtIndex:0];
+		
+		codeNode = [[xml nodesForXPath:@"./Error/Code" error:nil] objectAtIndex:0];
+		
+		s3ErrorCode = [codeNode stringValue];
+		s3ErrorMessage = [msgNode stringValue];
 	}
 	else {
 		NSLog(@"Error parsing S3 Response: %@", [err description]);
@@ -30,7 +45,21 @@
 	
 	[xml release];
 	
-	return s3ErrorMessage;
+	return [NSDictionary dictionaryWithObjectsAndKeys:	s3ErrorCode,
+														S3ErrorCodeKey, 
+														s3ErrorMessage, 
+														S3ErrorMessageKey, 
+														NULL];
+}
+
+
++ (int)transferStatusForErrorCode:(NSString *)code
+{	
+	if ([code isEqualToString:(NSString *)S3SignatureDoesNotMatch]) {
+		return TRANSFER_STATUS_LOGIN_DENIED;
+	}
+
+	return TRANSFER_STATUS_FAILED;
 }
 
 

@@ -11,15 +11,14 @@
 
 @interface S3UploadOperation : UploadOperation {
 	
-	int httpStatus;
+	NSString *errorCode;
 	NSString *errorMessage;
 	
 }
 
-@property(readwrite, assign) int httpStatus;
+@property(readwrite, copy) NSString *errorCode;
 @property(readwrite, copy) NSString *errorMessage;
 
-static size_t headerFunction(void *ptr, size_t size, size_t nmemb, void *data);
 static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data);
 
 

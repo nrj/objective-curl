@@ -17,10 +17,13 @@
 @synthesize path;
 @synthesize url;
 
+@synthesize clientType;
+
 @synthesize username;
 @synthesize password;
 
 @synthesize usePublicKeyAuth;
+@synthesize canUsePublicKeyAuth;
 @synthesize privateKeyFile;
 @synthesize publicKeyFile;
 

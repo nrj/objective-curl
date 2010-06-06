@@ -56,7 +56,7 @@
 	[super dealloc];
 }
 
-
+	
 /*
  * Generates a new curl_easy_handle.
  *
@@ -73,5 +73,12 @@
 	return handle;
 }
 
+
+- (int)clientType
+{
+	// Abstract
+	
+	return -1;
+}
 
 @end

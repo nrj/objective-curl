@@ -28,10 +28,10 @@
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
 	
-	scp = [[CurlSCP alloc] init];
-	[scp setVerbose:YES];
-	[scp setShowProgress:YES];
-	[scp setDelegate:self];
+//	scp = [[CurlSCP alloc] init];
+//	[scp setVerbose:YES];
+//	[scp setShowProgress:YES];
+//	[scp setDelegate:self];
 	
 	s3 = [[CurlS3 alloc] init];
 	[s3 setVerbose:YES];

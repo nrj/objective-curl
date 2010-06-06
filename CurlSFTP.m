@@ -6,6 +6,7 @@
 //
 
 #import "CurlSFTP.h"
+#import "CurlClientType.h"
 #import "Upload.h"
 #import "SSHUploadOperation.h"
 #import "NSString+PathExtras.h"
@@ -74,36 +75,9 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 }
 
 
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:hostname
-								  username:username
-								  password:@""
-								 directory:@"~/"
-									  port:[self defaultPort]];
-}
-
-
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:hostname
-								  username:username
-								  password:password
-								 directory:@""
-									  port:[self defaultPort]];	
-}
-
-
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory
-{
-	return [self uploadFilesAndDirectories:filesAndDirectories 
-									toHost:hostname
-								  username:username
-								  password:password
-								 directory:directory
-									  port:[self defaultPort]];	
+- (int)clientType
+{	
+	return CURL_CLIENT_SFTP;
 }
 
 
@@ -113,13 +87,15 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 	
 	[upload setProtocol:[self protocol]];
 	[upload setProtocolPrefix:[self protocolPrefix]];
+	[upload setClientType:[self clientType]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
 	[upload setPassword:password];
 	[upload setPath:directory];
 	[upload setPort:port];
-			
+	[upload setCanUsePublicKeyAuth:YES];
+	
 	[self upload:upload];
 	
 	return upload;

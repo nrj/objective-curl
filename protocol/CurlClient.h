@@ -12,6 +12,8 @@
 
 - (SecProtocolType)protocol;
 
+- (int)clientType;
+
 - (id)delegate;
 - (void)setDelegate:(id)delegate;
 

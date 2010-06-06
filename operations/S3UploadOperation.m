@@ -19,42 +19,26 @@
 @implementation S3UploadOperation
 
 
-@synthesize httpStatus;
+@synthesize errorCode;
 
 @synthesize errorMessage;
 
 
 /*
- * Parse and set the HTTP status from Amazon
- */
-static size_t headerFunction(void *ptr, size_t size, size_t nmemb, void *data)
-{
-    int len = size * nmemb;
-	S3UploadOperation *op = (S3UploadOperation *)data;
-	
-	// TODO - parse and set httpStatus
-	
-	printf("\n%s\n", (char *)ptr);
-	
-    return len;
-}
-
-
-/*
- * If we got a response body from PUT request and the httpStatus != 2XX then we handle it as an error
- * and bail out.
+ * If we got a response body from PUT request then we handle it as an error and bail.
  */
 static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
-{	
-    int len = size * nmemb;
+{		
 	S3UploadOperation *op = (S3UploadOperation *)data;
 	
-	// TODO - if httpStatus != 2XX then parse the error code.
-	BOOL isError = [op httpStatus] < 200 || [op httpStatus] > 299;
-
-	[op setErrorMessage:[S3ErrorParser parseErrorMessage:[NSString stringWithCString:(char *)ptr]]];
+	NSString *resp = [NSString stringWithCString:(char *)ptr];
 	
-    return isError ? 0 : len;
+	NSDictionary *err = [S3ErrorParser parseErrorDetails:resp];
+	
+	[op setErrorCode:[err objectForKey:S3ErrorCodeKey]];
+	[op setErrorMessage:[err objectForKey:S3ErrorMessageKey]];
+	
+    return 0;
 }
 
 
@@ -64,8 +48,6 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 - (void)setProtocolSpecificOptions
 {
 	curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
-	curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, headerFunction);
-	curl_easy_setopt(handle, CURLOPT_HEADERDATA, self);
 	curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, writeFunction);
 	curl_easy_setopt(handle, CURLOPT_WRITEDATA, self);
 }
@@ -96,6 +78,8 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 	
 	// Details of the request to be signed
 	NSString *stringToSign = [NSString stringWithFormat:@"PUT\n\n%@\n%@\n%@\n%@", contentType, date, acl, resource];
+	
+	NSLog(@"StringToSign = %@", stringToSign);
 	
 	// Construct the S3 authorization header
 	NSString *authString = [NSString stringWithFormat:@"AWS %@:%@", 
@@ -129,9 +113,9 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 	int status;
 	switch (result)
 	{
-		// Aborted from the write_func? Amazon S3 threw an error...
+		// Aborted from the write_func? That means Amazon S3 threw an error...
 		case CURLE_WRITE_ERROR:
-			status = TRANSFER_STATUS_FAILED;
+			status = [S3ErrorParser transferStatusForErrorCode:errorCode];
 			break;
 			
 		// Otherwise, process as a normal error.
@@ -140,10 +124,14 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 	}
 	
 	[upload setStatus:status];
+
+	NSString *message = (status == TRANSFER_STATUS_LOGIN_DENIED) ? 
+		[self getFailureDetailsForStatus:CURLE_LOGIN_DENIED withObject:upload] : 
+			[NSString stringWithFormat:@"%@:%@", errorCode, errorMessage];
 	
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidFail:message:)])
 	{
-		[[delegate invokeOnMainThread] uploadDidFail:upload message:errorMessage];
+		[[delegate invokeOnMainThread] uploadDidFail:upload message:message];
 	}
 }
 

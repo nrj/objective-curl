@@ -6,8 +6,10 @@
 //
 
 #import "CurlS3.h"
+#import "CurlClientType.h"
 #import "S3UploadOperation.h"
 #import "Upload.h"
+#import "NSString+PathExtras.h"
 
 
 @implementation CurlS3
@@ -33,6 +35,12 @@
 - (int)defaultPort
 {
 	return 443;
+}
+
+
+- (int)clientType
+{	
+	return CURL_CLIENT_S3;
 }
 
 

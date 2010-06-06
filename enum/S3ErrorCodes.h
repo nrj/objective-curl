@@ -1,0 +1,72 @@
+//
+//  S3ErrorCodes.h
+//  objective-curl
+//
+//  Copyright 2010 Nick Jensen <http://goto11.net>
+//
+
+const NSString * S3AccessDenied = @"AccessDenied";
+const NSString * S3AccountProblem = @"AccountProblem";
+const NSString * S3AmbiguousGrantByEmailAddress = @"AmbiguousGrantByEmailAddress";
+const NSString * S3BadDigest = @"BadDigest";
+const NSString * S3BucketAlreadyExists = @"BucketAlreadyExists";
+const NSString * S3BucketAlreadyOwnedByYou = @"BucketAlreadyOwnedByYou";
+const NSString * S3BucketNotEmpty = @"BucketNotEmpty";
+const NSString * S3CredentialsNotSupported = @"CredentialsNotSupported";
+const NSString * S3CrossLocationLoggingProhibited = @"CrossLocationLoggingProhibited";
+const NSString * S3EntityTooSmall = @"EntityTooSmall";
+const NSString * S3EntityTooLarge = @"EntityTooLarge";
+const NSString * S3ExpiredToken = @"ExpiredToken";
+const NSString * S3IncompleteBody = @"IncompleteBody";
+const NSString * S3IncorrectNumberOfFilesInPostRequest = @"IncorrectNumberOfFilesInPostRequest";
+const NSString * S3InlineDataTooLarge = @"InlineDataTooLarge";
+const NSString * S3InternalError = @"InternalError";
+const NSString * S3InvalidAccessKeyId = @"InvalidAccessKeyId";
+const NSString * S3InvalidAddressingHeader = @"InvalidAddressingHeader";
+const NSString * S3InvalidArgument = @"InvalidArgument";
+const NSString * S3InvalidBucketName = @"InvalidBucketName";
+const NSString * S3InvalidDigest = @"InvalidDigest";
+const NSString * S3InvalidLocationConstraint = @"InvalidLocationConstraint";
+const NSString * S3InvalidPayer = @"InvalidPayer";
+const NSString * S3InvalidPolicyDocument = @"InvalidPolicyDocument";
+const NSString * S3InvalidRange = @"InvalidRange";
+const NSString * S3InvalidSecurity = @"InvalidSecurity";
+const NSString * S3InvalidSOAPRequest = @"InvalidSOAPRequest";
+const NSString * S3InvalidStorageClass = @"InvalidStorageClass";
+const NSString * S3InvalidTargetBucketForLogging = @"InvalidTargetBucketForLogging";
+const NSString * S3InvalidToken = @"InvalidToken";
+const NSString * S3InvalidURI = @"InvalidURI";
+const NSString * S3KeyTooLong = @"KeyTooLong";
+const NSString * S3MalformedACLError = @"MalformedACLError";
+const NSString * S3MalformedPOSTRequest = @"MalformedPOSTRequest";
+const NSString * S3MalformedXML = @"MalformedXML";
+const NSString * S3MaxMessageLengthExceeded = @"MaxMessageLengthExceeded";
+const NSString * S3MaxPostPreDataLengthExceededError = @"MaxPostPreDataLengthExceededError";
+const NSString * S3MetadataTooLarge = @"MetadataTooLarge";
+const NSString * S3MethodNotAllowed = @"MethodNotAllowed";
+const NSString * S3MissingAttachment = @"MissingAttachment";
+const NSString * S3MissingContentLength = @"MissingContentLength";
+const NSString * S3MissingRequestBodyError = @"MissingRequestBodyError";
+const NSString * S3MissingSecurityElement = @"MissingSecurityElement";
+const NSString * S3MissingSecurityHeader = @"MissingSecurityHeader";
+const NSString * S3NoLoggingStatusForKey = @"NoLoggingStatusForKey";
+const NSString * S3NoSuchBucket = @"NoSuchBucket";
+const NSString * S3NoSuchKey = @"NoSuchKey";
+const NSString * S3NotImplemented = @"NotImplemented";
+const NSString * S3NotSignedUp = @"NotSignedUp";
+const NSString * S3OperationAborted = @"OperationAborted";
+const NSString * S3PermanentRedirect = @"PermanentRedirect";
+const NSString * S3PreconditionFailed = @"PreconditionFailed";
+const NSString * S3Redirect = @"Redirect";
+const NSString * S3RequestIsNotMultiPartContent = @"RequestIsNotMultiPartContent";
+const NSString * S3RequestTimeout = @"RequestTimeout";
+const NSString * S3RequestTimeTooSkewed = @"RequestTimeTooSkewed";
+const NSString * S3RequestTorrentOfBucketError = @"RequestTorrentOfBucketError";
+const NSString * S3SignatureDoesNotMatch = @"SignatureDoesNotMatch";
+const NSString * S3SlowDown = @"SlowDown";
+const NSString * S3TemporaryRedirect = @"TemporaryRedirect";
+const NSString * S3TokenRefreshRequired = @"TokenRefreshRequired";
+const NSString * S3TooManyBuckets = @"TooManyBuckets";
+const NSString * S3UnexpectedContent = @"UnexpectedContent";
+const NSString * S3UnresolvableGrantByEmailAddress = @"UnresolvableGrantByEmailAddress";
+const NSString * S3UserKeyMustBeSpecified = @"UserKeyMustBeSpecified";

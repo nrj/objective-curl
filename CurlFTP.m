@@ -6,6 +6,7 @@
 //
 
 #import "CurlFTP.h"
+#import "CurlClientType.h"
 #import "UploadOperation.h"
 #import "Upload.h"
 #import "NSString+PathExtras.h"
@@ -51,6 +52,13 @@
 {
 	return 21;
 }
+
+
+- (int)clientType
+{	
+	return CURL_CLIENT_FTP;
+}
+
 
 
 /*
@@ -101,13 +109,14 @@
 	
 	[upload setProtocol:[self protocol]];
 	[upload setProtocolPrefix:[self protocolPrefix]];
+	[upload setClientType:[self clientType]];
 	[upload setLocalFiles:filesAndDirectories];
 	[upload setHostname:hostname];
 	[upload setUsername:username];
 	[upload setPassword:password];
 	[upload setPath:[directory stringByRemovingTildePrefix]];
 	[upload setPort:port];
-	
+
 	[self upload:upload];
 	
 	return upload;

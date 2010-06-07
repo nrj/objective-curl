@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #include <sys/stat.h>
-#include <curl/curl.h>
+#import "curl.h"
+
+
 
 @class RemoteObject;
 

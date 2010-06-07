@@ -1,0 +1,4 @@
+.DS_Store
+objective-curl.xcodeproj/*.mode*
+objective-curl.xcodeproj/*.pbxuser
+build/**/*

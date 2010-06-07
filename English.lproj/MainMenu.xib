@@ -2,18 +2,18 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10D573</string>
-		<string key="IBDocument.InterfaceBuilderVersion">740</string>
+		<string key="IBDocument.SystemVersion">10D2094</string>
+		<string key="IBDocument.InterfaceBuilderVersion">732</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">740</string>
+			<string key="NS.object.0">732</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="648"/>
 			<integer value="29"/>
-			<integer value="713"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1112,7 +1112,7 @@
 							<object class="NSSecureTextFieldCell" key="NSCell" id="659381111">
 								<int key="NSCellFlags">343014976</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">9v9XNUmTHuD1w/0LskIYi2NSSvlAByKKfujIFH9l</string>
+								<string key="NSContents"/>
 								<object class="NSFont" key="NSSupport" id="26">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -1153,7 +1153,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="510153074">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">4326400</int>
-								<string key="NSContents">AKIAILUQ2JJ7YDXEHKRA</string>
+								<string key="NSContents">nick</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="370322315"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1170,7 +1170,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="790701010">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">s3.amazonaws.com</string>
+								<string key="NSContents">localhost</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="638388920"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1300,7 +1300,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="18424731">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">/Users/nrj/Desktop/avarcas.jpg</string>
+								<string key="NSContents">/Users/nick/Desktop/avarcas.jpg</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="889008429"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1317,7 +1317,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="5519405">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272761856</int>
-								<string key="NSContents">nickjensen</string>
+								<string key="NSContents">tmp</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="637258183"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -1345,7 +1345,7 @@
 							<object class="NSMutableArray" key="NSCells">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSButtonCell" id="322784260">
-									<int key="NSCellFlags">67239424</int>
+									<int key="NSCellFlags">-2080244224</int>
 									<int key="NSCellFlags2">131072</int>
 									<string key="NSContents">SFTP</string>
 									<reference key="NSSupport" ref="26"/>
@@ -1386,7 +1386,7 @@
 									<int key="NSPeriodicInterval">75</int>
 								</object>
 								<object class="NSButtonCell" id="380031538">
-									<int key="NSCellFlags">-2080244224</int>
+									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">131072</int>
 									<string key="NSContents">Amazon S3</string>
 									<reference key="NSSupport" ref="26"/>
@@ -1457,8 +1457,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
-							<int key="NSSelectedRow">3</int>
-							<reference key="NSSelectedCell" ref="380031538"/>
+							<reference key="NSSelectedCell" ref="322784260"/>
 							<reference key="NSBackgroundColor" ref="907046648"/>
 							<reference key="NSCellBackgroundColor" ref="850842249"/>
 							<object class="NSFont" key="NSFont">
@@ -1476,6 +1475,36 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			</object>
 			<object class="NSUserDefaultsController" id="1022775234">
 				<bool key="NSSharedInstance">YES</bool>
+			</object>
+			<object class="NSMenu" id="628350780">
+				<string key="NSTitle"/>
+				<object class="NSMutableArray" key="NSMenuItems">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSMenuItem" id="840865327">
+						<reference key="NSMenu" ref="628350780"/>
+						<string key="NSTitle">Item 1</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="90941078"/>
+						<reference key="NSMixedImage" ref="675015698"/>
+					</object>
+					<object class="NSMenuItem" id="329088914">
+						<reference key="NSMenu" ref="628350780"/>
+						<string key="NSTitle">Item 2</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="90941078"/>
+						<reference key="NSMixedImage" ref="675015698"/>
+					</object>
+					<object class="NSMenuItem" id="436222263">
+						<reference key="NSMenu" ref="628350780"/>
+						<string key="NSTitle">Item 3</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="90941078"/>
+						<reference key="NSMixedImage" ref="675015698"/>
+					</object>
+				</object>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -3215,6 +3244,32 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="277508104"/>
 						<reference key="parent" ref="826476616"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">731</int>
+						<reference key="object" ref="628350780"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="840865327"/>
+							<reference ref="329088914"/>
+							<reference ref="436222263"/>
+						</object>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">732</int>
+						<reference key="object" ref="840865327"/>
+						<reference key="parent" ref="628350780"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">733</int>
+						<reference key="object" ref="329088914"/>
+						<reference key="parent" ref="628350780"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">734</int>
+						<reference key="object" ref="436222263"/>
+						<reference key="parent" ref="628350780"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -3454,6 +3509,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>729.IBPluginDependency</string>
 					<string>73.IBPluginDependency</string>
 					<string>73.ImportedFromIB2</string>
+					<string>731.IBPluginDependency</string>
+					<string>732.IBPluginDependency</string>
+					<string>733.IBPluginDependency</string>
+					<string>734.IBPluginDependency</string>
 					<string>74.IBPluginDependency</string>
 					<string>74.ImportedFromIB2</string>
 					<string>75.IBPluginDependency</string>
@@ -3663,9 +3722,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{175, 132}, {486, 188}}</string>
+					<string>{{347, 109}, {486, 188}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{175, 132}, {486, 188}}</string>
+					<string>{{347, 109}, {486, 188}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3713,6 +3772,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -3752,7 +3815,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">730</int>
+			<int key="maxID">734</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

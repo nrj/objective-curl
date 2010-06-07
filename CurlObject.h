@@ -6,8 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "curl.h"
 #include <sys/stat.h>
-#include <curl/curl.h>
 
 @class RemoteObject;
 

@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015515B411BD66E800EAB22D /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 015515B211BD66E100EAB22D /* libssh2.1.dylib */; };
+		018293C411BD5B0D00B4AEA1 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293C311BD5B0D00B4AEA1 /* curl.h */; };
+		018293E911BD5CF900B4AEA1 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293E611BD5CF900B4AEA1 /* curlbuild.h */; };
+		018293EA11BD5CF900B4AEA1 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293E711BD5CF900B4AEA1 /* curlrules.h */; };
+		018293EB11BD5CF900B4AEA1 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293E811BD5CF900B4AEA1 /* curlver.h */; };
+		018293F511BD5D6600B4AEA1 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293F311BD5D6600B4AEA1 /* easy.h */; };
+		018293F611BD5D6600B4AEA1 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293F411BD5D6600B4AEA1 /* multi.h */; };
+		01C28CED11BD73DA009615C8 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */; };
+		01C28D0011BD7488009615C8 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 015515B211BD66E100EAB22D /* libssh2.1.dylib */; };
 		0B01E63811B72A6B003DD235 /* S3ErrorCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B01E63711B72A6B003DD235 /* S3ErrorCodes.h */; };
 		0B0A228111A9CB5700D73D5D /* .empty in Resources */ = {isa = PBXBuildFile; fileRef = 0B0A228011A9CB5700D73D5D /* .empty */; };
 		0B0B975A10F58CED007DBFA8 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B975610F58CED007DBFA8 /* NSString+MD5.h */; };
@@ -37,10 +46,7 @@
 		0BA5ECF511BC2744009C5194 /* CurlClientType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BA5ECF411BC2744009C5194 /* CurlClientType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB380A110E84BF4003DD538 /* CurlSFTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */; };
-		0BB383AE10EB1DF3003DD538 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
-		0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
 		0BB383B210EB1DF9003DD538 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */; };
-		0BB383B310EB1DF9003DD538 /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */; };
 		0BBF81F710EEB1B0005358BB /* FileTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BBF81F510EEB1B0005358BB /* FileTransfer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BBF81F810EEB1B0005358BB /* FileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF81F610EEB1B0005358BB /* FileTransfer.m */; };
 		0BBF83DD10EFD6CD005358BB /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF83DB10EFD6CD005358BB /* ftpparse.c */; };
@@ -68,7 +74,6 @@
 		0BD623F810DF1B29004D8C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BD623F710DF1B29004D8C5B /* main.m */; };
 		0BE0A34111A90E3400FBFB1F /* NSString+S3.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BE0A33F11A90E3400FBFB1F /* NSString+S3.h */; };
 		0BE0A34211A90E3400FBFB1F /* NSString+S3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BE0A34011A90E3400FBFB1F /* NSString+S3.m */; };
-		0BEDAD4510EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -90,8 +95,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				015515B411BD66E800EAB22D /* libssh2.1.dylib in Copy Frameworks */,
 				0BB383B210EB1DF9003DD538 /* libcurl.4.dylib in Copy Frameworks */,
-				0BB383B310EB1DF9003DD538 /* libssh2.1.dylib in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +115,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		015515B211BD66E100EAB22D /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
+		018293C311BD5B0D00B4AEA1 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		018293E611BD5CF900B4AEA1 /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
+		018293E711BD5CF900B4AEA1 /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
+		018293E811BD5CF900B4AEA1 /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		018293F311BD5D6600B4AEA1 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		018293F411BD5D6600B4AEA1 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0B01E63711B72A6B003DD235 /* S3ErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3ErrorCodes.h; sourceTree = "<group>"; };
@@ -144,7 +156,6 @@
 		0BB380A110E84BF4003DD538 /* CurlSFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSFTP.h; sourceTree = "<group>"; };
 		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
 		0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = lib/libcurl.4.dylib; sourceTree = "<group>"; };
-		0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
 		0BBF81F510EEB1B0005358BB /* FileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTransfer.h; sourceTree = "<group>"; };
 		0BBF81F610EEB1B0005358BB /* FileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTransfer.m; sourceTree = "<group>"; };
 		0BBF83DB10EFD6CD005358BB /* ftpparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftpparse.c; sourceTree = "<group>"; };
@@ -192,16 +203,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01C28CED11BD73DA009615C8 /* libcrypto.0.9.7.dylib in Frameworks */,
+				01C28D0011BD7488009615C8 /* libssh2.1.dylib in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
-				0BB383AE10EB1DF3003DD538 /* libcurl.4.dylib in Frameworks */,
-				0BB383AF10EB1DF3003DD538 /* libssh2.1.dylib in Frameworks */,
-				0BEDAD4510EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		018293C211BD5ACE00B4AEA1 /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				018293F311BD5D6600B4AEA1 /* easy.h */,
+				018293F411BD5D6600B4AEA1 /* multi.h */,
+				018293E611BD5CF900B4AEA1 /* curlbuild.h */,
+				018293E711BD5CF900B4AEA1 /* curlrules.h */,
+				018293E811BD5CF900B4AEA1 /* curlver.h */,
+				018293C311BD5B0D00B4AEA1 /* curl.h */,
+			);
+			path = curl;
+			sourceTree = "<group>";
+		};
 		034768DFFF38A50411DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +387,7 @@
 		0BD6240610DF1BF4004D8C5B /* include */ = {
 			isa = PBXGroup;
 			children = (
+				018293C211BD5ACE00B4AEA1 /* curl */,
 				0B5FF03911166DE8005A5F84 /* objective-curl.h */,
 			);
 			path = include;
@@ -389,7 +413,7 @@
 			children = (
 				0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */,
 				0BB383AC10EB1DF3003DD538 /* libcurl.4.dylib */,
-				0BB383AD10EB1DF3003DD538 /* libssh2.1.dylib */,
+				015515B211BD66E100EAB22D /* libssh2.1.dylib */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -446,6 +470,12 @@
 				0B40BA0711AF479E00158EEB /* S3ErrorParser.h in Headers */,
 				0B01E63811B72A6B003DD235 /* S3ErrorCodes.h in Headers */,
 				0BA5ECF511BC2744009C5194 /* CurlClientType.h in Headers */,
+				018293C411BD5B0D00B4AEA1 /* curl.h in Headers */,
+				018293E911BD5CF900B4AEA1 /* curlbuild.h in Headers */,
+				018293EA11BD5CF900B4AEA1 /* curlrules.h in Headers */,
+				018293EB11BD5CF900B4AEA1 /* curlver.h in Headers */,
+				018293F511BD5D6600B4AEA1 /* easy.h in Headers */,
+				018293F611BD5D6600B4AEA1 /* multi.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,7 +660,10 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "CurlTester-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -654,7 +687,10 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "CurlTester-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -685,7 +721,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-headerpad_max_install_names",
 					"-lcurl",
@@ -711,7 +750,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-headerpad_max_install_names",
 					"-lcurl",
@@ -725,38 +767,40 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "include/**";
+				HEADER_SEARCH_PATHS = "";
 				LD_OPENMP_FLAGS = "-fopenmp";
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "${SOURCE_ROOT}/include";
 			};
 			name = Debug;
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "include/**";
+				HEADER_SEARCH_PATHS = "";
 				LD_OPENMP_FLAGS = "-fopenmp";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "${SOURCE_ROOT}/include";
 			};
 			name = Release;
 		};

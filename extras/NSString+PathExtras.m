@@ -11,6 +11,18 @@
 @implementation NSString (PathExtras)
 
 
+- (NSString *)stringByAppendingPathPreservingAbsolutePaths:(NSString *)str
+{
+	NSMutableString *res = [[self stringByAppendingPathComponent:str] mutableCopy];
+	
+	if ([[str substringToIndex:1] isEqualToString:@"/"])
+	{	
+		[res replaceCharactersInRange:[res rangeOfString:@"/"] withString:@"//"];
+	}
+	
+	return (NSString *)res;
+}
+
 - (NSString *)stringByAddingTildePrefix
 {
 	if ([self isEqualToString:@""])

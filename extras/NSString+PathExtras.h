@@ -10,6 +10,7 @@
 
 @interface NSString (PathExtras)
 
+- (NSString *)stringByAppendingPathPreservingAbsolutePaths:(NSString *)str;
 - (NSString *)stringByAddingTildePrefix;
 - (NSString *)stringByRemovingTildePrefix;
 

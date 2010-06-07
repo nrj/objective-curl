@@ -114,7 +114,8 @@
 {
 	NSString *filePath = [[file remotePath] stringByAddingTildePrefix];
 	
-	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:filePath];
+	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] 
+						stringByAppendingPathPreservingAbsolutePaths:filePath];
 	
 	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
 	
@@ -487,6 +488,7 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 	else
 	{
 		[timer invalidate];
+		[timer release];
 	}
 }
 

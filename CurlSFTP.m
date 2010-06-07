@@ -81,31 +81,11 @@ NSString * const DEFAULT_KNOWN_HOSTS = @"~/.ssh/known_hosts";
 }
 
 
-- (Upload *)uploadFilesAndDirectories:(NSArray *)filesAndDirectories toHost:(NSString *)hostname username:(NSString *)username password:(NSString *)password directory:(NSString *)directory port:(int)port
-{
-	Upload *upload = [[[Upload alloc] init] autorelease];
-	
-	[upload setProtocol:[self protocol]];
-	[upload setProtocolPrefix:[self protocolPrefix]];
-	[upload setClientType:[self clientType]];
-	[upload setLocalFiles:filesAndDirectories];
-	[upload setHostname:hostname];
-	[upload setUsername:username];
-	[upload setPassword:password];
-	[upload setPath:directory];
-	[upload setPort:port];
-	[upload setCanUsePublicKeyAuth:YES];
-	
-	[self upload:upload];
-	
-	return upload;
-}
-
-
 - (void)upload:(Upload *)record
 {
 	SSHUploadOperation *op = [[SSHUploadOperation alloc] initWithHandle:[self newHandle] delegate:delegate];
 	
+	[record setCanUsePublicKeyAuth:YES];
 	[record setProgress:0];
 	[record setStatus:TRANSFER_STATUS_QUEUED];
 	[record setConnected:NO];

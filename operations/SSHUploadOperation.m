@@ -88,7 +88,7 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 {
 	NSString *filePath = [[file remotePath] stringByRemovingTildePrefix];
 		
-	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:filePath];
+	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:[filePath stringByAddingTildePrefix]];
 		
 	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
 		

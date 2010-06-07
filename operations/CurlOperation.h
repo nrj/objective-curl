@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include <sys/stat.h>
-#import "curl.h"
+#import "curl-ssh-patched.h"
 
 
 

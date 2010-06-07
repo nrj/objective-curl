@@ -39,9 +39,9 @@
  * in a subdirectory of the source tree.
  */
 
-#include "curlver.h"			/* libcurl version defines   */
-#include "curlbuild.h"			/* libcurl build definitions */
-#include "curlrules.h"			/* libcurl rules enforcement */
+#include <curl/curlver.h>			/* libcurl version defines   */
+#include <curl/curlbuild.h>		/* libcurl build definitions */
+#include <curl/curlrules.h>			/* libcurl rules enforcement */
 
 /*
  * Define WIN32 when build target is Win32 API
@@ -1914,8 +1914,8 @@ CURL_EXTERN CURLcode curl_easy_pause(CURL *handle, int bitmask);
 
 /* unfortunately, the easy.h and multi.h include files need options and info
   stuff before they can be included! */
-#include "easy.h" /* nothing in curl is fun without the easy stuff */
-#include "multi.h"
+#include <curl/easy.h> /* nothing in curl is fun without the easy stuff */
+#include <curl/multi.h>
 
 /* the typechecker doesn't work in C++ (yet) */
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && \

@@ -63,7 +63,6 @@
 		if ([file fileNotFound])
 		{
 			NSLog(@"Local file not found: %@", [file localPath]);
-
 			continue;
 		}
 		
@@ -72,8 +71,6 @@
 		FILE *fh = [file getHandle];
 		
 		NSString *url = [self urlForTransfer:file];
-		
-		NSLog(@"URL = %@", url);
 		
 		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)[file totalBytes]);
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);

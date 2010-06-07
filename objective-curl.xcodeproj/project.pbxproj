@@ -8,12 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		015515B411BD66E800EAB22D /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 015515B211BD66E100EAB22D /* libssh2.1.dylib */; };
-		018293C411BD5B0D00B4AEA1 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293C311BD5B0D00B4AEA1 /* curl.h */; };
-		018293E911BD5CF900B4AEA1 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293E611BD5CF900B4AEA1 /* curlbuild.h */; };
-		018293EA11BD5CF900B4AEA1 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293E711BD5CF900B4AEA1 /* curlrules.h */; };
-		018293EB11BD5CF900B4AEA1 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293E811BD5CF900B4AEA1 /* curlver.h */; };
-		018293F511BD5D6600B4AEA1 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293F311BD5D6600B4AEA1 /* easy.h */; };
-		018293F611BD5D6600B4AEA1 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293F411BD5D6600B4AEA1 /* multi.h */; };
+		018293C411BD5B0D00B4AEA1 /* curl-ssh-patched.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293C311BD5B0D00B4AEA1 /* curl-ssh-patched.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01C28CED11BD73DA009615C8 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */; };
 		01C28D0011BD7488009615C8 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 015515B211BD66E100EAB22D /* libssh2.1.dylib */; };
 		0B01E63811B72A6B003DD235 /* S3ErrorCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B01E63711B72A6B003DD235 /* S3ErrorCodes.h */; };
@@ -116,12 +111,7 @@
 
 /* Begin PBXFileReference section */
 		015515B211BD66E100EAB22D /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
-		018293C311BD5B0D00B4AEA1 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
-		018293E611BD5CF900B4AEA1 /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
-		018293E711BD5CF900B4AEA1 /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
-		018293E811BD5CF900B4AEA1 /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
-		018293F311BD5D6600B4AEA1 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
-		018293F411BD5D6600B4AEA1 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		018293C311BD5B0D00B4AEA1 /* curl-ssh-patched.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "curl-ssh-patched.h"; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0B01E63711B72A6B003DD235 /* S3ErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3ErrorCodes.h; sourceTree = "<group>"; };
@@ -215,12 +205,7 @@
 		018293C211BD5ACE00B4AEA1 /* curl */ = {
 			isa = PBXGroup;
 			children = (
-				018293F311BD5D6600B4AEA1 /* easy.h */,
-				018293F411BD5D6600B4AEA1 /* multi.h */,
-				018293E611BD5CF900B4AEA1 /* curlbuild.h */,
-				018293E711BD5CF900B4AEA1 /* curlrules.h */,
-				018293E811BD5CF900B4AEA1 /* curlver.h */,
-				018293C311BD5B0D00B4AEA1 /* curl.h */,
+				018293C311BD5B0D00B4AEA1 /* curl-ssh-patched.h */,
 			);
 			path = curl;
 			sourceTree = "<group>";
@@ -470,12 +455,7 @@
 				0B40BA0711AF479E00158EEB /* S3ErrorParser.h in Headers */,
 				0B01E63811B72A6B003DD235 /* S3ErrorCodes.h in Headers */,
 				0BA5ECF511BC2744009C5194 /* CurlClientType.h in Headers */,
-				018293C411BD5B0D00B4AEA1 /* curl.h in Headers */,
-				018293E911BD5CF900B4AEA1 /* curlbuild.h in Headers */,
-				018293EA11BD5CF900B4AEA1 /* curlrules.h in Headers */,
-				018293EB11BD5CF900B4AEA1 /* curlver.h in Headers */,
-				018293F511BD5D6600B4AEA1 /* easy.h in Headers */,
-				018293F611BD5D6600B4AEA1 /* multi.h in Headers */,
+				018293C411BD5B0D00B4AEA1 /* curl-ssh-patched.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

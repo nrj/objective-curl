@@ -79,8 +79,6 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 	// Details of the request to be signed
 	NSString *stringToSign = [NSString stringWithFormat:@"PUT\n\n%@\n%@\n%@\n%@", contentType, date, acl, resource];
 	
-	NSLog(@"StringToSign = %@", stringToSign);
-	
 	// Construct the S3 authorization header
 	NSString *authString = [NSString stringWithFormat:@"AWS %@:%@", 
 								accessKey, [stringToSign signS3PutRequestWithKey:secretKey]];

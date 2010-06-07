@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "curl.h"
+#import "curl-ssh-patched.h"
 #include <sys/stat.h>
 
 @class RemoteObject;

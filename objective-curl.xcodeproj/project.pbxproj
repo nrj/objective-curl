@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01351E6011BE978E0091D323 /* objective-curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 01351E5D11BE978E0091D323 /* objective-curlbuild.h */; };
+		01351E6111BE978E0091D323 /* objective-curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 01351E5E11BE978E0091D323 /* objective-curlrules.h */; };
+		01351E6211BE978E0091D323 /* objective-curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 01351E5F11BE978E0091D323 /* objective-curlver.h */; };
 		015515B411BD66E800EAB22D /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 015515B211BD66E100EAB22D /* libssh2.1.dylib */; };
 		018293C411BD5B0D00B4AEA1 /* curl-ssh-patched.h in Headers */ = {isa = PBXBuildFile; fileRef = 018293C311BD5B0D00B4AEA1 /* curl-ssh-patched.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01C28CED11BD73DA009615C8 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BEDAD4410EC7E9C00ED2C69 /* libcrypto.0.9.7.dylib */; };
@@ -110,6 +113,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01351E5D11BE978E0091D323 /* objective-curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curlbuild.h"; sourceTree = "<group>"; };
+		01351E5E11BE978E0091D323 /* objective-curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curlrules.h"; sourceTree = "<group>"; };
+		01351E5F11BE978E0091D323 /* objective-curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "objective-curlver.h"; sourceTree = "<group>"; };
 		015515B211BD66E100EAB22D /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = lib/libssh2.1.dylib; sourceTree = "<group>"; };
 		018293C311BD5B0D00B4AEA1 /* curl-ssh-patched.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "curl-ssh-patched.h"; sourceTree = "<group>"; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -206,6 +212,9 @@
 			isa = PBXGroup;
 			children = (
 				018293C311BD5B0D00B4AEA1 /* curl-ssh-patched.h */,
+				01351E5D11BE978E0091D323 /* objective-curlbuild.h */,
+				01351E5E11BE978E0091D323 /* objective-curlrules.h */,
+				01351E5F11BE978E0091D323 /* objective-curlver.h */,
 			);
 			path = curl;
 			sourceTree = "<group>";
@@ -456,6 +465,9 @@
 				0B01E63811B72A6B003DD235 /* S3ErrorCodes.h in Headers */,
 				0BA5ECF511BC2744009C5194 /* CurlClientType.h in Headers */,
 				018293C411BD5B0D00B4AEA1 /* curl-ssh-patched.h in Headers */,
+				01351E6011BE978E0091D323 /* objective-curlbuild.h in Headers */,
+				01351E6111BE978E0091D323 /* objective-curlrules.h in Headers */,
+				01351E6211BE978E0091D323 /* objective-curlver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,10 @@
 
 static int handleUploadProgress(UploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow);
 
+-(BOOL)dependentOperationCancelled;
+
+- (void)calculateUploadProgress:(double)ulnow total:(double)ultotal;
+
 - (void)setProtocolSpecificOptions;
 
 - (void)setFileSpecificOptions:(FileTransfer *)file;

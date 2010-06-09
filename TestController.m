@@ -34,7 +34,7 @@
 //	[scp setDelegate:self];
 	
 	s3 = [[CurlS3 alloc] init];
-	[s3 setVerbose:YES];
+	[s3 setVerbose:NO];
 	[s3 setShowProgress:YES];
 	[s3 setDelegate:self];
 }
@@ -96,14 +96,14 @@
 
 - (void)uploadDidProgress:(Upload *)record toPercent:(NSNumber *)percent;
 {
-//	NSLog(@".");
-	//	NSLog(@"Uploading %d of %d Files", [upload totalFilesUploaded], [upload totalFiles]);
-//	NSLog(@"  Current File: %.0f of %.0f Bytes Uploaded (%d%%)", 
-//			[[record currentTransfer] totalBytesUploaded], [[record currentTransfer] totalBytes], [[record currentTransfer] percentComplete]);
-//	
-//	NSLog(@"Total Progress: %.0f of %.0f Bytes Uploaded (%d%%)", 
-//			[record totalBytesUploaded], [record totalBytes], [record progress]);
-//	NSLog(@"");
+/*
+	NSLog(@".");
+	NSLog(@"  Current File: %.0f of %.0f Bytes Uploaded (%d%%)", 
+			[[record currentTransfer] totalBytesUploaded], [[record currentTransfer] totalBytes], [[record currentTransfer] percentComplete]);
+	
+	NSLog(@"Total Progress: %.0f of %.0f Bytes Uploaded (%d%%)", 
+			[record totalBytesUploaded], [record totalBytes], [record progress]);
+*/
 }
 
 

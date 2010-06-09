@@ -9,8 +9,8 @@
 #import "CurlFTP.h"
 #import "CurlClient.h"
 
-@interface CurlS3 : CurlFTP <CurlClient> {
 
-}
+@interface CurlS3 : CurlFTP <CurlClient>
+
 
 @end

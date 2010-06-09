@@ -24,13 +24,27 @@
 @synthesize errorMessage;
 
 
+static size_t read_function( void *ptr, size_t size, size_t nmemb, void *stream)
+{
+	int len = size * nmemb;
+	
+	NSLog(@"READ! %d", len);
+	
+	return len;
+}
+
+
+- (void)calculateUploadProgress:(double)ulnow total:(double)ultotal
+{
+	[super calculateUploadProgress:ulnow total:ultotal];
+}
+
+
 /*
  * If we got a response body from PUT request then we handle it as an error and bail.
  */
-static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
-{		
-	S3UploadOperation *op = (S3UploadOperation *)data;
-	
+static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperation *op)
+{			
 	NSString *resp = [NSString stringWithCString:(char *)ptr];
 	
 	NSDictionary *err = [S3ErrorParser parseErrorDetails:resp];
@@ -50,6 +64,7 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 	curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
 	curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, writeFunction);
 	curl_easy_setopt(handle, CURLOPT_WRITEDATA, self);
+	curl_easy_setopt(handle, CURLOPT_READFUNCTION, read_function);
 }
 
 
@@ -58,7 +73,7 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
  *
  */
 - (void)setFileSpecificOptions:(FileTransfer *)file
-{	
+{		
 	// These act the same as username and password
 	NSString *accessKey = [upload username];
 	NSString *secretKey = [upload password];

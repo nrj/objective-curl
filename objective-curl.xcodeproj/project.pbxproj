@@ -17,6 +17,8 @@
 		0B0B975B10F58CED007DBFA8 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975710F58CED007DBFA8 /* NSString+MD5.m */; };
 		0B0B975C10F58CED007DBFA8 /* NSString+PathExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */; };
 		0B0B975D10F58CED007DBFA8 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */; };
+		0B149EF011BF114900FB735F /* S3ListOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B149EEE11BF114900FB735F /* S3ListOperation.h */; };
+		0B149EF111BF114900FB735F /* S3ListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B149EEF11BF114900FB735F /* S3ListOperation.m */; };
 		0B1CC2B51117332600AC5959 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B76053510DF13DB00BE0666 /* TestController.m */; };
 		0B2E387B10DF2C3300E82CB2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B2E387A10DF2C3300E82CB2 /* MainMenu.xib */; };
 		0B40BA0711AF479E00158EEB /* S3ErrorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B40BA0511AF479E00158EEB /* S3ErrorParser.h */; };
@@ -120,6 +122,8 @@
 		0B0B975710F58CED007DBFA8 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
 		0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
+		0B149EEE11BF114900FB735F /* S3ListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3ListOperation.h; sourceTree = "<group>"; };
+		0B149EEF11BF114900FB735F /* S3ListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3ListOperation.m; sourceTree = "<group>"; };
 		0B40BA0511AF479E00158EEB /* S3ErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3ErrorParser.h; sourceTree = "<group>"; };
 		0B40BA0611AF479E00158EEB /* S3ErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3ErrorParser.m; sourceTree = "<group>"; };
 		0B5FEE6D11165123005A5F84 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClient.h; sourceTree = "<group>"; };
@@ -363,6 +367,8 @@
 				0BD3D14D110D1D8E00478C99 /* SSHUploadOperation.m */,
 				0B80545711A9035600CEA13A /* S3UploadOperation.h */,
 				0B80545811A9035600CEA13A /* S3UploadOperation.m */,
+				0B149EEE11BF114900FB735F /* S3ListOperation.h */,
+				0B149EEF11BF114900FB735F /* S3ListOperation.m */,
 				0BD3D013110CF5F000478C99 /* ListOperation.h */,
 				0BD3D014110CF5F000478C99 /* ListOperation.m */,
 			);
@@ -456,6 +462,7 @@
 				0B01E63811B72A6B003DD235 /* S3ErrorCodes.h in Headers */,
 				0BA5ECF511BC2744009C5194 /* CurlClientType.h in Headers */,
 				018293C411BD5B0D00B4AEA1 /* curl-ssh-patched.h in Headers */,
+				0B149EF011BF114900FB735F /* S3ListOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +601,7 @@
 				0B8054A211A9070600CEA13A /* NSFileManager+MimeType.m in Sources */,
 				0BE0A34211A90E3400FBFB1F /* NSString+S3.m in Sources */,
 				0B40BA0811AF479E00158EEB /* S3ErrorParser.m in Sources */,
+				0B149EF111BF114900FB735F /* S3ListOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,8 @@
  */
 - (void)main 
 {
+	if ([self isCancelled] || [self dependentOperationCancelled]) return;
+	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 			
 	// Set options for uploading
@@ -107,6 +109,23 @@
 }
 
 
+-(BOOL)dependentOperationCancelled
+{
+	BOOL answer = NO;
+
+	for (int i = 0; i < [[self dependencies] count]; i++) {
+		NSOperation *dependency = [[self dependencies] objectAtIndex:i];
+		
+		if ([dependency isCancelled]) {
+			answer = YES;
+			break;
+		}
+	}	
+	
+	return answer;
+}
+
+
 - (NSString *)urlForTransfer:(FileTransfer *)file
 {
 	NSString *filePath = [[file remotePath] stringByAddingTildePrefix];
@@ -140,6 +159,7 @@
 }
 
 
+
 /*
  * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
  * new upload progress and sets it on the upload.
@@ -147,7 +167,7 @@
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
  */
 static int handleUploadProgress(UploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow)
-{	
+{
 	Upload *upload = [operation upload];
 	
 	if (!connected)
@@ -158,7 +178,7 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 			// Connecting ...
 			[upload setConnected:NO];
 			[upload setStatus:TRANSFER_STATUS_CONNECTING];
-
+			
 			// Notify the delegate
 			[operation performUploadDelegateSelector:@selector(uploadIsConnecting:) withArgument:nil];
 		}
@@ -179,36 +199,47 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 			[operation startByteTimer];
 		}
 		
-		// Compute the current files bytes uploaded
-		double currentBytesUploaded = [[upload currentTransfer] isEmptyDirectory] ? [[upload currentTransfer] totalBytes] : ulnow;
-		
-		// Compute the total bytes uploaded
-		double totalBytesUploaded = [upload totalBytesUploaded] + (currentBytesUploaded - [[upload currentTransfer] totalBytesUploaded]);
-		
-		// Compute current files percentage complete
-		double percentComplete = [[upload currentTransfer] isEmptyDirectory] ? 100 : (ulnow * 100 / ultotal);
-		
-		[[upload currentTransfer] setTotalBytesUploaded:currentBytesUploaded];
-		[[upload currentTransfer] setPercentComplete:percentComplete];
-		
-		[upload setTotalBytesUploaded:totalBytesUploaded];
-		
-		// Compute the total percent complete of the entire transfer
-		int progressNow = ([upload totalBytesUploaded] * 100 / [upload totalBytes]);
-						
-		if (progressNow >= [upload progress])
-		{
-			// Set the current progress
-			[upload setProgress:progressNow];
-						
-			// Notify the delegate
-			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
-										withArgument:[NSNumber numberWithInt:progressNow]];
-		}
+		[operation calculateUploadProgress:ulnow total:ultotal];
 	}	
 	
 	return ([upload cancelled] || [upload status] == TRANSFER_STATUS_FAILED);
 }
+
+
+
+
+- (void)calculateUploadProgress:(double)ulnow total:(double)ultotal
+{
+	// Compute the current files bytes uploaded
+	double currentBytesUploaded = [[upload currentTransfer] isEmptyDirectory] ? [[upload currentTransfer] totalBytes] : ulnow;
+	
+	// Compute the total bytes uploaded
+	double totalBytesUploaded = [upload totalBytesUploaded] + (currentBytesUploaded - [[upload currentTransfer] totalBytesUploaded]);
+	
+	// Compute current files percentage complete
+	double percentComplete = [[upload currentTransfer] isEmptyDirectory] ? 100 : (ulnow * 100 / ultotal);
+	
+	[[upload currentTransfer] setTotalBytesUploaded:currentBytesUploaded];
+	[[upload currentTransfer] setPercentComplete:percentComplete];
+	
+	[upload setTotalBytesUploaded:totalBytesUploaded];
+	
+	// Compute the total percent complete of the entire transfer
+	int progressNow = ([upload totalBytesUploaded] * 100 / [upload totalBytes]);
+	
+	if (progressNow >= [upload progress])
+	{
+		// Set the current progress
+		[upload setProgress:progressNow];
+		
+		// Notify the delegate
+		[self performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
+									withArgument:[NSNumber numberWithInt:progressNow]];
+	}
+	
+}
+
+
 
 
 /*

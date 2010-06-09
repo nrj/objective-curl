@@ -1,4 +1,4 @@
 .DS_Store
-objective-curl.xcodeproj/*.mode*
-objective-curl.xcodeproj/*.pbxuser
+objective-curl.xcodeproj/nrj.mode1v3
+objective-curl.xcodeproj/nrj.pbxuser
 build/**/*

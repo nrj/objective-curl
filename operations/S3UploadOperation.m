@@ -10,6 +10,7 @@
 #import "UploadDelegate.h"
 #import "FileTransfer.h"
 #import "S3ErrorParser.h"
+#import "S3DateUtil.h"
 #import "NSString+S3.h"
 #import "NSString+PathExtras.h"
 #import "NSFileManager+MimeType.h"
@@ -24,16 +25,6 @@
 @synthesize errorMessage;
 
 
-static size_t read_function( void *ptr, size_t size, size_t nmemb, void *stream)
-{
-	int len = size * nmemb;
-	
-	NSLog(@"READ! %d", len);
-	
-	return len;
-}
-
-
 - (void)calculateUploadProgress:(double)ulnow total:(double)ultotal
 {
 	[super calculateUploadProgress:ulnow total:ultotal];
@@ -45,7 +36,7 @@ static size_t read_function( void *ptr, size_t size, size_t nmemb, void *stream)
  */
 static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperation *op)
 {			
-	NSString *resp = [NSString stringWithCString:(char *)ptr];
+	NSString *resp = [NSString stringWithUTF8String:(char *)ptr];
 	
 	NSDictionary *err = [S3ErrorParser parseErrorDetails:resp];
 	
@@ -64,7 +55,6 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperat
 	curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
 	curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, writeFunction);
 	curl_easy_setopt(handle, CURLOPT_WRITEDATA, self);
-	curl_easy_setopt(handle, CURLOPT_READFUNCTION, read_function);
 }
 
 
@@ -78,10 +68,7 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperat
 	NSString *accessKey = [upload username];
 	NSString *secretKey = [upload password];
 
-	// Construct the date Amazon date format 
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss zzzz"];
-	NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+	NSString *date = [S3DateUtil dateStringForNow];
 	
 	NSString *resource = [NSString stringWithFormat:@"/%@", [[file remotePath] stringByRemovingTildePrefix]];
 		

@@ -28,7 +28,7 @@
  */
 + (NSString *)libcurlVersion
 {		
-	return [NSString stringWithCString:curl_version()];
+	return [NSString stringWithUTF8String:curl_version()];
 }
 
 

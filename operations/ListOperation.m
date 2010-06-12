@@ -37,7 +37,7 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 				filename[info->namelen] = '\0';
 				
 				RemoteFile *file = [[RemoteFile alloc] init];	
-				[file setName:[NSString stringWithCString:filename]];
+				[file setName:[NSString stringWithUTF8String:filename]];
 				[file setIsDir:info->flagtrycwd];
 				[file setIsSymLink:(info->flagtrycwd && info->flagtryretr)];
 				[file setSize:info->size];
@@ -88,10 +88,10 @@ static size_t handleDirectoryList(void *ptr, size_t size, size_t nmemb, NSMutabl
 //	
 //	[folder setFiles:list];
 //	
-////	if (delegate && [delegate respondsToSelector:@selector(curl:didListRemoteDirectory:)])
-////	{
-////		[delegate curl:self didListRemoteDirectory:folder];
-////	}
+//	if (delegate && [delegate respondsToSelector:@selector(curl:didListRemoteDirectory:)])
+//	{
+//		[delegate curl:self didListRemoteDirectory:folder];
+//	}
 //	
 	[pool drain];
 	[pool release];

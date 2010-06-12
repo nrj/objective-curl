@@ -19,7 +19,7 @@
 	{
 		char hexValue[4];
 		sprintf(hexValue, "%02X", digest[i]);
-		[values addObject:[NSString stringWithCString:hexValue length:strlen(hexValue)]];
+		[values addObject:[NSString stringWithUTF8String:hexValue]];
 	}
 	
 	return [values componentsJoinedByString:@":"];

@@ -10,6 +10,7 @@
 #import "Upload.h"
 #import "FileTransfer.h"
 #import "UploadDelegate.h"
+#import "ConnectionDelegate.h"
 #import "RemoteFile.h"
 #import "RemoteFolder.h"
 #import "TransferStatus.h"

@@ -27,14 +27,17 @@ const NSString * S3ErrorMessageKey	= @"S3ErrorMessage";
 														  options:NSXMLDocumentTidyXML
 															error:&err];
 	
-	
-
 	if (!err) {
 		NSXMLNode *msgNode, *codeNode = nil;
 		
-		msgNode  = [[xml nodesForXPath:@"./Error/Message" error:nil] objectAtIndex:0];
-		
-		codeNode = [[xml nodesForXPath:@"./Error/Code" error:nil] objectAtIndex:0];
+		if ([xml nodesForXPath:@"./Error/Code" error:&err] && !err) {
+			codeNode = [[xml nodesForXPath:@"./Error/Code" error:nil] objectAtIndex:0];
+			msgNode  = [[xml nodesForXPath:@"./Error/Message" error:nil] objectAtIndex:0];
+		}
+		else
+		{
+			return nil;
+		}
 		
 		s3ErrorCode = [codeNode stringValue];
 		s3ErrorMessage = [msgNode stringValue];

@@ -24,7 +24,7 @@
 	[ftp setDelegate:self];	
 	
 	sftp = [[CurlSFTP alloc] init];
-	[sftp setVerbose:YES];
+	[sftp setVerbose:NO];
 	[sftp setShowProgress:YES];
 	[sftp setDelegate:self];
 	
@@ -79,13 +79,22 @@
 }
 
 
-#pragma mark UploadDelegate methods
+
+#pragma mark ConnectionDelegate methods
 
 
-- (void)uploadIsConnecting:(Upload *)record
+- (void)curlIsConnecting:(RemoteObject *)record
 {
-	NSLog(@"uploadIsConnecting");
+	NSLog(@"curlIsConnecting");
 }
+
+- (void)curlDidConnect:(RemoteObject *)record
+{
+	NSLog(@"curlDidConnect");
+}
+
+
+#pragma mark UploadDelegate methods
 
 
 - (void)uploadDidBegin:(Upload *)record

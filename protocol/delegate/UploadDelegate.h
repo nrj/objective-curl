@@ -13,12 +13,6 @@
 
 
 /*
- * Called when the upload starts the connection process.
- */
-- (void)uploadIsConnecting:(Upload *)record;
-
-
-/*
  * Called when the upload has started.
  */ 
 - (void)uploadDidBegin:(Upload *)record;

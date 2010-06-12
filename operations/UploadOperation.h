@@ -38,7 +38,9 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 
 - (void)handleUploadFailed:(CURLcode)result;
 
-- (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg;
+- (void)notifyDelegateOfFailure;
+
+- (void)performDelegateSelector:(SEL)aSelector withArgument:(id)arg;
 
 - (NSString *)credentials;
 

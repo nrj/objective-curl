@@ -12,8 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="29"/>
 			<integer value="449"/>
+			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1336,8 +1336,8 @@
 						</object>
 						<object class="NSMatrix" id="801609171">
 							<reference key="NSNextResponder" ref="686122530"/>
-							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{20, 97}, {93, 78}}</string>
+							<int key="NSvFlags">33</int>
+							<string key="NSFrame">{{20, 97}, {95, 78}}</string>
 							<reference key="NSSuperview" ref="686122530"/>
 							<bool key="NSEnabled">YES</bool>
 							<int key="NSNumRows">4</int>
@@ -1348,7 +1348,11 @@
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">131072</int>
 									<string key="NSContents">SFTP</string>
-									<reference key="NSSupport" ref="26"/>
+									<object class="NSFont" key="NSSupport" id="695996701">
+										<string key="NSName">LucidaGrande</string>
+										<double key="NSSize">11</double>
+										<int key="NSfFlags">16</int>
+									</object>
 									<reference key="NSControlView" ref="801609171"/>
 									<int key="NSTag">1</int>
 									<int key="NSButtonFlags">1211912703</int>
@@ -1365,7 +1369,7 @@
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">131072</int>
 									<string key="NSContents">FTP</string>
-									<reference key="NSSupport" ref="26"/>
+									<reference key="NSSupport" ref="695996701"/>
 									<reference key="NSControlView" ref="801609171"/>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">128</int>
@@ -1377,7 +1381,7 @@
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">131072</int>
 									<string key="NSContents">SCP (broken)</string>
-									<reference key="NSSupport" ref="26"/>
+									<reference key="NSSupport" ref="695996701"/>
 									<reference key="NSControlView" ref="801609171"/>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">128</int>
@@ -1389,7 +1393,7 @@
 									<int key="NSCellFlags">-2080244224</int>
 									<int key="NSCellFlags2">131072</int>
 									<string key="NSContents">Amazon S3</string>
-									<reference key="NSSupport" ref="26"/>
+									<reference key="NSSupport" ref="695996701"/>
 									<reference key="NSControlView" ref="801609171"/>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">128</int>
@@ -1398,7 +1402,7 @@
 									<int key="NSPeriodicInterval">75</int>
 								</object>
 							</object>
-							<string key="NSCellSize">{93, 18}</string>
+							<string key="NSCellSize">{90, 18}</string>
 							<string key="NSIntercellSpacing">{4, 2}</string>
 							<int key="NSMatrixFlags">1151868928</int>
 							<string key="NSCellClass">NSActionCell</string>
@@ -3723,9 +3727,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{400, 109}, {486, 188}}</string>
+					<string>{{656, 376}, {486, 188}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{400, 109}, {486, 188}}</string>
+					<string>{{656, 376}, {486, 188}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

@@ -28,7 +28,9 @@
 {
 	if ([self isCancelled] || [self dependentOperationCancelled]) {
 		
-		return [self notifyDelegateOfFailure];
+		[self notifyDelegateOfFailure];
+		
+		return;
 	}
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

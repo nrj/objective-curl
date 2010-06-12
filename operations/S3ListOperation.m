@@ -146,7 +146,8 @@ static size_t handleS3BucketListProgress(S3ListOperation *operation, int connect
 	
 	if (!error && result == CURLE_OK) {
 		
-		[request setStatus:TRANSFER_STATUS_COMPLETE];
+		// [request setStatus:TRANSFER_STATUS_COMPLETE];
+	
 	}
 	else {	
 		

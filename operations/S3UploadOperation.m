@@ -25,11 +25,6 @@
 @synthesize errorMessage;
 
 
-- (void)calculateUploadProgress:(double)ulnow total:(double)ultotal
-{
-	[super calculateUploadProgress:ulnow total:ultotal];
-}
-
 
 /*
  * If we got a response body from PUT request then we handle it as an error and bail.

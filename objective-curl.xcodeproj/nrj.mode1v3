@@ -285,7 +285,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 710}, {221, 633}}</string>
+							<string>{{0, 0}, {221, 633}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -322,7 +322,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ConnectionDelegate.h</string>
+								<string>TestController.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -330,11 +330,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ConnectionDelegate.h</string>
+										<string>TestController.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>0BDA85C611C41ED200BCA6B6</string>
+										<string>0BDB4A9F11C55A0000456AE1</string>
 										<key>history</key>
 										<array>
 											<string>0BD102D411BDE372002BC5CC</string>
@@ -362,14 +362,14 @@
 											<string>0B9CA8CE11C406E6002E05DF</string>
 											<string>0B49C80A11C40F6C00994AE7</string>
 											<string>0B0D2BD911C417A500E2371D</string>
-											<string>0B17197811C41A7D00818F3A</string>
 											<string>0B17197911C41A7D00818F3A</string>
 											<string>0B17198A11C41B7B00818F3A</string>
 											<string>0B17198B11C41B7B00818F3A</string>
 											<string>0B17198C11C41B7B00818F3A</string>
 											<string>0B17198D11C41B7B00818F3A</string>
 											<string>0B171A3F11C41EC300818F3A</string>
-											<string>0B171A4111C41EC300818F3A</string>
+											<string>0BDB4A9D11C55A0000456AE1</string>
+											<string>0BDB4A9E11C55A0000456AE1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -427,9 +427,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>0BDA85C711C41ED200BCA6B6</string>
+				<string>0BDB4AA011C55A0000456AE1</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>0BDA85C811C41ED200BCA6B6</string>
+				<string>0BDB4AA111C55A0000456AE1</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -565,6 +565,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>0BD5F72411BDBC6A003119E3</string>
 		<string>/Users/nrj/Code/Cocoa/objective-curl/objective-curl.xcodeproj</string>
 	</array>
@@ -646,7 +647,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>0BD5F72411BDBC6A003119E3</string>
-				<string>0BDA85C911C41ED200BCA6B6</string>
+				<string>0BDB4A8E11C559E300456AE1</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -799,12 +800,14 @@
 							<key>Dock</key>
 							<array>
 								<dict>
+									<key>BecomeActive</key>
+									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>UploadOperation.m</string>
+										<string>SSHUploadOperation.m</string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -825,8 +828,6 @@
 							<string>212pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -862,8 +863,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>0B0D2B4811C4161600E2371D</string>
-				<string>0B0D2B4911C4161600E2371D</string>
+				<string>0BDB4A9311C559E300456AE1</string>
+				<string>0BDB4A9411C559E300456AE1</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>

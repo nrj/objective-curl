@@ -85,6 +85,10 @@
 		case CURLE_REMOTE_ACCESS_DENIED:
 			message = [NSString stringWithFormat:@"Failed writing to directory %@", [object path]];
 			break;
+
+		case CURLE_REMOTE_FILE_NOT_FOUND:
+			message = [NSString stringWithFormat:@"Remote directory not found %@:%@", [object hostname], [object path]];
+			break;			
 			
 		case CURLE_PARTIAL_FILE:
 			message = [NSString stringWithFormat:@"Incorrect number of bytes reported by server: %@", [object uri]];

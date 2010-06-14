@@ -59,7 +59,8 @@ const NSString * S3ErrorMessageKey	= @"S3ErrorMessage";
 + (int)transferStatusForErrorCode:(NSString *)code
 {	
 	if ([code isEqualToString:(NSString *)S3SignatureDoesNotMatch] ||
-		[code isEqualToString:(NSString *)S3InvalidAccessKeyId]) {
+		[code isEqualToString:(NSString *)S3InvalidAccessKeyId] ||
+		[code isEqualToString:(NSString *)S3AccessDenied]) {
 		return TRANSFER_STATUS_LOGIN_DENIED;
 	}
 

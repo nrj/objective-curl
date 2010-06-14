@@ -75,8 +75,6 @@ static int hostKeyCallback(CURL *curl, const struct curl_khkey *knownKey, const 
 	{
 		const char *removeTempFile = [[NSString stringWithFormat:@"RM \"%@\"", [[file remotePath] stringByRemovingTildePrefix]] UTF8String];
 		
-		printf("\nQuote Command is %s\n", removeTempFile);
-		
 		[file appendPostQuote:removeTempFile];
 	}
 	

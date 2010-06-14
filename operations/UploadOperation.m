@@ -10,6 +10,7 @@
 #import "FileTransfer.h"
 #import "Upload.h"
 #import "UploadDelegate.h"
+#import "ConnectionDelegate.h"
 #import "TransferStatus.h"
 #import "NSString+PathExtras.h"
 
@@ -25,6 +26,13 @@
  */
 - (void)main 
 {
+	if ([self isCancelled] || [self dependentOperationCancelled]) {
+		
+		[self notifyDelegateOfFailure];
+		
+		return;
+	}
+	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 			
 	// Set options for uploading
@@ -111,12 +119,31 @@
 {
 	NSString *filePath = [[file remotePath] stringByAddingTildePrefix];
 	
-	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] 
-						stringByAppendingPathPreservingAbsolutePaths:filePath];
+	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]]
+					  stringByAppendingPathPreservingAbsolutePaths:filePath];
 	
 	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
 	
 	return url;
+}
+
+
+
+
+-(BOOL)dependentOperationCancelled
+{
+	BOOL answer = NO;
+
+	for (int i = 0; i < [[self dependencies] count]; i++) {
+		NSOperation *dependency = [[self dependencies] objectAtIndex:i];
+		
+		if ([dependency isCancelled]) {
+			answer = YES;
+			break;
+		}
+	}	
+	
+	return answer;
 }
 
 
@@ -140,6 +167,7 @@
 }
 
 
+
 /*
  * Used to handle upload progress if the showProgress flag is set. Invoked by libcurl on progress updates to calculates the 
  * new upload progress and sets it on the upload.
@@ -147,20 +175,21 @@
  *      See http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTPROGRESSFUNCTION 
  */
 static int handleUploadProgress(UploadOperation *operation, int connected, double dltotal, double dlnow, double ultotal, double ulnow)
-{	
+{
 	Upload *upload = [operation upload];
 	
+	if ([upload connected] && !connected) return 0;  // Reconnecting...
+	
 	if (!connected)
-	{		
-		
+	{
 		if ([upload status] != TRANSFER_STATUS_CONNECTING)
 		{
 			// Connecting ...
 			[upload setConnected:NO];
 			[upload setStatus:TRANSFER_STATUS_CONNECTING];
-
+			
 			// Notify the delegate
-			[operation performUploadDelegateSelector:@selector(uploadIsConnecting:) withArgument:nil];
+			[operation performDelegateSelector:@selector(curlIsConnecting:) withArgument:nil];
 		}
 		
 	}
@@ -170,45 +199,64 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 		{
 			// We have a connection.
 			[upload setConnected:YES];
-			[upload setStatus:TRANSFER_STATUS_UPLOADING];
+			[upload setStatus:TRANSFER_STATUS_CONNECTED];
 			
 			// Notify the delegate
-			[operation performUploadDelegateSelector:@selector(uploadDidBegin:) withArgument:nil];
-			
+			[operation performDelegateSelector:@selector(curlDidConnect:) withArgument:nil];			
+		}
+		
+		if ([upload connected] && [upload status] != TRANSFER_STATUS_UPLOADING && ulnow > 0)
+		{
+			[upload setStatus:TRANSFER_STATUS_UPLOADING];
+		
+			// Notify the delegate
+			[operation performDelegateSelector:@selector(uploadDidBegin:) withArgument:nil];
+		 
 			// Start the BPS timer
 			[operation startByteTimer];
 		}
 		
-		// Compute the current files bytes uploaded
-		double currentBytesUploaded = [[upload currentTransfer] isEmptyDirectory] ? [[upload currentTransfer] totalBytes] : ulnow;
-		
-		// Compute the total bytes uploaded
-		double totalBytesUploaded = [upload totalBytesUploaded] + (currentBytesUploaded - [[upload currentTransfer] totalBytesUploaded]);
-		
-		// Compute current files percentage complete
-		double percentComplete = [[upload currentTransfer] isEmptyDirectory] ? 100 : (ulnow * 100 / ultotal);
-		
-		[[upload currentTransfer] setTotalBytesUploaded:currentBytesUploaded];
-		[[upload currentTransfer] setPercentComplete:percentComplete];
-		
-		[upload setTotalBytesUploaded:totalBytesUploaded];
-		
-		// Compute the total percent complete of the entire transfer
-		int progressNow = ([upload totalBytesUploaded] * 100 / [upload totalBytes]);
-						
-		if (progressNow >= [upload progress])
-		{
-			// Set the current progress
-			[upload setProgress:progressNow];
-						
-			// Notify the delegate
-			[operation performUploadDelegateSelector:@selector(uploadDidProgress:toPercent:) 
-										withArgument:[NSNumber numberWithInt:progressNow]];
-		}
+		[operation calculateUploadProgress:ulnow total:ultotal];
 	}	
 	
 	return ([upload cancelled] || [upload status] == TRANSFER_STATUS_FAILED);
 }
+
+
+
+
+- (void)calculateUploadProgress:(double)ulnow total:(double)ultotal
+{
+	// Compute the current files bytes uploaded
+	double currentBytesUploaded = [[upload currentTransfer] isEmptyDirectory] ? [[upload currentTransfer] totalBytes] : ulnow;
+	
+	// Compute the total bytes uploaded
+	double totalBytesUploaded = [upload totalBytesUploaded] + (currentBytesUploaded - [[upload currentTransfer] totalBytesUploaded]);
+	
+	// Compute current files percentage complete
+	double percentComplete = [[upload currentTransfer] isEmptyDirectory] ? 100 : (ulnow * 100 / ultotal);
+	
+	[[upload currentTransfer] setTotalBytesUploaded:currentBytesUploaded];
+	[[upload currentTransfer] setPercentComplete:percentComplete];
+	
+	[upload setTotalBytesUploaded:totalBytesUploaded];
+	
+	// Compute the total percent complete of the entire transfer
+	int progressNow = ([upload totalBytesUploaded] * 100 / [upload totalBytes]);
+	
+	if (progressNow >= [upload progress])
+	{
+		// Set the current progress
+		[upload setProgress:progressNow];
+		
+		// Notify the delegate
+		[self performDelegateSelector:@selector(uploadDidProgress:toPercent:)
+						 withArgument:[NSNumber numberWithInt:progressNow]];
+	}
+	
+}
+
+
 
 
 /*
@@ -223,8 +271,8 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 		[upload setStatus:TRANSFER_STATUS_COMPLETE];
 		
 		// Notify Delegates		
-		[self performUploadDelegateSelector:@selector(uploadDidFinish:) 
-							   withArgument:nil];
+		[self performDelegateSelector:@selector(uploadDidFinish:) 
+						 withArgument:nil];
 	}
 	else if ([upload cancelled])
 	{
@@ -232,8 +280,8 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 		[upload setStatus:TRANSFER_STATUS_CANCELLED];
 
 		// Notify Delegate
-		[self performUploadDelegateSelector:@selector(uploadWasCancelled:) 
-							   withArgument:nil];
+		[self performDelegateSelector:@selector(uploadWasCancelled:) 
+						 withArgument:nil];
 	}
 	else
 	{		
@@ -266,14 +314,21 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 	}
 	
 	[upload setStatus:status];
-
-	NSString *message = [self getFailureDetailsForStatus:result withObject:upload];
+	[upload setStatusMessage:[self getFailureDetailsForStatus:result withObject:upload]];
 	
+	[self notifyDelegateOfFailure];
+}
+
+
+
+- (void)notifyDelegateOfFailure
+{
 	if (delegate && [delegate respondsToSelector:@selector(uploadDidFail:message:)])
 	{
-		[[delegate invokeOnMainThread] uploadDidFail:upload message:message];
-	}
+		[[delegate invokeOnMainThread] uploadDidFail:upload message:[upload statusMessage]];
+	}	
 }
+
 
 
 /*
@@ -395,7 +450,7 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
  * Calls an UploadDelegate method on the main thread.
  *
  */
-- (void)performUploadDelegateSelector:(SEL)aSelector withArgument:(id)arg
+- (void)performDelegateSelector:(SEL)aSelector withArgument:(id)arg
 {
 	if (delegate && [delegate respondsToSelector:aSelector])
 	{

@@ -10,8 +10,10 @@
 #import "UploadDelegate.h"
 #import "FileTransfer.h"
 #import "S3ErrorParser.h"
+#import "S3DateUtil.h"
 #import "NSString+S3.h"
 #import "NSString+PathExtras.h"
+#import "NSString+URLEncoding.h"
 #import "NSFileManager+MimeType.h"
 #import "NSObject+Extensions.h"
 
@@ -24,14 +26,13 @@
 @synthesize errorMessage;
 
 
+
 /*
  * If we got a response body from PUT request then we handle it as an error and bail.
  */
-static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
-{		
-	S3UploadOperation *op = (S3UploadOperation *)data;
-	
-	NSString *resp = [NSString stringWithCString:(char *)ptr];
+static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperation *op)
+{			
+	NSString *resp = [NSString stringWithUTF8String:(char *)ptr];
 	
 	NSDictionary *err = [S3ErrorParser parseErrorDetails:resp];
 	
@@ -58,17 +59,14 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
  *
  */
 - (void)setFileSpecificOptions:(FileTransfer *)file
-{	
+{		
 	// These act the same as username and password
 	NSString *accessKey = [upload username];
 	NSString *secretKey = [upload password];
 
-	// Construct the date Amazon date format 
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss zzzz"];
-	NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+	NSString *date = [S3DateUtil dateStringForNow];
 	
-	NSString *resource = [NSString stringWithFormat:@"/%@", [[file remotePath] stringByRemovingTildePrefix]];
+	NSString *resource = [[NSString stringWithFormat:@"/%@", [[file remotePath] stringByRemovingTildePrefix]] encodedURLString];
 		
 	// Get the content type of the file we're uploading
 	NSString *contentType = [NSFileManager mimeTypeForFileAtPath:[file localPath]];
@@ -140,7 +138,7 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, void *data)
 	
 	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:filePath];
 	
-	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
+	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], [path encodedURLString]];
 	
 	return url;
 }

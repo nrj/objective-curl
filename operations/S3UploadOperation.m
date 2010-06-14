@@ -13,6 +13,7 @@
 #import "S3DateUtil.h"
 #import "NSString+S3.h"
 #import "NSString+PathExtras.h"
+#import "NSString+URLEncoding.h"
 #import "NSFileManager+MimeType.h"
 #import "NSObject+Extensions.h"
 
@@ -65,7 +66,7 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperat
 
 	NSString *date = [S3DateUtil dateStringForNow];
 	
-	NSString *resource = [NSString stringWithFormat:@"/%@", [[file remotePath] stringByRemovingTildePrefix]];
+	NSString *resource = [[NSString stringWithFormat:@"/%@", [[file remotePath] stringByRemovingTildePrefix]] encodedURLString];
 		
 	// Get the content type of the file we're uploading
 	NSString *contentType = [NSFileManager mimeTypeForFileAtPath:[file localPath]];
@@ -137,7 +138,7 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperat
 	
 	NSString *path = [[NSString stringWithFormat:@"%@:%d", [upload hostname], [upload port]] stringByAppendingPathComponent:filePath];
 	
-	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], path];
+	NSString *url = [NSString stringWithFormat:@"%@://%@", [upload protocolPrefix], [path encodedURLString]];
 	
 	return url;
 }

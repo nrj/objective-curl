@@ -41,6 +41,8 @@
 		0B8054A111A9070600CEA13A /* NSFileManager+MimeType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B80549F11A9070600CEA13A /* NSFileManager+MimeType.h */; };
 		0B8054A211A9070600CEA13A /* NSFileManager+MimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8054A011A9070600CEA13A /* NSFileManager+MimeType.m */; };
 		0B9CA8DE11C408A8002E05DF /* ConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B9CA8DD11C408A8002E05DF /* ConnectionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0BA1B68F11C5DC7F005A88BC /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BA1B68D11C5DC7F005A88BC /* NSString+URLEncoding.h */; };
+		0BA1B69011C5DC7F005A88BC /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BA1B68E11C5DC7F005A88BC /* NSString+URLEncoding.m */; };
 		0BA5ECF511BC2744009C5194 /* CurlClientType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BA5ECF411BC2744009C5194 /* CurlClientType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BB380A310E84BF4003DD538 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BB380A110E84BF4003DD538 /* CurlSFTP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0BB380A410E84BF4003DD538 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB380A210E84BF4003DD538 /* CurlSFTP.m */; };
@@ -150,6 +152,8 @@
 		0B8054A011A9070600CEA13A /* NSFileManager+MimeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+MimeType.m"; sourceTree = "<group>"; };
 		0B8DC51C10DF26E70042F200 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		0B9CA8DD11C408A8002E05DF /* ConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDelegate.h; sourceTree = "<group>"; };
+		0BA1B68D11C5DC7F005A88BC /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		0BA1B68E11C5DC7F005A88BC /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		0BA5ECF411BC2744009C5194 /* CurlClientType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClientType.h; sourceTree = "<group>"; };
 		0BB380A110E84BF4003DD538 /* CurlSFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSFTP.h; sourceTree = "<group>"; };
 		0BB380A210E84BF4003DD538 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
@@ -396,14 +400,16 @@
 		0BEDAAB910EC44E200ED2C69 /* extras */ = {
 			isa = PBXGroup;
 			children = (
-				0B0B975610F58CED007DBFA8 /* NSString+MD5.h */,
-				0B0B975710F58CED007DBFA8 /* NSString+MD5.m */,
+				0BA1B68D11C5DC7F005A88BC /* NSString+URLEncoding.h */,
+				0BA1B68E11C5DC7F005A88BC /* NSString+URLEncoding.m */,
 				0B0B975810F58CED007DBFA8 /* NSString+PathExtras.h */,
 				0B0B975910F58CED007DBFA8 /* NSString+PathExtras.m */,
-				0B80549F11A9070600CEA13A /* NSFileManager+MimeType.h */,
-				0B8054A011A9070600CEA13A /* NSFileManager+MimeType.m */,
+				0B0B975610F58CED007DBFA8 /* NSString+MD5.h */,
+				0B0B975710F58CED007DBFA8 /* NSString+MD5.m */,
 				0BE0A33F11A90E3400FBFB1F /* NSString+S3.h */,
 				0BE0A34011A90E3400FBFB1F /* NSString+S3.m */,
+				0B80549F11A9070600CEA13A /* NSFileManager+MimeType.h */,
+				0B8054A011A9070600CEA13A /* NSFileManager+MimeType.m */,
 			);
 			path = extras;
 			sourceTree = "<group>";
@@ -474,6 +480,7 @@
 				0B149EF011BF114900FB735F /* S3ListOperation.h in Headers */,
 				0BDCB0CD11C292F100AD8451 /* S3DateUtil.h in Headers */,
 				0B9CA8DE11C408A8002E05DF /* ConnectionDelegate.h in Headers */,
+				0BA1B68F11C5DC7F005A88BC /* NSString+URLEncoding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +621,7 @@
 				0B40BA0811AF479E00158EEB /* S3ErrorParser.m in Sources */,
 				0B149EF111BF114900FB735F /* S3ListOperation.m in Sources */,
 				0BDCB0CE11C292F100AD8451 /* S3DateUtil.m in Sources */,
+				0BA1B69011C5DC7F005A88BC /* NSString+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

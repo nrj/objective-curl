@@ -104,6 +104,9 @@
 		[upload setTotalFilesUploaded:i + 1];
 	}
 	
+	// Cleanup Curl
+	curl_easy_cleanup(handle);
+	
 	// Cleanup the files array.
 	[filesToUpload release];
 

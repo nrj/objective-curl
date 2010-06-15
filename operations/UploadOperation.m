@@ -80,8 +80,8 @@
 		
 		NSString *url = [self urlForTransfer:file];
 		
-		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)[file totalBytes]);
 		curl_easy_setopt(handle, CURLOPT_READDATA, fh);
+		curl_easy_setopt(handle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)[file totalBytes]);
 		curl_easy_setopt(handle, CURLOPT_URL, [url UTF8String]);
 		
 		// Perform
@@ -216,6 +216,8 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 			[operation startByteTimer];
 		}
 		
+		if (ulnow > ultotal) return 0;		// This happens occasionally, not sure why...
+		
 		[operation calculateUploadProgress:ulnow total:ultotal];
 	}	
 	
@@ -226,7 +228,7 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 
 
 - (void)calculateUploadProgress:(double)ulnow total:(double)ultotal
-{
+{		
 	// Compute the current files bytes uploaded
 	double currentBytesUploaded = [[upload currentTransfer] isEmptyDirectory] ? [[upload currentTransfer] totalBytes] : ulnow;
 	
@@ -253,7 +255,6 @@ static int handleUploadProgress(UploadOperation *operation, int connected, doubl
 		[self performDelegateSelector:@selector(uploadDidProgress:toPercent:)
 						 withArgument:[NSNumber numberWithInt:progressNow]];
 	}
-	
 }
 
 

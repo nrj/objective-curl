@@ -2,7 +2,7 @@
 
 export CFLAGS="-O -g -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch i386"
 
-CURL_BUILD="curl-7.19.7"
+CURL_BUILD="curl-7.20.1"
 
 PROJECT_LIBS="/Users/nrj/Code/Cocoa/objective-curl/lib"
 PROJECT_INCLUDE="/Users/nrj/Code/Cocoa/objective-curl/include/curl"
@@ -25,12 +25,12 @@ install_name_tool -change /usr/local/lib/libssh2.1.dylib @executable_path/../Fra
 
 cp lib/.libs/libcurl.4.dylib $PROJECT_LIBS
 
-cp include/curl/easy.h $PROJECT_INCLUDE
-cp include/curl/multi.h $PROJECT_INCLUDE
-cp include/curl/curl.h $PROJECT_INCLUDE
-cp include/curl/curlbuild.h $PROJECT_INCLUDE
-cp include/curl/curlrules.h $PROJECT_INCLUDE
-cp include/curl/curlver.h $PROJECT_INCLUDE
+# cp include/curl/easy.h $PROJECT_INCLUDE
+# cp include/curl/multi.h $PROJECT_INCLUDE
+# cp include/curl/curl.h $PROJECT_INCLUDE
+# cp include/curl/curlbuild.h $PROJECT_INCLUDE
+# cp include/curl/curlrules.h $PROJECT_INCLUDE
+# cp include/curl/curlver.h $PROJECT_INCLUDE
 
 cd ..
 

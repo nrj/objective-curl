@@ -34,7 +34,7 @@
 //	[scp setDelegate:self];
 	
 	s3 = [[CurlS3 alloc] init];
-	[s3 setVerbose:NO];
+	[s3 setVerbose:YES];
 	[s3 setShowProgress:YES];
 	[s3 setDelegate:self];
 }

@@ -51,6 +51,9 @@ static size_t writeFunction(void *ptr, size_t size, size_t nmemb, S3UploadOperat
 	curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
 	curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, writeFunction);
 	curl_easy_setopt(handle, CURLOPT_WRITEDATA, self);
+	curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(handle, CURLOPT_MAXREDIRS, 10);
+	curl_easy_setopt(handle, CURLOPT_NETRC, CURL_NETRC_IGNORED);
 }
 
 

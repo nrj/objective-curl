@@ -802,7 +802,6 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 				USER_HEADER_SEARCH_PATHS = "${SOURCE_ROOT}/include";
-				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -822,7 +821,6 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 				USER_HEADER_SEARCH_PATHS = "${SOURCE_ROOT}/include";
-				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};

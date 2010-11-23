@@ -36,8 +36,8 @@
  */
 - (void)dealloc
 {
-	curl_easy_cleanup(handle);
-
+	handle = NULL;
+	
 	curl_global_cleanup();
 	
 	[super dealloc];

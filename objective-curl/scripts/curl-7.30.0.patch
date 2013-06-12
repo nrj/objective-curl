@@ -1,0 +1,22 @@
+diff -rupN curl-7.30.0/include/curl/curl.h curl-7.30.0-patched/include/curl/curl.h
+--- curl-7.30.0/include/curl/curl.h	2013-04-11 14:46:54.000000000 -0400
++++ curl-7.30.0-patched/include/curl/curl.h	2013-06-12 14:52:39.000000000 -0400
+@@ -157,6 +157,7 @@ struct curl_httppost {
+ };
+ 
+ typedef int (*curl_progress_callback)(void *clientp,
++                                      int connected,
+                                       double dltotal,
+                                       double dlnow,
+                                       double ultotal,
+diff -rupN curl-7.30.0/lib/progress.c curl-7.30.0-patched/lib/progress.c
+--- curl-7.30.0/lib/progress.c	2013-01-16 17:05:56.000000000 -0500
++++ curl-7.30.0-patched/lib/progress.c	2013-06-12 14:54:10.000000000 -0400
+@@ -364,6 +364,7 @@ int Curl_pgrsUpdate(struct connectdata *
+       /* There's a callback set, so we call that instead of writing
+          anything ourselves. This really is the way to go. */
+       result= data->set.fprogress(data->set.progress_client,
++                                  data->progress.flags ? 1 : 0,
+                                   (double)data->progress.size_dl,
+                                   (double)data->progress.downloaded,
+                                   (double)data->progress.size_ul,

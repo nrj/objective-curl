@@ -6,8 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <sys/stat.h>
 #import "curl-patched.h"
-#include <sys/stat.h>
 
 @class CurlRemoteObject;
 

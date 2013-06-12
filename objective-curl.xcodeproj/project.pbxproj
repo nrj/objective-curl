@@ -7,71 +7,72 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B10D2D51769232900C17736 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0B10D2D31769232900C17736 /* LICENSE */; };
+		0B10D2D61769232900C17736 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B10D2D41769232900C17736 /* README.md */; };
+		0B10D33C176929D300C17736 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D303176929D300C17736 /* CurlClient.h */; };
+		0B10D33D176929D300C17736 /* CurlClientType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D304176929D300C17736 /* CurlClientType.h */; };
+		0B10D33E176929D300C17736 /* CurlConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D305176929D300C17736 /* CurlConnectionDelegate.h */; };
+		0B10D33F176929D300C17736 /* CurlFileTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D306176929D300C17736 /* CurlFileTransfer.h */; };
+		0B10D340176929D300C17736 /* CurlFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D307176929D300C17736 /* CurlFileTransfer.m */; };
+		0B10D341176929D300C17736 /* CurlFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D308176929D300C17736 /* CurlFTP.h */; };
+		0B10D342176929D300C17736 /* CurlFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D309176929D300C17736 /* CurlFTP.m */; };
+		0B10D343176929D300C17736 /* CurlObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D30A176929D300C17736 /* CurlObject.h */; };
+		0B10D344176929D300C17736 /* CurlObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D30B176929D300C17736 /* CurlObject.m */; };
+		0B10D345176929D300C17736 /* CurlOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D30C176929D300C17736 /* CurlOperation.h */; };
+		0B10D346176929D300C17736 /* CurlOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D30D176929D300C17736 /* CurlOperation.m */; };
+		0B10D347176929D300C17736 /* CurlRemoteFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D30E176929D300C17736 /* CurlRemoteFile.h */; };
+		0B10D348176929D300C17736 /* CurlRemoteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D30F176929D300C17736 /* CurlRemoteFile.m */; };
+		0B10D349176929D300C17736 /* CurlRemoteFolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D310176929D300C17736 /* CurlRemoteFolder.h */; };
+		0B10D34A176929D300C17736 /* CurlRemoteFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D311176929D300C17736 /* CurlRemoteFolder.m */; };
+		0B10D34B176929D300C17736 /* CurlRemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D312176929D300C17736 /* CurlRemoteObject.h */; };
+		0B10D34C176929D300C17736 /* CurlRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D313176929D300C17736 /* CurlRemoteObject.m */; };
+		0B10D34D176929D300C17736 /* CurlS3.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D314176929D300C17736 /* CurlS3.h */; };
+		0B10D34E176929D300C17736 /* CurlS3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D315176929D300C17736 /* CurlS3.m */; };
+		0B10D34F176929D300C17736 /* CurlS3DateUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D316176929D300C17736 /* CurlS3DateUtil.h */; };
+		0B10D350176929D300C17736 /* CurlS3DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D317176929D300C17736 /* CurlS3DateUtil.m */; };
+		0B10D351176929D300C17736 /* CurlS3ErrorCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D318176929D300C17736 /* CurlS3ErrorCodes.h */; };
+		0B10D352176929D300C17736 /* CurlS3ErrorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D319176929D300C17736 /* CurlS3ErrorParser.h */; };
+		0B10D353176929D300C17736 /* CurlS3ErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D31A176929D300C17736 /* CurlS3ErrorParser.m */; };
+		0B10D354176929D300C17736 /* CurlS3ListOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D31B176929D300C17736 /* CurlS3ListOperation.h */; };
+		0B10D355176929D300C17736 /* CurlS3ListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D31C176929D300C17736 /* CurlS3ListOperation.m */; };
+		0B10D356176929D300C17736 /* CurlS3UploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D31D176929D300C17736 /* CurlS3UploadOperation.h */; };
+		0B10D357176929D300C17736 /* CurlS3UploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D31E176929D300C17736 /* CurlS3UploadOperation.m */; };
+		0B10D358176929D300C17736 /* CurlSCP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D31F176929D300C17736 /* CurlSCP.h */; };
+		0B10D359176929D300C17736 /* CurlSCP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D320176929D300C17736 /* CurlSCP.m */; };
+		0B10D35A176929D300C17736 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D321176929D300C17736 /* CurlSFTP.h */; };
+		0B10D35B176929D300C17736 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D322176929D300C17736 /* CurlSFTP.m */; };
+		0B10D35C176929D300C17736 /* CurlSSHUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D323176929D300C17736 /* CurlSSHUploadOperation.h */; };
+		0B10D35D176929D300C17736 /* CurlSSHUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D324176929D300C17736 /* CurlSSHUploadOperation.m */; };
+		0B10D35E176929D300C17736 /* CurlTransferStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D325176929D300C17736 /* CurlTransferStatus.h */; };
+		0B10D35F176929D300C17736 /* CurlUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D326176929D300C17736 /* CurlUpload.h */; };
+		0B10D360176929D300C17736 /* CurlUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D327176929D300C17736 /* CurlUpload.m */; };
+		0B10D361176929D300C17736 /* CurlUploadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D328176929D300C17736 /* CurlUploadDelegate.h */; };
+		0B10D362176929D300C17736 /* CurlUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D329176929D300C17736 /* CurlUploadOperation.h */; };
+		0B10D363176929D300C17736 /* CurlUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D32A176929D300C17736 /* CurlUploadOperation.m */; };
+		0B10D364176929D300C17736 /* DDInvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D32B176929D300C17736 /* DDInvocationGrabber.h */; };
+		0B10D365176929D300C17736 /* DDInvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D32C176929D300C17736 /* DDInvocationGrabber.m */; };
+		0B10D366176929D300C17736 /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D32D176929D300C17736 /* ftpparse.c */; };
+		0B10D367176929D300C17736 /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D32E176929D300C17736 /* ftpparse.h */; };
+		0B10D368176929D300C17736 /* NSFileManager+MimeType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D32F176929D300C17736 /* NSFileManager+MimeType.h */; };
+		0B10D369176929D300C17736 /* NSFileManager+MimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D330176929D300C17736 /* NSFileManager+MimeType.m */; };
+		0B10D36A176929D300C17736 /* NSObject+DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D331176929D300C17736 /* NSObject+DDExtensions.h */; };
+		0B10D36B176929D300C17736 /* NSObject+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D332176929D300C17736 /* NSObject+DDExtensions.m */; };
+		0B10D36C176929D300C17736 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D333176929D300C17736 /* NSString+MD5.h */; };
+		0B10D36D176929D300C17736 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D334176929D300C17736 /* NSString+MD5.m */; };
+		0B10D36E176929D300C17736 /* NSString+PathExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D335176929D300C17736 /* NSString+PathExtras.h */; };
+		0B10D36F176929D300C17736 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D336176929D300C17736 /* NSString+PathExtras.m */; };
+		0B10D370176929D300C17736 /* NSString+S3.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D337176929D300C17736 /* NSString+S3.h */; };
+		0B10D371176929D300C17736 /* NSString+S3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D338176929D300C17736 /* NSString+S3.m */; };
+		0B10D372176929D300C17736 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D339176929D300C17736 /* NSString+URLEncoding.h */; };
+		0B10D373176929D300C17736 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B10D33A176929D300C17736 /* NSString+URLEncoding.m */; };
+		0B10D374176929D300C17736 /* objective-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B10D33B176929D300C17736 /* objective-curl.h */; };
+		0B10D37517692D0500C17736 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB451E317690E9C008BF623 /* libcurl.4.dylib */; };
+		0B10D37617692D0500C17736 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB451E417690E9C008BF623 /* libssh2.1.dylib */; };
 		0B5978BC1768C8510084A123 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B5978BB1768C8510084A123 /* Cocoa.framework */; };
 		0B5978C61768C8510084A123 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B5978C41768C8510084A123 /* InfoPlist.strings */; };
-		0B5978D31768C90B0084A123 /* NSObject+DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978D11768C90B0084A123 /* NSObject+DDExtensions.h */; };
-		0B5978D41768C90B0084A123 /* NSObject+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978D21768C90B0084A123 /* NSObject+DDExtensions.m */; };
-		0B5978D71768C9610084A123 /* DDInvocationGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978D51768C9610084A123 /* DDInvocationGrabber.h */; };
-		0B5978D81768C9610084A123 /* DDInvocationGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978D61768C9610084A123 /* DDInvocationGrabber.m */; };
-		0B5978E91768CA730084A123 /* CurlFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978DF1768CA730084A123 /* CurlFTP.h */; };
-		0B5978EA1768CA730084A123 /* CurlFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978E01768CA730084A123 /* CurlFTP.m */; };
-		0B5978EB1768CA730084A123 /* CurlObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978E11768CA730084A123 /* CurlObject.h */; };
-		0B5978EC1768CA730084A123 /* CurlObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978E21768CA730084A123 /* CurlObject.m */; };
-		0B5978ED1768CA730084A123 /* CurlS3.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978E31768CA730084A123 /* CurlS3.h */; };
-		0B5978EE1768CA730084A123 /* CurlS3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978E41768CA730084A123 /* CurlS3.m */; };
-		0B5978EF1768CA730084A123 /* CurlSCP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978E51768CA730084A123 /* CurlSCP.h */; };
-		0B5978F01768CA730084A123 /* CurlSCP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978E61768CA730084A123 /* CurlSCP.m */; };
-		0B5978F11768CA730084A123 /* CurlSFTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978E71768CA730084A123 /* CurlSFTP.h */; };
-		0B5978F21768CA730084A123 /* CurlSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978E81768CA730084A123 /* CurlSFTP.m */; };
-		0B5978FD1768CB900084A123 /* NSFileManager+MimeType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978F31768CB900084A123 /* NSFileManager+MimeType.h */; };
-		0B5978FE1768CB900084A123 /* NSFileManager+MimeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978F41768CB900084A123 /* NSFileManager+MimeType.m */; };
-		0B5978FF1768CB900084A123 /* NSString+MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978F51768CB900084A123 /* NSString+MD5.h */; };
-		0B5979001768CB900084A123 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978F61768CB900084A123 /* NSString+MD5.m */; };
-		0B5979011768CB900084A123 /* NSString+PathExtras.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978F71768CB900084A123 /* NSString+PathExtras.h */; };
-		0B5979021768CB900084A123 /* NSString+PathExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978F81768CB900084A123 /* NSString+PathExtras.m */; };
-		0B5979031768CB900084A123 /* NSString+S3.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978F91768CB900084A123 /* NSString+S3.h */; };
-		0B5979041768CB900084A123 /* NSString+S3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978FA1768CB900084A123 /* NSString+S3.m */; };
-		0B5979051768CB900084A123 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5978FB1768CB900084A123 /* NSString+URLEncoding.h */; };
-		0B5979061768CB900084A123 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5978FC1768CB900084A123 /* NSString+URLEncoding.m */; };
-		0B59790A1768CBE40084A123 /* CurlClientType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979071768CBE40084A123 /* CurlClientType.h */; };
-		0B59790B1768CBE40084A123 /* CurlS3ErrorCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979081768CBE40084A123 /* CurlS3ErrorCodes.h */; };
-		0B59790C1768CBE40084A123 /* CurlTransferStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979091768CBE40084A123 /* CurlTransferStatus.h */; };
-		0B5979131768CCCD0084A123 /* curl-patched.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59790F1768CCCD0084A123 /* curl-patched.h */; };
-		0B5979211768CD110084A123 /* CurlFileTransfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979171768CD110084A123 /* CurlFileTransfer.h */; };
-		0B5979221768CD110084A123 /* CurlFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979181768CD110084A123 /* CurlFileTransfer.m */; };
-		0B5979231768CD110084A123 /* CurlRemoteFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979191768CD110084A123 /* CurlRemoteFile.h */; };
-		0B5979241768CD110084A123 /* CurlRemoteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B59791A1768CD110084A123 /* CurlRemoteFile.m */; };
-		0B5979251768CD110084A123 /* CurlRemoteFolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59791B1768CD110084A123 /* CurlRemoteFolder.h */; };
-		0B5979261768CD110084A123 /* CurlRemoteFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B59791C1768CD110084A123 /* CurlRemoteFolder.m */; };
-		0B5979271768CD110084A123 /* CurlRemoteObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59791D1768CD110084A123 /* CurlRemoteObject.h */; };
-		0B5979281768CD110084A123 /* CurlRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B59791E1768CD110084A123 /* CurlRemoteObject.m */; };
-		0B5979291768CD110084A123 /* CurlUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59791F1768CD110084A123 /* CurlUpload.h */; };
-		0B59792A1768CD110084A123 /* CurlUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979201768CD110084A123 /* CurlUpload.m */; };
-		0B59792D1768CE070084A123 /* CurlConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59792B1768CE070084A123 /* CurlConnectionDelegate.h */; };
-		0B59792E1768CE070084A123 /* CurlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59792C1768CE070084A123 /* CurlClient.h */; };
-		0B59793C1768CE9B0084A123 /* CurlOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59792F1768CE980084A123 /* CurlOperation.h */; };
-		0B59793D1768CE9B0084A123 /* CurlOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979301768CE980084A123 /* CurlOperation.m */; };
-		0B5979401768CE9B0084A123 /* CurlS3ListOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979331768CE990084A123 /* CurlS3ListOperation.h */; };
-		0B5979411768CE9B0084A123 /* CurlS3ListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979341768CE990084A123 /* CurlS3ListOperation.m */; };
-		0B5979421768CE9B0084A123 /* CurlS3UploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979351768CE990084A123 /* CurlS3UploadOperation.h */; };
-		0B5979431768CE9B0084A123 /* CurlS3UploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979361768CE990084A123 /* CurlS3UploadOperation.m */; };
-		0B5979441768CE9B0084A123 /* CurlSSHUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979371768CE9A0084A123 /* CurlSSHUploadOperation.h */; };
-		0B5979451768CE9B0084A123 /* CurlSSHUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979381768CE9A0084A123 /* CurlSSHUploadOperation.m */; };
-		0B5979461768CE9B0084A123 /* CurlUploadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5979391768CE9A0084A123 /* CurlUploadDelegate.h */; };
-		0B5979471768CE9B0084A123 /* CurlUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59793A1768CE9A0084A123 /* CurlUploadOperation.h */; };
-		0B5979481768CE9B0084A123 /* CurlUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B59793B1768CE9A0084A123 /* CurlUploadOperation.m */; };
-		0B59794B1768CF020084A123 /* ftpparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979491768CF020084A123 /* ftpparse.c */; };
-		0B59794C1768CF020084A123 /* ftpparse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59794A1768CF020084A123 /* ftpparse.h */; };
-		0B5979511768D10C0084A123 /* CurlS3DateUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59794D1768D10A0084A123 /* CurlS3DateUtil.h */; };
-		0B5979521768D10C0084A123 /* CurlS3DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B59794E1768D10B0084A123 /* CurlS3DateUtil.m */; };
-		0B5979531768D10C0084A123 /* CurlS3ErrorParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59794F1768D10B0084A123 /* CurlS3ErrorParser.h */; };
-		0B5979541768D10C0084A123 /* CurlS3ErrorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5979501768D10C0084A123 /* CurlS3ErrorParser.m */; };
+		0B5979131768CCCD0084A123 /* curl-patched.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B59790F1768CCCD0084A123 /* curl-patched.h */; settings = {ATTRIBUTES = (); }; };
 		0B5979561768D3680084A123 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B5979551768D3680084A123 /* libcrypto.dylib */; };
 		0B5979611768D62C0084A123 /* .empty in Resources */ = {isa = PBXBuildFile; fileRef = 0B5979601768D62C0084A123 /* .empty */; };
-		0B5979641768D6880084A123 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0B5979621768D6870084A123 /* LICENSE */; };
-		0B5979651768D6880084A123 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B5979631768D6870084A123 /* README.md */; };
-		0BB451E517690E9C008BF623 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB451E317690E9C008BF623 /* libcurl.4.dylib */; };
-		0BB451E617690E9C008BF623 /* libssh2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB451E417690E9C008BF623 /* libssh2.1.dylib */; };
 		0BB451E71769153D008BF623 /* libcurl.4.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB451E317690E9C008BF623 /* libcurl.4.dylib */; };
 		0BB451E81769153D008BF623 /* libssh2.1.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB451E417690E9C008BF623 /* libssh2.1.dylib */; };
 /* End PBXBuildFile section */
@@ -92,6 +93,65 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B10D2D31769232900C17736 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		0B10D2D41769232900C17736 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
+		0B10D303176929D300C17736 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlClient.h; path = src/CurlClient.h; sourceTree = "<group>"; };
+		0B10D304176929D300C17736 /* CurlClientType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlClientType.h; path = src/CurlClientType.h; sourceTree = "<group>"; };
+		0B10D305176929D300C17736 /* CurlConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlConnectionDelegate.h; path = src/CurlConnectionDelegate.h; sourceTree = "<group>"; };
+		0B10D306176929D300C17736 /* CurlFileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlFileTransfer.h; path = src/CurlFileTransfer.h; sourceTree = "<group>"; };
+		0B10D307176929D300C17736 /* CurlFileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlFileTransfer.m; path = src/CurlFileTransfer.m; sourceTree = "<group>"; };
+		0B10D308176929D300C17736 /* CurlFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlFTP.h; path = src/CurlFTP.h; sourceTree = "<group>"; };
+		0B10D309176929D300C17736 /* CurlFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlFTP.m; path = src/CurlFTP.m; sourceTree = "<group>"; };
+		0B10D30A176929D300C17736 /* CurlObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlObject.h; path = src/CurlObject.h; sourceTree = "<group>"; };
+		0B10D30B176929D300C17736 /* CurlObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlObject.m; path = src/CurlObject.m; sourceTree = "<group>"; };
+		0B10D30C176929D300C17736 /* CurlOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlOperation.h; path = src/CurlOperation.h; sourceTree = "<group>"; };
+		0B10D30D176929D300C17736 /* CurlOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlOperation.m; path = src/CurlOperation.m; sourceTree = "<group>"; };
+		0B10D30E176929D300C17736 /* CurlRemoteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlRemoteFile.h; path = src/CurlRemoteFile.h; sourceTree = "<group>"; };
+		0B10D30F176929D300C17736 /* CurlRemoteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlRemoteFile.m; path = src/CurlRemoteFile.m; sourceTree = "<group>"; };
+		0B10D310176929D300C17736 /* CurlRemoteFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlRemoteFolder.h; path = src/CurlRemoteFolder.h; sourceTree = "<group>"; };
+		0B10D311176929D300C17736 /* CurlRemoteFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlRemoteFolder.m; path = src/CurlRemoteFolder.m; sourceTree = "<group>"; };
+		0B10D312176929D300C17736 /* CurlRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlRemoteObject.h; path = src/CurlRemoteObject.h; sourceTree = "<group>"; };
+		0B10D313176929D300C17736 /* CurlRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlRemoteObject.m; path = src/CurlRemoteObject.m; sourceTree = "<group>"; };
+		0B10D314176929D300C17736 /* CurlS3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlS3.h; path = src/CurlS3.h; sourceTree = "<group>"; };
+		0B10D315176929D300C17736 /* CurlS3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlS3.m; path = src/CurlS3.m; sourceTree = "<group>"; };
+		0B10D316176929D300C17736 /* CurlS3DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlS3DateUtil.h; path = src/CurlS3DateUtil.h; sourceTree = "<group>"; };
+		0B10D317176929D300C17736 /* CurlS3DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlS3DateUtil.m; path = src/CurlS3DateUtil.m; sourceTree = "<group>"; };
+		0B10D318176929D300C17736 /* CurlS3ErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlS3ErrorCodes.h; path = src/CurlS3ErrorCodes.h; sourceTree = "<group>"; };
+		0B10D319176929D300C17736 /* CurlS3ErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlS3ErrorParser.h; path = src/CurlS3ErrorParser.h; sourceTree = "<group>"; };
+		0B10D31A176929D300C17736 /* CurlS3ErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlS3ErrorParser.m; path = src/CurlS3ErrorParser.m; sourceTree = "<group>"; };
+		0B10D31B176929D300C17736 /* CurlS3ListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlS3ListOperation.h; path = src/CurlS3ListOperation.h; sourceTree = "<group>"; };
+		0B10D31C176929D300C17736 /* CurlS3ListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlS3ListOperation.m; path = src/CurlS3ListOperation.m; sourceTree = "<group>"; };
+		0B10D31D176929D300C17736 /* CurlS3UploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlS3UploadOperation.h; path = src/CurlS3UploadOperation.h; sourceTree = "<group>"; };
+		0B10D31E176929D300C17736 /* CurlS3UploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlS3UploadOperation.m; path = src/CurlS3UploadOperation.m; sourceTree = "<group>"; };
+		0B10D31F176929D300C17736 /* CurlSCP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlSCP.h; path = src/CurlSCP.h; sourceTree = "<group>"; };
+		0B10D320176929D300C17736 /* CurlSCP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlSCP.m; path = src/CurlSCP.m; sourceTree = "<group>"; };
+		0B10D321176929D300C17736 /* CurlSFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlSFTP.h; path = src/CurlSFTP.h; sourceTree = "<group>"; };
+		0B10D322176929D300C17736 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlSFTP.m; path = src/CurlSFTP.m; sourceTree = "<group>"; };
+		0B10D323176929D300C17736 /* CurlSSHUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlSSHUploadOperation.h; path = src/CurlSSHUploadOperation.h; sourceTree = "<group>"; };
+		0B10D324176929D300C17736 /* CurlSSHUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlSSHUploadOperation.m; path = src/CurlSSHUploadOperation.m; sourceTree = "<group>"; };
+		0B10D325176929D300C17736 /* CurlTransferStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlTransferStatus.h; path = src/CurlTransferStatus.h; sourceTree = "<group>"; };
+		0B10D326176929D300C17736 /* CurlUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlUpload.h; path = src/CurlUpload.h; sourceTree = "<group>"; };
+		0B10D327176929D300C17736 /* CurlUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlUpload.m; path = src/CurlUpload.m; sourceTree = "<group>"; };
+		0B10D328176929D300C17736 /* CurlUploadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlUploadDelegate.h; path = src/CurlUploadDelegate.h; sourceTree = "<group>"; };
+		0B10D329176929D300C17736 /* CurlUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurlUploadOperation.h; path = src/CurlUploadOperation.h; sourceTree = "<group>"; };
+		0B10D32A176929D300C17736 /* CurlUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurlUploadOperation.m; path = src/CurlUploadOperation.m; sourceTree = "<group>"; };
+		0B10D32B176929D300C17736 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDInvocationGrabber.h; path = src/DDInvocationGrabber.h; sourceTree = "<group>"; };
+		0B10D32C176929D300C17736 /* DDInvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDInvocationGrabber.m; path = src/DDInvocationGrabber.m; sourceTree = "<group>"; };
+		0B10D32D176929D300C17736 /* ftpparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ftpparse.c; path = src/ftpparse.c; sourceTree = "<group>"; };
+		0B10D32E176929D300C17736 /* ftpparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftpparse.h; path = src/ftpparse.h; sourceTree = "<group>"; };
+		0B10D32F176929D300C17736 /* NSFileManager+MimeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+MimeType.h"; path = "src/NSFileManager+MimeType.h"; sourceTree = "<group>"; };
+		0B10D330176929D300C17736 /* NSFileManager+MimeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+MimeType.m"; path = "src/NSFileManager+MimeType.m"; sourceTree = "<group>"; };
+		0B10D331176929D300C17736 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DDExtensions.h"; path = "src/NSObject+DDExtensions.h"; sourceTree = "<group>"; };
+		0B10D332176929D300C17736 /* NSObject+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+DDExtensions.m"; path = "src/NSObject+DDExtensions.m"; sourceTree = "<group>"; };
+		0B10D333176929D300C17736 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5.h"; path = "src/NSString+MD5.h"; sourceTree = "<group>"; };
+		0B10D334176929D300C17736 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5.m"; path = "src/NSString+MD5.m"; sourceTree = "<group>"; };
+		0B10D335176929D300C17736 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+PathExtras.h"; path = "src/NSString+PathExtras.h"; sourceTree = "<group>"; };
+		0B10D336176929D300C17736 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+PathExtras.m"; path = "src/NSString+PathExtras.m"; sourceTree = "<group>"; };
+		0B10D337176929D300C17736 /* NSString+S3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+S3.h"; path = "src/NSString+S3.h"; sourceTree = "<group>"; };
+		0B10D338176929D300C17736 /* NSString+S3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+S3.m"; path = "src/NSString+S3.m"; sourceTree = "<group>"; };
+		0B10D339176929D300C17736 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+URLEncoding.h"; path = "src/NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		0B10D33A176929D300C17736 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLEncoding.m"; path = "src/NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		0B10D33B176929D300C17736 /* objective-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objective-curl.h"; path = "src/objective-curl.h"; sourceTree = "<group>"; };
 		0B5978B81768C8510084A123 /* objective-curl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "objective-curl.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B5978BB1768C8510084A123 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0B5978BE1768C8510084A123 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -100,68 +160,9 @@
 		0B5978C31768C8510084A123 /* objective-curl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "objective-curl-Info.plist"; sourceTree = "<group>"; };
 		0B5978C51768C8510084A123 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0B5978C71768C8510084A123 /* objective-curl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "objective-curl-Prefix.pch"; sourceTree = "<group>"; };
-		0B5978C81768C8510084A123 /* objective-curl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "objective-curl.h"; sourceTree = "<group>"; };
-		0B5978D11768C90B0084A123 /* NSObject+DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DDExtensions.h"; sourceTree = "<group>"; };
-		0B5978D21768C90B0084A123 /* NSObject+DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DDExtensions.m"; sourceTree = "<group>"; };
-		0B5978D51768C9610084A123 /* DDInvocationGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInvocationGrabber.h; sourceTree = "<group>"; };
-		0B5978D61768C9610084A123 /* DDInvocationGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDInvocationGrabber.m; sourceTree = "<group>"; };
-		0B5978DF1768CA730084A123 /* CurlFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlFTP.h; sourceTree = "<group>"; };
-		0B5978E01768CA730084A123 /* CurlFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlFTP.m; sourceTree = "<group>"; };
-		0B5978E11768CA730084A123 /* CurlObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlObject.h; sourceTree = "<group>"; };
-		0B5978E21768CA730084A123 /* CurlObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlObject.m; sourceTree = "<group>"; };
-		0B5978E31768CA730084A123 /* CurlS3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlS3.h; sourceTree = "<group>"; };
-		0B5978E41768CA730084A123 /* CurlS3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlS3.m; sourceTree = "<group>"; };
-		0B5978E51768CA730084A123 /* CurlSCP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSCP.h; sourceTree = "<group>"; };
-		0B5978E61768CA730084A123 /* CurlSCP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSCP.m; sourceTree = "<group>"; };
-		0B5978E71768CA730084A123 /* CurlSFTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSFTP.h; sourceTree = "<group>"; };
-		0B5978E81768CA730084A123 /* CurlSFTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSFTP.m; sourceTree = "<group>"; };
-		0B5978F31768CB900084A123 /* NSFileManager+MimeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+MimeType.h"; sourceTree = "<group>"; };
-		0B5978F41768CB900084A123 /* NSFileManager+MimeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+MimeType.m"; sourceTree = "<group>"; };
-		0B5978F51768CB900084A123 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		0B5978F61768CB900084A123 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
-		0B5978F71768CB900084A123 /* NSString+PathExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PathExtras.h"; sourceTree = "<group>"; };
-		0B5978F81768CB900084A123 /* NSString+PathExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PathExtras.m"; sourceTree = "<group>"; };
-		0B5978F91768CB900084A123 /* NSString+S3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+S3.h"; sourceTree = "<group>"; };
-		0B5978FA1768CB900084A123 /* NSString+S3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+S3.m"; sourceTree = "<group>"; };
-		0B5978FB1768CB900084A123 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
-		0B5978FC1768CB900084A123 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
-		0B5979071768CBE40084A123 /* CurlClientType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClientType.h; sourceTree = "<group>"; };
-		0B5979081768CBE40084A123 /* CurlS3ErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlS3ErrorCodes.h; sourceTree = "<group>"; };
-		0B5979091768CBE40084A123 /* CurlTransferStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlTransferStatus.h; sourceTree = "<group>"; };
 		0B59790F1768CCCD0084A123 /* curl-patched.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "curl-patched.h"; path = "objective-curl/include/curl-patched.h"; sourceTree = "<group>"; };
-		0B5979171768CD110084A123 /* CurlFileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlFileTransfer.h; sourceTree = "<group>"; };
-		0B5979181768CD110084A123 /* CurlFileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlFileTransfer.m; sourceTree = "<group>"; };
-		0B5979191768CD110084A123 /* CurlRemoteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlRemoteFile.h; sourceTree = "<group>"; };
-		0B59791A1768CD110084A123 /* CurlRemoteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlRemoteFile.m; sourceTree = "<group>"; };
-		0B59791B1768CD110084A123 /* CurlRemoteFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlRemoteFolder.h; sourceTree = "<group>"; };
-		0B59791C1768CD110084A123 /* CurlRemoteFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlRemoteFolder.m; sourceTree = "<group>"; };
-		0B59791D1768CD110084A123 /* CurlRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlRemoteObject.h; sourceTree = "<group>"; };
-		0B59791E1768CD110084A123 /* CurlRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlRemoteObject.m; sourceTree = "<group>"; };
-		0B59791F1768CD110084A123 /* CurlUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlUpload.h; sourceTree = "<group>"; };
-		0B5979201768CD110084A123 /* CurlUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlUpload.m; sourceTree = "<group>"; };
-		0B59792B1768CE070084A123 /* CurlConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlConnectionDelegate.h; sourceTree = "<group>"; };
-		0B59792C1768CE070084A123 /* CurlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlClient.h; sourceTree = "<group>"; };
-		0B59792F1768CE980084A123 /* CurlOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlOperation.h; sourceTree = "<group>"; };
-		0B5979301768CE980084A123 /* CurlOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlOperation.m; sourceTree = "<group>"; };
-		0B5979331768CE990084A123 /* CurlS3ListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlS3ListOperation.h; sourceTree = "<group>"; };
-		0B5979341768CE990084A123 /* CurlS3ListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlS3ListOperation.m; sourceTree = "<group>"; };
-		0B5979351768CE990084A123 /* CurlS3UploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlS3UploadOperation.h; sourceTree = "<group>"; };
-		0B5979361768CE990084A123 /* CurlS3UploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlS3UploadOperation.m; sourceTree = "<group>"; };
-		0B5979371768CE9A0084A123 /* CurlSSHUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlSSHUploadOperation.h; sourceTree = "<group>"; };
-		0B5979381768CE9A0084A123 /* CurlSSHUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlSSHUploadOperation.m; sourceTree = "<group>"; };
-		0B5979391768CE9A0084A123 /* CurlUploadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlUploadDelegate.h; sourceTree = "<group>"; };
-		0B59793A1768CE9A0084A123 /* CurlUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlUploadOperation.h; sourceTree = "<group>"; };
-		0B59793B1768CE9A0084A123 /* CurlUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlUploadOperation.m; sourceTree = "<group>"; };
-		0B5979491768CF020084A123 /* ftpparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ftpparse.c; sourceTree = "<group>"; };
-		0B59794A1768CF020084A123 /* ftpparse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftpparse.h; sourceTree = "<group>"; };
-		0B59794D1768D10A0084A123 /* CurlS3DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlS3DateUtil.h; sourceTree = "<group>"; };
-		0B59794E1768D10B0084A123 /* CurlS3DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlS3DateUtil.m; sourceTree = "<group>"; };
-		0B59794F1768D10B0084A123 /* CurlS3ErrorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlS3ErrorParser.h; sourceTree = "<group>"; };
-		0B5979501768D10C0084A123 /* CurlS3ErrorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurlS3ErrorParser.m; sourceTree = "<group>"; };
 		0B5979551768D3680084A123 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		0B5979601768D62C0084A123 /* .empty */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .empty; sourceTree = "<group>"; };
-		0B5979621768D6870084A123 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		0B5979631768D6870084A123 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		0BB451E317690E9C008BF623 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = "objective-curl/dylib/libcurl.4.dylib"; sourceTree = "<group>"; };
 		0BB451E417690E9C008BF623 /* libssh2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.1.dylib; path = "objective-curl/dylib/libssh2.1.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,16 +172,78 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B10D37517692D0500C17736 /* libcurl.4.dylib in Frameworks */,
+				0B10D37617692D0500C17736 /* libssh2.1.dylib in Frameworks */,
 				0B5978BC1768C8510084A123 /* Cocoa.framework in Frameworks */,
 				0B5979561768D3680084A123 /* libcrypto.dylib in Frameworks */,
-				0BB451E517690E9C008BF623 /* libcurl.4.dylib in Frameworks */,
-				0BB451E617690E9C008BF623 /* libssh2.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B10D302176929C500C17736 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0B10D303176929D300C17736 /* CurlClient.h */,
+				0B10D304176929D300C17736 /* CurlClientType.h */,
+				0B10D305176929D300C17736 /* CurlConnectionDelegate.h */,
+				0B10D306176929D300C17736 /* CurlFileTransfer.h */,
+				0B10D307176929D300C17736 /* CurlFileTransfer.m */,
+				0B10D308176929D300C17736 /* CurlFTP.h */,
+				0B10D309176929D300C17736 /* CurlFTP.m */,
+				0B10D30A176929D300C17736 /* CurlObject.h */,
+				0B10D30B176929D300C17736 /* CurlObject.m */,
+				0B10D30C176929D300C17736 /* CurlOperation.h */,
+				0B10D30D176929D300C17736 /* CurlOperation.m */,
+				0B10D30E176929D300C17736 /* CurlRemoteFile.h */,
+				0B10D30F176929D300C17736 /* CurlRemoteFile.m */,
+				0B10D310176929D300C17736 /* CurlRemoteFolder.h */,
+				0B10D311176929D300C17736 /* CurlRemoteFolder.m */,
+				0B10D312176929D300C17736 /* CurlRemoteObject.h */,
+				0B10D313176929D300C17736 /* CurlRemoteObject.m */,
+				0B10D314176929D300C17736 /* CurlS3.h */,
+				0B10D315176929D300C17736 /* CurlS3.m */,
+				0B10D316176929D300C17736 /* CurlS3DateUtil.h */,
+				0B10D317176929D300C17736 /* CurlS3DateUtil.m */,
+				0B10D318176929D300C17736 /* CurlS3ErrorCodes.h */,
+				0B10D319176929D300C17736 /* CurlS3ErrorParser.h */,
+				0B10D31A176929D300C17736 /* CurlS3ErrorParser.m */,
+				0B10D31B176929D300C17736 /* CurlS3ListOperation.h */,
+				0B10D31C176929D300C17736 /* CurlS3ListOperation.m */,
+				0B10D31D176929D300C17736 /* CurlS3UploadOperation.h */,
+				0B10D31E176929D300C17736 /* CurlS3UploadOperation.m */,
+				0B10D31F176929D300C17736 /* CurlSCP.h */,
+				0B10D320176929D300C17736 /* CurlSCP.m */,
+				0B10D321176929D300C17736 /* CurlSFTP.h */,
+				0B10D322176929D300C17736 /* CurlSFTP.m */,
+				0B10D323176929D300C17736 /* CurlSSHUploadOperation.h */,
+				0B10D324176929D300C17736 /* CurlSSHUploadOperation.m */,
+				0B10D325176929D300C17736 /* CurlTransferStatus.h */,
+				0B10D326176929D300C17736 /* CurlUpload.h */,
+				0B10D327176929D300C17736 /* CurlUpload.m */,
+				0B10D328176929D300C17736 /* CurlUploadDelegate.h */,
+				0B10D329176929D300C17736 /* CurlUploadOperation.h */,
+				0B10D32A176929D300C17736 /* CurlUploadOperation.m */,
+				0B10D32B176929D300C17736 /* DDInvocationGrabber.h */,
+				0B10D32C176929D300C17736 /* DDInvocationGrabber.m */,
+				0B10D32F176929D300C17736 /* NSFileManager+MimeType.h */,
+				0B10D330176929D300C17736 /* NSFileManager+MimeType.m */,
+				0B10D331176929D300C17736 /* NSObject+DDExtensions.h */,
+				0B10D332176929D300C17736 /* NSObject+DDExtensions.m */,
+				0B10D333176929D300C17736 /* NSString+MD5.h */,
+				0B10D334176929D300C17736 /* NSString+MD5.m */,
+				0B10D335176929D300C17736 /* NSString+PathExtras.h */,
+				0B10D336176929D300C17736 /* NSString+PathExtras.m */,
+				0B10D337176929D300C17736 /* NSString+S3.h */,
+				0B10D338176929D300C17736 /* NSString+S3.m */,
+				0B10D339176929D300C17736 /* NSString+URLEncoding.h */,
+				0B10D33A176929D300C17736 /* NSString+URLEncoding.m */,
+				0B10D33B176929D300C17736 /* objective-curl.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
 		0B5978AE1768C8510084A123 = {
 			isa = PBXGroup;
 			children = (
@@ -214,11 +277,9 @@
 		0B5978C11768C8510084A123 /* objective-curl */ = {
 			isa = PBXGroup;
 			children = (
-				0B5979621768D6870084A123 /* LICENSE */,
-				0B5979631768D6870084A123 /* README.md */,
-				0B5978C81768C8510084A123 /* objective-curl.h */,
-				0B5978DE1768CA480084A123 /* Framework Classes */,
-				0B5978D01768C8D50084A123 /* Categories */,
+				0B10D302176929C500C17736 /* Source */,
+				0B10D2D31769232900C17736 /* LICENSE */,
+				0B10D2D41769232900C17736 /* README.md */,
 				0B5978C21768C8510084A123 /* Supporting Files */,
 			);
 			path = "objective-curl";
@@ -227,82 +288,14 @@
 		0B5978C21768C8510084A123 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0B10D32D176929D300C17736 /* ftpparse.c */,
+				0B10D32E176929D300C17736 /* ftpparse.h */,
 				0B5979601768D62C0084A123 /* .empty */,
-				0B5979491768CF020084A123 /* ftpparse.c */,
-				0B59794A1768CF020084A123 /* ftpparse.h */,
 				0B5978C41768C8510084A123 /* InfoPlist.strings */,
 				0B5978C31768C8510084A123 /* objective-curl-Info.plist */,
 				0B5978C71768C8510084A123 /* objective-curl-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		0B5978D01768C8D50084A123 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				0B5978F31768CB900084A123 /* NSFileManager+MimeType.h */,
-				0B5978F41768CB900084A123 /* NSFileManager+MimeType.m */,
-				0B5978F51768CB900084A123 /* NSString+MD5.h */,
-				0B5978F61768CB900084A123 /* NSString+MD5.m */,
-				0B5978F71768CB900084A123 /* NSString+PathExtras.h */,
-				0B5978F81768CB900084A123 /* NSString+PathExtras.m */,
-				0B5978F91768CB900084A123 /* NSString+S3.h */,
-				0B5978FA1768CB900084A123 /* NSString+S3.m */,
-				0B5978FB1768CB900084A123 /* NSString+URLEncoding.h */,
-				0B5978FC1768CB900084A123 /* NSString+URLEncoding.m */,
-				0B5978D51768C9610084A123 /* DDInvocationGrabber.h */,
-				0B5978D61768C9610084A123 /* DDInvocationGrabber.m */,
-				0B5978D11768C90B0084A123 /* NSObject+DDExtensions.h */,
-				0B5978D21768C90B0084A123 /* NSObject+DDExtensions.m */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
-		0B5978DE1768CA480084A123 /* Framework Classes */ = {
-			isa = PBXGroup;
-			children = (
-				0B59792B1768CE070084A123 /* CurlConnectionDelegate.h */,
-				0B59792C1768CE070084A123 /* CurlClient.h */,
-				0B5979071768CBE40084A123 /* CurlClientType.h */,
-				0B5979171768CD110084A123 /* CurlFileTransfer.h */,
-				0B5979181768CD110084A123 /* CurlFileTransfer.m */,
-				0B5978DF1768CA730084A123 /* CurlFTP.h */,
-				0B5978E01768CA730084A123 /* CurlFTP.m */,
-				0B5978E11768CA730084A123 /* CurlObject.h */,
-				0B5978E21768CA730084A123 /* CurlObject.m */,
-				0B59792F1768CE980084A123 /* CurlOperation.h */,
-				0B5979301768CE980084A123 /* CurlOperation.m */,
-				0B5979191768CD110084A123 /* CurlRemoteFile.h */,
-				0B59791A1768CD110084A123 /* CurlRemoteFile.m */,
-				0B59791B1768CD110084A123 /* CurlRemoteFolder.h */,
-				0B59791C1768CD110084A123 /* CurlRemoteFolder.m */,
-				0B59791D1768CD110084A123 /* CurlRemoteObject.h */,
-				0B59791E1768CD110084A123 /* CurlRemoteObject.m */,
-				0B5978E31768CA730084A123 /* CurlS3.h */,
-				0B5978E41768CA730084A123 /* CurlS3.m */,
-				0B5979081768CBE40084A123 /* CurlS3ErrorCodes.h */,
-				0B5979331768CE990084A123 /* CurlS3ListOperation.h */,
-				0B5979341768CE990084A123 /* CurlS3ListOperation.m */,
-				0B5979351768CE990084A123 /* CurlS3UploadOperation.h */,
-				0B5979361768CE990084A123 /* CurlS3UploadOperation.m */,
-				0B5978E51768CA730084A123 /* CurlSCP.h */,
-				0B5978E61768CA730084A123 /* CurlSCP.m */,
-				0B5978E71768CA730084A123 /* CurlSFTP.h */,
-				0B5978E81768CA730084A123 /* CurlSFTP.m */,
-				0B5979371768CE9A0084A123 /* CurlSSHUploadOperation.h */,
-				0B5979381768CE9A0084A123 /* CurlSSHUploadOperation.m */,
-				0B5979091768CBE40084A123 /* CurlTransferStatus.h */,
-				0B59791F1768CD110084A123 /* CurlUpload.h */,
-				0B5979201768CD110084A123 /* CurlUpload.m */,
-				0B5979391768CE9A0084A123 /* CurlUploadDelegate.h */,
-				0B59793A1768CE9A0084A123 /* CurlUploadOperation.h */,
-				0B59793B1768CE9A0084A123 /* CurlUploadOperation.m */,
-				0B59794D1768D10A0084A123 /* CurlS3DateUtil.h */,
-				0B59794E1768D10B0084A123 /* CurlS3DateUtil.m */,
-				0B59794F1768D10B0084A123 /* CurlS3ErrorParser.h */,
-				0B5979501768D10C0084A123 /* CurlS3ErrorParser.m */,
-			);
-			name = "Framework Classes";
 			sourceTree = "<group>";
 		};
 		0B59790E1768CC920084A123 /* include */ = {
@@ -338,38 +331,39 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B5978D31768C90B0084A123 /* NSObject+DDExtensions.h in Headers */,
-				0B5978D71768C9610084A123 /* DDInvocationGrabber.h in Headers */,
-				0B5978E91768CA730084A123 /* CurlFTP.h in Headers */,
-				0B5978EB1768CA730084A123 /* CurlObject.h in Headers */,
-				0B5978ED1768CA730084A123 /* CurlS3.h in Headers */,
-				0B5978EF1768CA730084A123 /* CurlSCP.h in Headers */,
-				0B5978F11768CA730084A123 /* CurlSFTP.h in Headers */,
-				0B5978FD1768CB900084A123 /* NSFileManager+MimeType.h in Headers */,
-				0B5978FF1768CB900084A123 /* NSString+MD5.h in Headers */,
-				0B5979011768CB900084A123 /* NSString+PathExtras.h in Headers */,
-				0B5979031768CB900084A123 /* NSString+S3.h in Headers */,
-				0B5979051768CB900084A123 /* NSString+URLEncoding.h in Headers */,
-				0B59790A1768CBE40084A123 /* CurlClientType.h in Headers */,
-				0B59790B1768CBE40084A123 /* CurlS3ErrorCodes.h in Headers */,
-				0B59790C1768CBE40084A123 /* CurlTransferStatus.h in Headers */,
 				0B5979131768CCCD0084A123 /* curl-patched.h in Headers */,
-				0B5979211768CD110084A123 /* CurlFileTransfer.h in Headers */,
-				0B5979231768CD110084A123 /* CurlRemoteFile.h in Headers */,
-				0B5979251768CD110084A123 /* CurlRemoteFolder.h in Headers */,
-				0B5979271768CD110084A123 /* CurlRemoteObject.h in Headers */,
-				0B5979291768CD110084A123 /* CurlUpload.h in Headers */,
-				0B59792D1768CE070084A123 /* CurlConnectionDelegate.h in Headers */,
-				0B59792E1768CE070084A123 /* CurlClient.h in Headers */,
-				0B59793C1768CE9B0084A123 /* CurlOperation.h in Headers */,
-				0B5979401768CE9B0084A123 /* CurlS3ListOperation.h in Headers */,
-				0B5979421768CE9B0084A123 /* CurlS3UploadOperation.h in Headers */,
-				0B5979441768CE9B0084A123 /* CurlSSHUploadOperation.h in Headers */,
-				0B5979461768CE9B0084A123 /* CurlUploadDelegate.h in Headers */,
-				0B5979471768CE9B0084A123 /* CurlUploadOperation.h in Headers */,
-				0B59794C1768CF020084A123 /* ftpparse.h in Headers */,
-				0B5979511768D10C0084A123 /* CurlS3DateUtil.h in Headers */,
-				0B5979531768D10C0084A123 /* CurlS3ErrorParser.h in Headers */,
+				0B10D33C176929D300C17736 /* CurlClient.h in Headers */,
+				0B10D33D176929D300C17736 /* CurlClientType.h in Headers */,
+				0B10D33E176929D300C17736 /* CurlConnectionDelegate.h in Headers */,
+				0B10D33F176929D300C17736 /* CurlFileTransfer.h in Headers */,
+				0B10D341176929D300C17736 /* CurlFTP.h in Headers */,
+				0B10D343176929D300C17736 /* CurlObject.h in Headers */,
+				0B10D345176929D300C17736 /* CurlOperation.h in Headers */,
+				0B10D347176929D300C17736 /* CurlRemoteFile.h in Headers */,
+				0B10D349176929D300C17736 /* CurlRemoteFolder.h in Headers */,
+				0B10D34B176929D300C17736 /* CurlRemoteObject.h in Headers */,
+				0B10D34D176929D300C17736 /* CurlS3.h in Headers */,
+				0B10D34F176929D300C17736 /* CurlS3DateUtil.h in Headers */,
+				0B10D351176929D300C17736 /* CurlS3ErrorCodes.h in Headers */,
+				0B10D352176929D300C17736 /* CurlS3ErrorParser.h in Headers */,
+				0B10D354176929D300C17736 /* CurlS3ListOperation.h in Headers */,
+				0B10D356176929D300C17736 /* CurlS3UploadOperation.h in Headers */,
+				0B10D358176929D300C17736 /* CurlSCP.h in Headers */,
+				0B10D35A176929D300C17736 /* CurlSFTP.h in Headers */,
+				0B10D35C176929D300C17736 /* CurlSSHUploadOperation.h in Headers */,
+				0B10D35E176929D300C17736 /* CurlTransferStatus.h in Headers */,
+				0B10D35F176929D300C17736 /* CurlUpload.h in Headers */,
+				0B10D361176929D300C17736 /* CurlUploadDelegate.h in Headers */,
+				0B10D362176929D300C17736 /* CurlUploadOperation.h in Headers */,
+				0B10D364176929D300C17736 /* DDInvocationGrabber.h in Headers */,
+				0B10D367176929D300C17736 /* ftpparse.h in Headers */,
+				0B10D368176929D300C17736 /* NSFileManager+MimeType.h in Headers */,
+				0B10D36A176929D300C17736 /* NSObject+DDExtensions.h in Headers */,
+				0B10D36C176929D300C17736 /* NSString+MD5.h in Headers */,
+				0B10D36E176929D300C17736 /* NSString+PathExtras.h in Headers */,
+				0B10D370176929D300C17736 /* NSString+S3.h in Headers */,
+				0B10D372176929D300C17736 /* NSString+URLEncoding.h in Headers */,
+				0B10D374176929D300C17736 /* objective-curl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,8 +423,8 @@
 			files = (
 				0B5978C61768C8510084A123 /* InfoPlist.strings in Resources */,
 				0B5979611768D62C0084A123 /* .empty in Resources */,
-				0B5979641768D6880084A123 /* LICENSE in Resources */,
-				0B5979651768D6880084A123 /* README.md in Resources */,
+				0B10D2D51769232900C17736 /* LICENSE in Resources */,
+				0B10D2D61769232900C17736 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,31 +452,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B5978D41768C90B0084A123 /* NSObject+DDExtensions.m in Sources */,
-				0B5978D81768C9610084A123 /* DDInvocationGrabber.m in Sources */,
-				0B5978EA1768CA730084A123 /* CurlFTP.m in Sources */,
-				0B5978EC1768CA730084A123 /* CurlObject.m in Sources */,
-				0B5978EE1768CA730084A123 /* CurlS3.m in Sources */,
-				0B5978F01768CA730084A123 /* CurlSCP.m in Sources */,
-				0B5978F21768CA730084A123 /* CurlSFTP.m in Sources */,
-				0B5978FE1768CB900084A123 /* NSFileManager+MimeType.m in Sources */,
-				0B5979001768CB900084A123 /* NSString+MD5.m in Sources */,
-				0B5979021768CB900084A123 /* NSString+PathExtras.m in Sources */,
-				0B5979041768CB900084A123 /* NSString+S3.m in Sources */,
-				0B5979061768CB900084A123 /* NSString+URLEncoding.m in Sources */,
-				0B5979221768CD110084A123 /* CurlFileTransfer.m in Sources */,
-				0B5979241768CD110084A123 /* CurlRemoteFile.m in Sources */,
-				0B5979261768CD110084A123 /* CurlRemoteFolder.m in Sources */,
-				0B5979281768CD110084A123 /* CurlRemoteObject.m in Sources */,
-				0B59792A1768CD110084A123 /* CurlUpload.m in Sources */,
-				0B59793D1768CE9B0084A123 /* CurlOperation.m in Sources */,
-				0B5979411768CE9B0084A123 /* CurlS3ListOperation.m in Sources */,
-				0B5979431768CE9B0084A123 /* CurlS3UploadOperation.m in Sources */,
-				0B5979451768CE9B0084A123 /* CurlSSHUploadOperation.m in Sources */,
-				0B5979481768CE9B0084A123 /* CurlUploadOperation.m in Sources */,
-				0B59794B1768CF020084A123 /* ftpparse.c in Sources */,
-				0B5979521768D10C0084A123 /* CurlS3DateUtil.m in Sources */,
-				0B5979541768D10C0084A123 /* CurlS3ErrorParser.m in Sources */,
+				0B10D340176929D300C17736 /* CurlFileTransfer.m in Sources */,
+				0B10D342176929D300C17736 /* CurlFTP.m in Sources */,
+				0B10D344176929D300C17736 /* CurlObject.m in Sources */,
+				0B10D346176929D300C17736 /* CurlOperation.m in Sources */,
+				0B10D348176929D300C17736 /* CurlRemoteFile.m in Sources */,
+				0B10D34A176929D300C17736 /* CurlRemoteFolder.m in Sources */,
+				0B10D34C176929D300C17736 /* CurlRemoteObject.m in Sources */,
+				0B10D34E176929D300C17736 /* CurlS3.m in Sources */,
+				0B10D350176929D300C17736 /* CurlS3DateUtil.m in Sources */,
+				0B10D353176929D300C17736 /* CurlS3ErrorParser.m in Sources */,
+				0B10D355176929D300C17736 /* CurlS3ListOperation.m in Sources */,
+				0B10D357176929D300C17736 /* CurlS3UploadOperation.m in Sources */,
+				0B10D359176929D300C17736 /* CurlSCP.m in Sources */,
+				0B10D35B176929D300C17736 /* CurlSFTP.m in Sources */,
+				0B10D35D176929D300C17736 /* CurlSSHUploadOperation.m in Sources */,
+				0B10D360176929D300C17736 /* CurlUpload.m in Sources */,
+				0B10D363176929D300C17736 /* CurlUploadOperation.m in Sources */,
+				0B10D365176929D300C17736 /* DDInvocationGrabber.m in Sources */,
+				0B10D366176929D300C17736 /* ftpparse.c in Sources */,
+				0B10D369176929D300C17736 /* NSFileManager+MimeType.m in Sources */,
+				0B10D36B176929D300C17736 /* NSObject+DDExtensions.m in Sources */,
+				0B10D36D176929D300C17736 /* NSString+MD5.m in Sources */,
+				0B10D36F176929D300C17736 /* NSString+PathExtras.m in Sources */,
+				0B10D371176929D300C17736 /* NSString+S3.m in Sources */,
+				0B10D373176929D300C17736 /* NSString+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

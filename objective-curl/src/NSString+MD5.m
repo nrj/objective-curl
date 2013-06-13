@@ -36,10 +36,10 @@
 	
 	BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 	
-	bmem = BIO_new_mem_buf((char *)data, len);
+	bmem = BIO_new_mem_buf((char *)data, (int)len);
 	bmem = BIO_push(b64, bmem);
 	
-	BIO_read(bmem, buffer, len);
+	BIO_read(bmem, buffer, (int)len);
 	
 	BIO_free_all(bmem);
 	

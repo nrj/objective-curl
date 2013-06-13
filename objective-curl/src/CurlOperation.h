@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <sys/stat.h>
-#import "curl-patched.h"
+#import "patched-curl.h"
 
 @class CurlRemoteObject;
 

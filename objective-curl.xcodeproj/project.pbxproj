@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		0B4F461817698E44008BC7B3 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4F461717698E44008BC7B3 /* libssl.dylib */; };
 		0B4F461D17698F1E008BC7B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4F461B17698EBA008BC7B3 /* libz.dylib */; };
-		0B4F461F176A1680008BC7B3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4F461E176A1680008BC7B3 /* libcurl.a */; };
-		0B4F4621176A16A3008BC7B3 /* libssh2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4F4620176A16A3008BC7B3 /* libssh2.a */; };
 		0B5AE5F9176970D000B31A29 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B5AE5F8176970D000B31A29 /* Cocoa.framework */; };
 		0B5AE603176970D000B31A29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B5AE601176970D000B31A29 /* InfoPlist.strings */; };
 		0B5AE60E1769711100B31A29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B5AE60D1769711100B31A29 /* Foundation.framework */; };
@@ -71,15 +69,15 @@
 		0B5AE67F1769719E00B31A29 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5AE6461769719E00B31A29 /* NSString+URLEncoding.h */; };
 		0B5AE6801769719E00B31A29 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5AE6471769719E00B31A29 /* NSString+URLEncoding.m */; };
 		0B5AE6811769719E00B31A29 /* objective-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5AE6481769719E00B31A29 /* objective-curl.h */; };
-		0B5AE683176971DC00B31A29 /* curl-patched.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B5AE682176971DC00B31A29 /* curl-patched.h */; };
 		0B5AE685176971F100B31A29 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B5AE684176971F100B31A29 /* libcrypto.dylib */; };
+		0BABBB1A176A39F20088A82D /* patched-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BABBB19176A39F20088A82D /* patched-curl.h */; };
+		0BABBB1D176A3A5D0088A82D /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BABBB1B176A3A5D0088A82D /* libcurl.a */; };
+		0BABBB1E176A3A5D0088A82D /* libssh2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BABBB1C176A3A5D0088A82D /* libssh2.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0B4F461717698E44008BC7B3 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		0B4F461B17698EBA008BC7B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		0B4F461E176A1680008BC7B3 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "objective-curl/lib/libcurl.a"; sourceTree = "<group>"; };
-		0B4F4620176A16A3008BC7B3 /* libssh2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssh2.a; path = "objective-curl/lib/libssh2.a"; sourceTree = "<group>"; };
 		0B5AE5F5176970D000B31A29 /* objective-curl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "objective-curl.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B5AE5F8176970D000B31A29 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0B5AE600176970D000B31A29 /* objective-curl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "objective-curl-Info.plist"; sourceTree = "<group>"; };
@@ -143,8 +141,10 @@
 		0B5AE6461769719E00B31A29 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+URLEncoding.h"; path = "src/NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		0B5AE6471769719E00B31A29 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLEncoding.m"; path = "src/NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		0B5AE6481769719E00B31A29 /* objective-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objective-curl.h"; path = "src/objective-curl.h"; sourceTree = "<group>"; };
-		0B5AE682176971DC00B31A29 /* curl-patched.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "curl-patched.h"; path = "include/curl-patched.h"; sourceTree = "<group>"; };
 		0B5AE684176971F100B31A29 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		0BABBB19176A39F20088A82D /* patched-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "patched-curl.h"; path = "src/patched-curl.h"; sourceTree = "<group>"; };
+		0BABBB1B176A3A5D0088A82D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = lib/libcurl.a; sourceTree = "<group>"; };
+		0BABBB1C176A3A5D0088A82D /* libssh2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssh2.a; path = lib/libssh2.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,13 +152,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B4F4621176A16A3008BC7B3 /* libssh2.a in Frameworks */,
-				0B4F461F176A1680008BC7B3 /* libcurl.a in Frameworks */,
 				0B4F461D17698F1E008BC7B3 /* libz.dylib in Frameworks */,
 				0B4F461817698E44008BC7B3 /* libssl.dylib in Frameworks */,
 				0B5AE685176971F100B31A29 /* libcrypto.dylib in Frameworks */,
 				0B5AE60E1769711100B31A29 /* Foundation.framework in Frameworks */,
 				0B5AE5F9176970D000B31A29 /* Cocoa.framework in Frameworks */,
+				0BABBB1D176A3A5D0088A82D /* libcurl.a in Frameworks */,
+				0BABBB1E176A3A5D0088A82D /* libssh2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +185,8 @@
 		0B5AE5F7176970D000B31A29 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0B4F461E176A1680008BC7B3 /* libcurl.a */,
-				0B4F4620176A16A3008BC7B3 /* libssh2.a */,
+				0BABBB1B176A3A5D0088A82D /* libcurl.a */,
+				0BABBB1C176A3A5D0088A82D /* libssh2.a */,
 				0B4F461B17698EBA008BC7B3 /* libz.dylib */,
 				0B4F461717698E44008BC7B3 /* libssl.dylib */,
 				0B5AE684176971F100B31A29 /* libcrypto.dylib */,
@@ -208,7 +208,6 @@
 		0B5AE5FF176970D000B31A29 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0B5AE682176971DC00B31A29 /* curl-patched.h */,
 				0B5AE600176970D000B31A29 /* objective-curl-Info.plist */,
 				0B5AE601176970D000B31A29 /* InfoPlist.strings */,
 				0B5AE604176970D000B31A29 /* objective-curl-Prefix.pch */,
@@ -276,6 +275,7 @@
 				0B5AE6461769719E00B31A29 /* NSString+URLEncoding.h */,
 				0B5AE6471769719E00B31A29 /* NSString+URLEncoding.m */,
 				0B5AE6481769719E00B31A29 /* objective-curl.h */,
+				0BABBB19176A39F20088A82D /* patched-curl.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -319,7 +319,7 @@
 				0B5AE67D1769719E00B31A29 /* NSString+S3.h in Headers */,
 				0B5AE67F1769719E00B31A29 /* NSString+URLEncoding.h in Headers */,
 				0B5AE6811769719E00B31A29 /* objective-curl.h in Headers */,
-				0B5AE683176971DC00B31A29 /* curl-patched.h in Headers */,
+				0BABBB1A176A39F20088A82D /* patched-curl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,7 +496,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "objective-curl/objective-curl-Prefix.pch";
 				INFOPLIST_FILE = "objective-curl/objective-curl-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/$(PRODUCT_NAME)/lib";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
@@ -514,7 +514,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "objective-curl/objective-curl-Prefix.pch";
 				INFOPLIST_FILE = "objective-curl/objective-curl-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/$(PRODUCT_NAME)/lib";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
